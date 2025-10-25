@@ -19,16 +19,19 @@
             Toolbox::ajouterMessageAlerte("Bon retour sur le site ".$login. "!", Toolbox:: COULEUR_VERTE);
             $_SESSION['profil'] = ["login" => $login];
               header("location: ".URL."compte/profil");
+              exit();
           }else{
             $msg =  "Le compte de ".$login. " n'a pas été activé par mail. ";
             $msg .= "<a href='renvoyerMailValidation/".$login."'>Renvoyez le mail de validation </a>";
             Toolbox::ajouterMessageAlerte($msg, Toolbox::COULEUR_ROUGE);
             //renvoyer le mail da validation a l'utilisateur
             header("Location: ".URL."login");
+            exit();
           }
       }else {
         Toolbox::ajouterMessageAlerte("la combinaison mot de passe et login non valide", Toolbox::COULEUR_ROUGE);
         header("location: ".URL. "login");
+        exit();
       }
     }
 
@@ -58,9 +61,10 @@
     Toolbox::ajouterMessageAlerte("Vous êtes maintenant déconnecté", Toolbox::COULEUR_ORANGE);
     unset($_SESSION['profil']);
     header ("location: " .URL."accueils");
+    exit();
   }
 
-    //ft qui valide un compte , en verifiant que le login n'existe pass
+    //ft qui valide un compte , en verifiant que le login n'existe pas
     public function validation_creerCompte($login,$password,$mail){
       if ($this->utilisateurManager->verifLoginDisponible($login)){
         $passwordCrypte = password_hash($password,PASSWORD_DEFAULT);
@@ -71,11 +75,13 @@
           Toolbox::ajouterMessageAlerte("La compte a été crée, un mail de validation vous sera envoyé", Toolbox::COULEUR_VERTE);
           header("Location: ".URL. "login");
           echo "le compte est crée";
+          exit();
         }
       }else{
         Toolbox::ajouterMessageAlerte("Le login est déjà utilisé !", Toolbox::COULEUR_ROUGE);
         header("Location: ".URL."creerCompte");
         echo "le compte n'est pas crée";
+        exit();
       }
     }
 
@@ -91,6 +97,7 @@
       $utilisateur = $this->utilisateurManager->getUserInformation($login);
       $this->sendMailValidation($login,$utilisateur['mail'],$utilisateur['clef']);
       header ("Location: ".URL."login");
+      exit();
     }
 
     //ft qui active le compte utilisateur=basculer le champs isValid a 1
@@ -101,14 +108,21 @@
           "login" => $login,
         ];
         header("Location: ".URL.'compte/profil');
+        exit();
       }else{
         Toolbox::ajouterMessageAlerte("Le compte n'a pas été activée!", Toolbox::COULEUR_ROUGE);
         header ("Location :".URL."creerCompte");
+        exit();
       }
     }
 
     //ft qui modifie le mail
     public function validation_modificationMail($mail){
+      if (!isset($_SESSION['profil'])) {
+        Toolbox::ajouterMessageAlerte("Veuillez vous connecter!", Toolbox::COULEUR_ROUGE);
+        header("location: ".URL."login");
+        exit();
+      }
       //echo "entree";
       if($this->utilisateurManager->bdValidationModificationMail($_SESSION['profil']['login'],$mail)){
         Toolbox::ajouterMessageAlerte("Le mail est bien modifié !", Toolbox::COULEUR_VERTE);
@@ -116,10 +130,16 @@
         Toolbox::ajouterMessageAlerte("Aucune modification de mail effectuée !", Toolbox::COULEUR_ROUGE);
       }
         header ("Location: ".URL."compte/profil");
+        exit();
     }
 
     public function modificationPassword(){
+      if (!isset($_SESSION['profil'])) {
+        Toolbox::ajouterMessageAlerte("Veuillez vous connecter!", Toolbox::COULEUR_ROUGE);
+        header("location: ".URL."login");
+        exit();
         // Envoyer les données dans la view
+      }
         $data_page = [
           "view" => "./views/Utilisateur/modificationPassword.view.php",
           "custom_css" => ["style.css", "accueil.css"],
@@ -133,6 +153,11 @@
       }
 
     public function validation_modificationPassword($ancienPassword,$nouveauPassword,$confirmNouveauPassword){
+      if (!isset($_SESSION['profil'])) {
+        Toolbox::ajouterMessageAlerte("Veuillez vous connecter!", Toolbox::COULEUR_ROUGE);
+        header("location: ".URL."login");
+        exit();
+    }
       if($nouveauPassword === $confirmNouveauPassword){
 
         if($this->utilisateurManager->isCombinaisonValide($_SESSION['profil']['login'],$ancienPassword)){
@@ -141,35 +166,46 @@
             if($this->utilisateurManager->bdModificationPassword($_SESSION['profil']['login'],$passwordCrypte)){
               Toolbox::ajouterMessageAlerte('Le mot de passe a bien été modifié', Toolbox::COULEUR_VERTE);
               header("Location: ".URL."compte/profil");
+              exit();
             }else{
               Toolbox::ajouterMessageAlerte("La modification n'a pas été éffectuée", Toolbox::COULEUR_ROUGE );
               header("Location: ".URL."compte/modificationPassword");
+              exit();
             }
 
         }else{
           Toolbox::ajouterMessageAlerte('La combinaison login /ancien mot de passe ne correspond pas', Toolbox::COULEUR_ROUGE);
           header('Location :'.URL.'compte/modificationPassword');
+          exit();
         }
 
       }else{
         Toolbox::ajouterMessageAlerte('Les deux 2 nouveaux mots de passe ne correpondent pas', Toolbox::COULEUR_ROUGE);
         header ('Location :'.URL.'compte/modificationPassword');
+        exit();
       }
     }
 
     //ft qui valdie la suppression du compte
     public function validation_suppressionCompte(){
-      //Suppression de l'image
-      $this->dossierSuppressionImageUtilisateur($_SESSION['profil']['login']);
-      //Suppression du dossier
-      rmdir("public/Assets/images/profils/".$_SESSION['profil']['login']);
-    if($this->utilisateurManager->bdSuppressionCompte($_SESSION['profil']['login'])){
-      Toolbox::ajouterMessageAlerte('La suppression du compte est effectué!', Toolbox::COULEUR_VERTE);
-    $this->deconnexion();
-  }else{
-    Toolbox::ajouterMessageAlerte("La suppression du compte n'a pas été effectuée, contacté l'utilisateur", Toolbox::COULEUR_ROUGE);
-    header ("location: ".URL."compte/profil");
-  }
+      if (!isset($_SESSION['profil'])) {
+        Toolbox::ajouterMessageAlerte("Veuillez vous connecter!", Toolbox::COULEUR_ROUGE);
+        header("location: ".URL."login");
+        exit();
+      }
+        //Suppression de l'image
+        $this->dossierSuppressionImageUtilisateur($_SESSION['profil']['login']);
+        //Suppression du dossier
+        rmdir("public/Assets/images/profils/".$_SESSION['profil']['login']);
+      if($this->utilisateurManager->bdSuppressionCompte($_SESSION['profil']['login'])){
+        Toolbox::ajouterMessageAlerte('La suppression du compte est effectué!', Toolbox::COULEUR_VERTE);
+        $this->deconnexion();
+      }
+      else{
+        Toolbox::ajouterMessageAlerte("La suppression du compte n'a pas été effectuée, contacté l'utilisateur", Toolbox::COULEUR_ROUGE);
+        header ("location: ".URL."compte/profil");
+        exit();
+      }
     }
 
 
@@ -179,6 +215,11 @@
      * ajout de nouvelles images dans le repertoire
      */
     public function validation_modificationImage($file){
+      if (!isset($_SESSION['profil'])) {
+        Toolbox::ajouterMessageAlerte("Veuillez vous connecter!", Toolbox::COULEUR_ROUGE);
+        header("location: ".URL."login");
+        exit();
+      }
       try {
         $repertoire = "public/Assets/images/profils/".$_SESSION['profil']['login']."/";
         //Ajout image dans le repertoire
@@ -190,7 +231,7 @@
         if($this->utilisateurManager->bdAjoutImage($_SESSION['profil']['login'],$nomImageBD)){
           Toolbox::ajouterMessageAlerte("La modification a été éffectuée", Toolbox::COULEUR_VERTE);
         }else{
-          Toolbox::ajouterMessageAlerte("La modification de l'image n'a pas été éffectuée");
+            Toolbox::ajouterMessageAlerte("La modification de l'image n'a pas été effectuée", Toolbox::COULEUR_ROUGE);
         }
       } catch (\Exception $e) {
         Toolbox::ajouterMessageAlerte($e->getMessage(), Toolbox::COULEUR_ROUGE);

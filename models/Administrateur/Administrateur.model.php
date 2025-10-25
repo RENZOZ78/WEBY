@@ -21,6 +21,15 @@
         return $produit;
     }
 
+     //recuperation de data des commandes
+     public function getCommandes(){
+      $req = $this->getBdd()->prepare("SELECT * FROM commandes");
+      $req->execute();
+      $commande = $req->fetchAll(PDO::FETCH_ASSOC);
+      $req->closeCursor();
+      return $commande;
+  }
+
     public function bdModificationRoleUser($login,$role){
       $req= "UPDATE utilisateur set role = :role WHERE login = :login";
       $stmt = $this->getBdd()->prepare($req);

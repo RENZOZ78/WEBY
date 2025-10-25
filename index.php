@@ -27,7 +27,7 @@
 
         } else{
            //echo "autres pages";
-           $url= explode("/", filter_var($_GET['page'],FILTER_SANITIZE_URL));
+           $url= explode("/", filter_var($_GET['page'],FILTER_SANITIZE_STRING));
            $page = $url[0];
         }
 
@@ -38,26 +38,35 @@
           case "entreprises":
           //$visiteurController->entreprise();
             switch ($url[1]){
-                case "creation": $visiteurController->creation_entreprise();
-                break;
-                case "modification": $visiteurController->modification_entreprise();
-                break;
-                case "gestion": $visiteurController->gestion_entreprise();
-                break;
-          break;
-          default: throw new exception( "la page n'existe pas");
+                case "creation": 
+                  $visiteurController->creation_entreprise();
+                  break;
+                case "modification": 
+                  $visiteurController->modification_entreprise();
+                  break;
+                case "gestion": 
+                  $visiteurController->gestion_entreprise();
+                  break;          
+            default: 
+              throw new exception( "la page n'existe pas");
           }
+          break;
 
-          case "sites": $visiteurController->site();
-          break;
-          case "reseaux": $visiteurController->reseaux();
-          break;
-          case "contact":  $visiteurController->contact();
-          break;
-          case "marketing": $visiteurController->marketing();
-          break;
-          case "login":  $visiteurController->login();
-          break;
+          case "sites": 
+            $visiteurController->site();
+            break;
+          case "reseaux": 
+            $visiteurController->reseaux();
+            break;
+          case "contact":  
+            $visiteurController->contact();
+            break;
+          case "marketing": 
+            $visiteurController->marketing();
+            break;
+          case "login":  
+            $visiteurController->login();
+            break;
 
           case "validation_login":
             if(!empty ($_POST['login']) && !empty($_POST['password'])){
@@ -69,8 +78,9 @@
               header('location: '.URL."login");
             }
           break;
-          case "creerCompte": $visiteurController->creerCompte();
-          break;
+          case "creerCompte": 
+            $visiteurController->creerCompte();
+              break;
           case "validation_creerCompte":
             if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['mail'])){
                 echo "les champs sont remplis";
@@ -83,24 +93,30 @@
               header("location:".URL."creerCompte");
             }
           break;
-          case "renvoyerMailValidation" : $utilisateurController->renvoyerMailValidation($url[1]);
-          break;
-          case "validationMail": $utilisateurController->validation_mailCompte($url[1],$url[2]);
-          break;
+          case "renvoyerMailValidation" : 
+            $utilisateurController->renvoyerMailValidation($url[1]);
+            break;
+          case "validationMail": 
+            $utilisateurController->validation_mailCompte($url[1],$url[2]);
+            break;
           case "compte" :
             if(!Securite::estConnecte()){
               Toolbox::ajouterMessageAlerte("Veuillez vous connecter!", Toolbox::COULEUR_ROUGE);
               header("location: ".URL."login");
             }else{
               switch($url[1]){
-                case "profil" : $utilisateurController->profil();
-                break;
-                case "deconnexion" : $utilisateurController->deconnexion();
-                break;
-                case "validation_modificationMail" : $utilisateurController->validation_modificationMail(Securite::secureHTML($_POST['mail']));
-                break;
-                case "modificationPassword" : $utilisateurController->modificationPassword();
-                break;
+                case "profil" : 
+                  $utilisateurController->profil();
+                  break;
+                case "deconnexion" : 
+                  $utilisateurController->deconnexion();
+                  break;
+                case "validation_modificationMail" : 
+                  $utilisateurController->validation_modificationMail(Securite::secureHTML($_POST['mail']));
+                  break;
+                case "modificationPassword" : 
+                  $utilisateurController->modificationPassword();
+                  break;
                 case "validation_modificationPassword":
                 if( !empty($_POST['ancienPassword']) && !empty($_POST['nouveauPassword']) && !empty($_POST['confirmNouveauPassword'])){
                   $ancienPassword =Securite::secureHTML($_POST['ancienPassword']);
@@ -113,64 +129,81 @@
                 }
                 break;
                 case "suppressionCompte": $utilisateurController->validation_suppressionCompte();
-                break;
+                  break;
                 case "validation_modificationImage":
                   //print_r($_FILES['image']);
-                  if($_FILES['image']['size'] > 0) {
+                  //verifie si l'image existe et verifie sa taille.
+                  if (isset($_FILES['image']) && ($_FILES['image']['size'] > 0)) {
                     $utilisateurController->validation_modificationImage($_FILES['image']);
-                  }else{
-                    Toolbox::ajouterMessageAlerte("vous n'avez pas modifié l'image");
-                    header("location: ".URL."compte/profil");
+                  } else {
+                    Toolbox::ajouterMessageAlerte("vous n'avez pas modifié l'image", Toolbox ::COULEUR_ROUGE);
+                    header("location: " . URL . "compte/profil");
                   }
-                break;
-                default: throw new exception( "la page n'existe pas");
+                  break;
+                default: 
+                  throw new exception( "la page n'existe pas");
+                }
               }
-            }
-          break;
+            break;
           case "administration":
             if(!Securite::estConnecte()){
               Toolbox::ajouterMessageAlerte("Veuillez vous connecter!", Toolbox::COULEUR_ROUGE);
-                header("location: ".URL."Login");
+              header("location: ".URL."Login");
             } elseif (!Securite::estAdministrateur() && !Securite::estSuperAdministrateur()) {
               Toolbox::ajouterMessageAlerte("Vous n'avez pas le droit d'être ici ", Toolbox::COULEUR_ROUGE);
               header("location: ".URL."accueil");
             }elseif (Securite::estAdministrateur()){
               switch($url[1]){
-                case "droits": $administrateurController->gestion_droits();
-                break;
-                case "validation_modificationRole" : $administrateurController->validation_modificationRole($_POST['login'], $_POST['role']);
-                break;
-                case "gestionCommandes": $administrateurController->gestion_commandes();
-                break;
-                case "gestionProduits": $administrateurController->gestion_produits();
-                break;
-                case "gestionUtilisateurs": $administrateurController->gestion_utilisateurs();
-                break;
+                case "droits": 
+                  $administrateurController->gestion_droits();
+                  break;
+                case "validation_modificationRole" : 
+                  $administrateurController->validation_modificationRole($_POST['login'], $_POST['role']);
+                  break;
+                case "gestionCommandes": 
+                  $administrateurController->gestion_commandes();
+                  break;
+                case "gestionProduits": 
+                  $administrateurController->gestion_produits();
+                  break;
+                case "gestionUtilisateurs": 
+                  $administrateurController->gestion_utilisateur();
+                  break;
+                default:
+                  throw new Exception("La page n'existe pas");
               }
 
             }elseif (Securite::estSuperAdministrateur()){
               switch($url[1]){
-                case "droits": $administrateurController->gestion_droits();
-                break;
-                case "validation_modificationRole" : $administrateurController->validation_modificationRole($_POST['login'], $_POST['role']);
-                break;
-                case "gestionCommandes": $administrateurController->gestion_commandes();
-                break;
-                case "gestionProduits": $administrateurController->gestion_produits();
-                break;
-                case "gestionFullUtilisateur": $sAdministrateurController->gestion_full_utilisateur();
-                break;
-                case "validationModificationFullUtilisateur" : $sAdministrateurController->validation_modification_full_utilisateur($_POST['login'], $_POST['mail'], $_POST['role'], $_POST['is_valid'], $_POST['role']);
-                break;
+                case "droits": 
+                  $administrateurController->gestion_droits();
+                  break;
+                case "validation_modificationRole" : 
+                  $administrateurController->validation_modificationRole($_POST['login'], $_POST['role']);
+                  break;
+                case "gestionCommandes": 
+                  $administrateurController->gestion_commandes();
+                  break;
+                case "gestionProduits": 
+                  $administrateurController->gestion_produits();
+                  break;
+                case "gestionFullUtilisateur":  
+                  $sAdministrateurController->gestion_full_utilisateur();
+                  break;
+                case "validationModificationFullUtilisateur" : 
+                  $sAdministrateurController->validation_modification_full_utilisateur($_POST['login'], $_POST['mail'], $_POST['role'], $_POST['is_valid'], $_POST['role']);
+                  break;
 
-                default : throw new Exception("La page n'existe pas");
+                default :   
+                  throw new Exception("La page n'existe pas");
               }
             }
           break;
-          default: throw new exception( "la page n'existe pas du tout");
+          default: 
+            throw new exception( "la page n'existe pas du tout");
         }
 
-      } catch (\Exception $e) {
+      } catch (Exception $e) {
         $visiteurController->pageErreur($e->getMessage());
       }
 

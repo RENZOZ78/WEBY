@@ -50,13 +50,14 @@
     }
 
     public function gestion_commandes(){
-    $utilisateurs = $this->administrateurManager->getUtilisateurs();
+    // $utilisateurs = $this->administrateurManager->getUtilisateurs();
+    $commandes = $this->administrateurManager->getCommandes();
       $data_page = [
         "view" => "./views/Administrateur/gestionCommandes.view.php",
         "custom_css" => ["creerCompte.css"],
         "H1" => "Gérer les droits utilisateurs",
         "uvp"=> "Ici vous pouvez gérer les droits utilisateurs",
-        "utilisateurs" => $utilisateurs,
+        "commandes" => $commandes,
         "page_title"=> "WebyCloudy | Gestion droits ",
         "template" => "views/common/template.php"
       ];
