@@ -3,7 +3,6 @@
 <?php
   $page_description = "Page de gestion des produits" ;
   $costum_css= "projets.css";
-  $header_content=  include "inc/header.php";
   //$page_content=  include "inc/content_profil.php";
   //phpinfo();
  ?>

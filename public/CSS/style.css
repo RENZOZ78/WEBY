@@ -1,8 +1,6 @@
 /* Reset */
-
 *,*::before,*::after{
 	box-sizing:border-box;
-
 }
 html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,
 pre,form,fieldset,input,textarea,p,blockquote,th,td,
@@ -12,11 +10,15 @@ header,footer,aside,nav,article,figure,figcaption{
 }
 
 body{
-	background-color: #ffd012ad;
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: #f8f9fa; /* Light gray background for a cleaner look */
+  color: #343a40; /* Darker text for better readability */
 }
 
 fieldset,img{
-	border: 1px;
+	border: 0;
   border-radius: 20px;
   padding: 5px;
 }
@@ -29,10 +31,6 @@ ol,ul{
 }
 caption,th{
 	text-align:left;
-}
-h1,h2,h3,h4,h5,h6{
-	font-size:100%;
-	font-weight:400;
 }
 q:before,q:after{
 	content:'';
@@ -48,209 +46,139 @@ a:active,a:focus{
 }
 
 
-/* GENERAL */
-h2{
-  font-size: 60px;
-padding-top: 8vh;
-padding-bottom: 5vh;
-font-family: 'Kaushan Script';
+/* GENERAL TYPOGRAPHY */
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  color: #0d6efd; /* Bootstrap primary blue for consistency */
+  text-shadow: none; /* Remove text shadow for better readability */
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+  text-transform: capitalize;
 }
 
-h3{
-	font-size: 30px;
-	padding: 10px;
-	margin: 7vh 0 2vh;
-	font-family: 'Kaushan Script';
-	background-color: blue;
-	color: whitesmoke;
-	width: fit-content;
-	border-radius: 0px 20px 20px 0;
-
-}
-
-h4{
-  font-size: 15px;
-	padding: 5px;
-	border: 1px;
-	border-radius: 10px;
-	border-bottom-width: thick;
-	font-family: sans-serif roboto;
-	margin: 0 auto 15px;
-	width: auto;
-
-}
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.25rem; }
 
 
 /*Header-------------------------*/
 
 .img_top{
-	background-image:
-	/* linear-gradient(rgba(0, 0, 255, 0.5), rgba(255, 255, 0, 0.5)),  */
-	url("https://webycloudy.com/img/bgphotshop.png");
+	background-image: url("https://webycloudy.com/img/bgphotshop.png");
 	background-size: cover;
 	background-position: center;
 	height: 100%;
 	witdh: 100%;
 	z-index: 1000;
-
 }
 
-
 .text-intro{
-    padding-top: 5rem;
-    /* padding-bottom: 200px; */
+    padding: 5rem 1rem;
     text-align: center;
 }
 
 .preTxt{
-    font-size: 70px;
+    font-size: 2.5rem; /* Adjusted size */
     margin: 0;
     color: #2f2d2d;
-    line-height: 0.5;
-    margin-bottom: 40px;
+    line-height: 1;
+    margin-bottom: 1rem;
+    font-family: 'Lato', sans-serif;
 }
 
-h1{
-    font-size: 150px;
-    color: #2f2d2d;
-    /* font-family: 'Kaushan Script'; */
-		font-family: inherit;
+/* Overriding the generic h1 for the main header text to be bigger */
+.text-intro h1 {
+    font-size: 6rem;
+    font-family: 'Lato', sans-serif;
     font-weight: 700;
 }
 
-.alert-success{
-	top: 20px;
-}
 
-
-/*------------------------------NAVIGATION: la navigation va se retrecir quand on va sroller sur le contenue + animation en js */
+/*------------------------------NAVIGATION */
 
 #main-nav{
     transition: all 0.4s ease ;
+    background-color: #0d6efd !important; /* Enforce bootstrap primary color */
 }
 
 .navbar-brand{
-    font-size: 45px!important;/*passe par dessus bootstrap*/
-    font-family: 'Kaushan Script!important';
+    font-size: 2rem !important; /* passe par dessus bootstrap */
+    font-family: 'Lato', sans-serif !important;
 }
 
 .navbar a {
-    color: black!important;
-    font-family: 'Lato';
-    font-size: 22px;
+    color: white !important; /* White text on blue background */
+    font-family: 'Lato', sans-serif;
+    font-size: 1.1rem;
     font-weight: 700;
-    transition: all 0.6s ease;
+    transition: all 0.4s ease;
+    border-radius: 5px;
+    margin: 0 5px;
 }
 
 .navbar a.nav-link:hover {
-  color: blue;
+  color: #0d6efd !important;
   background-color: whitesmoke;
-  border-radius: 10px;
 }
 
-    /* animation barre navigation: des qu'on scroll de plus de 30px= la barre va se reduire */
+.dropdown-menu {
+    background-color: #0d6efd;
+}
+
+.dropdown-item {
+    color: white !important;
+}
+
+.dropdown-item:hover {
+    color: #0d6efd !important;
+    background-color: whitesmoke;
+}
+
+
+/* animation barre navigation: des qu'on scroll de plus de 30px= la barre va se reduire */
 .navbar.opaque .navbar-brand{
-    font-size: 27px!important;
+    font-size: 1.5rem !important;
     transition: all 0.4s ease;
 }
 .navbar.opaque a{
-    font-size:18px;
+    font-size: 1rem;
     transition: all 0.4s ease;
 }
 
 
-/* -A PROPOS & VALEUR AJOUTE ACCORDION ---------------------- */
+/* SECTIONS */
+
+section{
+    padding: 60px 0;
+}
 
 #aPropos{
-    margin-top: 70px;
-    padding-bottom: 50px;
-    border-bottom: 1px dashed #2f2d2d;
-		background-color: whitesmoke;
-  	/* padding-top: 50px; */
-}
-
-
-}
-h2.about{
-  font-size: 60px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-family: 'Kaushan Script';
-  margin: 0 auto;
-  width: 100%;
+    background-color: white;
 }
 
 .about_table{
 	min-height: 300px;
 	padding: 15px;
-	border: 1px solid blue;
+	border: 1px solid #dee2e6;
 	border-radius: 20px;
-	box-shadow: 10px 3px 3px blue;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
 
 .accordion_border{
 	border-radius: 20px;
-	border: 1px solid blue;
-	box-shadow: 5px 3px 3px blue;
+	border: 1px solid #dee2e6;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 	padding: 10px;
 }
 
-
-/* btn accordion */
-.accordion_btn {
-  background-color: #fff;
-	color: black;
-  position: relative;
-  background-image: url("https://example.com/image.png");
-  background-repeat: no-repeat;
-  background-position: left;
-  transition: background-color 0.8s ease-in-out;
-	border-radius: 10px;
-}
-
-@keyframes toggle-background {
-  0% {
-    background-position: left;
-  }
-  50% {
-    background-position: right;
-  }
-
-}
-
-.accordion_btn:active {
-  animation: toggle-background 1s ease-in-out forwards;
-  animation-fill-mode: backwards;
-}
-
-.accordion_btn:hover {
-  background-color: #0d6efd;
-	color: white;
-}
-
-
-
-
-
-/* ---------------------------Trois icones */
-#icones{
-    padding-top: 75px;
-    padding-bottom:75px;
-    border-bottom: 1px dashed #2f2d2d;
-		width: 90%;
-		margin: 0 auto;
-
-}
-.icone_titre{
-  font-size: 40px;
-}
 
 /*--------------------------- 1er banniere */
 
 #ban1{
     position: relative;
-    background: url("img/banniere1.png");
-		background-image: url("../img/banniere1.png");
+    background-image: url("../img/banniere1.png");
     background-position: right;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -263,36 +191,6 @@ h2.about{
     padding-bottom:100px;
 }
 
-/* .h2Photos{
-    padding-top: 50px;
-    padding-bottom: 20px;
-    font-family: "Kaushan Script";
-    font-size: 70px;
-} */
-
-#galerie .container p{
-    padding-bottom: 40px;
-}
-
-img.img-fluid{
-    height: auto;
-
-}
-
-h2.titre_site{
-   color: #22a7f0;
-	 font-size: 60px;
-}
-
-h2{
-  text-transform: capitalize;
-  color: #0b5ed7;
-  margin-top: 30px;
-  text-shadow: 4px 3px 0px rgba(0,0,0,0.3);
-	font-size=60px;
-	width: max-content;
-  margin: 30px auto 1%;
-}
 
 /*------------------------------- seconde banniere */
 
@@ -306,21 +204,8 @@ h2{
 		background-color: whitesmoke;
 }
 
-#carouselContent{
-    margin-top: 70px;
-    font-size: 35px;
-    color: #000;
-    font-weight: 400;
-}
 
 /*----CARTES TARIFS *****************************/
-
-.offreH{
-    font-size: 70px;
-    padding-top: 80px;
-    padding-bottom: 50px;
-    font-family: 'Kaushan Script';
-}
 
 #cartes{
     padding: 50px 0 20px 0;
@@ -328,21 +213,17 @@ h2{
 		margin: 0 auto;
 }
 
-.carte2{
-	width: inherit;
-}
-
 .threeCards{
     width: 300px;
     height: 520px;
     position: relative;
     transition: 0.2s ease-in;
-    box-shadow: 0px 10px 30px #000;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
 		background-color: white;
 }
 
 .threeCards:hover{
-    transform:scale(1.1);
+    transform:scale(1.05);
 		z-index: 1000;
 }
 
@@ -353,37 +234,9 @@ h2{
     background: rgba(216, 216, 216, 0.5)
 }
 
-.header h3{
-    margin: 0;
-    position: relative;
-    top: 130px;
-    text-align: center;
-    font-family: 'Lato';
-    font-size: 15px;
-}
-
-h2.carte_prix{
-top: 200px;
-/* margin-top: 200px; */
-padding-top: 10px;
-text-align: center;
-font-size=60px;
-}
-
-span#spanPrix{
-    font-size: 30px;
-    height: 50px;
-}
-
-h2.promes{
-    padding-top: 50px;
-		font-size=60px;
-}
-
 .type{
     height: 120px;
     width: 300px;
-    /* background: rgba(2,2,2,0.5); */
     background: #0d6efd;
     clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
     position: absolute;
@@ -391,672 +244,52 @@ h2.promes{
 }
 
 .type h2{
-    margin:10 0;
+    margin:10px 0;
     text-align: center;
     color: #fff;
-    font-family: 'kaushan script ';
-    font-size: 30px;
+    font-size: 1.75rem; /* 30px */
     position: relative;
-    /* top: 30px; */
     padding: 10px
 }
 
-.details{
-    background: #fff;
-    text-align: center;
-    height: 60px;
-    line-height: 60px;
-    font-family: 'Lato';
-    transition: all 0.5s ease-in;
-
-}
-
-.details:hover{
-    background: rgba(181, 208, 230, 0.1);
-
-}
-
-#btn {
-    background: #fff;
-    height: 50px;
-}
-
-#btn a {
-    background: #fff;
-    height: 50px;
-    width: 120px;
-    display: block;
-    margin: auto;
-    text-align: center;
-    line-height: 50px;
-    position: relative;
-    top: 10px;
-    border-radius: 30px;
-    border: 1px solid #22a7f0;
-    transition: all 0.8s ease-in;
-}
-
-
-#btn a:hover{
-    background: rgba(6,136,206,0.8);
-    color: #fff;
-}
-
-
-/* bouton envoyer */
-
-
-/* progress competences-------------------------- */
-
-/* #progress{
-    border-top: 1px dashed #000;
-    /* border-bottom: 1px solid #000; */
-    /* padding-top: 100px;
-    padding-bottom: 100px;
-}  */
-h2.competences{
-  font-size: 40px;
-  padding-top: 0;
-	padding-bottom: 10px;
-}
-
-/*   PRESTATIONS--------------------*/
-svg text{
-  text-anchor: middle;
-  dominant-baseline: middle;
-}
-
-.prestations{
-	padding-top: 0px !important;
-}
-
- .btn-group{
-	margin-top: 10px;
-}
-
-.img_card{
-	object-fit: fill;
-	margin: 0 auto;
-	border: 1px;
-  border-radius: 20px;
-  padding: 5px;
-}
-
-.img_rx, .img_entreprise, .img_site, .img_marketing  {
-width: 100%;
-margin: 0 auto;
-}
-
-.img_rx:hover, .img_entreprise:hover, .img_site:hover, .img_marketing:hover{
-    transform:scale(1.1);
-		z-index: 1000;
-		transition: 0.5s ease-in-out;
-}
-
-.card{
-	padding: 15px;
-}
-
-.button_card:hover{
-	background-color: #0d6efd;;
-	color: white;
-}
-
-
-/* CLIENTS LOGO---------------------------- */
-
-#clients{
-    border-top: 1px dashed #000;
-    border-bottom: 1px solid #0000;
-    padding-top: 50px;
-    padding-bottom: 50px;
-		background-color: white;
-}
-
-/*   TARIFS--------------------*/
-
-
-/* CONTACT***************/
-#contact{
-	background-color: alwhitesmoke;
-}
 
 /* FOOTER------------------*/
 footer{
   background-color: #0d6efd;
   color: white;
+  padding: 40px 0;
+  text-align: center;
 }
 
 
 /*--- MEDIA QUERY----------------------------------------------------------- */
 
-
-@media screen and (max-width: 1260px){
-	.text-intro h1{
-		margin-bottom: 30px;
-	}
-	.navbar{
-		flex-wrap: wrap;
-	}
-	.navbar a.nav-link {
-  font-size: 20px;
-	}
-
-	.navbar-nav {
-
-	    flex-direction: row;
-	  width: max-content;
-	}
-	h2{
-		width:max-content;
-	}
-
-
-}
-
-
-
-@media screen and (min-width: 1200px){
-	.text-intro h1{
-		margin-bottom: 30px;
-	}
-}
-
 @media screen and (max-width: 1200px){
-
-    .preTxt{
-        font-size: 40px;
-
+    .text-intro h1{
+        font-size: 5rem;
     }
-    h1{
-        font-size: 90px;
+    .preTxt{
+        font-size: 2rem;
     }
 }
 
+@media screen and (max-width: 800px){
+    .text-intro h1{
+        font-size: 4rem;
+    }
+    .preTxt{
+        font-size: 1.5rem;
+    }
+}
 
-
-@media screen and (max-width: 1000px){
-    .threeCards{
-
-            margin: 0 auto 30px;
-        }
-			}
-			#ban1 h2{
-				width: auto;
-			}
-
-@media screen and (min-width: 800px){
-
-  h1{
-    font-size: 90px;
+@media screen and (max-width: 600px){
+	#main-nav{
+		position: static;
   }
   header{
-    height: 30vh;
-    padding: 0;
-		margin-top: 0;
+    margin-top: 0;
+  }
+  .text-intro h1{
+      font-size: 3rem;
   }
 }
-
-
-/* ME MAX 800PX *************************/
-@media screen and (max-width: 800px){
-	header {
-	 height: 20vh;
-	 padding: 15px;
- }
-
- .navbar-nav {
-	flex-direction: column;
-	margin: 0 auto;
-}
-    .preTxt{
-        font-size: 30px;
-
-    }
-    h1{
-        font-size: 71px;
-    }
-    .text-intro{
-				padding: 100px auto;
-        text-align: center;
-				padding-top: 5vh;
-    }
-
-    .section_title, .section_text{
-              text-align: center;
-            }
-}
-
-/* MEDIA QUERY MAX-762PX *************************************/
-@media screen and (max-width: 762px){
-
-   /* #progress{
-       padding-top : 30px;
-       padding-bottom: 30px;
-    } */
-    .preTxt{
-        font-size: 20px;
-
-    }
-    h1{
-        font-size: 51px;
-    }
-    .text-intro{
-      padding: 15rem auto ;
-    }
-    h2.competences{
-      font-size: 70px;
-    }
-		.img_rx, .img_entreprise, .img_site, .img_marketing {
-			object-fit: cover;
-		}
-
-		.aPropos2 {
-  margin-bottom: 20px;
-}
-
-}
-
-/* MEDIA  MIN-600PX ******************************************/
-@media screen and (min-width: 600px){
-		.text-intro {
-			height: 100%;
-			padding-top: 10vh;
-			padding-bottom: auto;
-			height: auto;
-	}
-}
-
-/* MEDIA  MAX-600PX ******************************************/
-@media screen and (max-width: 600px){
-
-	body{
-		background-color: whitesmoke;
-	}
-
-	#main-nav{
-		border-radius: 20px;
-		padding: 10px;
-		padding: 10px 20px ;
-		width: 90%;
-		margin: 10px auto 0;
-		position: absolute;
-}
-
- .sect_tit_txt{
-    margin:15px 12px 15px;
-  }
-
-	header {
-		background-color: #ffdf5e;
- 	 background-position: 10px;
- 	border-radius: 20px;
- 	 width: 90%;
- 	margin: 80px auto 10px;
- 	height: 35vh;
-	box-shadow: 5px 3px 3px blue;
- }
-
-.about1 {
-	background-color: #ffdf5e;
-  border-radius: 20px;
-  box-shadow: 5px 3px 3px blue;
-	padding: 10px 10px 10px;
-	width: 90%;
-	margin: 40px 20px;
-
-}
-
-.about_table {
-  min-height: 300px;
-  padding: 15px;
-	box-shadow: none;
-	border: none;
-}
-.valeur_ajoute{
-	background-color: #ffdf5e;
-  border-radius: 20px;
-  box-shadow: 5px 3px 3px blue;
-	padding: 10px 10px 10px;
-	width: 90%;
-	margin: 40px 20px;
-}
-
-.accordion_border, .card {
-	background-color: #ffdf5e;
-}
-.accordion_border{
-	padding: 15px;
-	box-shadow: none;
-	border: none;
-}
-.card-header{
-	border: none;
-	background-color: inherit;
-}
-.accordion_btn{
-	background-color: inherit;
-}
-
-#icones{
-	background-color: #ffdf5e;
-  border-radius: 20px;
-  box-shadow: 5px 3px 3px blue;
-	padding: 10px 10px 10px;
-}
-
-.galaxy2{
-	background-color: #ffdf5e;
-	border-radius: 20px;
-	box-shadow: 5px 3px 3px blue;
-	width: 90%;
-	margin: 0 auto;
-}
-
-
-	h2, .offreH{
-		font-size: 40px;
-		padding-top: 30px;
-		text-align: cetner;
-	}
-
-  h2.section_title.text-center{
-    font-size: 40px;
-    padding-top: 30px;
-  }
-
-.lead{
-	display: none;
-}
-
-.album{
-	padding:  10px;
-}
-
-  p.section_text{
-    padding-top: 0;
-  }
-  h3.titre_site{
-    padding-top: 20px;
-  }
-
-  .projects_section{
-    display: block;
-  }
-
-  .project_content{
-    text-align: center;
-  }
-
-
- #aPropos {
-  margin-top: 10px;
-}
-
-#ban2 {
-  min-height: 200px;
-}
-
-#cartes {
-  padding: 50px 0 20px 0;
-}
-
-#carouselContent {
-  margin-top: 10px;
-}
-
-  .project {
-      display: block;
-      margin: 55px auto;
-      background-color: aquamarine ;
-      background-position: 10px;
-      border-radius: 20px;
-      padding: 15px;
-  }
-
-  .cont_nav{
-    width: 100%;
-    height: fit-content;
-  }
-
-  .sect_tit_txt{
-     /* background-color: rgba(230, 0, 115, 0.9) ; */
-      background-position: 10px;
-      /* border-radius: 20px; */
-      padding: 10px 70px ;
-      width: auto;
-      margin: 55px 12px 15px;
-      text-align: center;
-  }
-
-	.card{
-		border-radius: 20px;
-		padding: 20px;
-	}
-
-	.threeCards {
-	 margin: 0 auto 60px;
- }
-
-
-  footer{
-    /* background-color: whitesmoke ;*/
-    background-color: #0d6efd;
-    color: white;
-    background-position: 10px;
-    border-radius: 20px;
-    padding: 10px 70px ;
-    width: auto;
-    margin: 15px 12px;
-    text-align: center;
-  }
-
-  img{
-    display: block;
-    /* width: 80%; */
-    /* margin-left: auto;
-    margin-right: auto; */
-				/* border: 1px solid black; */
-		/* border-radius: 20px; */
-		padding: 10px;
-  }
-
-	.img_marque{
-		/* border-radius:20px;
-		border: 1px solid black;
-		padding: 5px; */
-	}
-
-.creationS{
-		background-image: url(..\public\Assets\images\profils\didier\56226_zac-durant-_6HzPU9Hyfg-unsplash.jpg);
-	}
-
-	.site{
-		background-image: image();
-	}
-
-	.rx{
-			background-image: image();
-		}
-
-	.marketing{
-		background-image: image();
-	}
-
-	/* client */
-	.img_marque{
-		margin: 0 auto;
-  	width: min-content;
-	}
-
-}
-
-	svg rect{
-		border: 1px solid;
-		border-radius: 20px;
-	}
-
-  p.project_text{
-    text-align: justify;
-    width: 80%;
-    margin: 5% auto;
-    font-size: 20px;
-  }
-
-  /* h2{
-    font-family: Kaushan;
-  } */
-
-  h2.titre_site{
-    font-size: 1.9rem;
-    width: 80%;
-    margin: 10px auto;
-  }
-
-  .text-intro{
-    height: 100%;
-		padding-top: 5vh;
-    padding-bottom: auto;
-  }
-
-  /* .box, .circle{
-    margin-right: 40px;
-    margin-left: -40px;
-		display: none;
-      } */
-
-			/* .valeur_ajoute{
-				background-color: #ffdf5e;
-				border-radius: 20px;
-				box-shadow: 5px 3px 3px blue;
-				width: 90%;
-				margin: 40px auto 50px;
-				padding: 10px;
-			} */
-
-			.border_contact{
-			  background-color: #ffdf5e;
-			  border-radius: 20px;
-			  box-shadow: 5px 3px 3px blue;
-			  width: 90%;
-			  margin: 0 auto ;
-			  padding: 20px;
-
-			}
-
-			#prix{
-				background-color: #ffdf5e;
-				border-radius: 20px;
-				/* box-shadow: 5px 3px 3px blue; */
-				width: 90%;
-				margin: 0 auto 50px;
-				padding: 10px;
-			}
-  }
-
-	@media screen and (max-width: 526px){
-		.navbar-brand {
-	  font-size: 35px !important;
-	  font-family: 'Kaushan Script!important';
-}
-	}
-
-@media screen and (max-width: 500px){
-
-	.text-intro a{
-			transform: scale(0.8);
-	}
-	.navbar-brand{
-			font-size: 25px!important;
-	}
-	.preTxt{
-			font-size: 25px;
-			line-height: 100%;
-	}
-	h1{
-			font-size: 51px;
-	}
-
-
-	}
-
-
-/* MEDIA MAX 420P ***********************/
- @media screen and (max-width:420px){
-
-/* navbar *****************/
-header{
-	margin-top: 10vh;
-}
-
-.navbar-nav {
- flex-direction: column;
- width: auto;
-}
-	 .navbar-brand{
-		 display: none;
-	 }
-	 .logo_aigle{
-		 height: 150px;
-		 width:150px;
-		 margin: 0 auto;
-	 }
-	 .navbar a.nav-link{
-		 font-size: 13px;
-	 }
-	 .navbar-dark .navbar-toggler {
-	  color: rgba(255,255,255,.55);
-	  border-color: rgba(255,255,255,.1);
-	  border: 2px solid whitesmoke;
-	  margin-right: 25px;
-	}
-	.navbar-nav li {
-	  margin: auto;
-	}
-
-    .text-intro {
-        padding-top: 5vh;
-    }
-
-		.container.cont_nav{
-			display: flex;
-			justify-content: space-between;
-			flex-wrap: nowrap;
-			align-items: center;
-			/* width: 100%; */
-		}
-
-    h1{
-      padding-top: 8px;
-      font-size: 30px;
-    }
-    h2.about, h2.text-center, h2.offreH, h2.competences{
-      /* font-size: 60px; */
-      padding-top: 40px;
-    }
-		#ban1 h2{
-			width: auto;
-		}
-		.container.cont_nav{
-	    display: flex;
-	    justify-content:  center;;
-	    flex-wrap: nowrap;
-	    align-items: center;
-	    /* width: 100%; */
-	  }
-
-		.sect_tit_txt{
-			margin: 35px 0;
-			height: auto;
-		}
-
-		/* .preTxt{
-			font-size: 15px;
-		} */
-		/* .btn{
-			height: 80%;
-			width: 80%;
-		} */
-
-
- }

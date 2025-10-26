@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -27,17 +24,18 @@
       <link rel="shortcut icon" type="image/png" href="<?= URL; ?>/img/favicon.png"/>
 
       <!--Police de caractère-->
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
       <!--fontawesome-->
       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
       <!-- css ekko librairie -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
 
       <!-- css aos librairie -->
       <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+      <link  href="<?= URL; ?>public/CSS/custom.css" rel="stylesheet"/>
 
       <title><?= $page_title; ?></title>
   </head>
@@ -45,7 +43,7 @@
   <body>
 
       <!-- afficher le header (barre de nav + texte intro)-->
-        <?= $header_content; ?>
+      <?php require_once("inc/header.php"); ?>
 
       <!-- affichage des alertes optimisés-->
       <div class="container mt-sm-5" >

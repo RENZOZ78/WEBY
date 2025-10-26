@@ -1,6 +1,3 @@
-
-
-
 <!-- SECTION ABOUT-->
 <section id="aPropos">
     <div class="container">
@@ -99,10 +96,8 @@
       <section id="ban1" class="py-2">
           <div class="container py-5" data-aos="fade-right"
   data-aos-duration="2000" >
-        <h2 class="pb-3 galaxy ">Êtes-vous prêt à faire passer votre activité dans une autre dimension?  <img src="img/galaxy2.png" height="60px" width="60px" pt-3 alt="">
+        <h2 class="pb-3 galaxy ">Êtes-vous prêt à faire passer votre activité dans une autre dimension?  <img src="<?= URL; ?>img/galaxy2.png" height="60px" width="60px" pt-3 alt="">
          </h2>
-        <!-- d-none dm-block = technique pour faire disparaitre un element texte a partir de la taille ecran medium -->
-        <!-- <p class="text-dark d-none d-md-block">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam odio soluta fugit officiis nulla distinctio, ab tempore quaerat consequuntur. Aut?</p> -->
         <a href="#" class="btn btn-primary">Allons-y!!!</a>
     </div>
 </section>
@@ -188,7 +183,6 @@
                       <div class="header">
                           <div class="type">
                               <h2>Publicité</h2>
-                              <!-- <p class="">Ramener des clients sur votre site</p> -->
                           </div>
                           <h3 class="carte_prix" >A partir de <span id="spanPrix"> 300€</span> /mois</h3>
                           <div>
@@ -268,32 +262,22 @@
          <div class="row" data-aos="zoom-in-up"  >
              <div class="col-md-3 col-sm-6 text-center">
                  <a href="#">
-                     <img src="img/spotify.jpg" alt="spotify">
-
-
+                     <img src="<?= URL; ?>img/spotify.jpg" alt="spotify">
                  </a>
              </div>
              <div class="col-md-3 col-sm-6 text-center">
               <a href="#">
-
-                  <img src="img/microsoft.jpg" alt="microsooft">
-
-
+                  <img src="<?= URL; ?>img/microsoft.jpg" alt="microsooft">
               </a>
           </div>
           <div class="col-md-3 col-sm-6 text-center">
               <a href="#">
-
-                  <img src="img/apple.jpg" alt="apple">
-
-
+                  <img src="<?= URL; ?>img/apple.jpg" alt="apple">
               </a>
           </div>
           <div class="col-md-3 col-sm-6 text-center">
               <a href="#">
-
-                  <img src="img/google.jpg" alt="google">
-
+                  <img src="<?= URL; ?>img/google.jpg" alt="google">
               </a>
           </div>
          </div>

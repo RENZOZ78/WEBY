@@ -14,10 +14,8 @@
     protected function getBdd(){
       if(self::$pdo === null){
         self::setBdd();
-        echo "vous etes connecté";
       }
       return self::$pdo;
-      echo "vous n'etes pas connecté, mais ca passe!";
     }
   }
 

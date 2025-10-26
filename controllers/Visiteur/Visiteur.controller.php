@@ -34,11 +34,11 @@
 
     //ft qui gere les infos de la page d'accueils--------
     public  function accueil(){
-      //echo password_hash("test", PASSWORD_DEFAULT);
       $this->generatePageWithOptions([
         "view" => "./views/Visiteur/accueil.view.php",
         "custom_css" => ["style.css", "accueil.css"], // Garder les CSS spécifiques
-        "H1" => "Accueil",
+        "H1" => "Bienvenue",
+        "uvp"=> "Vos idées sont nos inspirations",
         "page_js" => ["accueil.js"],
         "page_title"=> "WebyCloudy | Accueil "
       ]);
@@ -49,8 +49,8 @@
       $this->generatePageWithOptions([
         "view" => "./views/Visiteur/entreprise.view.php",
         "custom_css" => ["style.css", "accueil.css"],
-        "H1" => "Créer votre société",
-        "uvp"=> "Vos projets sont nos inspirations",
+        "H1" => "Création de Société",
+        "uvp"=> "Lancez votre activité sur des bases solides",
         "page_title"=> "WebyCloudy | Société "
       ]);
     }
@@ -60,9 +60,9 @@
       $this->generatePageWithOptions([
         "view" => "./views/Visiteur/creation_entreprise.view.php",
         "custom_css" => ["style.css", "accueil.css"],
-        "H1" => "Créer votre société",
+        "H1" => "Création de Société",
         "uvp"=> "Il est temps de passer à l'action",
-        "page_title"=> "WebyCloudy | création société "
+        "page_title"=> "WebyCloudy | Création société "
       ]);
     }
 
@@ -71,9 +71,9 @@
       $this->generatePageWithOptions([
         "view" => "./views/Visiteur/gestion_entreprise.view.php",
         "custom_css" => ["style.css", "accueil.css"],
-        "H1" => "Gérer votre société",
-        "uvp"=> "Gérer votre société pour donner la bonne direction",
-        "page_title"=> "WebyCloudy | gestion société "
+        "H1" => "Gestion de Société",
+        "uvp"=> "Pilotez votre activité vers le succès",
+        "page_title"=> "WebyCloudy | Gestion société "
       ]);
     }
 
@@ -82,9 +82,9 @@
       $this->generatePageWithOptions([
         "view" => "./views/Visiteur/suppression_entreprise.view.php",
         "custom_css" => ["style.css", "accueil.css"],
-        "H1" => "Modification votre société",
-        "uvp"=> "Effectuer toutes les modifications",
-        "page_title"=> "WebyCloudy | Suppression société "
+        "H1" => "Modification de Société",
+        "uvp"=> "Mettez à jour les informations de votre entreprise",
+        "page_title"=> "WebyCloudy | Modification société "
       ]);
     }
 
@@ -93,9 +93,9 @@
       $this->generatePageWithOptions([
         "view" => "./views/Visiteur/site.view.php",
         "custom_css" => ["projets.css"],
-        "H1" => "Créer votre site internet",
-        "uvp"=> "Profitez de la puissance de votre site web",
-        "page_title"=> "WebyCloudy | Site "
+        "H1" => "Création de Site Web",
+        "uvp"=> "Votre vitrine numérique, puissante et moderne",
+        "page_title"=> "WebyCloudy | Site Web "
       ]);
     }
 
@@ -104,9 +104,9 @@
       $this->generatePageWithOptions([
         "view" => "./views/Visiteur/reseau.view.php",
         "custom_css" => ["style.css"],
-        "H1" => "Les réseaux sociaux",
-        "uvp"=> "Profitez de votre audience sur les réseaux sociaux",
-        "page_title"=> "WebyCloudy | Reseaux sociaux "
+        "H1" => "Gestion des Réseaux Sociaux",
+        "uvp"=> "Engagez et développez votre communauté",
+        "page_title"=> "WebyCloudy | Réseaux sociaux "
       ]);
     }
 
@@ -115,8 +115,8 @@
       $this->generatePageWithOptions([
         "view" => "./views/Visiteur/marketing.view.php",
         "custom_css" => ["projets.css", "marketing.css"],
-        "H1" => "Publicité",
-        "uvp"=> "Il est temps de faire passer votre activité au niveau supérieur",
+        "H1" => "Stratégie Marketing & Publicité",
+        "uvp"=> "Passez au niveau supérieur et touchez votre cible",
         "page_title"=> "WebyCloudy | Publicité "
       ]);
   }
@@ -126,8 +126,8 @@
       $this->generatePageWithOptions([
         "view" => "./views/Visiteur/contact.view.php",
         "custom_css" => ["projets.css"],
-        "H1" => "Contact",
-        "uvp"=> "Restons en contact",
+        "H1" => "Nous Contacter",
+        "uvp"=> "Une question ? Un projet ? Parlons-en.",
         "page_title"=> "WebyCloudy | Contact "
       ]);
   }
@@ -137,8 +137,8 @@
       $this->generatePageWithOptions([
         "view" => "./views/Visiteur/login.view.php",
         "custom_css" => ["projets.css"],
-        "H1" => "Creation de compte",
-        "uvp"=> "Veuillez entrer vos logins et mot de passe",
+        "H1" => "Connexion",
+        "uvp"=> "Heureux de vous revoir !",
         "page_title"=> "WebyCloudy | Login "
       ]);
   }
@@ -148,8 +148,8 @@
       $this->generatePageWithOptions([
         "view" => "./views/Visiteur/creerCompte.view.php",
         "custom_css" => ["creerCompte.css"],
-        "H1" => "Créer votre compte",
-        "uvp"=> "Afin d'avoir accès à outes les infos, veuillez créer votre compte",
+        "H1" => "Création de Compte",
+        "uvp"=> "Rejoignez notre plateforme en quelques clics",
         "page_title"=> "WebyCloudy | Créer compte "
       ]);
     }

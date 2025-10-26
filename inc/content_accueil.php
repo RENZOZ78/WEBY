@@ -1,13 +1,9 @@
-
-
-
 <!-- SECTION ABOUT APROPOS-->
 <section id="aPropos">
     <div class="container">
         <div class="row">
             <div class=" about1 col-md-6 " data-aos="zoom-in-right" data-aos-duration="1000" >
                 <h2 class="about text-center">A Propos</h2>
-                <!-- <hr> -->
                 <div class="about_table">
                   <p>Notre agence vous propose plusieurs solutions afin que votre activié prenne de la l'importance qu'elle mérite sur le web.</p>
                   <p>Nous écoutons vos demandes, identifions vos besoins, puis nous réalisons votre site internet.</p>
@@ -106,8 +102,6 @@
   data-aos-duration="2000" >
         <h2 class="pb-3 galaxy ">Êtes-vous prêt à passer à l'action?  <img src="img/galaxy2.png" height="60px" width="60px" pt-3 alt="">
          </h2>
-        <!-- d-none dm-block = technique pour faire disparaitre un element texte a partir de la taille ecran medium -->
-        <!-- <p class="text-dark d-none d-md-block">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam odio soluta fugit officiis nulla distinctio, ab tempore quaerat consequuntur. Aut?</p> -->
         <a href="#" class="btn accordion_btn btn-primary">Allons-y!!!</a>
     </div>
 </section>
@@ -171,10 +165,6 @@
              <div class="col-lg-6 col-md-8 mx-auto">
                  <h2 class="fw-light">Nos prestations</h2>
                  <p class="lead text-body-secondary">Nous vous proposons une palette de prestations afin de vous mener droit au succes de votre activité</p>
-                 <!-- <p>
-                     <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                     <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-                 </p> -->
              </div>
          </div>
      </section>
@@ -188,19 +178,13 @@
                      <div class="card container shadow-sm">
                        <h4 x="50%" y="50%" fill="#eceeef" dy=".3em"   text-anchor: "middle" dominant-baseline: "middle" >CREATION DE SOCIETE</h4>
                        <div class="img_card ">
-                         <img class="img_entreprise" src="public\Assets\images\accueil\entreprise rc.png"  height="300" alt="">
+                         <img class="img_entreprise" src="<?= URL; ?>public/Assets/images/accueil/entreprise rc.png"  height="300" alt="">
                        </div>
-                         <!-- <svg class="bd-placeholder-img card-img-top " width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                           <title>Creation de société</title>
-                           <rect class="creationS" width="100%" height="100%" fill="#55595c"/>
-
-                         </svg> -->
                          <div class="card-body">
                              <p class="card-text">Nous vous accompagnons dans la création de votre société, et les autres besoins liés à votre activité.</p>
                              <div class=" d-flex justify-content-between align-items-center">
                                  <div class="btn-group">
-                                     <button type="button" onclick="window.location.href='<?= URL; ?>entreprises'" class=" button_card accordion_btn btn btn-sm btn-outline-secondary">En savoir plus</button>
-                                     <!--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>   -->
+                                     <a href="<?= URL; ?>entreprises" class=" button_card accordion_btn btn btn-sm btn-outline-secondary">En savoir plus</a>
                                  </div>
                                  <small class="text-body-secondary"></small>
                              </div>
@@ -209,26 +193,17 @@
                  </div>
                  <div class="col">
                      <div class="card container shadow-sm">
-                         <!-- <svg class="bd-placeholder-img card-img-top"
-                           width="100%" height="225"
-                           xmlns="http://www.w3.org/2000/svg"
-                           role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                           <title>Site internet</title>
-                           <rect width="100%" height="100%" fill="#55595c"/>
-                           <text x="50%" y="50%" fill="#eceeef" dy=".3em" text-anchor: "middle" dominant-baseline: "middle" >Création de votre site internet</text>
-                         </svg> -->
                          <h4 x="50%" y="50%" fill="#eceeef" dy=".3em" text-anchor: "middle" dominant-baseline: "middle" >VOTRE SITE WEB</h4>
 
                          <div class="img_card ">
-                           <img class="img_site" src="public\Assets\images\site internet\si3.png"  height="300" alt="">
+                           <img class="img_site" src="<?= URL; ?>public/Assets/images/site internet/si3.png"  height="300" alt="">
                          </div>
 
                          <div class="card-body">
                              <p class="card-text">Grâce à votre site internet responsive, vous avez le pouvoir d'afficher votre activité sur internet.</p>
                              <div class="d-flex justify-content-between align-items-center">
                                  <div class="btn-group">
-                                     <button type="button" onclick="window.location.href='<?= URL; ?>sites'" class=" button_card btn accordion_btn btn-sm btn-outline-secondary">En savoir plus</button>
-                                     <!--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>   -->
+                                     <a href="<?= URL; ?>sites" class=" button_card btn accordion_btn btn-sm btn-outline-secondary">En savoir plus</a>
                                  </div>
                                  <small class="text-body-secondary"></small>
                              </div>
@@ -238,21 +213,15 @@
 
                  <div class="col">
                      <div class="card container shadow-sm">
-                         <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                           <title>Réseaux sociaux</title>
-                           <rect width="100%" height="100%" fill="#55595c"/>
-                           <text x="50%" y="50%" fill="#eceeef" dy=".3em" text-anchor: "middle" dominant-baseline: "middle" >Réseaux sociaux</text>
-                         </svg> -->
                          <h4 x="50%" y="50%" fill="#eceeef" dy=".3em" text-anchor: "middle" dominant-baseline: "middle" >VOS RESEAUX SOCIAUX</h4>
                          <div class="img_card ">
-                           <img class="img_rx" src="public\Assets\images\reseaux sociaux\rx4.png"  height="300" alt="">
+                           <img class="img_rx" src="<?= URL; ?>public/Assets/images/reseaux sociaux/rx4.png"  height="300" alt="">
                          </div>
                          <div class="card-body">
                              <p class="card-text">Il est temps de mieux exploiter les réseaux sociaux à votre profit grâce à une gestion dynamique!</p>
                              <div class="d-flex justify-content-between align-items-center">
                                  <div class="btn-group">
-                                     <button type="button" onclick="window.location.href='<?= URL; ?>reseaux'" class=" button_card btn accordion_btn btn-sm btn-outline-secondary">En savoir plus</button>
-                                     <!--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>  -->
+                                     <a href="<?= URL; ?>reseaux" class=" button_card btn accordion_btn btn-sm btn-outline-secondary">En savoir plus</a>
                                  </div>
                                  <small class="text-body-secondary"></small>
                              </div>
@@ -262,20 +231,15 @@
 
                  <div class="col">
                      <div class="card container shadow-sm">
-                         <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                           <title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/>
-                           <text x="50%" y="50%" fill="#eceeef" dy=".3em" text-anchor: "middle" dominant-baseline: "middle" >Marketing web</text>
-                         </svg> -->
                          <h4 x="50%" y="50%" fill="#eceeef" dy=".3em" text-anchor: "middle" dominant-baseline: "middle" >MARKETING WEB</h4>
                          <div class="img_card ">
-                           <img class="img_marketing" src="public\Assets\images\strategie_marketing\st3.png"  height="300" alt="">
+                           <img class="img_marketing" src="<?= URL; ?>public/Assets/images/strategie_marketing/st3.png"  height="300" alt="">
                          </div>
                          <div class="card-body">
                              <p class="card-text">Nous mettons en place une stratégie marketing afin de vous ramener et votre chiffre d'affaire.</p>
                              <div class="d-flex justify-content-between align-items-center">
                                  <div class="btn-group">
-                                     <button type="button" onclick="window.location.href='<?= URL; ?>marketing'" class=" button_card btn accordion_btn btn-sm btn-outline-secondary">En savoir plus</button>
-                                     <!--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
+                                     <a href="<?= URL; ?>marketing" class=" button_card btn accordion_btn btn-sm btn-outline-secondary">En savoir plus</a>
                                  </div>
                                  <small class="text-body-secondary"></small>
                              </div>
@@ -289,42 +253,6 @@
  </main>
  <!--FIN SECTION DES PRESTATIONS    ------>
 
-
-<!-- SECTION PROGRESS BAR CHAMPS D'ACTIONS -->
- <!-- <section id="progress">
-     <div class="container">
-         <div class="row">
-             <div class="col-md-6 competences"  data-aos="fade-right" data-aos-offset="300" >
-                 <h2 class=" competences text-center">Notre champs d'action</h2>
-                 <hr>
-                 <p>
-                     Nous vous assurons des prestations de qualités afin que votre activité soit pérenne.
-                 </p>
-               </div>
-
-          <div class="col-md-6 pt-1"  data-aos="fade-up"
-   data-aos-anchor-placement="center-bottom" >
-              <p class="m-0">Marketing Digital</p>
-              <div class="progress">
-                  <div class="progress-bar progress-bar-animated  progress-bar-striped "  role="progressbar" style="width: 90%" ></div>
-              </div>
-              <p class="m-0">Growth Hacking</p>
-              <div class="progress">
-                  <div class="progress-bar progress-bar-animated  progress-bar-striped bg-success role="progressbar" style="width: 95%" ></div>
-              </div>
-              <p class="m-0">Communication</p>
-              <div class="progress">
-                  <div class="progress-bar progress-bar-animated  progress-bar-striped bg-info "  role="progressbar" style="width: 90%" ></div>
-              </div>
-              <p class="m-0">Réseaux</p>
-              <div class="progress">
-                  <div class="progress-bar progress-bar-animated  progress-bar-striped bg-warning "  role="progressbar" style="width: 90%" ></div>
-              </div>
-          </div>
-
-         </div>
-     </div>
- </section> -->
 
 <!-- SECTION CLIENTS -------------------------------------------------------------------------->
  <section id="clients">
@@ -400,7 +328,6 @@
                        <div class="header">
                            <div class="type">
                                <h2>Réseaux sociaux</h2>
-                               <!-- <p class="">Ramener des clients sur votre site</p> -->
                            </div>
                            <h3 class="carte_prix" >A partir de <span id="spanPrix"> 300€</span> /mois</h3>
                            <div>

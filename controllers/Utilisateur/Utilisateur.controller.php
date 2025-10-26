@@ -37,20 +37,17 @@
 
     //ft page profil----------------
     public function profil(){
-    //recuperation des données de la variables $data a partir de la classe utilisateurManager , dans la session de la ft getUserInformation en prennant en parametre profil et un login
     $datas = $this->utilisateurManager->getUserInformation($_SESSION['profil']['login']);
     $_SESSION['profil']['role'] = $datas['role'];
-    //print_r($datas);
 
-    //envoyer data a page contact view
       $data_page = [
         "view" => "views/Utilisateur/profil.view.php",
         "custom_css" => ["projets.css"],
-        "H1" => "Compte de ".$_SESSION['profil']['login'],
-        "uvp"=> "Vous trouverez toutes vos informations",
+        "H1" => "Mon Profil",
+        "uvp"=> "Gérez vos informations personnelles et vos préférences.",
         "utilisateur" => $datas,
         "page_js" => ['profil.js'],
-        "page_title"=> "WebyCloudy | Profil ",
+        "page_title"=> "WebyCloudy | Profil",
         "template" => "views/common/template.php"
       ];
       $this->genererPage($data_page);
@@ -138,15 +135,14 @@
         Toolbox::ajouterMessageAlerte("Veuillez vous connecter!", Toolbox::COULEUR_ROUGE);
         header("location: ".URL."login");
         exit();
-        // Envoyer les données dans la view
       }
         $data_page = [
           "view" => "./views/Utilisateur/modificationPassword.view.php",
           "custom_css" => ["style.css", "accueil.css"],
-          "H1" => "Modifier votre mot  ".$_SESSION['profil']['login'],
+          "H1" => "Changer de Mot de Passe",
+          "uvp"=> "Pour votre sécurité, choisissez un mot de passe fort.",
           "page_js" => ["modificationPassword.js"],
-          "uvp"=> "",
-          "page_title"=> "WebyCloudy | Modification Mot de passe ",
+          "page_title"=> "WebyCloudy | Modification Mot de passe",
           "template" => "views/common/template.php"
         ];
         $this->genererPage($data_page);

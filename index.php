@@ -1,6 +1,4 @@
-
-
-    <?php
+<?php
 
     session_start();
 
@@ -35,7 +33,32 @@
         switch($page){
           case "accueils": $visiteurController->accueil();
           break;
+          case "prestations":
+            if(empty($url[1])){
+              // Si on est sur /prestations sans rien après, on peut rediriger vers l'accueil ou une page de résumé
+              $visiteurController->accueil();
+            } else {
+              switch($url[1]){
+                case "entreprises":
+                  $visiteurController->entreprise();
+                  break;
+                case "sites":
+                  $visiteurController->site();
+                  break;
+                case "reseaux":
+                  $visiteurController->reseaux();
+                  break;
+                case "marketing":
+                  $visiteurController->marketing();
+                  break;
+                default: throw new exception("Cette prestation n'existe pas");
+              }
+            }
+          break;
           case "entreprises":
+            if(empty($url[1])){
+              $visiteurController->entreprise();
+            } else {
           //$visiteurController->entreprise();
             switch ($url[1]){
                 case "creation": 
@@ -49,20 +72,12 @@
                   break;          
             default: 
               throw new exception( "la page n'existe pas");
+            }
           }
           break;
 
-          case "sites": 
-            $visiteurController->site();
-            break;
-          case "reseaux": 
-            $visiteurController->reseaux();
-            break;
           case "contact":  
             $visiteurController->contact();
-            break;
-          case "marketing": 
-            $visiteurController->marketing();
             break;
           case "login":  
             $visiteurController->login();

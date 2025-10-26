@@ -7,7 +7,6 @@
   //$uvp= "Restons en contact";
   //$page_title= "WebySites | Contact";
   //$H1= "Contact";
-  $header_content=  include "inc/header.php";
 
  ?>
 
