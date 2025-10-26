@@ -1,33 +1,3 @@
-*, ::before, ::after {
-
-    box-sizing: border-box;
-
-    margin: 0;
-
-    padding: 0;
-
-}
-
-
-
-/* body {
-
-    background:  #282937;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    height: 100vh;
-
-    overflow-x: hidden;
-
-} */
-
-
-
 .box {
 
     position: relative;

@@ -7,7 +7,6 @@
 
     private $administrateurManager;
 
-    //constructeur pour creer une instance de MainManager
     public function __construct(){
       $this->administrateurManager = new AdministrateurManager();
     }
@@ -17,10 +16,10 @@
       $data_page = [
         "view" => "./views/Administrateur/gestionDroits.view.php",
         "custom_css" => ["creerCompte.css"],
-        "H1" => "Gérer les droits utilisateurs",
-        "uvp"=> "Ici vous pouvez gérer les droits utilisateurs",
+        "H1" => "Gestion des Rôles",
+        "uvp"=> "Attribuez et modifiez les rôles des utilisateurs.",
         "utilisateurs" => $utilisateurs,
-        "page_title"=> "WebyCloudy | Gestion droits",
+        "page_title"=> "WebyCloudy | Gestion des Rôles",
         "template" => "views/common/template.php"
       ];
       $this->genererPage($data_page);
@@ -28,7 +27,7 @@
 
     public function validation_modificationRole($login,$role){
       if($this->administrateurManager->bdModificationRoleUser($login,$role)){
-        Toolbox::ajouterMessageAlerte("Le role est bien modifié !", Toolbox::COULEUR_VERTE);
+        Toolbox::ajouterMessageAlerte("Le rôle a bien été modifié !", Toolbox::COULEUR_VERTE);
       }else{
         Toolbox::ajouterMessageAlerte("Aucune modification de rôle n'a été effectuée !", Toolbox::COULEUR_ROUGE);
       }
@@ -40,24 +39,24 @@
       $data_page = [
         "view" => "./views/Administrateur/gestionUtilisateurs.view.php",
         "custom_css" => ["creerCompte.css"],
-        "H1" => "Gérer les droits utilisateurs",
-        "uvp"=> "Ici vous pouvez gérer les droits utilisateurs",
+        "H1" => "Gestion des Utilisateurs",
+        "uvp"=> "Consultez la liste des utilisateurs inscrits.",
         "utilisateurs" => $utilisateurs,
-        "page_title"=> "WebyCloudy | Gestion droits ",
+        "page_title"=> "WebyCloudy | Gestion des Utilisateurs",
         "template" => "views/common/template.php"
       ];
       $this->genererPage($data_page);
     }
 
     public function gestion_commandes(){
-    $utilisateurs = $this->administrateurManager->getUtilisateurs();
+    $commandes = $this->administrateurManager->getCommandes();
       $data_page = [
         "view" => "./views/Administrateur/gestionCommandes.view.php",
         "custom_css" => ["creerCompte.css"],
-        "H1" => "Gérer les droits utilisateurs",
-        "uvp"=> "Ici vous pouvez gérer les droits utilisateurs",
-        "utilisateurs" => $utilisateurs,
-        "page_title"=> "WebyCloudy | Gestion droits ",
+        "H1" => "Gestion des Commandes",
+        "uvp"=> "Consultez l'historique des commandes.",
+        "commandes" => $commandes,
+        "page_title"=> "WebyCloudy | Gestion des Commandes",
         "template" => "views/common/template.php"
       ];
       $this->genererPage($data_page);
@@ -68,16 +67,15 @@
       $data_page = [
         "view" => "./views/Administrateur/gestionProduits.view.php",
         "custom_css" => ["creerCompte.css"],
-        "H1" => "Gestion des produits",
-        "uvp"=> "Ici vous pouvez gérer les produits",
+        "H1" => "Gestion des Produits",
+        "uvp"=> "Ajoutez, modifiez ou supprimez des produits.",
         "produits" => $produits,
-        "page_title"=> "WebyCloudy | Gestion produits ",
+        "page_title"=> "WebyCloudy | Gestion des Produits",
         "template" => "views/common/template.php"
       ];
       $this->genererPage($data_page);
     }
 
-    //ft page erreur qui appelle la ft du parent-------
     public function pageErreur($msg){
       parent::pageErreur($msg);
     }
