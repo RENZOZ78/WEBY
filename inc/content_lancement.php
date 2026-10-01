@@ -2,8 +2,9 @@
   $intro = [
     "kicker" => "Business plan professionnel",
     "titre" => "Un dossier qui convainc votre banquier",
-    "image" => "public/Assets/images/entreprise/BP.png",
-    "alt" => "Business plan",
+    "image" => "public/Assets/images/entreprise/entreprise3.png",
+    "alt" => "Équipe qui prépare un dossier de création d'entreprise",
+    "legende" => ["Un dossier de 30 pages", "Étude de marché, prévisionnel, mise en page investisseurs"],
     "paragraphes" => [
       "Vous lancez votre projet ? Mettez toutes les chances de votre côté pour convaincre votre banquier et l'administration.",
       "95 % de nos clients ont validé leur dossier grâce à notre expertise. Votre business plan complet : un dossier de 30 pages haute qualité, livré en 48h à 7 jours.",
@@ -44,5 +45,6 @@
   include "inc/partials/pricing.php";
 
   $cta_titre = "Contactez-nous pour un devis gratuit";
+  $cta_image = "public/Assets/images/entreprise/vtc3.png";
   include "inc/partials/cta.php";
 ?>

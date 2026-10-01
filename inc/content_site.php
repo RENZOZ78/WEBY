@@ -2,8 +2,10 @@
   $intro = [
     "kicker" => "Site internet professionnel — dès 300 €",
     "titre" => "Un site moderne qui vous apporte des clients",
-    "image" => "public/Assets/images/site%20internet/ws2.png",
+    "image" => "img/pc_cafe.jpg",
     "alt" => "Création de site internet",
+    "legende" => ["Site vitrine ou e-commerce", "Responsive, référencé, maintenu"],
+    "inverse" => true,
     "paragraphes" => [
       "Votre société souffre d'un manque de visibilité ? Un site internet professionnel, c'est votre vitrine ouverte 24h/24, partout en France.",
       "Nous créons votre site, nous le référençons sur Google et nous le maintenons : vous n'avez rien à gérer.",
@@ -42,5 +44,6 @@
   include "inc/partials/pricing.php";
 
   $cta_titre = "Faites passer votre activité dans une autre dimension";
+  $cta_image = "public/Assets/images/site%20internet/si2.png";
   include "inc/partials/cta.php";
 ?>

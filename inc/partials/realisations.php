@@ -17,7 +17,7 @@
     <div class="row g-4">
       <?php foreach($realisations as $i => $projet) : ?>
         <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
-          <article class="project-card">
+          <article class="project-card tilt">
             <div class="thumb"><img src="<?= URL.$projet[3] ?>" alt="Aperçu du site <?= $projet[1] ?>" loading="lazy"></div>
             <div class="body">
               <span class="tag"><?= $projet[0] ?></span>

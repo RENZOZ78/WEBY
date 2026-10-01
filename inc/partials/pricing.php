@@ -13,7 +13,7 @@
     <div class="row g-4 justify-content-center">
       <?php foreach($tarifs['offres'] as $i => $offre) : ?>
         <div class="col-md-6 <?= $nbOffres === 4 ? 'col-xl-3' : 'col-lg-4' ?>" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
-          <div class="price-card<?= !empty($offre['vedette']) ? ' featured' : '' ?>">
+          <div class="price-card tilt<?= !empty($offre['vedette']) ? ' featured' : '' ?>">
             <?php if(!empty($offre['vedette'])) : ?><span class="badge-pop">Le plus demandé</span><?php endif; ?>
             <div class="name"><?= $offre['nom'] ?></div>
             <div class="from">À partir de</div>

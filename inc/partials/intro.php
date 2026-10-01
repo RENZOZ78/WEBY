@@ -6,9 +6,12 @@
 <section class="section">
   <div class="container">
     <div class="row align-items-center g-5">
-      <div class="col-lg-6" data-aos="fade-right">
+      <div class="col-lg-6<?= !empty($intro['inverse']) ? ' order-lg-2' : '' ?>" data-aos="reveal" data-aos-duration="1100">
         <div class="intro-img-wrap">
-          <img class="intro-img" src="<?= URL.$intro['image'] ?>" alt="<?= htmlspecialchars($intro['alt'] ?? '') ?>" loading="lazy">
+          <div class="photo tilt">
+            <img class="intro-img" src="<?= URL.$intro['image'] ?>" alt="<?= htmlspecialchars($intro['alt'] ?? '') ?>" loading="lazy">
+            <?php if(!empty($intro['legende'])) : ?><div class="caption"><strong><?= $intro['legende'][0] ?></strong><small><?= $intro['legende'][1] ?></small></div><?php endif; ?>
+          </div>
         </div>
       </div>
       <div class="col-lg-6" data-aos="fade-left">

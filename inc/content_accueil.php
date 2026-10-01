@@ -8,7 +8,8 @@
     </div>
     <div class="row g-4">
       <div class="col-lg-6" data-aos="fade-up">
-        <article class="pack-card pack-gold">
+        <article class="pack-card pack-gold tilt">
+          <div class="pack-bg" aria-hidden="true"><img src="<?= URL ?>public/Assets/images/entreprise/BP3.png" alt="" loading="lazy"></div>
           <span class="pack-tag"><i class="fas fa-rocket"></i>Pack Lancement &amp; Financement</span>
           <h3>Vous lancez votre projet ?</h3>
           <p class="pack-cible">Pour les futurs entrepreneurs et porteurs de projets. Objectif : obtenir le Kbis et l'accord de la banque.</p>
@@ -26,7 +27,8 @@
         </article>
       </div>
       <div class="col-lg-6" data-aos="fade-up" data-aos-delay="120">
-        <article class="pack-card pack-cyan">
+        <article class="pack-card pack-cyan tilt">
+          <div class="pack-bg" aria-hidden="true"><img src="<?= URL ?>img/pc_lumineux.jpg" alt="" loading="lazy"></div>
           <span class="pack-tag"><i class="fas fa-chart-line"></i>Pack Croissance</span>
           <h3>Votre entreprise existe déjà ?</h3>
           <p class="pack-cible">Pour passer à la vitesse supérieure. Objectif : développer le chiffre d'affaires et déléguer la paperasse.</p>
@@ -52,12 +54,12 @@
 <!-- SECTION PRESTATIONS ------------------------------->
 <?php
   $prestations = [
-    ["fa-file-invoice", "Business plan professionnel", "Dès 299 €", "Un dossier de 30 pages : étude de marché, stratégie commerciale, prévisionnel financier sur 3 ou 5 ans, mise en page pour investisseurs.", "public/Assets/images/entreprise/BP.png", "prestations/lancement", ""],
-    ["fa-stamp", "Création de société", "Dès 200 € + frais", "Rédaction des statuts (SASU, SARL, EURL, micro-entreprise), immatriculation au greffe, Journal officiel et aide aux aides ACRE / ARCE.", "public/Assets/images/accueil/entreprise%20rc.png", "prestations/lancement", ""],
-    ["fa-folder-open", "Gestion & administratif", "RH dès 30 €", "Contrats, fiches de paie, entrées et sorties de salariés, création de devis et factures pros. À la carte, selon vos besoins.", "public/Assets/images/entreprise/brainstorming.png", "prestations/gestion", "cyan"],
-    ["fa-laptop-code", "Site internet professionnel", "Dès 300 €", "Site vitrine ou e-commerce moderne et responsive, référencement SEO pour être trouvé sur Google, maintenance et fluidité garanties.", "public/Assets/images/site%20internet/si3.png", "prestations/sites", "cyan"],
-    ["fa-bullhorn", "Marketing & croissance", "Dès 500 €", "Audit de votre activité, acquisition de prospects qualifiés, réseaux sociaux, publicité, identité visuelle et positionnement.", "public/Assets/images/strategie_marketing/st3.png", "prestations/marketing", "cyan"],
-    ["fa-headset", "Espace client inclus", "Offert", "Suivez l'avancement de vos projets, retrouvez vos devis, factures et documents, et échangez avec nous depuis votre espace.", "public/Assets/images/site%20internet/ws2.png", "creerCompte", ""],
+    ["fa-file-invoice", "Business plan professionnel", "Dès 299 €", "Un dossier de 30 pages : étude de marché, stratégie commerciale, prévisionnel financier sur 3 ou 5 ans, mise en page pour investisseurs.", "public/Assets/images/entreprise/BP2.png", "prestations/lancement", ""],
+    ["fa-stamp", "Création de société", "Dès 200 € + frais", "Rédaction des statuts (SASU, SARL, EURL, micro-entreprise), immatriculation au greffe, Journal officiel et aide aux aides ACRE / ARCE.", "public/Assets/images/entreprise/ent.png", "prestations/lancement", ""],
+    ["fa-folder-open", "Gestion & administratif", "RH dès 30 €", "Contrats, fiches de paie, entrées et sorties de salariés, création de devis et factures pros. À la carte, selon vos besoins.", "public/Assets/images/entreprise/bs3.png", "prestations/gestion", "cyan"],
+    ["fa-laptop-code", "Site internet professionnel", "Dès 300 €", "Site vitrine ou e-commerce moderne et responsive, référencement SEO pour être trouvé sur Google, maintenance et fluidité garanties.", "public/Assets/images/site%20internet/si2.png", "prestations/sites", "cyan"],
+    ["fa-bullhorn", "Marketing & croissance", "Dès 500 €", "Audit de votre activité, acquisition de prospects qualifiés, réseaux sociaux, publicité, identité visuelle et positionnement.", "public/Assets/images/site%20internet/rx3.png", "prestations/marketing", "cyan"],
+    ["fa-headset", "Espace client inclus", "Offert", "Suivez l'avancement de vos projets, retrouvez vos devis, factures et documents, et échangez avec nous depuis votre espace.", "public/Assets/images/site%20internet/Design%20sans%20titre.png", "creerCompte", ""],
   ];
 ?>
 <section class="section section-alt" id="prestations">
@@ -70,7 +72,7 @@
     <div class="row g-4">
       <?php foreach($prestations as $i => $prestation) : ?>
         <div class="col-md-6 col-xl-4" data-aos="fade-up" data-aos-delay="<?= ($i % 3) * 100 ?>">
-          <article class="service-card">
+          <article class="service-card tilt">
             <div class="media">
               <div class="img-wrap"><img src="<?= URL.$prestation[4] ?>" alt="" loading="lazy"></div>
               <span class="icon <?= $prestation[6] ?>"><i class="fas <?= $prestation[0] ?>"></i></span>
@@ -82,6 +84,37 @@
               <a href="<?= URL.$prestation[5] ?>" class="link-arrow">En savoir plus <i class="fas fa-arrow-right"></i></a>
             </div>
           </article>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION SECTEURS ------------------------------->
+<?php
+  $secteurs = [
+    ["fa-taxi", "VTC & transport", "public/Assets/images/entreprise/vtc3.png"],
+    ["fa-helmet-safety", "BTP & artisans", "public/Assets/images/entreprise/entreprise3.png"],
+    ["fa-utensils", "Restauration", "img/pc_cafe.jpg"],
+    ["fa-cart-shopping", "E-commerce", "public/Assets/images/site%20internet/si2.png"],
+    ["fa-user-tie", "Professions libérales", "public/Assets/images/entreprise/ent.png"],
+    ["fa-building", "Sociétés & start-up", "public/Assets/images/entreprise/1_20230314_082639_0000.png"],
+  ];
+?>
+<section class="section">
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <span class="kicker cyan">Secteurs</span>
+      <h2>Nous accompagnons tous les entrepreneurs</h2>
+      <p>VTC, BTP, restauration, e-commerce, professions libérales… partout en France, en visio ou en rendez-vous.</p>
+    </div>
+    <div class="row g-3">
+      <?php foreach($secteurs as $i => $secteur) : ?>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="<?= $i * 70 ?>">
+          <a href="<?= URL ?>contact?offre=<?= rawurlencode($secteur[1]) ?>" class="sector">
+            <img src="<?= URL.$secteur[2] ?>" alt="" loading="lazy">
+            <span class="lbl"><i class="fas <?= $secteur[0] ?>"></i><?= $secteur[1] ?></span>
+          </a>
         </div>
       <?php endforeach; ?>
     </div>

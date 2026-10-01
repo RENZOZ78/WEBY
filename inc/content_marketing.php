@@ -4,6 +4,8 @@
     "titre" => "Vendre plus, et plus cher",
     "image" => "public/Assets/images/strategie_marketing/st3.png",
     "alt" => "Cible atteinte",
+    "legende" => ["Vendre plus, et plus cher", "Audit, acquisition, image de marque"],
+    "inverse" => true,
     "paragraphes" => [
       "Votre société souffre d'un manque de visibilité ? Vous n'arrivez pas à obtenir autant de clients que vous le souhaitez ? Nous avons la solution.",
       "Objectif : développer votre chiffre d'affaires avec une stratégie claire, mesurable et adaptée à votre secteur.",
@@ -43,5 +45,6 @@
   include "inc/partials/pricing.php";
 
   $cta_titre = "Appelez-nous pour transformer votre activité";
+  $cta_image = "public/Assets/images/site%20internet/rx3.png";
   include "inc/partials/cta.php";
 ?>

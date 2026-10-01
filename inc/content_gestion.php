@@ -2,8 +2,9 @@
   $intro = [
     "kicker" => "Gestion & administratif — à la carte",
     "titre" => "Libérez-vous du temps pour votre métier",
-    "image" => "public/Assets/images/entreprise/brainstorming.png",
+    "image" => "public/Assets/images/entreprise/bs3.png",
     "alt" => "Gestion administrative",
+    "legende" => ["Paie, contrats, factures", "Nous gérons, vous validez"],
     "paragraphes" => [
       "Votre entreprise existe déjà et la paperasse vous prend un temps précieux ? Déléguez-nous les tâches administratives et concentrez-vous sur vos clients.",
       "Vous ne payez que ce dont vous avez besoin : chaque prestation se commande à l'unité ou en forfait mensuel.",

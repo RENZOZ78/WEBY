@@ -1,7 +1,18 @@
 <!-- FORMULAIRE DE CREATION DE COMPTE-->
 <section class="section">
-  <div class="container">
-    <div class="auth-wrap" data-aos="fade-up">
+  <div class="container" style="max-width: 980px;">
+    <div class="auth-split" data-aos="fade-up">
+      <div class="auth-photo">
+        <img src="<?= URL ?>public/Assets/images/entreprise/ent.png" alt="">
+        <div class="caption">
+          <h2>Rejoignez WebyCloudy</h2>
+          <ul>
+            <li><i class="fas fa-circle-check"></i>Gratuit, en 1 minute</li>
+            <li><i class="fas fa-circle-check"></i>Vos projets et documents au même endroit</li>
+            <li><i class="fas fa-circle-check"></i>Réponse de l'agence sous 48h</li>
+          </ul>
+        </div>
+      </div>
       <form method="post" action="<?= URL ?>validation_creerCompte" class="form-card needs-validation" novalidate>
         <?= Securite::csrfField() ?>
         <h2 class="h4 mb-1">Créez votre compte</h2>
@@ -42,8 +53,8 @@
         </div>
 
         <button class="btn btn-gold w-100 btn-lg" type="submit">Créer mon compte</button>
+        <p class="auth-switch mb-0">Déjà inscrit ? <a href="<?= URL ?>login" class="fw-semibold">Se connecter</a></p>
       </form>
-      <p class="auth-switch">Déjà inscrit ? <a href="<?= URL ?>login" class="fw-semibold">Se connecter</a></p>
     </div>
   </div>
 </section>

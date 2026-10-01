@@ -96,11 +96,12 @@
 <!-- Bandeau d'en-tete ---------------------------------------->
 <?php if($estAccueil) : ?>
   <header class="wc-hero">
+    <span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span>
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-lg-6" data-aos="fade-up">
           <span class="eyebrow"><i class="fas fa-star"></i>95 % de clients satisfaits · France entière</span>
-          <h1>Lancez et <span class="accent">développez</span> votre entreprise</h1>
+          <h1>Lancez et développez <span class="rotating accent"><span>votre entreprise</span><span>votre chiffre d'affaires</span><span>votre visibilité</span><span>votre société</span></span></h1>
           <p class="lead"><?= $hero_texte ?? "" ?></p>
           <div class="d-flex flex-wrap gap-3 mt-4">
             <a href="#packs" class="btn btn-gold btn-lg">Découvrir nos packs</a>
@@ -113,23 +114,37 @@
           </div>
         </div>
         <div class="col-lg-6" data-aos="fade-left" data-aos-delay="150">
-          <div class="hero-visual">
-            <img class="hero-img" src="<?= URL ?>public/Assets/images/entreprise/brainstorming.png" alt="Entrepreneurs en réunion de lancement">
+          <div class="hero-visual hero-scene">
+            <img class="hero-img" src="<?= URL ?>public/Assets/images/entreprise/bs3.png" alt="Entrepreneurs qui travaillent sur leur business plan">
             <div class="hero-card card-a">
               <span class="icon"><i class="fas fa-file-signature"></i></span>
               <span><strong>Kbis obtenu</strong>Statuts, immatriculation, ACRE</span>
             </div>
             <div class="hero-card card-b card-cyan">
-              <span class="icon"><i class="fas fa-chart-line"></i></span>
-              <span><strong>+ de clients</strong>Site, SEO &amp; stratégie</span>
+              <span class="icon"><i class="fas fa-rocket"></i></span>
+              <span><strong>Livré en 48h – 7j</strong>Business plan complet</span>
+            </div>
+            <div class="hero-mock" aria-hidden="true">
+              <div class="mock-head"><span><span class="dot"></span>Votre activité</span><span class="up" style="color:var(--wc-green)">+38 %</span></div>
+              <div class="bars"><i style="--h:35%;--i:0"></i><i style="--h:48%;--i:1"></i><i style="--h:42%;--i:2"></i><i style="--h:60%;--i:3"></i><i style="--h:55%;--i:4"></i><i style="--h:72%;--i:5"></i><i style="--h:68%;--i:6"></i><i style="--h:88%;--i:7"></i><i style="--h:100%;--i:8"></i></div>
+              <div class="kpi"><span><b>+ 120</b>prospects</span><span><b>Kbis</b>validé</span><span><b class="up">× 2,4</b>visibilité</span></div>
+              <div class="line"><i></i></div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </header>
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <?php for($k = 0; $k < 2; $k++) : ?>
+        <span><i class="fas fa-circle"></i>Business plan</span><span><i class="fas fa-circle"></i>Création de société</span><span><i class="fas fa-circle"></i>Prêt bancaire</span><span><i class="fas fa-circle"></i>Site internet</span><span><i class="fas fa-circle"></i>Référencement Google</span><span><i class="fas fa-circle"></i>Gestion RH & paie</span><span><i class="fas fa-circle"></i>Devis & factures</span><span><i class="fas fa-circle"></i>Publicité en ligne</span><span><i class="fas fa-circle"></i>Réseaux sociaux</span><span><i class="fas fa-circle"></i>Image de marque</span><span><i class="fas fa-circle"></i>VTC · BTP · Restauration · E-commerce · Professions libérales</span>
+      <?php endfor; ?>
+    </div>
+  </div>
 <?php elseif($estCompact) : ?>
   <header class="wc-hero hero-compact">
+    <span class="blob blob-1"></span>
     <div class="container">
       <span class="eyebrow mb-2"><?= $uvp ?></span>
       <h1><?= $H1 ?></h1>
@@ -137,6 +152,7 @@
   </header>
 <?php else : ?>
   <header class="wc-hero hero-page">
+    <span class="blob blob-1"></span><span class="blob blob-2"></span>
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="<?= !empty($hero_image) ? 'col-lg-7' : 'col-lg-9' ?>" data-aos="fade-up">
@@ -157,7 +173,12 @@
         </div>
         <?php if(!empty($hero_image)) : ?>
           <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left" data-aos-delay="150">
-            <div class="hero-visual"><img class="hero-img" src="<?= URL.$hero_image ?>" alt=""></div>
+            <div class="hero-visual hero-scene">
+              <img class="hero-img" src="<?= URL.$hero_image ?>" alt="">
+              <?php if(!empty($hero_carte)) : [$icone, $titre, $texte] = explode("|", $hero_carte, 3); ?>
+                <div class="hero-card card-a"><span class="icon"><i class="fas <?= $icone ?>"></i></span><span><strong><?= $titre ?></strong><?= $texte ?></span></div>
+              <?php endif; ?>
+            </div>
           </div>
         <?php endif; ?>
       </div>

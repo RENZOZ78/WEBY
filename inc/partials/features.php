@@ -10,10 +10,10 @@
       <h2><?= $features['titre'] ?></h2>
       <?php if(!empty($features['texte'])) : ?><p><?= $features['texte'] ?></p><?php endif; ?>
     </div>
-    <div class="row g-4 justify-content-center">
+    <div class="row g-4 justify-content-center<?= !empty($features['etapes']) ? ' steps-line' : '' ?>"<?= !empty($features['etapes']) ? ' data-aos="fade-up"' : '' ?>>
       <?php foreach($features['items'] as $i => $item) : ?>
         <div class="col-md-6 <?= $nbFeatures === 4 ? 'col-lg-3' : 'col-lg-4' ?>" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
-          <div class="feature">
+          <div class="feature tilt">
             <?php if(!empty($features['etapes'])) : ?><div class="step-num">0<?= $i + 1 ?></div><?php endif; ?>
             <div class="icon"><i class="fas <?= $item[0] ?>"></i></div>
             <h3><?= $item[1] ?></h3>

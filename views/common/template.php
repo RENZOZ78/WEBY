@@ -35,6 +35,7 @@
 
   <body>
     <a class="skip-link" href="#contenu">Aller au contenu</a>
+    <div class="scroll-progress" aria-hidden="true"></div>
 
     <?php require_once("inc/header.php"); ?>
 
