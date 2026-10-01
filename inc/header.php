@@ -1,115 +1,151 @@
-<!-- header, Navigation, titre ---------------------------------------->
+<?php
+  //renvoie "active" si le lien correspond a la page courante
+  $actif = function($prefixes) use ($page_courante){
+    foreach((array)$prefixes as $prefixe){
+      if($page_courante === $prefixe || strpos($page_courante, $prefixe."/") === 0) return " active";
+    }
+    return "";
+  };
+  $estAccueil = !empty($hero_accueil);
+  $estCompact = !empty($hero_compact);
+?>
+<!-- Navigation ---------------------------------------->
+<nav class="navbar navbar-expand-lg wc-nav<?= $estCompact ? ' nav-solid' : '' ?>" id="main-nav" aria-label="Navigation principale">
+  <div class="container">
+    <a href="<?= URL ?>accueils" class="navbar-brand">
+      <img src="<?= URL ?>public/Assets/images/accueil/logo_aigle.svg" alt="" width="58" height="47">
+      <span class="brand-text">Weby<span>Cloudy</span></span>
+    </a>
 
-<header id="top"  >
-  <div class="img_top">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Ouvrir le menu">
+      <i class="fas fa-bars text-white"></i>
+    </button>
 
-        <div class="container ">
-          <nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top" id="main-nav">
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item">
+          <a href="<?= URL ?>accueils" class="nav-link<?= $actif(["accueils", ""]) ?>">Accueil</a>
+        </li>
 
-            <div class="container cont_nav">
-              <!-- <iframe src="public\Assets\images\accueil\logo_aigle.svg"
-              width="100" height="100" style="border:1;"></iframe> -->
+        <!-- deroulant prestations -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle<?= $actif(["prestations", "entreprises"]) ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">Prestations</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<?= URL ?>prestations/entreprises"><i class="fas fa-briefcase"></i>Création de société</a></li>
+            <li><a class="dropdown-item" href="<?= URL ?>prestations/sites"><i class="fas fa-laptop-code"></i>Site internet</a></li>
+            <li><a class="dropdown-item" href="<?= URL ?>prestations/reseaux"><i class="fas fa-hashtag"></i>Réseaux sociaux</a></li>
+            <li><a class="dropdown-item" href="<?= URL ?>prestations/marketing"><i class="fas fa-bullhorn"></i>Publicité &amp; marketing</a></li>
+          </ul>
+        </li>
 
-              <object type="image/svg+xml" class="logo_aigle" data="..\public\Assets\images\accueil\logo_aigle.svg"
-              width="100" height="100" ></object>
+        <li class="nav-item">
+          <a href="<?= URL ?>contact" class="nav-link<?= $actif("contact") ?>">Contact</a>
+        </li>
 
-              <a href="<?= URL; ?>accueils" class="navbar-brand">WebyCloudy</a>
+        <!-- espace administration -->
+        <?php if(Securite::estAdministrateur() || Securite::estSuperAdministrateur()) : ?>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle<?= $actif("administration") ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administration</a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <?php if(Securite::estSuperAdministrateur()) : ?>
+                <li><a class="dropdown-item" href="<?= URL ?>administration/gestionFullUtilisateur"><i class="fas fa-user-gear"></i>Gestion complète</a></li>
+              <?php endif; ?>
+              <li><a class="dropdown-item" href="<?= URL ?>administration/droits"><i class="fas fa-user-shield"></i>Gérer les droits</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>administration/gestionUtilisateurs"><i class="fas fa-users"></i>Utilisateurs</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>administration/gestionCommandes"><i class="fas fa-receipt"></i>Commandes</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>administration/gestionProduits"><i class="fas fa-box"></i>Produits</a></li>
+            </ul>
+          </li>
+        <?php endif; ?>
 
-              <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+        <!-- compte -->
+        <?php if(!Securite::estConnecte()) : ?>
+          <li class="nav-item">
+            <a href="<?= URL ?>login" class="nav-link<?= $actif(["login", "creerCompte"]) ?>"><i class="far fa-user me-1"></i>Mon compte</a>
+          </li>
+        <?php else : ?>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle<?= $actif("compte") ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="far fa-user me-1"></i><?= $_SESSION['profil']['login'] ?>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="<?= URL ?>compte/profil"><i class="fas fa-id-card"></i>Mon profil</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>compte/modificationPassword"><i class="fas fa-key"></i>Mot de passe</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="<?= URL ?>compte/deconnexion"><i class="fas fa-right-from-bracket"></i>Se déconnecter</a></li>
+            </ul>
+          </li>
+        <?php endif; ?>
 
-              <div class="collapse navbar-collapse" id="navbarCollapse">
-                                <ul class="navbar-nav ml-auto">
-                
-                                  <li class="nav-item mr-1">
-                                    <a href="<?= URL; ?>accueils" class="nav-link">Accueil</a>
-                                  </li>
-                
-                                  <!-- deroulant prestations ------------------->
-                                  <a href="#" id="navbarDropdown" aria-expanded="false" data-toggle="dropdown" class="nav-link dropdown-toggle dropdown-toggle">Prestations</a>
-                                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li class="nav-item mr-1">
-                                      <a href="<?= URL; ?>prestations/entreprises" class="nav-link">Société</a>
-                                    </li>
-                
-                                    <li class="nav-item mr-1">
-                                      <a href="<?= URL; ?>prestations/sites" class="nav-link">Site internet</a>
-                                    </li>
-                
-                                    <li class="nav-item mr-1">
-                                      <a href="<?= URL; ?>prestations/reseaux" class="nav-link">Réseaux sociaux</a>
-                                    </li>
-                
-                                    <li class="nav-item mr-1">
-                                      <a href="<?= URL; ?>prestations/marketing" class="nav-link">Publicité</a>
-                                    </li>
-                                  </ul>
-                
-                                  <li class="nav-item mr-1">
-                                    <a href="<?= URL; ?>contact" class="nav-link">Contact</a>
-                                  </li>
-                
-                                  <!-- si l'utilisateur n'est pas connecté --------------->
-                                  <?php if(!Securite::estConnecte()) : ?>
-                                    <li class="nav-item mr-1">
-                                      <a
-                                      href="#"
-                                      id="navbarDropdown" aria-expanded="false" data-toggle="dropdown" class="nav-link dropdown-toggle dropdown-toggle">Votre compte</a>
-                                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <li><a class="dropdown-item" href="<?= URL; ?>login">Se connecter</a></li>
-                                        <li><a class="dropdown-item" href="<?= URL; ?>creerCompte">Créer compte</a></li>
-                                      </ul>
-                                    </li>
-                
-                
-                
-                                <!-- si l'utilisateur est connecté ------------------->
-                              <?php elseif(Securite::estConnecte()) : ?>
-                                <li class="nav-item mr-1">
-                                  <a href="#" id="navbarDropdown" aria-expanded="false" data-toggle="dropdown" class="nav-link dropdown-toggle dropdown-toggle">Compte</a>
-                                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="<?= URL; ?>compte/profil">Profil</a></li>
-                                    <li><a class="dropdown-item" href="<?= URL; ?>compte/deconnexion">Se deconnecter</a></li>
-                                  </ul>
-                                </li>
-                              <?php endif; ?>
-                
-                              <!-- si l'uilitisateur est admin, il a access a l'onglet admnistration, gestio commande, gestion produits -->
-                              <?php if(Securite::estConnecte() && Securite::estAdministrateur()  ) : ?>
-                                <li class=" dropdown">
-                                  <button class="btn btn-secondary nav-link dropdown-toggle" type="button" href="#"   aria-expanded="false" data-toggle="dropdown" >Administration</button>
-                                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="<?= URL; ?>administration/droits">Gérer les droits</a></li>
-                                    <li><a class="dropdown-item" href="<?= URL; ?>administration/gestionCommandes">Gestion commandes</a></li>
-                                    <li><a class="dropdown-item" href="<?= URL; ?>administration/gestionProduits">Gestion produits</a></li>
-                                  </ul>
-                                </li>
-                
-                                <!-- si l'uilitisateur est superAdmin, il a access a la page gesdtion utilisateur et gestio commande et gestion produit -->
-                              <?php elseif( Securite::estConnecte() &&  Securite::estSuperAdministrateur())
-                                :?>
-                                <li class="dropdown">
-                                  <button class="btn btn-secondary nav-link dropdown-toggle" type="button" href="#"   aria-expanded="false" data-toggle="dropdown" >Super Administration</button>
-                                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="<?= URL; ?>administration/gestionFullUtilisateur">Gestion utilisateur</a></li>
-                                    <li><a class="dropdown-item" href="<?= URL; ?>administration/gestionCommandes">Gestion commandes</a></li>
-                                    <li><a class="dropdown-item" href="<?= URL; ?>administration/gestionProduits">Gestion produits</a></li>
-                                  </ul>
-                                </li>
-                              <?php endif; ?>
-                
-                                </ul>          </div>
+        <li class="nav-item nav-cta ms-lg-2">
+          <a href="<?= URL ?>contact" class="btn btn-gold btn-sm">Demander un devis</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Bandeau d'en-tete ---------------------------------------->
+<?php if($estAccueil) : ?>
+  <header class="wc-hero">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6" data-aos="fade-up">
+          <span class="eyebrow"><i class="fas fa-feather-pointed"></i><?= $uvp ?></span>
+          <h1>Faites <span class="accent">décoller</span> votre activité</h1>
+          <p class="lead"><?= $hero_texte ?? "" ?></p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#prestations" class="btn btn-gold btn-lg">Découvrir nos prestations</a>
+            <a href="<?= URL ?>contact" class="btn btn-outline-light btn-lg">Parlons de votre projet</a>
+          </div>
+          <div class="hero-badges">
+            <span><i class="fas fa-bolt"></i>Réponse sous 48h</span>
+            <span><i class="fas fa-mobile-screen"></i>Sites responsive &amp; SEO</span>
+            <span><i class="fas fa-credit-card"></i>Paiement en 2x ou 3x</span>
+          </div>
         </div>
-      </nav>
-
-      <div class="text-intro">
-        <div class="preTxt font-italic"><?= $uvp; ?></div>
-        <h1><?= $H1; ?></h1>
-        <!-- <a href="<?= URL; ?>index.php" class=" btn btn_nav btn-dark mt-3">En savoir Plus</a>
-        <a href="<?= URL; ?>projets.php" class=" btn btn_nav btn-outline-dark mt-3">Nos projets</a> -->
+        <div class="col-lg-6" data-aos="fade-left" data-aos-delay="150">
+          <div class="hero-visual">
+            <img class="hero-img" src="<?= URL ?>public/Assets/images/site%20internet/si3.png" alt="Site internet affiché sur ordinateur, tablette et mobile">
+            <div class="hero-card card-a">
+              <span class="icon"><i class="fas fa-chart-line"></i></span>
+              <span><strong>Plus de visibilité</strong>Site, réseaux &amp; pub</span>
+            </div>
+            <div class="hero-card card-b">
+              <span class="icon"><i class="fas fa-briefcase"></i></span>
+              <span><strong>Société créée</strong>Statuts, JO, K-bis</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-  </div>
-</header>
+  </header>
+<?php elseif($estCompact) : ?>
+  <header class="wc-hero hero-compact">
+    <div class="container">
+      <span class="eyebrow mb-2"><?= $uvp ?></span>
+      <h1><?= $H1 ?></h1>
+    </div>
+  </header>
+<?php else : ?>
+  <header class="wc-hero hero-page">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="<?= !empty($hero_image) ? 'col-lg-7' : 'col-lg-9' ?>" data-aos="fade-up">
+          <span class="eyebrow"><?= $uvp ?></span>
+          <h1><?= $H1 ?></h1>
+          <?php if(!empty($hero_texte)) : ?><p class="lead"><?= $hero_texte ?></p><?php endif; ?>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="<?= URL ?>contact" class="btn btn-gold">Demander un devis</a>
+            <a href="#tarifs" class="btn btn-outline-light">Voir les tarifs</a>
+          </div>
+        </div>
+        <?php if(!empty($hero_image)) : ?>
+          <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left" data-aos-delay="150">
+            <div class="hero-visual"><img class="hero-img" src="<?= URL.$hero_image ?>" alt=""></div>
+          </div>
+        <?php endif; ?>
+      </div>
+    </div>
+  </header>
+<?php endif; ?>

@@ -1,5 +1,4 @@
 <?php
-  // Cette vue ne doit contenir que le contenu principal de la page.
-  // Le template se chargera d'inclure le header et le footer.
-  require_once "./inc/content_reseau.php";
+  // Contenu principal de la page (le template inclut le header et le footer)
+  require "./inc/content_reseau.php";
 ?>

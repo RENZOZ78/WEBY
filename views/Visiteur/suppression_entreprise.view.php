@@ -1,8 +1,4 @@
 <?php
-
-  $page_description = "
-  Weby Cloudy vous propose en outre de vous accompagner dans la création et la gestion de votre société" ;
-
-  $page_content =  include "./inc/content_entreprise.php";
-
- ?>
+  // Contenu principal de la page (le template inclut le header et le footer)
+  require "./inc/content_entreprise.php";
+?>

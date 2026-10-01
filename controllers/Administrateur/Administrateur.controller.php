@@ -1,6 +1,5 @@
 <?php
   require_once("./controllers/MainController.controller.php");
-  require_once("models/MainManager.model.php");
   require_once("models/Administrateur/Administrateur.model.php");
 
   class AdministrateurController extends MainController{
@@ -11,73 +10,65 @@
       $this->administrateurManager = new AdministrateurManager();
     }
 
-    public function gestion_droits(){
-    $utilisateurs = $this->administrateurManager->getUtilisateurs();
-      $data_page = [
-        "view" => "./views/Administrateur/gestionDroits.view.php",
-        "custom_css" => ["creerCompte.css"],
-        "H1" => "Gestion des Rôles",
-        "uvp"=> "Attribuez et modifiez les rôles des utilisateurs.",
-        "utilisateurs" => $utilisateurs,
-        "page_title"=> "WebyCloudy | Gestion des Rôles",
+    private function pageAdmin($view, $h1, $uvp, $titre, $donnees){
+      $data_page = array_merge([
+        "view" => $view,
+        "custom_css" => [],
+        "H1" => $h1,
+        "uvp"=> $uvp,
+        "page_description" => $uvp,
+        "page_title"=> "WebyCloudy | ".$titre,
+        "hero_compact" => true,
         "template" => "views/common/template.php"
-      ];
+      ], $donnees);
       $this->genererPage($data_page);
     }
 
+    public function gestion_droits(){
+      $this->pageAdmin("./views/Administrateur/gestionDroits.view.php", "Gestion des rôles",
+        "Attribuez et modifiez les rôles des utilisateurs.", "Gestion des Rôles",
+        ["utilisateurs" => $this->administrateurManager->getUtilisateurs()]);
+    }
+
+    //un administrateur ne peut modifier que les comptes "utilisateur" et ne peut pas créer de super administrateur
     public function validation_modificationRole($login,$role){
-      if($this->administrateurManager->bdModificationRoleUser($login,$role)){
+      $roleActuel = $this->administrateurManager->getRoleUtilisateur($login);
+      $rolesAutorises = Securite::estSuperAdministrateur() ? Securite::ROLES : ["utilisateur", "administrateur"];
+
+      if($roleActuel === null){
+        Toolbox::ajouterMessageAlerte("Utilisateur introuvable.", Toolbox::COULEUR_ROUGE);
+      }elseif($login === $_SESSION['profil']['login']){
+        Toolbox::ajouterMessageAlerte("Vous ne pouvez pas modifier votre propre rôle.", Toolbox::COULEUR_ROUGE);
+      }elseif(!in_array($role, $rolesAutorises, true) || (!Securite::estSuperAdministrateur() && $roleActuel !== "utilisateur")){
+        Toolbox::ajouterMessageAlerte("Vous n'avez pas les droits pour effectuer cette modification.", Toolbox::COULEUR_ROUGE);
+      }elseif($this->administrateurManager->bdModificationRoleUser($login,$role)){
         Toolbox::ajouterMessageAlerte("Le rôle a bien été modifié !", Toolbox::COULEUR_VERTE);
       }else{
-        Toolbox::ajouterMessageAlerte("Aucune modification de rôle n'a été effectuée !", Toolbox::COULEUR_ROUGE);
+        Toolbox::ajouterMessageAlerte("Aucune modification de rôle n'a été effectuée !", Toolbox::COULEUR_ORANGE);
       }
-        header ("Location: ".URL."administration/droits");
+      Toolbox::redirection("administration/droits");
     }
 
     public function gestion_utilisateur(){
-    $utilisateurs = $this->administrateurManager->getUtilisateurs();
-      $data_page = [
-        "view" => "./views/Administrateur/gestionUtilisateurs.view.php",
-        "custom_css" => ["creerCompte.css"],
-        "H1" => "Gestion des Utilisateurs",
-        "uvp"=> "Consultez la liste des utilisateurs inscrits.",
-        "utilisateurs" => $utilisateurs,
-        "page_title"=> "WebyCloudy | Gestion des Utilisateurs",
-        "template" => "views/common/template.php"
-      ];
-      $this->genererPage($data_page);
+      $this->pageAdmin("./views/Administrateur/gestionUtilisateurs.view.php", "Gestion des utilisateurs",
+        "Consultez la liste des utilisateurs inscrits.", "Gestion des Utilisateurs",
+        ["utilisateurs" => $this->administrateurManager->getUtilisateurs()]);
     }
 
     public function gestion_commandes(){
-    $commandes = $this->administrateurManager->getCommandes();
-      $data_page = [
-        "view" => "./views/Administrateur/gestionCommandes.view.php",
-        "custom_css" => ["creerCompte.css"],
-        "H1" => "Gestion des Commandes",
-        "uvp"=> "Consultez l'historique des commandes.",
-        "commandes" => $commandes,
-        "page_title"=> "WebyCloudy | Gestion des Commandes",
-        "template" => "views/common/template.php"
-      ];
-      $this->genererPage($data_page);
+      $this->pageAdmin("./views/Administrateur/gestionCommandes.view.php", "Gestion des commandes",
+        "Consultez l'historique des commandes.", "Gestion des Commandes",
+        ["commandes" => $this->administrateurManager->getCommandes()]);
     }
 
     public function gestion_produits(){
-    $produits = $this->administrateurManager->getProduits();
-      $data_page = [
-        "view" => "./views/Administrateur/gestionProduits.view.php",
-        "custom_css" => ["creerCompte.css"],
-        "H1" => "Gestion des Produits",
-        "uvp"=> "Ajoutez, modifiez ou supprimez des produits.",
-        "produits" => $produits,
-        "page_title"=> "WebyCloudy | Gestion des Produits",
-        "template" => "views/common/template.php"
-      ];
-      $this->genererPage($data_page);
+      $this->pageAdmin("./views/Administrateur/gestionProduits.view.php", "Gestion des produits",
+        "Consultez les produits proposés.", "Gestion des Produits",
+        ["produits" => $this->administrateurManager->getProduits()]);
     }
 
-    public function pageErreur($msg){
-      parent::pageErreur($msg);
+    public function pageErreur($msg, $code = 404){
+      parent::pageErreur($msg, $code);
     }
 
   }

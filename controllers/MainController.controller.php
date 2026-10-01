@@ -1,15 +1,8 @@
 <?php
 
-require_once("models/MainManager.model.php");
 require_once("controllers/Toolbox.class.php");
 
-
   Abstract class MainController{
-    private $mainManager;
-
-    public function __construct(){
-      $this->mainManager = new MainManager();
-    }
 
     protected function genererPage($data){
       extract($data);//creer la variable directement
@@ -19,18 +12,16 @@ require_once("controllers/Toolbox.class.php");
       require_once($template);
     }
 
-
-    protected function pageErreur($msg){
-      //recuperation des données de la variables produit de l'instance mainManager a partir de bdd
-      //$produits = $this->mainManager->getProduits();
-
-      //envoyer data a page erreur
+    protected function pageErreur($msg, $code = 404){
+      http_response_code($code);
       $data_page = [
         "view" => "./views/error.view.php",
-        "custom_css" => ["projets.css"],
-        "H1" => "Page erreur",
-        //"produits" => $produits,
-        "uvp"=> "Contactez nous pour toute question",
+        "custom_css" => [],
+        "H1" => "Oups !",
+        "uvp"=> "Erreur",
+        "hero_compact" => true,
+        "msg" => $msg,
+        "page_description" => "Page d'erreur",
         "page_title"=> "WebyCloudy | Page erreur ",
         "template" => "views/common/template.php"
       ];

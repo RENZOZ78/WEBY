@@ -1,51 +1,32 @@
-<?php
-  
+<section class="section">
+  <div class="container">
+    <div class="auth-wrap">
+      <form method="post" action="<?= URL ?>compte/validation_modificationPassword" class="form-card needs-validation" novalidate>
+        <?= Securite::csrfField() ?>
+        <div class="mb-3">
+          <label for="ancienPassword" class="form-label">Mot de passe actuel</label>
+          <input type="password" id="ancienPassword" name="ancienPassword" class="form-control" autocomplete="current-password" required>
+          <div class="invalid-feedback">Tapez votre mot de passe actuel.</div>
+        </div>
 
-  $page_description = "Page de de modification de mot de passe" ;
+        <div class="mb-3">
+          <label for="nouveauPassword" class="form-label">Nouveau mot de passe</label>
+          <input type="password" id="nouveauPassword" name="nouveauPassword" class="form-control" autocomplete="new-password" minlength="8" required aria-describedby="aideNouveau">
+          <div id="aideNouveau" class="form-text">8 caractères minimum.</div>
+        </div>
 
-  $costum_css= "projets.css";
-  //$uvp= "Restons en contact";
-  //$page_title= "WebySites | Contact";
-  //$H1= "Contact";
+        <div class="mb-3">
+          <label for="confirmNouveauPassword" class="form-label">Confirmation du nouveau mot de passe</label>
+          <input type="password" id="confirmNouveauPassword" name="confirmNouveauPassword" class="form-control" autocomplete="new-password" minlength="8" required>
+        </div>
 
- ?>
+        <div class="alert alert-danger d-none py-2" id="erreur">Les mots de passe ne correspondent pas.</div>
 
-  <!--<h1>Modification du mot de pass -
-    <//?= $_SESSION['profil']['login'] ?>
-  </h1>
-  -->
-
-<form method="post" action="<?=URL ?>compte/validation_modificationPassword" class="row g-3 needs-validation mt-3 mb-5 d-flex justify-content-evenly" novalidate>
-
-    <div class="col-md-3">
-      <label for="password" class="form-label">Ancien password</label>
-      <input type="password" id="ancienPassword" name="ancienPassword" class="form-control" aria-labelledby="passwordHelpBlock" required>
-      <div id="passwordHelpBlock" class="form-text">
-        Tapez votre ancien mot de passe
-      </div>
+        <div class="d-flex gap-2">
+          <a href="<?= URL ?>compte/profil" class="btn btn-light border">Annuler</a>
+          <button class="btn btn-gold flex-grow-1" id="btnValidation" type="submit" disabled>Valider</button>
+        </div>
+      </form>
     </div>
-
-    <div class="col-md-3">
-      <label for="nouveauPassword" class="form-label">Nouveau mot de passe</label>
-      <input type="password" id="nouveauPassword" name="nouveauPassword" class="form-control" aria-labelledby="passwordHelpBlock" required>
-      <div id="passwordHelpBlock" class="form-text">
-        Saisissez votre nouveau mot de passe.
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <label for="confirmNouveauPassword" class="form-label">Confirmation nouveau mot de passe</label>
-      <input type="password" id="confirmNouveauPassword" name="confirmNouveauPassword" class="form-control" aria-labelledby="passwordHelpBlock" required>
-      <div id="passwordHelpBlock" class="form-text">
-        Confirmer votre nouveau mot de passe.
-      </div>
-    </div>
-
-    <div class="alert alert-danger d-none" id="erreur">
-      Les passwords ne correspondent pas
-    </div>
-
-    <div class="col-12">
-      <button class="btn btn-primary" id="btnValidation" type="submit" disabled >Valider</button>
-    </div>
-</form>
+  </div>
+</section>

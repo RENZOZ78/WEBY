@@ -1,116 +1,45 @@
-<!-- section projets--------------------------------------------------------- -->
+<?php
+  $intro = [
+    "kicker" => "Site internet",
+    "titre" => "Un site moderne qui travaille pour vous",
+    "image" => "public/Assets/images/site%20internet/ws2.png",
+    "alt" => "Création de site internet",
+    "paragraphes" => [
+      "Nous créons votre site internet afin que vous puissiez capter de nouveaux clients et renforcer l'identité de votre activité.",
+      "Tous nos sites sont optimisés pour le référencement (SEO) et s'adaptent aux ordinateurs, tablettes et mobiles.",
+    ],
+    "points" => [
+      ["fa-wand-magic-sparkles", "Modernité", "Nous mettons un point d'honneur à vous proposer des sites modernes, afin que vous puissiez attirer une large palette de clients."],
+      ["fa-globe", "Présence web", "Nous accentuons votre présence sur le web, pour que vous profitiez de tout le potentiel de votre entreprise sur internet… et obteniez plus de clients."],
+      ["fa-star", "E-réputation", "Parce que la réputation de votre société est primordiale, nous veillons à ce que vos clients soient satisfaits et qu'ils le disent tout haut."],
+    ],
+  ];
+  include "inc/partials/intro.php";
 
-        <section id="projets" class="projects_section text_center ptb_3">
+  $features = [
+    "kicker" => "Inclus",
+    "titre" => "Ce que vous obtenez",
+    "items" => [
+      ["fa-mobile-screen", "Compatible partout", "Votre site s'affiche parfaitement sur téléphone, tablette, Android et Apple."],
+      ["fa-store", "Boutique en ligne", "Achat, rendez-vous, agenda : vos clients peuvent tout faire sur votre site, en un clic."],
+      ["fa-gauge-high", "Rapide et dynamique", "Un site à la pointe de la technologie et du design, fluide et dynamique."],
+    ],
+  ];
+  include "inc/partials/features.php";
 
-            <div class="sect_tit_txt">
-                <h2 class="section_title text-center ">Exemples de projets</h2>
-                <p class="section_text text-center ">Tous nos sites web bénificie d'une optimisation SEO, ainsi que d'une adapation pour les formats pc, tablettes edt mobile</p>
-            </div>
+  include "inc/partials/realisations.php";
 
-            <div class="container">
+  $tarifs = [
+    "titre" => "Choisissez le site qu'il vous faut",
+    "texte" => "Nom de domaine, hébergement et référencement : tout est compris.",
+    "offres" => [
+      ["nom" => "Site vitrine", "prix" => "250€", "periode" => "", "details" => ["Site responsive", "Site référencé SEO", "Nom de domaine", "Hébergement"]],
+      ["nom" => "Blog", "prix" => "400€", "periode" => "", "vedette" => true, "details" => ["Site responsive", "Site référencé SEO", "Espace membre", "Articles optimisés SEO"]],
+      ["nom" => "Site e-commerce", "prix" => "700€", "periode" => "", "details" => ["Site responsive", "Site référencé", "Pages articles et prestations", "Paiement sécurisé"]],
+    ],
+  ];
+  include "inc/partials/pricing.php";
 
-                <div class="projects ptb_2">
-
-                    <div class="project" >
-                        <img src="img/gym-accueil.jpg" class="gym-accueil-img"  alt="Fiteos" height="190px" width="320px" data-aos="zoom-in" >
-                        <div class="project_content">
-                            <h3 class="titre_site" data-aos="fade-right"  >Salle  de sport </h3>
-                            <p class="project_text " data-aos="fade-up"
-        data-aos-anchor-placement="top-center" >Fiteos est un site commercial pour salle de sport. </p>
-                            <a href="https://cocky-einstein-d0b9f5.netlify.app/" class="btn btn-lg btn-primary btn_project_section" data-aos="fade-up" ><i class="fas fa-eye"></i>Voir</a>
-                        </div>
-                    </div>
-                    <div class="project">
-                        <img src="img/img-portfolio2.jpg" alt="delta-immo" height="190px" width="320px" data-aos="zoom-in" >
-                        <div class="project_content">
-                            <h3 class="titre_site" data-aos="fade-right" text-center >Agence immobilière </h3>
-                            <p class="project_text" data-aos="fade-up" >Delta-Immo est un site d'agence immobilière qui vous propose des biens d'exception. </p>
-                            <a href="https://relaxed-lewin-d05331.netlify.app/" class="btn btn-lg btn-primary btn_project_section" data-aos="fade-up" ><i class="fas fa-eye"></i>Voir</a>
-                        </div>
-                    </div>
-                    <div class="project">
-                        <img src="img/magic-food-cap.png" alt="Magic food panam" height="190px" width="320px" data-aos="zoom-in" >
-                        <div class="project_content">
-                            <h3 class="titre_site" data-aos="fade-right" text-center >Restauration </h3>
-                            <p class="project_text" data-aos="fade-up" >Magic food panam est site  de restaurant en ligne. Magic food panam propose une grande variété de délicieux plats.</p>
-                            <a href="https://elaborate-dango-33f458.netlify.app/" class="btn btn-lg btn-primary btn_project_section" data-aos="fade-up" ><i class="fas fa-eye"></i>Voir</a>
-                        </div>
-                    </div>
-                    <div class="project">
-                        <img src="img/dif-cap.png" alt="Dorine Invest" height="190px" width="320px" data-aos="zoom-in" >
-                        <div class="project_content">
-                            <h3 class="titre_site" data-aos="fade-right" text-center >Finance </h3>
-                            <p class="project_text" data-aos="fade-up" >Dofinvest est site de services financiers pour particuliers et entreprises. </p>
-                            <a href="https://dofinvest.fr/" class="btn btn-lg btn-primary btn_project_section" data-aos="fade-up" ><i class="fas fa-eye"></i>Voir</a>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- SECTION TARIF -->
-                <section id="prix">
-                    <h2 class="text-center offreH">Tarifs</h2>
-                    <hr>
-                    <div id="cartes" class="container  ">
-                        <div class="row  ">
-
-                            <div class="col-lg-4 carte">
-                                <div class="threeCards">
-                                    <div class="header">
-                                        <h3 class="carte_prix" >A partir de<span id="spanPrix">  250€</span> </h3>
-                                        <div class="type">
-                                            <h2>Site vitrine </h2>
-                                        </div>
-                                    </div>
-                                    <div class="details">Site responsive</div>
-                                    <div class="details">Site référencé seo</div>
-                                    <div class="details">Nom de Domaine</div>
-                                    <div class="details">Hebergement</div>
-                                    <div id="btn"><a href="#">Commander</a></div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 carte">
-                                <div class="threeCards">
-                                    <div class="header">
-                                        <div class="type">
-                                            <h2>Blog</h2>
-                                            <!-- <p class="">Ramener des clients sur votre site</p> -->
-                                        </div>
-                                        <h3 class="carte_prix" >A partir de <span id="spanPrix"> 400€</span> </h3>
-                                        <div>
-                                            <h2 class="promes" ></h2>
-                                        </div>
-                                    </div>
-                                    <div class="details">Site responsive</div>
-                                    <div class="details">Site référencé seo</div>
-                                    <div class="details">Section membre</div>
-                                    <div class="details">Des articles optimisé seo</div>
-                                    <div id="btn"><a href="#">Commander</a></div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 carte">
-                                <div class="threeCards">
-                                    <div class="header">
-                                        <h3 class="carte_prix" >A partir de<span id="spanPrix">  700€</span> </h3>
-                                        <div class="type">
-                                            <h2>Site e-commerce</h2>
-                                        </div>
-                                    </div>
-
-                                    <div class="details">Site responsive</div>
-                                    <div class="details">Site référencé</div>
-                                    <div class="details">Page articles et prestations</div>
-                                    <div class="details">paiement sécurisé</div>
-                                    <div id="btn"><a href="#">Commander</a></div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-
-        </section>
+  $cta_titre = "Faites passer votre activité dans une autre dimension";
+  include "inc/partials/cta.php";
+?>
