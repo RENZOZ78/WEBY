@@ -6,15 +6,15 @@
         <a href="<?= URL ?>accueils" class="brand d-inline-block mb-3">
           <img src="<?= URL ?>public/Assets/images/accueil/logo_aigle.svg" alt="WebyCloudy" width="69" height="56">
         </a>
-        <p class="mb-0">Votre agence pour créer votre société, construire votre site internet et développer votre présence sur le web.</p>
+        <p class="mb-0">Business plan, création de société, gestion administrative, site internet et stratégie marketing : une seule agence pour lancer et faire grandir votre entreprise.</p>
       </div>
       <div class="col-6 col-lg-2 offset-lg-1">
         <h4>Prestations</h4>
         <ul>
-          <li><a href="<?= URL ?>prestations/entreprises">Création de société</a></li>
+          <li><a href="<?= URL ?>prestations/lancement">Business plan &amp; création</a></li>
+          <li><a href="<?= URL ?>prestations/gestion">Gestion &amp; administratif</a></li>
           <li><a href="<?= URL ?>prestations/sites">Site internet</a></li>
-          <li><a href="<?= URL ?>prestations/reseaux">Réseaux sociaux</a></li>
-          <li><a href="<?= URL ?>prestations/marketing">Publicité</a></li>
+          <li><a href="<?= URL ?>prestations/marketing">Marketing &amp; croissance</a></li>
         </ul>
       </div>
       <div class="col-6 col-lg-2">
@@ -22,7 +22,7 @@
         <ul>
           <li><a href="<?= URL ?>accueils">Accueil</a></li>
           <li><a href="<?= URL ?>contact">Contact</a></li>
-          <li><a href="<?= URL ?>login">Mon compte</a></li>
+          <li><a href="<?= URL ?>login">Espace client</a></li>
           <li><a href="<?= URL ?>creerCompte">Créer un compte</a></li>
         </ul>
       </div>

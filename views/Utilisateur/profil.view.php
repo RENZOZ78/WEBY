@@ -1,5 +1,6 @@
 <section class="section">
   <div class="container">
+    <?php include "inc/partials/espace_nav.php"; ?>
     <div class="row g-4">
 
       <!-- Carte d'identite + photo -->

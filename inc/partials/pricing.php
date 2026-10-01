@@ -18,6 +18,7 @@
             <div class="name"><?= $offre['nom'] ?></div>
             <div class="from">À partir de</div>
             <div class="price"><?= $offre['prix'] ?><?php if(!empty($offre['periode'])) : ?> <small><?= $offre['periode'] ?></small><?php endif; ?></div>
+            <?php if(!empty($offre['option'])) : ?><div class="small text-muted-wc mt-1"><?= $offre['option'] ?></div><?php endif; ?>
             <ul>
               <?php foreach($offre['details'] as $detail) : ?>
                 <li><i class="fas fa-circle-check"></i><span><?= $detail ?></span></li>
@@ -28,6 +29,6 @@
         </div>
       <?php endforeach; ?>
     </div>
-    <p class="price-note"><i class="fas fa-credit-card me-1"></i> Paiement sécurisé par CB ou PayPal — paiement en 2x ou 3x dès 200€ avec Alma.</p>
+    <p class="price-note"><i class="fas fa-credit-card me-1"></i> Prix indicatifs « à partir de », devis gratuit et personnalisé. Paiement sécurisé par CB ou PayPal, en 2x ou 3x dès 200 € avec Alma.</p>
   </div>
 </section>

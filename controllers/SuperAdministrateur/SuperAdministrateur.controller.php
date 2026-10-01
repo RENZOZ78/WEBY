@@ -20,6 +20,7 @@
         "utilisateurs" => $this->sAdministrateurManager->getUtilisateurs(),
         "page_title"=> "WebyCloudy | Administration Utilisateurs",
         "hero_compact" => true,
+        "espace" => "admin",
         "template" => "views/common/template.php"
       ];
       $this->genererPage($data_page);

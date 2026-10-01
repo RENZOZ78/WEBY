@@ -12,23 +12,7 @@
         return $utilisateur;
     }
 
-    //recuperation de data des produits
-    public function getProduits(){
-        $req = $this->getBdd()->prepare("SELECT * FROM produits");
-        $req->execute();
-        $produit = $req->fetchAll(PDO::FETCH_ASSOC);
-        $req->closeCursor();
-        return $produit;
-    }
 
-     //recuperation de data des commandes
-     public function getCommandes(){
-      $req = $this->getBdd()->prepare("SELECT * FROM commandes");
-      $req->execute();
-      $commande = $req->fetchAll(PDO::FETCH_ASSOC);
-      $req->closeCursor();
-      return $commande;
-  }
 
     //recuperation du role actuel d'un utilisateur
     public function getRoleUtilisateur($login){

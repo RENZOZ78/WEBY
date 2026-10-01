@@ -27,7 +27,7 @@
           if($this->utilisateurManager->estCompteActive($login)){
             $this->connecter($login);
             Toolbox::ajouterMessageAlerte("Bon retour sur le site ".$login." !", Toolbox::COULEUR_VERTE);
-            Toolbox::redirection("compte/profil");
+            Toolbox::redirection(Securite::estAdministrateur() || Securite::estSuperAdministrateur() ? "administration/tableau" : "compte/tableau");
           }else{
             $msg =  "Le compte de ".$login." n'a pas été activé par mail. ";
             $msg .= "<a href='".URL."renvoyerMailValidation/".rawurlencode($login)."'>Renvoyer le mail de validation</a>";
@@ -58,6 +58,7 @@
         "page_js" => ['profil.js'],
         "page_title"=> "WebyCloudy | Profil",
         "hero_compact" => true,
+        "espace" => "client",
         "template" => "views/common/template.php"
       ];
       $this->genererPage($data_page);
@@ -119,7 +120,7 @@
       if($login !== "" && ctype_digit((string)$clef) && $this->utilisateurManager->bdValidationMailCompte($login,$clef)){
         $this->connecter($login);
         Toolbox::ajouterMessageAlerte("Votre compte est bien activé !", Toolbox::COULEUR_VERTE);
-        Toolbox::redirection("compte/profil");
+        Toolbox::redirection("compte/tableau");
       }
       Toolbox::ajouterMessageAlerte("Le compte n'a pas été activé : lien invalide ou compte déjà actif.", Toolbox::COULEUR_ROUGE);
       Toolbox::redirection("login");
@@ -147,6 +148,7 @@
           "page_js" => ["modificationPassword.js"],
           "page_title"=> "WebyCloudy | Modification Mot de passe",
           "hero_compact" => true,
+          "espace" => "client",
           "template" => "views/common/template.php"
         ];
         $this->genererPage($data_page);

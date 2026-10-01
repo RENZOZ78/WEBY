@@ -5,7 +5,7 @@
       <div class="table-responsive">
         <table class="table align-middle">
           <thead>
-            <tr><th>Utilisateur</th><th>Email</th><th>Compte</th><th>Rôle</th></tr>
+            <tr><th>Utilisateur</th><th>Email</th><th>Compte</th><th>Rôle</th><th></th></tr>
           </thead>
           <tbody>
             <?php foreach ($utilisateurs as $utilisateur) : ?>
@@ -25,6 +25,7 @@
                   <?php endif; ?>
                 </td>
                 <td><span class="role-badge <?= $utilisateur['role'] ?>"><?= $utilisateur['role'] ?></span></td>
+                <td class="text-end"><a href="<?= URL ?>administration/nouveauProjet?client=<?= rawurlencode($utilisateur['login']) ?>" class="btn btn-light btn-sm"><i class="fas fa-plus me-1"></i>Projet</a></td>
               </tr>
             <?php endforeach; ?>
           </tbody>

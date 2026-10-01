@@ -2,13 +2,13 @@
   $site = $site ?? require("config/config.php");
   $offreDemandee = isset($_GET['offre']) ? htmlspecialchars(substr((string)$_GET['offre'], 0, 80)) : "";
 ?>
-<section class="section<?= !empty($contact_alt) ? ' section-alt' : '' ?>" id="contact">
+<section class="section section-alt" id="contact">
   <div class="container">
     <div class="row g-5">
       <div class="col-lg-5" data-aos="fade-right">
         <span class="kicker">Contact</span>
         <h2 class="mb-3">Parlons de votre projet</h2>
-        <p class="text-muted-wc mb-4">N'hésitez pas à nous écrire ou à nous appeler : notre équipe vous répond sous 48h.</p>
+        <p class="text-muted-wc mb-4">Devis gratuit. Écrivez-nous ou appelez-nous : nous vous répondons sous 48h, partout en France, en visio ou en rendez-vous.</p>
         <div class="contact-info">
           <div class="item">
             <span class="icon"><i class="fas fa-phone"></i></span>

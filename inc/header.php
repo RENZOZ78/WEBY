@@ -8,6 +8,7 @@
   };
   $estAccueil = !empty($hero_accueil);
   $estCompact = !empty($hero_compact);
+  $estAdmin = Securite::estAdministrateur() || Securite::estSuperAdministrateur();
 ?>
 <!-- Navigation ---------------------------------------->
 <nav class="navbar navbar-expand-lg wc-nav<?= $estCompact ? ' nav-solid' : '' ?>" id="main-nav" aria-label="Navigation principale">
@@ -29,12 +30,15 @@
 
         <!-- deroulant prestations -->
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle<?= $actif(["prestations", "entreprises"]) ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">Prestations</a>
+          <a href="#" class="nav-link dropdown-toggle<?= $actif("prestations") ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">Prestations</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<?= URL ?>prestations/entreprises"><i class="fas fa-briefcase"></i>Création de société</a></li>
+            <li><h6 class="dropdown-header text-uppercase small" style="color:var(--wc-gold-2)">Lancement &amp; financement</h6></li>
+            <li><a class="dropdown-item" href="<?= URL ?>prestations/lancement"><i class="fas fa-rocket"></i>Business plan &amp; création de société</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header text-uppercase small" style="color:var(--wc-cyan)">Croissance</h6></li>
+            <li><a class="dropdown-item" href="<?= URL ?>prestations/gestion"><i class="fas fa-folder-open"></i>Gestion &amp; administratif</a></li>
             <li><a class="dropdown-item" href="<?= URL ?>prestations/sites"><i class="fas fa-laptop-code"></i>Site internet</a></li>
-            <li><a class="dropdown-item" href="<?= URL ?>prestations/reseaux"><i class="fas fa-hashtag"></i>Réseaux sociaux</a></li>
-            <li><a class="dropdown-item" href="<?= URL ?>prestations/marketing"><i class="fas fa-bullhorn"></i>Publicité &amp; marketing</a></li>
+            <li><a class="dropdown-item" href="<?= URL ?>prestations/marketing"><i class="fas fa-bullhorn"></i>Marketing &amp; croissance</a></li>
           </ul>
         </li>
 
@@ -43,17 +47,18 @@
         </li>
 
         <!-- espace administration -->
-        <?php if(Securite::estAdministrateur() || Securite::estSuperAdministrateur()) : ?>
+        <?php if($estAdmin) : ?>
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle<?= $actif("administration") ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administration</a>
             <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="<?= URL ?>administration/tableau"><i class="fas fa-gauge-high"></i>Tableau de bord</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>administration/demandes"><i class="fas fa-inbox"></i>Demandes</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>administration/projets"><i class="fas fa-diagram-project"></i>Projets</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>administration/gestionUtilisateurs"><i class="fas fa-users"></i>Clients</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>administration/droits"><i class="fas fa-user-shield"></i>Droits</a></li>
               <?php if(Securite::estSuperAdministrateur()) : ?>
                 <li><a class="dropdown-item" href="<?= URL ?>administration/gestionFullUtilisateur"><i class="fas fa-user-gear"></i>Gestion complète</a></li>
               <?php endif; ?>
-              <li><a class="dropdown-item" href="<?= URL ?>administration/droits"><i class="fas fa-user-shield"></i>Gérer les droits</a></li>
-              <li><a class="dropdown-item" href="<?= URL ?>administration/gestionUtilisateurs"><i class="fas fa-users"></i>Utilisateurs</a></li>
-              <li><a class="dropdown-item" href="<?= URL ?>administration/gestionCommandes"><i class="fas fa-receipt"></i>Commandes</a></li>
-              <li><a class="dropdown-item" href="<?= URL ?>administration/gestionProduits"><i class="fas fa-box"></i>Produits</a></li>
             </ul>
           </li>
         <?php endif; ?>
@@ -61,7 +66,7 @@
         <!-- compte -->
         <?php if(!Securite::estConnecte()) : ?>
           <li class="nav-item">
-            <a href="<?= URL ?>login" class="nav-link<?= $actif(["login", "creerCompte"]) ?>"><i class="far fa-user me-1"></i>Mon compte</a>
+            <a href="<?= URL ?>login" class="nav-link<?= $actif(["login", "creerCompte"]) ?>"><i class="far fa-user me-1"></i>Espace client</a>
           </li>
         <?php else : ?>
           <li class="nav-item dropdown">
@@ -69,16 +74,19 @@
               <i class="far fa-user me-1"></i><?= $_SESSION['profil']['login'] ?>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="<?= URL ?>compte/profil"><i class="fas fa-id-card"></i>Mon profil</a></li>
-              <li><a class="dropdown-item" href="<?= URL ?>compte/modificationPassword"><i class="fas fa-key"></i>Mot de passe</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>compte/tableau"><i class="fas fa-gauge-high"></i>Mon espace</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>compte/projets"><i class="fas fa-diagram-project"></i>Mes projets</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>compte/documents"><i class="fas fa-folder-open"></i>Mes documents</a></li>
+              <li><a class="dropdown-item" href="<?= URL ?>compte/demandes"><i class="fas fa-comments"></i>Mes demandes</a></li>
               <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="<?= URL ?>compte/profil"><i class="fas fa-id-card"></i>Mon profil</a></li>
               <li><a class="dropdown-item" href="<?= URL ?>compte/deconnexion"><i class="fas fa-right-from-bracket"></i>Se déconnecter</a></li>
             </ul>
           </li>
         <?php endif; ?>
 
         <li class="nav-item nav-cta ms-lg-2">
-          <a href="<?= URL ?>contact" class="btn btn-gold btn-sm">Demander un devis</a>
+          <a href="<?= URL ?>contact" class="btn btn-gold btn-sm">Devis gratuit</a>
         </li>
       </ul>
     </div>
@@ -91,29 +99,29 @@
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-lg-6" data-aos="fade-up">
-          <span class="eyebrow"><i class="fas fa-feather-pointed"></i><?= $uvp ?></span>
-          <h1>Faites <span class="accent">décoller</span> votre activité</h1>
+          <span class="eyebrow"><i class="fas fa-star"></i>95 % de clients satisfaits · France entière</span>
+          <h1>Lancez et <span class="accent">développez</span> votre entreprise</h1>
           <p class="lead"><?= $hero_texte ?? "" ?></p>
           <div class="d-flex flex-wrap gap-3 mt-4">
-            <a href="#prestations" class="btn btn-gold btn-lg">Découvrir nos prestations</a>
-            <a href="<?= URL ?>contact" class="btn btn-outline-light btn-lg">Parlons de votre projet</a>
+            <a href="#packs" class="btn btn-gold btn-lg">Découvrir nos packs</a>
+            <a href="<?= URL ?>contact" class="btn btn-outline-light btn-lg">Devis gratuit</a>
           </div>
           <div class="hero-badges">
-            <span><i class="fas fa-bolt"></i>Réponse sous 48h</span>
-            <span><i class="fas fa-mobile-screen"></i>Sites responsive &amp; SEO</span>
+            <span><i class="fas fa-bolt"></i>Livraison 48h à 7 jours</span>
+            <span><i class="fas fa-video"></i>Visio ou rendez-vous</span>
             <span><i class="fas fa-credit-card"></i>Paiement en 2x ou 3x</span>
           </div>
         </div>
         <div class="col-lg-6" data-aos="fade-left" data-aos-delay="150">
           <div class="hero-visual">
-            <img class="hero-img" src="<?= URL ?>public/Assets/images/site%20internet/si3.png" alt="Site internet affiché sur ordinateur, tablette et mobile">
+            <img class="hero-img" src="<?= URL ?>public/Assets/images/entreprise/brainstorming.png" alt="Entrepreneurs en réunion de lancement">
             <div class="hero-card card-a">
-              <span class="icon"><i class="fas fa-chart-line"></i></span>
-              <span><strong>Plus de visibilité</strong>Site, réseaux &amp; pub</span>
+              <span class="icon"><i class="fas fa-file-signature"></i></span>
+              <span><strong>Kbis obtenu</strong>Statuts, immatriculation, ACRE</span>
             </div>
-            <div class="hero-card card-b">
-              <span class="icon"><i class="fas fa-briefcase"></i></span>
-              <span><strong>Société créée</strong>Statuts, JO, K-bis</span>
+            <div class="hero-card card-b card-cyan">
+              <span class="icon"><i class="fas fa-chart-line"></i></span>
+              <span><strong>+ de clients</strong>Site, SEO &amp; stratégie</span>
             </div>
           </div>
         </div>
@@ -136,9 +144,16 @@
           <h1><?= $H1 ?></h1>
           <?php if(!empty($hero_texte)) : ?><p class="lead"><?= $hero_texte ?></p><?php endif; ?>
           <div class="d-flex flex-wrap gap-3 mt-4">
-            <a href="<?= URL ?>contact" class="btn btn-gold">Demander un devis</a>
+            <a href="<?= URL ?>contact" class="btn btn-gold">Devis gratuit</a>
             <a href="#tarifs" class="btn btn-outline-light">Voir les tarifs</a>
           </div>
+          <?php if(!empty($hero_badges)) : ?>
+            <div class="hero-badges">
+              <?php foreach($hero_badges as $badge) : [$icone, $texte] = explode("|", $badge, 2); ?>
+                <span><i class="fas <?= $icone ?>"></i><?= $texte ?></span>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
         </div>
         <?php if(!empty($hero_image)) : ?>
           <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left" data-aos-delay="150">

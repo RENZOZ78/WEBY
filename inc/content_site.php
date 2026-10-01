@@ -1,17 +1,17 @@
 <?php
   $intro = [
-    "kicker" => "Site internet",
-    "titre" => "Un site moderne qui travaille pour vous",
+    "kicker" => "Site internet professionnel — dès 300 €",
+    "titre" => "Un site moderne qui vous apporte des clients",
     "image" => "public/Assets/images/site%20internet/ws2.png",
     "alt" => "Création de site internet",
     "paragraphes" => [
-      "Nous créons votre site internet afin que vous puissiez capter de nouveaux clients et renforcer l'identité de votre activité.",
-      "Tous nos sites sont optimisés pour le référencement (SEO) et s'adaptent aux ordinateurs, tablettes et mobiles.",
+      "Votre société souffre d'un manque de visibilité ? Un site internet professionnel, c'est votre vitrine ouverte 24h/24, partout en France.",
+      "Nous créons votre site, nous le référençons sur Google et nous le maintenons : vous n'avez rien à gérer.",
     ],
     "points" => [
-      ["fa-wand-magic-sparkles", "Modernité", "Nous mettons un point d'honneur à vous proposer des sites modernes, afin que vous puissiez attirer une large palette de clients."],
-      ["fa-globe", "Présence web", "Nous accentuons votre présence sur le web, pour que vous profitiez de tout le potentiel de votre entreprise sur internet… et obteniez plus de clients."],
-      ["fa-star", "E-réputation", "Parce que la réputation de votre société est primordiale, nous veillons à ce que vos clients soient satisfaits et qu'ils le disent tout haut."],
+      ["fa-laptop-code", "Site vitrine ou e-commerce", "Un site moderne et responsive, parfaitement lisible sur PC, tablette et mobile. Boutique en ligne, prise de rendez-vous, agenda : tout est possible."],
+      ["fa-magnifying-glass", "Référencement (SEO)", "Pages optimisées, textes travaillés, fiche Google : pour être trouvé par vos clients quand ils vous cherchent."],
+      ["fa-screwdriver-wrench", "Maintenance et fluidité garanties", "Mises à jour, sauvegardes, sécurité et rapidité : votre site reste fluide et disponible."],
     ],
   ];
   include "inc/partials/intro.php";
@@ -19,10 +19,11 @@
   $features = [
     "kicker" => "Inclus",
     "titre" => "Ce que vous obtenez",
+    "sombre" => true,
     "items" => [
-      ["fa-mobile-screen", "Compatible partout", "Votre site s'affiche parfaitement sur téléphone, tablette, Android et Apple."],
-      ["fa-store", "Boutique en ligne", "Achat, rendez-vous, agenda : vos clients peuvent tout faire sur votre site, en un clic."],
-      ["fa-gauge-high", "Rapide et dynamique", "Un site à la pointe de la technologie et du design, fluide et dynamique."],
+      ["fa-mobile-screen", "Compatible partout", "PC, tablette, Android, iPhone : votre site s'adapte à tous les écrans."],
+      ["fa-store", "Vendez en ligne", "Paiement sécurisé, catalogue, prise de rendez-vous : vos clients commandent en un clic."],
+      ["fa-gauge-high", "Rapide et sécurisé", "Un site fluide, hébergé et protégé, avec nom de domaine et certificat HTTPS."],
     ],
   ];
   include "inc/partials/features.php";
@@ -31,11 +32,11 @@
 
   $tarifs = [
     "titre" => "Choisissez le site qu'il vous faut",
-    "texte" => "Nom de domaine, hébergement et référencement : tout est compris.",
+    "texte" => "Nom de domaine, hébergement, référencement et maintenance : tout est compris.",
     "offres" => [
-      ["nom" => "Site vitrine", "prix" => "250€", "periode" => "", "details" => ["Site responsive", "Site référencé SEO", "Nom de domaine", "Hébergement"]],
-      ["nom" => "Blog", "prix" => "400€", "periode" => "", "vedette" => true, "details" => ["Site responsive", "Site référencé SEO", "Espace membre", "Articles optimisés SEO"]],
-      ["nom" => "Site e-commerce", "prix" => "700€", "periode" => "", "details" => ["Site responsive", "Site référencé", "Pages articles et prestations", "Paiement sécurisé"]],
+      ["nom" => "Site vitrine", "prix" => "300 €", "periode" => "", "vedette" => true, "details" => ["Responsive PC / mobile", "Référencement SEO", "Nom de domaine & hébergement", "Maintenance"]],
+      ["nom" => "Site + blog", "prix" => "450 €", "periode" => "", "details" => ["Tout le site vitrine", "Espace membre", "Articles optimisés SEO", "Maintenance"]],
+      ["nom" => "Site e-commerce", "prix" => "700 €", "periode" => "", "details" => ["Tout le site vitrine", "Catalogue & panier", "Paiement sécurisé", "Maintenance"]],
     ],
   ];
   include "inc/partials/pricing.php";

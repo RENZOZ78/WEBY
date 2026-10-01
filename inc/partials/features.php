@@ -3,7 +3,7 @@
    * $features = ["kicker", "titre", "texte", "sombre" => bool, "items" => [[icone, titre, texte]]] */
   $nbFeatures = count($features['items']);
 ?>
-<section class="section <?= !empty($features['sombre']) ? 'section-dark' : 'section-alt' ?>">
+<section class="section <?= !empty($features['sombre']) ? 'section-glow' : '' ?>">
   <div class="container">
     <div class="section-head" data-aos="fade-up">
       <span class="kicker"><?= $features['kicker'] ?></span>

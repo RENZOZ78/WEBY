@@ -1,6 +1,7 @@
 <section class="section">
   <div class="container">
-    <div class="auth-wrap">
+    <?php include "inc/partials/espace_nav.php"; ?>
+    <div class="auth-wrap ms-0">
       <form method="post" action="<?= URL ?>compte/validation_modificationPassword" class="form-card needs-validation" novalidate>
         <?= Securite::csrfField() ?>
         <div class="mb-3">

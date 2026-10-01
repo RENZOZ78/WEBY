@@ -13,16 +13,29 @@
     require_once("./controllers/securite.class.php");
     require_once("./controllers/Visiteur/Visiteur.controller.php");
     require_once("./controllers/Utilisateur/Utilisateur.controller.php");
+    require_once("./controllers/Utilisateur/Espace.controller.php");
     require_once("./controllers/Administrateur/Administrateur.controller.php");
     require_once("./controllers/SuperAdministrateur/SuperAdministrateur.controller.php");
     $visiteurController = new VisiteurController();
     $utilisateurController = new UtilisateurController();
+    $espaceController = new EspaceController();
     $administrateurController = new AdministrateurController();
     $sAdministrateurController = new SAdministrateurController();
 
     //recupere un champ POST nettoyé
     function post($cle){
       return isset($_POST[$cle]) ? trim((string)$_POST[$cle]) : "";
+    }
+
+    //champ POST texte libre (echappe, sauts de ligne conserves)
+    function postTexte($cle){
+      return Securite::secureHTML(post($cle));
+    }
+
+    //redirection permanente (anciennes adresses)
+    function redirectionPermanente($chemin){
+      header("Location: ".URL.$chemin, true, 301);
+      exit();
     }
 
     try {
@@ -43,8 +56,8 @@
           "validation_login" => "login",
           "validation_creerCompte" => "creerCompte",
           "validation_contact" => "contact",
-          "compte" => "compte/profil",
-          "administration" => "administration/droits",
+          "compte" => "compte/tableau",
+          "administration" => "administration/tableau",
         ];
         Toolbox::redirection($retour[$page] ?? "accueils");
       }
@@ -56,21 +69,18 @@
         case "prestations":
           switch($url[1]){
             case "": $visiteurController->accueil(); break;
-            case "entreprises": $visiteurController->entreprise(); break;
+            case "lancement": $visiteurController->lancement(); break;
+            case "gestion": $visiteurController->gestion(); break;
             case "sites": $visiteurController->site(); break;
-            case "reseaux": $visiteurController->reseaux(); break;
             case "marketing": $visiteurController->marketing(); break;
+            //anciennes adresses
+            case "entreprises": redirectionPermanente("prestations/lancement"); break;
+            case "reseaux": redirectionPermanente("prestations/marketing"); break;
             default: throw new Exception("Cette prestation n'existe pas");
           }
         break;
         case "entreprises":
-          switch ($url[1]){
-            case "": $visiteurController->entreprise(); break;
-            case "creation": $visiteurController->creation_entreprise(); break;
-            case "modification": $visiteurController->modification_entreprise(); break;
-            case "gestion": $visiteurController->gestion_entreprise(); break;
-            default: throw new Exception("La page n'existe pas");
-          }
+          redirectionPermanente($url[1] === "gestion" ? "prestations/gestion" : "prestations/lancement");
         break;
 
         case "contact":
@@ -123,6 +133,37 @@
             Toolbox::redirection("login");
           }
           switch($url[1]){
+            case "":
+            case "tableau":
+              $espaceController->tableau();
+              break;
+            case "projets":
+              $espaceController->projets();
+              break;
+            case "projet":
+              $espaceController->projet((int)$url[2]);
+              break;
+            case "documents":
+              $espaceController->documents();
+              break;
+            case "document":
+              $espaceController->document((int)$url[2]);
+              break;
+            case "demandes":
+              $espaceController->demandes();
+              break;
+            case "demande":
+              $espaceController->demande((int)$url[2]);
+              break;
+            case "nouvelleDemande":
+              $espaceController->nouvelleDemande();
+              break;
+            case "validation_nouvelleDemande":
+              $espaceController->validation_nouvelleDemande(postTexte('sujet'), postTexte('message'));
+              break;
+            case "validation_message":
+              $espaceController->validation_message((int)post('demande_id'), postTexte('message'));
+              break;
             case "profil" :
               $utilisateurController->profil();
               break;
@@ -176,17 +217,56 @@
             Toolbox::redirection("accueils");
           }
           switch($url[1]){
+            case "":
+            case "tableau":
+              $administrateurController->tableau();
+              break;
+            case "projets":
+              $administrateurController->projets();
+              break;
+            case "nouveauProjet":
+              $administrateurController->nouveauProjet();
+              break;
+            case "validation_nouveauProjet":
+              $administrateurController->validation_nouveauProjet(Securite::secureHTML(post('login')), postTexte('titre'), post('type'), post('etape'), postTexte('note'));
+              break;
+            case "projet":
+              $administrateurController->projet((int)$url[2]);
+              break;
+            case "validation_projet":
+              $administrateurController->validation_projet((int)post('projet_id'), Securite::secureHTML(post('login')), postTexte('titre'), post('type'), post('etape'), postTexte('note'));
+              break;
+            case "suppression_projet":
+              if($_SERVER['REQUEST_METHOD'] !== "POST") Toolbox::redirection("administration/projets");
+              $administrateurController->suppression_projet((int)post('projet_id'));
+              break;
+            case "validation_document":
+              $administrateurController->validation_document((int)post('projet_id'), $_FILES['document'] ?? [], postTexte('nom'), post('categorie'));
+              break;
+            case "suppression_document":
+              if($_SERVER['REQUEST_METHOD'] !== "POST") Toolbox::redirection("administration/projets");
+              $administrateurController->suppression_document((int)post('document_id'));
+              break;
+            case "document":
+              $administrateurController->document((int)$url[2]);
+              break;
+            case "demandes":
+              $administrateurController->demandes();
+              break;
+            case "demande":
+              $administrateurController->demande((int)$url[2]);
+              break;
+            case "validation_reponse":
+              $administrateurController->validation_reponse((int)post('demande_id'), postTexte('message'));
+              break;
+            case "validation_statutDemande":
+              $administrateurController->validation_statutDemande((int)post('demande_id'), post('statut'));
+              break;
             case "droits":
               $administrateurController->gestion_droits();
               break;
             case "validation_modificationRole" :
               $administrateurController->validation_modificationRole(Securite::secureHTML(post('login')), post('role'));
-              break;
-            case "gestionCommandes":
-              $administrateurController->gestion_commandes();
-              break;
-            case "gestionProduits":
-              $administrateurController->gestion_produits();
               break;
             case "gestionUtilisateurs":
               $administrateurController->gestion_utilisateur();
@@ -196,7 +276,7 @@
             case "validationModificationFullUtilisateur":
               if(!Securite::estSuperAdministrateur()){
                 Toolbox::ajouterMessageAlerte("Cette page est réservée au super administrateur", Toolbox::COULEUR_ROUGE);
-                Toolbox::redirection("administration/droits");
+                Toolbox::redirection("administration/tableau");
               }
               if($url[1] === "gestionFullUtilisateur"){
                 $sAdministrateurController->gestion_full_utilisateur();
