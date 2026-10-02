@@ -10,9 +10,15 @@
 
     private const MARQUEUR = "storage/.installed";
 
+    //n'interrompt jamais le site : tant que la base n'est pas configuree, seules les pages
+    //qui en ont besoin echouent (les pages publiques restent accessibles)
     public static function verifier(){
       if(is_file(self::MARQUEUR)) return;
-      (new self())->installer();
+      try {
+        (new self())->installer();
+      } catch (PDOException $e) {
+        error_log("Installation en attente de la base de données : ".$e->getMessage());
+      }
     }
 
     private function installer(){
