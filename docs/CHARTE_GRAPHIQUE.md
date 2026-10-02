@@ -11,16 +11,26 @@ business plans, présentations.
 
 | Élément | Valeur |
 |---|---|
-| Emblème | aigle — `public/Assets/images/accueil/logo_aigle.svg` |
-| Nom | **Weby**Cloudy, en un seul mot, W et C en capitales |
+| Fichier du logo | `public/Assets/images/accueil/logo_aigle.svg` (version PNG 98 × 79 px : `logo_wc2.png`) |
+| Contenu du fichier | l'aigle **et**, dessous, le nom « weby cloudy » (minuscules, deux mots, police étroite) |
+| Couleurs du fichier | aigle or `#cc921f` ; nom or `#cc921f` cerné d'or clair `#e6c584` |
+| Aigle seul | **aucun fichier à ce jour** (à créer) |
+| Nom écrit en texte | **Weby**Cloudy, en un seul mot, W et C en capitales |
 | Écriture du nom | Poppins Bold (700) ; « Weby » en blanc `#ffffff`, « Cloudy » en or clair `#f3c868` |
-| Disposition | emblème à gauche, nom à droite, centrés verticalement |
-| Halo | lueur dorée autour de l'emblème sur fond sombre : `drop-shadow(0 0 12px rgba(224,171,60,.5))` |
+| Disposition sur le site | fichier du logo à gauche, nom en Poppins à droite, centrés verticalement (le nom apparaît donc aussi, en petit, sous l'aigle) |
+| Halo | lueur dorée autour du logo sur fond sombre : `drop-shadow(0 0 12px rgba(224,171,60,.5))` |
 | Taille sur le site | 46 px de haut dans le menu (38 px au défilement), 56 px en pied de page |
+
+`logo_aigle.png` et `logo_aigle2.png` portent l'ancien nom « Weby Weba Solutions » : ne pas les utiliser.
 
 Règles d'usage :
 - Toujours sur fond sombre (bleu nuit de la palette). Pas de version sur fond clair définie à ce jour.
-- Ne pas déformer, ne pas recolorer l'emblème, ne pas écrire « Weby Cloudy » ou « webycloudy » dans un visuel.
+- Hors site, utiliser le fichier du logo tel quel (aigle + nom dessous), **sans** réécrire le nom à côté.
+  La disposition du site (aigle à gauche, nom en Poppins à droite) demande un fichier de l'aigle seul, qui
+  n'existe pas encore.
+- Ne pas déformer, ne pas recolorer le logo.
+- Dans les textes et titres, écrire « WebyCloudy ». Le fichier du logo écrit « weby cloudy » : l'écriture
+  officielle du nom dans le logo reste à trancher par le propriétaire.
 - Garder autour du logo une marge libre d'au moins la moitié de sa hauteur.
 
 ## 2. Couleurs
@@ -144,6 +154,8 @@ blancs très discrète, cartes à bordure fine et translucide.
 
 ## 8. À compléter
 
+- Fichier de l'aigle seul (sans le nom), pour la disposition du site et les petits formats.
+- Écriture officielle du nom dans le logo (« weby cloudy » dans le fichier, « WebyCloudy » sur le site).
 - Version du logo sur fond clair et version monochrome.
-- Couleurs exactes de l'emblème (fichier SVG à ouvrir) et exports PNG du logo en plusieurs tailles.
+- Exports PNG du logo en plusieurs tailles (le seul PNG à jour, `logo_wc2.png`, fait 98 × 79 px).
 - Fichier de favicon et image de partage (réseaux sociaux).

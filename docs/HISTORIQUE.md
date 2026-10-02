@@ -44,8 +44,9 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Dossier `backup_v1`** (ancien site statique, à côté de `public_html`) : à supprimer quand la V2 est validée.
 - [ ] Fichiers inutiles servis en production : `.idea/`, `.vscode/`, `node_modules/` sont encore suivis par git et
       donc déployés. Les retirer du dépôt (`git rm --cached`) en prévenant le propriétaire.
-- [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : définir le logo sur fond clair et en monochrome,
-      exporter le logo en PNG, valider la version claire pour les documents imprimés.
+- [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
+      contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
+      sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
 
 ---
 
@@ -59,12 +60,17 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
   Valeurs relevées dans `public/CSS/theme.css` et `inc/header.php` ; rien n'a été inventé ni modifié sur le site.
 - Rédigé depuis Chat, qui n'a pas le droit d'écriture sur le dépôt : fichier remis au propriétaire, puis ajouté
   au dépôt par Claude Code avec cette entrée.
+- Correction après la revue automatique de la PR : `logo_aigle.svg` n'est pas l'aigle seul, il contient aussi le
+  nom « weby cloudy » sous l'aigle (vérifié par rendu du fichier). La charte le dit désormais, donne les couleurs
+  du fichier (`#cc921f`, `#e6c584`), demande de ne pas réécrire le nom à côté hors site, et signale que
+  `logo_aigle.png` / `logo_aigle2.png` portent l'ancien nom « Weby Weba Solutions ».
 
 **Fichiers / zones touchés** : `docs/CHARTE_GRAPHIQUE.md`, `docs/CONTEXTE_ACTIF.md`, `README.md`
-**Vérifications** : chaque valeur comparée aux variables `--wc-*` du thème en ligne ; documentation seule.
+**Vérifications** : chaque valeur comparée aux variables `--wc-*` du thème en ligne ; fichiers du logo affichés
+dans Chromium pour en voir le contenu ; documentation seule.
 **Référence** : PR #7
-**Suites** : version du logo sur fond clair et monochrome ; couleurs exactes de l'emblème ; exports PNG du logo ;
-version claire pour les documents imprimés à valider.
+**Suites** : fichier de l'aigle seul ; écriture officielle du nom dans le logo ; logo sur fond clair et
+monochrome ; exports PNG du logo ; version claire pour les documents imprimés à valider.
 
 ---
 
