@@ -11,6 +11,7 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 - [`docs/DECISIONS.md`](docs/DECISIONS.md) : choix durables en vigueur.
 - [`docs/HISTORIQUE.md`](docs/HISTORIQUE.md) : journal de tout ce qui a été fait et points en suspens.
 - [`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md) : production (Hostinger, base, déploiement, configuration, retour arrière).
+- [`docs/CHARTE_GRAPHIQUE.md`](docs/CHARTE_GRAPHIQUE.md) : charte graphique (logo, couleurs, typographies, déclinaisons).
 
 ## Installation locale (XAMPP)
 
