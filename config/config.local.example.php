@@ -8,9 +8,9 @@
     "db_name" => "u000000000_webycloudy",
     "db_user" => "u000000000_weby",
     "db_pass" => "mot-de-passe-de-la-base",
-    "mail_contact" => "webycloudy@gmail.com",
+    "mail_contact" => "info@webycloudy.com",
     //compte super administrateur cree au premier lancement si la table est vide de super admin
     "admin_login" => "admin",
-    "admin_mail" => "webycloudy@gmail.com",
+    "admin_mail" => "info@webycloudy.com",
     "admin_password" => "a-changer-des-la-premiere-connexion",
   ];

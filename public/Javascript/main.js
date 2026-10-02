@@ -68,11 +68,13 @@
     if (mots.length < 2 || reduit) { if (mots[0]) mots[0].classList.add("on"); return; }
     var i = 0;
     mots[0].classList.add("on");
+    //l'ancien mot disparait entierement avant que le suivant n'apparaisse (pas de chevauchement)
     setInterval(function () {
       mots[i].classList.remove("on");
       i = (i + 1) % mots.length;
-      mots[i].classList.add("on");
-    }, 2600);
+      var suivant = mots[i];
+      setTimeout(function () { suivant.classList.add("on"); }, 400);
+    }, 2800);
   });
 
   // compteurs : les nombres montent quand la tuile devient visible

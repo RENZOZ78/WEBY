@@ -19,8 +19,8 @@
     "db_name" => config_env("DB_NAME", "webycloudy"),
     "db_user" => config_env("DB_USER", "root"),
     "db_pass" => config_env("DB_PASS", ""),
-    "mail_contact" => config_env("MAIL_CONTACT", "webycloudy@gmail.com"),
-    "telephone" => "07 62 63 44 70",
+    "mail_contact" => config_env("MAIL_CONTACT", "info@webycloudy.com"),
+    "telephone" => "06 52 47 37 99",
     "horaires" => "Du lundi au vendredi, de 10h à 18h",
     //compte super administrateur cree automatiquement a la premiere installation (laisser vide pour ne rien creer)
     "admin_login" => "",

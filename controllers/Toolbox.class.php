@@ -37,13 +37,16 @@
 
     //ft qui envoie des mails aux utilisateurs
     public static function envoyerMail($destinataire,$sujet,$message,$repondreA = null){
+      //expediteur : l'adresse pro du domaine (meilleure delivrabilite que gmail, SPF du domaine)
+      $config = require(__DIR__."/../config/config.php");
+      $expediteur = $config['mail_contact'];
       $headers = [
-        "From" => "WebyCloudy <webycloudy@gmail.com>",
+        "From" => "WebyCloudy <".$expediteur.">",
         "Content-Type" => "text/plain; charset=UTF-8",
       ];
       if($repondreA) $headers["Reply-To"] = $repondreA;
       $sujet = "=?UTF-8?B?".base64_encode($sujet)."?=";
-      return @mail($destinataire,$sujet,$message,$headers);
+      return @mail($destinataire,$sujet,$message,$headers,"-f".$expediteur);
     }
 
     //ft qui envoie le mail de validation et affiche le resultat
