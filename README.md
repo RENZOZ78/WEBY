@@ -2,6 +2,14 @@
 
 Site vitrine et espace client de l'agence WebyCloudy (PHP 8 / MySQL, architecture MVC maison, Bootstrap 5.3, thème sombre).
 
+En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
+
+## Documentation
+
+- [`CLAUDE.md`](CLAUDE.md) : consignes de travail — **lire l'historique avant chaque tâche, l'enregistrer après**.
+- [`docs/HISTORIQUE.md`](docs/HISTORIQUE.md) : journal de tout ce qui a été fait et points en suspens.
+- [`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md) : production (Hostinger, base, déploiement, configuration, retour arrière).
+
 ## Installation locale (XAMPP)
 
 1. Copier le dossier dans `htdocs/` et activer `mod_rewrite` (le fichier `.htaccess` route toutes les URL vers `index.php`).
