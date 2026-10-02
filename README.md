@@ -7,6 +7,8 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 ## Documentation
 
 - [`CLAUDE.md`](CLAUDE.md) : consignes de travail — **lire l'historique avant chaque tâche, l'enregistrer après**.
+- [`docs/CONTEXTE_ACTIF.md`](docs/CONTEXTE_ACTIF.md) : état du projet sur une page — point d'entrée de tous les assistants.
+- [`docs/DECISIONS.md`](docs/DECISIONS.md) : choix durables en vigueur.
 - [`docs/HISTORIQUE.md`](docs/HISTORIQUE.md) : journal de tout ce qui a été fait et points en suspens.
 - [`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md) : production (Hostinger, base, déploiement, configuration, retour arrière).
 

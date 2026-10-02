@@ -1,17 +1,20 @@
 # WebyCloudy — consignes de travail
 
 Ce fichier est lu automatiquement au début de chaque session (Claude Code et assistants compatibles).
-Il s'applique à **toute personne ou tout agent** qui travaille sur ce dépôt.
+Il s'applique à **toute personne ou tout agent** qui travaille sur ce dépôt ou sur le projet WebyCloudy :
+Claude Code, Cowork et Chat partagent le même état, conservé dans `docs/`.
 
 ## 1. Avant toute tâche : prendre connaissance de l'historique
 
 Avant de modifier quoi que ce soit, lire dans cet ordre :
 
-1. [`docs/HISTORIQUE.md`](docs/HISTORIQUE.md) — au minimum les **5 dernières entrées** et la section
+1. [`docs/CONTEXTE_ACTIF.md`](docs/CONTEXTE_ACTIF.md) — en entier (une page) : situation, priorités, sujets ouverts.
+2. [`docs/HISTORIQUE.md`](docs/HISTORIQUE.md) — au minimum les **5 dernières entrées** et la section
    « Points en suspens ». Elles disent ce qui a déjà été fait, pourquoi, et ce qui reste à valider.
-2. [`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md) — dès que la tâche touche la mise en ligne, la base de données,
+3. [`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md) — dès que la tâche touche la mise en ligne, la base de données,
    la configuration, Hostinger ou le nom de domaine.
-3. [`README.md`](README.md) — architecture du code, installation locale, rôles.
+4. [`docs/DECISIONS.md`](docs/DECISIONS.md) — avant de proposer un changement de cap.
+5. [`README.md`](README.md) — architecture du code, installation locale, rôles.
 
 Ne pas refaire ni annuler un choix consigné dans l'historique sans en avoir parlé au propriétaire du site.
 
@@ -25,6 +28,12 @@ consignée **dans le même commit ou la même PR que le travail** :
 - **Si la production change** (base, fichiers sur le serveur, configuration, branche déployée, domaine, mails,
   PHP, sauvegardes) : mettre aussi à jour [`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md).
 - **Si l'architecture, l'installation locale ou les rôles changent** : mettre à jour [`README.md`](README.md).
+- **Si la situation, les priorités ou un sujet ouvert changent** : mettre à jour
+  [`docs/CONTEXTE_ACTIF.md`](docs/CONTEXTE_ACTIF.md) (et sa date). Il doit rester sur une page.
+- **Si un choix durable est pris ou modifié** : une ligne dans [`docs/DECISIONS.md`](docs/DECISIONS.md).
+- **Travail hors code** (contenus, SEO, Instagram, Leboncoin, acquisition), fait dans Cowork ou Chat : même règle,
+  une entrée dans l'historique. Chat, qui n'écrit pas dans le dépôt, fait consigner ses conclusions par Cowork
+  ou Claude Code.
 - Mettre à jour la section « Points en suspens » de l'historique : ajouter ce qui reste à faire,
   retirer ce qui a été réglé.
 

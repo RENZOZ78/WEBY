@@ -27,6 +27,7 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
+- [ ] **Compléter le tableau « Hors site »** de `docs/CONTEXTE_ACTIF.md` (SEO, Instagram, Leboncoin, acquisition).
 - [ ] **Changer les mots de passe** communiqués pendant la mise en ligne du 2026-10-02 : compte super-admin du site
       (`admin`, depuis *Mon profil*) et utilisateur MySQL `u181593296_weby` (hPanel, puis reporter le nouveau mot de
       passe dans `config/config.local.php` sur le serveur).
@@ -43,6 +44,27 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Dossier `backup_v1`** (ancien site statique, à côté de `public_html`) : à supprimer quand la V2 est validée.
 - [ ] Fichiers inutiles servis en production : `.idea/`, `.vscode/`, `node_modules/` sont encore suivis par git et
       donc déployés. Les retirer du dépôt (`git rm --cached`) en prévenant le propriétaire.
+
+---
+
+## 2026-10-02 — Suivi partagé entre Claude Code, Cowork et Chat
+
+**Demande** : que les projets Cowork et Chat de WebyCloudy prennent connaissance de ce qui a été fait et des
+avancées, et que chaque avancée soit enregistrée dans les fichiers `.md` du dépôt (structure du même type que
+celle de Sportmaniax).
+
+**Réalisé** :
+- `docs/CONTEXTE_ACTIF.md` : état du projet sur une page (situation, 3 priorités, hors site, sujets ouverts,
+  rôle de chaque outil). Il sert aussi de tableau de bord : pas de fichier séparé, pour éviter les doublons.
+- `docs/DECISIONS.md` : choix durables en vigueur, reconstitués depuis l'historique.
+- `CLAUDE.md` : ordre de lecture et règles d'enregistrement étendus à Cowork et Chat, et au travail hors code.
+- `README.md` : liens vers les deux nouveaux documents.
+
+**Fichiers / zones touchés** : `docs/CONTEXTE_ACTIF.md`, `docs/DECISIONS.md`, `CLAUDE.md`, `README.md`
+**Vérifications** : relecture ; aucun secret ; documentation seule, aucun fichier du site modifié.
+**Référence** : PR « Suivi partagé » (réalisé depuis Cowork)
+**Suites** : compléter le tableau « Hors site » du contexte actif ; coller la consigne de lecture dans les
+instructions des projets Cowork et Chat.
 
 ---
 
