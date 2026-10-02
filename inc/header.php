@@ -101,7 +101,7 @@
       <div class="row align-items-center g-5">
         <div class="col-lg-6" data-aos="fade-up">
           <span class="eyebrow"><i class="fas fa-star"></i>95 % de clients satisfaits · France entière</span>
-          <h1>Lancez et développez <span class="rotating accent"><span>votre entreprise</span><span>votre chiffre d'affaires</span><span>votre visibilité</span><span>votre société</span></span></h1>
+          <h1>Lancez et développez <span class="rotating"><span class="on">votre entreprise</span><span>votre chiffre d'affaires</span><span>votre visibilité</span><span>votre société</span></span></h1>
           <p class="lead"><?= $hero_texte ?? "" ?></p>
           <div class="d-flex flex-wrap gap-3 mt-4">
             <a href="#packs" class="btn btn-gold btn-lg">Découvrir nos packs</a>

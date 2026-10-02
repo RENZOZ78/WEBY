@@ -506,10 +506,17 @@ a { text-decoration: none; }
 @keyframes blob-c { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-60px, -90px); } }
 
 /* mot qui tourne dans le titre */
+/* le degrade est applique a chaque mot : applique au conteneur, le navigateur
+   peindrait aussi le texte des mots masques (superposition sur mobile) */
 .rotating { display: inline-grid; vertical-align: top; text-align: left; max-width: 100%; }
-.rotating > span { grid-area: 1 / 1; opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; white-space: nowrap; }
+.rotating > span {
+  grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(18px);
+  transition: opacity .35s ease, transform .35s ease, visibility 0s linear .35s; white-space: nowrap;
+  background: var(--wc-grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone; padding-bottom: .06em;
+}
+.rotating > span.on { opacity: 1; visibility: visible; transform: none; transition: opacity .35s ease, transform .35s ease, visibility 0s; }
 @media (max-width: 767.98px) { .rotating { display: grid; } .rotating > span { white-space: normal; } }
-.rotating > span.on { opacity: 1; transform: none; }
 
 /* visuel du hero : photo + maquette de tableau de bord */
 .hero-scene { position: relative; perspective: 1200px; }
