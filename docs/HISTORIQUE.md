@@ -62,7 +62,7 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 **Fichiers / zones touchés** : `docs/CHARTE_GRAPHIQUE.md`, `docs/CONTEXTE_ACTIF.md`, `README.md`
 **Vérifications** : chaque valeur comparée aux variables `--wc-*` du thème en ligne ; documentation seule.
-**Référence** : PR « Charte graphique »
+**Référence** : PR #7
 **Suites** : version du logo sur fond clair et monochrome ; couleurs exactes de l'emblème ; exports PNG du logo ;
 version claire pour les documents imprimés à valider.
 
