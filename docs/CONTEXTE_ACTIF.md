@@ -4,7 +4,7 @@
 À lire en premier, avant toute tâche ou tout conseil. Doit rester **court** (une page) : l'ancien part dans
 [`HISTORIQUE.md`](HISTORIQUE.md), les choix durables dans [`DECISIONS.md`](DECISIONS.md).
 
-Dernière mise à jour : 2026-10-02 — par Claude Code (ajout de la charte graphique)
+Dernière mise à jour : 2026-10-02 — par Claude Code (charte graphique intégrée dans Canva)
 
 > Ce dépôt est **public** : ne rien écrire ici de confidentiel (mots de passe, données clients, chiffres privés).
 
@@ -16,7 +16,8 @@ Dernière mise à jour : 2026-10-02 — par Claude Code (ajout de la charte grap
   marketing & croissance), espace client et administration.
 - **Phase** : validation de la V2 après mise en ligne (sécurité des accès, mails, tarifs, contenus).
 - **Charte graphique** : [`CHARTE_GRAPHIQUE.md`](CHARTE_GRAPHIQUE.md) — à suivre pour tout visuel (site, Instagram,
-  Leboncoin, documents).
+  Leboncoin, documents). Dans Canva : dossier `webycloudy` (logo, planche et Doc de la charte) ; le kit de marque
+  Canva reste à remplir à la main.
 
 ## Priorités en cours (3 maximum)
 

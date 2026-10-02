@@ -12,6 +12,7 @@ business plans, présentations.
 | Élément | Valeur |
 |---|---|
 | Fichier du logo | `public/Assets/images/accueil/logo_aigle.svg` (version PNG 98 × 79 px : `logo_wc2.png`) |
+| Exports grand format | `docs/marque/logo_webycloudy_transparent.png` (1200 px, fond transparent) et `docs/marque/logo_webycloudy_fond_nuit.png` (sur `#070d1f`), rendus fidèles du SVG |
 | Contenu du fichier | l'aigle **et**, dessous, le nom « weby cloudy » (minuscules, deux mots, police étroite) |
 | Couleurs du fichier | aigle or `#cc921f` ; nom or `#cc921f` cerné d'or clair `#e6c584` |
 | Aigle seul | **aucun fichier à ce jour** (à créer) |
@@ -152,10 +153,30 @@ blancs très discrète, cartes à bordure fine et translucide.
   titres en Poppins, or `#e0ab3c` pour les filets et les titres de section. Version claire à valider par le
   propriétaire (non définie dans le site).
 
-## 8. À compléter
+## 8. Dans Canva
+
+Compte Canva du propriétaire, dossier **`webycloudy`** (le dossier historique, avec `logo`, `CARTE DE VISITE`,
+`Instagram`, `annonce le bon coin`…) :
+
+| Emplacement Canva | Contenu |
+|---|---|
+| `webycloudy / logo` | les deux exports du logo ci-dessus |
+| `webycloudy / Charte graphique` | la planche de marque (`docs/marque/planche_marque_webycloudy.png`) et le Doc « Charte graphique — WebyCloudy » (ce document mis en forme) |
+
+**Kit de marque Canva** : le connecteur Canva ne permet pas de créer ni de modifier un kit de marque ; il se
+remplit à la main (Accueil → Menu → Marque → Kits de marque) :
+- **Couleurs** — palette « Fonds » : `#070D1F`, `#0C1530`, `#111C3D` ; palette « Marque » : `#E0AB3C`,
+  `#F3C868`, `#FF8A3D` ; palette « Accents » : `#3FD0FF`, `#5B7CFF`, `#8B5CF6`, `#FF5C8A` ;
+  palette « Texte » : `#FFFFFF`, `#EEF1F8`, `#A7B0CA`.
+- **Polices** — Titre et Sous-titre : Poppins Bold ; Corps de texte : Inter.
+- **Logos** — importer `docs/marque/logo_webycloudy_transparent.png` (aussi dans `webycloudy / logo`).
+
+Si la charte change, mettre à jour ce fichier **et** les éléments Canva (planche, Doc, kit de marque).
+
+## 9. À compléter
 
 - Fichier de l'aigle seul (sans le nom), pour la disposition du site et les petits formats.
 - Écriture officielle du nom dans le logo (« weby cloudy » dans le fichier, « WebyCloudy » sur le site).
 - Version du logo sur fond clair et version monochrome.
-- Exports PNG du logo en plusieurs tailles (le seul PNG à jour, `logo_wc2.png`, fait 98 × 79 px).
+- Exports PNG du logo en petites tailles (favicon, avatar) : un export 1200 px existe dans `docs/marque/`.
 - Fichier de favicon et image de partage (réseaux sociaux).
