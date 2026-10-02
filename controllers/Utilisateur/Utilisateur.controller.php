@@ -1,14 +1,17 @@
 <?php
   require_once("./controllers/MainController.controller.php");
   require_once("models/Utilisateur/Utilisateur.model.php");
+  require_once("models/Espace/Espace.model.php");
 
   class UtilisateurController extends MainController{
 
     private $utilisateurManager;
+    private $espaceManager;
 
     //constructeur pour creer une instance de UtilisateurManager
     public function __construct(){
       $this->utilisateurManager = new UtilisateurManager();
+      $this->espaceManager = new EspaceManager();
     }
 
     //ft qui ouvre la session de l'utilisateur
@@ -183,6 +186,13 @@
       $this->dossierSuppressionImageUtilisateur();
       $dossier = "public/Assets/images/profils/".$login;
       if(is_dir($dossier)) @rmdir($dossier);
+      //Suppression des projets, documents, demandes et messages du client : un futur compte
+      //portant le meme login ne doit rien heriter
+      $fichiers = $this->espaceManager->bdSupprimerDonneesUtilisateur($login);
+      foreach($fichiers as $fichier){
+        $chemin = "storage/documents/".$fichier;
+        if(is_file($chemin)) unlink($chemin);
+      }
 
       if($this->utilisateurManager->bdSuppressionCompte($login)){
         unset($_SESSION['profil']);

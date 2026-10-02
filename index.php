@@ -11,6 +11,7 @@
 
     require_once("./controllers/Toolbox.class.php");
     require_once("./controllers/securite.class.php");
+    require_once("./models/Installation.class.php");
     require_once("./controllers/Visiteur/Visiteur.controller.php");
     require_once("./controllers/Utilisateur/Utilisateur.controller.php");
     require_once("./controllers/Utilisateur/Espace.controller.php");
@@ -39,6 +40,9 @@
     }
 
     try {
+      //premier lancement : creation des tables et du compte administrateur
+      Installation::verifier();
+
       //decoupage de l'url
       $url = [];
       if(empty($_GET['page'])){

@@ -143,6 +143,26 @@
       return $this->requete("UPDATE demandes SET statut = ? WHERE id = ?", [$statut, (int)$id])->rowCount() > 0;
     }
 
+    /* ---------- Suppression d'un compte ---------- */
+
+    //supprime toutes les donnees liees a un login (projets, documents, demandes, messages) ; renvoie les fichiers a effacer
+    public function bdSupprimerDonneesUtilisateur($login){
+      $bdd = $this->getBdd();
+      $fichiers = $this->requete("SELECT fichier FROM documents WHERE login = ?", [$login])->fetchAll(PDO::FETCH_COLUMN);
+      $bdd->beginTransaction();
+      try {
+        $this->requete("DELETE FROM documents WHERE login = ?", [$login]);
+        $this->requete("DELETE FROM projets WHERE login = ?", [$login]);
+        $this->requete("DELETE m FROM messages m INNER JOIN demandes d ON d.id = m.demande_id WHERE d.login = ?", [$login]);
+        $this->requete("DELETE FROM demandes WHERE login = ?", [$login]);
+        $bdd->commit();
+      } catch (Exception $e) {
+        $bdd->rollBack();
+        throw $e;
+      }
+      return $fichiers;
+    }
+
     /* ---------- Tableaux de bord ---------- */
 
     //compteurs pour l'administration

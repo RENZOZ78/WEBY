@@ -1,7 +1,7 @@
 RewriteEngine On
 
 # Interdit l'accès direct au code, à la configuration et au schéma SQL
-RewriteRule ^(config|controllers|models|views|inc|node_modules)(/|$) - [F,L]
+RewriteRule ^(config|controllers|models|views|inc|storage|node_modules)(/|$) - [F,L]
 RewriteRule \.(sql|md|lock)$ - [F,L]
 RewriteRule (^|/)\. - [F,L]
 

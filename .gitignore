@@ -13,3 +13,4 @@ public/Assets/images/profils/*/
 # Documents des clients (déposés par l'agence)
 storage/documents/*
 !storage/documents/.gitkeep
+storage/.installed
