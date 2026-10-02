@@ -44,6 +44,27 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Dossier `backup_v1`** (ancien site statique, à côté de `public_html`) : à supprimer quand la V2 est validée.
 - [ ] Fichiers inutiles servis en production : `.idea/`, `.vscode/`, `node_modules/` sont encore suivis par git et
       donc déployés. Les retirer du dépôt (`git rm --cached`) en prévenant le propriétaire.
+- [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : définir le logo sur fond clair et en monochrome,
+      exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-02 — Charte graphique extraite du site
+
+**Demande** : extraire la charte graphique (kit de marque) du site et l'ajouter au dépôt en bonne et due forme.
+
+**Réalisé** :
+- `docs/CHARTE_GRAPHIQUE.md` : logo, couleurs (bleu nuit, or, accents cyan / violet / rose), dégradés,
+  typographies (Poppins, Inter), arrondis, ombres, composants, règles pour Instagram, Leboncoin et documents.
+  Valeurs relevées dans `public/CSS/theme.css` et `inc/header.php` ; rien n'a été inventé ni modifié sur le site.
+- Rédigé depuis Chat, qui n'a pas le droit d'écriture sur le dépôt : fichier remis au propriétaire, puis ajouté
+  au dépôt par Claude Code avec cette entrée.
+
+**Fichiers / zones touchés** : `docs/CHARTE_GRAPHIQUE.md`, `docs/CONTEXTE_ACTIF.md`, `README.md`
+**Vérifications** : chaque valeur comparée aux variables `--wc-*` du thème en ligne ; documentation seule.
+**Référence** : PR « Charte graphique »
+**Suites** : version du logo sur fond clair et monochrome ; couleurs exactes de l'emblème ; exports PNG du logo ;
+version claire pour les documents imprimés à valider.
 
 ---
 
