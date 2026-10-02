@@ -1,0 +1,7 @@
+# Les documents des clients ne sont jamais servis directement : ils passent par le routeur (controle du proprietaire)
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Deny from all
+</IfModule>

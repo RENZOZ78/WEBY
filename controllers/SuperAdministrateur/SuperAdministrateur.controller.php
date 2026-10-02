@@ -1,6 +1,5 @@
 <?php
   require_once("./controllers/MainController.controller.php");
-  require_once("models/MainManager.model.php");
   require_once("models/SuperAdministrateur/SuperAdministrateur.model.php");
 
   class SAdministrateurController extends MainController{
@@ -12,58 +11,39 @@
     }
 
     public function gestion_full_utilisateur(){
-    $utilisateurs = $this->sAdministrateurManager->getUtilisateurs();
       $data_page = [
         "view" => "./views/SuperAdministrateur/gestionFullUtilisateur.view.php",
-        "custom_css" => ["creerCompte.css"],
-        "H1" => "Administration Complète des Utilisateurs",
+        "custom_css" => [],
+        "H1" => "Administration des utilisateurs",
         "uvp"=> "Modifiez toutes les informations des utilisateurs.",
-        "utilisateurs" => $utilisateurs,
+        "page_description" => "Administration complète des utilisateurs",
+        "utilisateurs" => $this->sAdministrateurManager->getUtilisateurs(),
         "page_title"=> "WebyCloudy | Administration Utilisateurs",
+        "hero_compact" => true,
+        "espace" => "admin",
         "template" => "views/common/template.php"
       ];
       $this->genererPage($data_page);
     }
 
-    public function validation_modification_full_utilisateur($login,$role,$mail,$is_valid){
-      if($this->sAdministrateurManager->bdModificationRoleUser($login,$role,$mail,$is_valid)){
-        Toolbox::ajouterMessageAlerte("Le rôle a bien été modifié !", Toolbox::COULEUR_VERTE);
+    public function validation_modification_full_utilisateur($login,$mail,$role,$is_valid){
+      $is_valid = ($is_valid === "1") ? 1 : 0;
+      if(!filter_var(html_entity_decode($mail), FILTER_VALIDATE_EMAIL)){
+        Toolbox::ajouterMessageAlerte("L'adresse mail n'est pas valide.", Toolbox::COULEUR_ROUGE);
+      }elseif(!Securite::estRoleValide($role)){
+        Toolbox::ajouterMessageAlerte("Le rôle demandé n'existe pas.", Toolbox::COULEUR_ROUGE);
+      }elseif($login === $_SESSION['profil']['login'] && ($role !== "superAdministrateur" || $is_valid !== 1)){
+        Toolbox::ajouterMessageAlerte("Vous ne pouvez pas retirer vos propres droits de super administrateur.", Toolbox::COULEUR_ROUGE);
+      }elseif($this->sAdministrateurManager->bdModificationFullUtilisateur($login,$mail,$role,$is_valid)){
+        Toolbox::ajouterMessageAlerte("L'utilisateur ".$login." a bien été modifié !", Toolbox::COULEUR_VERTE);
       }else{
-        Toolbox::ajouterMessageAlerte("Aucune modification de rôle n'a été effectuée !", Toolbox::COULEUR_ROUGE);
+        Toolbox::ajouterMessageAlerte("Aucune modification n'a été effectuée.", Toolbox::COULEUR_ORANGE);
       }
-        header ("Location: ".URL."administration/droits");
+      Toolbox::redirection("administration/gestionFullUtilisateur");
     }
 
-    public function gestion_commandes(){
-    $commandes = $this->sAdministrateurManager->getCommandes();
-      $data_page = [
-        "view" => "./views/Administrateur/gestionCommandes.view.php",
-        "custom_css" => ["creerCompte.css"],
-        "H1" => "Gestion des Commandes",
-        "uvp"=> "Consultez l'historique des commandes.",
-        "commandes" => $commandes,
-        "page_title"=> "WebyCloudy | Gestion des Commandes",
-        "template" => "views/common/template.php"
-      ];
-      $this->genererPage($data_page);
-    }
-
-    public function gestion_produits(){
-    $produits = $this->sAdministrateurManager->getProduits();
-      $data_page = [
-        "view" => "./views/Administrateur/gestionProduits.view.php",
-        "custom_css" => ["creerCompte.css"],
-        "H1" => "Gestion des Produits",
-        "uvp"=> "Ajoutez, modifiez ou supprimez des produits.",
-        "produits" => $produits,
-        "page_title"=> "WebyCloudy | Gestion des Produits",
-        "template" => "views/common/template.php"
-      ];
-      $this->genererPage($data_page);
-    }
-
-    public function pageErreur($msg){
-      parent::pageErreur($msg);
+    public function pageErreur($msg, $code = 404){
+      parent::pageErreur($msg, $code);
     }
 
   }

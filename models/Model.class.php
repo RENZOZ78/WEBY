@@ -3,10 +3,11 @@
   abstract class Model{
     private static $pdo;
 
-    //ft qui parametre la connection a la bdd
+    //ft qui parametre la connection a la bdd (identifiants dans config/config.php)
     private static function setBdd(){
-      self::$pdo = new PDO("mysql:host=127.0.0.1;dbname=webycloudy;charset=utf8", "root", "");
-
+      $config = require(__DIR__."/../config/config.php");
+      $dsn = "mysql:host=".$config['db_host'].";dbname=".$config['db_name'].";charset=utf8mb4";
+      self::$pdo = new PDO($dsn, $config['db_user'], $config['db_pass']);
       self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 

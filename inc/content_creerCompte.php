@@ -1,58 +1,60 @@
-
-
-
 <!-- FORMULAIRE DE CREATION DE COMPTE-->
-<section id="aPropos">
-    <div class="container">
-        <div class="row">
-
-
-  <form method="post" action="validation_creerCompte" class="row g-3 needs-validation" novalidate>
-
-    <div class="col-md-4">
-      <label for="login" class="form-label">Login</label>
-      <div class="input-group has-validation">
-        <span class="input-group-text" id="inputGroupPrepend">@</span>
-        <input type="text" class="form-control" id="login" name="login" aria-describedby="inputGroupPrepend" required>
-        <div class="invalid-feedback">
-          Entrez votre login
+<section class="section">
+  <div class="container" style="max-width: 980px;">
+    <div class="auth-split" data-aos="fade-up">
+      <div class="auth-photo">
+        <img src="<?= URL ?>public/Assets/images/entreprise/ent.png" alt="">
+        <div class="caption">
+          <h2>Rejoignez WebyCloudy</h2>
+          <ul>
+            <li><i class="fas fa-circle-check"></i>Gratuit, en 1 minute</li>
+            <li><i class="fas fa-circle-check"></i>Vos projets et documents au même endroit</li>
+            <li><i class="fas fa-circle-check"></i>Réponse de l'agence sous 48h</li>
+          </ul>
         </div>
       </div>
-    </div>
+      <form method="post" action="<?= URL ?>validation_creerCompte" class="form-card needs-validation" novalidate>
+        <?= Securite::csrfField() ?>
+        <h2 class="h4 mb-1">Créez votre compte</h2>
+        <p class="text-muted-wc mb-4">Un mail de validation vous sera envoyé.</p>
 
-    <div class="col-md-4">
-      <label for="password" class="form-label">Mot de passe</label>
-      <input type="password" id="password" name="password" class="form-control" aria-labelledby="passwordHelpBlock" required>
-      <div id="passwordHelpBlock" class="form-text">
-        Votre mot de passe doit avoir 8 caractères, contenir des lettre et de chiffres, ne doit pas contenir d'espace, de caracteres spéciaux, ou emoji.
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <label for="mail" class="form-label">Mail</label>
-      <input type="mail" id="mail" name="mail" class="form-control" aria-labelledby="passwordHelpBlock" required>
-      <div id="mail" class="form-text">
-        Veuillez entrez votre mail
-      </div>
-    </div>
-
-  <div class="col-12">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-      <label class="form-check-label" for="invalidCheck">
-        Agree to terms and conditions
-      </label>
-      <div class="invalid-feedback">
-        Vous devez donner votre accord avant de valider.
-      </div>
-    </div>
-  </div>
-  <div class="col-12">
-    <button class="btn btn-primary" type="submit">Créer !</button>
-  </div>
-</form>
-
-
+        <div class="mb-3">
+          <label for="login" class="form-label">Login</label>
+          <div class="input-group has-validation">
+            <span class="input-group-text"><i class="far fa-user"></i></span>
+            <input type="text" class="form-control" id="login" name="login" autocomplete="username" required maxlength="50">
+            <div class="invalid-feedback">Choisissez un login.</div>
           </div>
-      </div>
-  </section>
+        </div>
+
+        <div class="mb-3">
+          <label for="mail" class="form-label">Email</label>
+          <div class="input-group has-validation">
+            <span class="input-group-text"><i class="far fa-envelope"></i></span>
+            <input type="email" id="mail" name="mail" class="form-control" autocomplete="email" required>
+            <div class="invalid-feedback">Entrez une adresse email valide.</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Mot de passe</label>
+          <div class="input-group has-validation">
+            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+            <input type="password" id="password" name="password" class="form-control" autocomplete="new-password" minlength="8" required aria-describedby="passwordHelp">
+            <div class="invalid-feedback">8 caractères minimum.</div>
+          </div>
+          <div id="passwordHelp" class="form-text">8 caractères minimum. Mélangez lettres et chiffres.</div>
+        </div>
+
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" id="cgu" required>
+          <label class="form-check-label" for="cgu">J'accepte les conditions d'utilisation</label>
+          <div class="invalid-feedback">Vous devez donner votre accord avant de valider.</div>
+        </div>
+
+        <button class="btn btn-gold w-100 btn-lg" type="submit">Créer mon compte</button>
+        <p class="auth-switch mb-0">Déjà inscrit ? <a href="<?= URL ?>login" class="fw-semibold">Se connecter</a></p>
+      </form>
+    </div>
+  </div>
+</section>

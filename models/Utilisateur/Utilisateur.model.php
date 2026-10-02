@@ -10,13 +10,12 @@
       $stmt->execute();
       $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
       $stmt->closeCursor();
-      return $resultat['password'];
+      return $resultat ? $resultat['password'] : null;
     }
     //ft qui verifie si la combinaison login pwd est valide en pbdd
     public function isCombinaisonValide($login, $password){
       $passwordBD = $this->getPasswordUser($login);
-      echo $passwordBD;
-      echo 'la combinaison login password est bonne';
+      if($passwordBD === null) return false;
       return password_verify($password, $passwordBD);
       }
 
@@ -29,7 +28,7 @@
       $stmt->execute();
       $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
       $stmt->closeCursor();
-      return ((int)$resultat['is_valid'] ===0) ? false : true;
+      return $resultat && (int)$resultat['is_valid'] === 1;
     }
 
     //ft qui recupere toutes les infos de l'utilisateur en bdd
@@ -135,7 +134,7 @@
     $stmt->execute();
     $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
-    return $resultat['image'];
+    return $resultat ? $resultat['image'] : null;
   }
 
 

@@ -1,25 +1,18 @@
+// Verifie que les 2 nouveaux mots de passe sont identiques avant d'activer le bouton Valider
+(function () {
+  var nouveauPassword = document.querySelector("#nouveauPassword");
+  var confirmNouveauPassword = document.querySelector("#confirmNouveauPassword");
+  var btnValidation = document.querySelector("#btnValidation");
+  var erreur = document.querySelector("#erreur");
+  if (!nouveauPassword || !confirmNouveauPassword) return;
 
-const nouveauPassword = document.querySelector("#nouveauPassword");
-const confirmNouveauPassword = document.querySelector("#confirmNouveauPassword")
-
-//ft qui ecoute la valeur du champs nouveauPassword
-nouveauPassword.addEventListener("keyup",function(){
-  verificationPassword();
-})
-
-//ft qui ecoute la valeur rentrée dans le champs confirmNouveauPassword
-confirmNouveauPassword.addEventListener("keyup",function(){
-  verificationPassword();
-})
-
-//ft qui verifie si les 2 ,nouveau mdp sont egaux. si ils ne sont pas egaux, le bouton valider estr disable et une alerte apparait
-function verificationPassword(){
-  if(nouveauPassword.value === confirmNouveauPassword.value){
-    document.querySelector("#btnValidation").disabled = false;
-    document.querySelector("#erreur").classList.add("d-none");
-  }else{
-    document.querySelector("#btnValidation").disabled = true;
-    document.querySelector("#erreur").classList.remove("d-none");
-
+  function verificationPassword() {
+    var identiques = nouveauPassword.value === confirmNouveauPassword.value;
+    var rempli = nouveauPassword.value.length > 0;
+    btnValidation.disabled = !(identiques && rempli);
+    erreur.classList.toggle("d-none", identiques || confirmNouveauPassword.value === "");
   }
-}
+
+  nouveauPassword.addEventListener("input", verificationPassword);
+  confirmNouveauPassword.addEventListener("input", verificationPassword);
+})();

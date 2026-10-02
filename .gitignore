@@ -1,0 +1,16 @@
+# Dépendances et fichiers d'IDE
+node_modules/
+.idea/
+.vscode/
+
+# Configuration locale éventuelle (identifiants)
+config/config.local.php
+.env
+
+# Photos de profil envoyées par les utilisateurs (sauf l'image par défaut)
+public/Assets/images/profils/*/
+
+# Documents des clients (déposés par l'agence)
+storage/documents/*
+!storage/documents/.gitkeep
+storage/.installed
