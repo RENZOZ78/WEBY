@@ -46,7 +46,41 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       donc déployés. Les retirer du dépôt (`git rm --cached`) en prévenant le propriétaire.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
-      sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+      sur fond clair et en monochrome, exports PNG en petites tailles (favicon, avatar), valider la version claire
+      pour les documents imprimés.
+- [ ] **Kit de marque Canva** à remplir à la main (couleurs, polices, logo : valeurs dans la charte, section 8) ;
+      vérifier le kit sans nom déjà présent ; supprimer le dossier Canva `WebyCloudy` vide (le bon est `webycloudy`).
+
+---
+
+## 2026-10-02 — Charte graphique intégrée dans Canva
+
+**Demande** : intégrer dans le compte Canva, pour le projet WebyCloudy, la charte graphique décidée et
+consignée sur GitHub.
+
+**Réalisé** (via le connecteur Canva, depuis Claude Code) :
+- Dossier retenu : **`webycloudy`**, le dossier historique du compte (sous-dossiers `logo`, `CARTE DE VISITE`,
+  `Instagram`, `annonce le bon coin`, `Business plan`…), signalé par le propriétaire. Un dossier `WebyCloudy`
+  vide, créé le même jour à la racine, n'a pas été utilisé.
+- Exports du logo rendus depuis `logo_aigle.svg` (Chromium, sans retouche) : 1200 px fond transparent et version
+  sur bleu nuit, dans `docs/marque/`, importés dans `webycloudy / logo` (qui était vide).
+- Planche de marque (couleurs, dégradés, Poppins / Inter, boutons, proportions, règles d'usage) générée depuis
+  les valeurs de la charte : `docs/marque/planche_marque_webycloudy.png`, importée dans le nouveau sous-dossier
+  `webycloudy / Charte graphique`.
+- Doc Canva « Charte graphique — WebyCloudy » (texte de la charte, sans réécriture par l'IA de Canva) dans
+  `webycloudy / Charte graphique`.
+- `docs/CHARTE_GRAPHIQUE.md` : section « Dans Canva » (emplacements, valeurs à saisir dans le kit de marque).
+
+**Non fait** : le **kit de marque Canva** (couleurs, polices, logo) — le connecteur Canva ne permet ni de le
+créer ni de le modifier. Valeurs prêtes à saisir dans la charte, section 8. Le compte a déjà un kit de marque
+sans nom (en plus de « bapti couverture » et « Pablo Transports ») : à vérifier s'il s'agit de WebyCloudy.
+
+**Fichiers / zones touchés** : `docs/marque/*.png`, `docs/CHARTE_GRAPHIQUE.md`, `docs/CONTEXTE_ACTIF.md`,
+`docs/DECISIONS.md` ; Canva : dossier `webycloudy`
+**Vérifications** : images relues après rendu (polices Poppins et Inter bien chargées) ; imports Canva au statut
+« success » ; contenu des dossiers Canva listé après rangement ; aucun fichier du site modifié.
+**Référence** : PR de la branche `claude/upbeat-maxwell-a2rnfd`
+**Suites** : remplir le kit de marque Canva à la main ; supprimer le dossier Canva `WebyCloudy` vide si inutile.
 
 ---
 
