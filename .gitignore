@@ -14,3 +14,5 @@ public/Assets/images/profils/*/
 storage/documents/*
 !storage/documents/.gitkeep
 storage/.installed
+storage/.schema
+storage/.sel

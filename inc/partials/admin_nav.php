@@ -20,4 +20,7 @@
     <a href="<?= URL ?>administration/<?= $route ?>" class="<?= $pageAdminCourante === $route ? 'active' : '' ?>"><i class="fas <?= $lien[0] ?>"></i><?= $lien[1] ?></a>
   <?php endforeach; ?>
   <a href="<?= URL ?>administration/nouveauProjet" class="ms-lg-auto"><i class="fas fa-plus"></i>Nouveau projet</a>
+  <?php if(Securite::estSuperAdministrateur()) : ?>
+    <a href="<?= URL ?>supervision/tableau"><i class="fas fa-satellite-dish"></i>Supervision</a>
+  <?php endif; ?>
 </nav>

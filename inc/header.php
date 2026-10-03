@@ -46,6 +46,13 @@
           <a href="<?= URL ?>contact" class="nav-link<?= $actif("contact") ?>">Contact</a>
         </li>
 
+        <!-- supervision (super administrateur) -->
+        <?php if(Securite::estSuperAdministrateur()) : ?>
+          <li class="nav-item">
+            <a href="<?= URL ?>supervision/tableau" class="nav-link<?= $actif("supervision") ?>"><i class="fas fa-satellite-dish me-1"></i>Supervision</a>
+          </li>
+        <?php endif; ?>
+
         <!-- espace administration -->
         <?php if($estAdmin) : ?>
           <li class="nav-item dropdown">

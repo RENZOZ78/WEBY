@@ -31,12 +31,18 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 - `controllers/`, `models/`, `views/` : MVC par rôle (Visiteur, Utilisateur, Administrateur, SuperAdministrateur)
 - `inc/content_*.php` : contenu des pages publiques ; `inc/partials/` : sections réutilisables (tarifs, réalisations, contact, cycle animé du hero de l'accueil…)
 - `public/CSS/theme.css` : thème du site ; `public/Javascript/` : scripts
+- `models/Supervision/` : mesure d'audience (`Audience`), journal d'activité (`Journal::ajouter()` à appeler
+  pour chaque action notable), statistiques de la supervision ; vues dans `views/SuperAdministrateur/supervision/`
 - `storage/documents/` : fichiers des clients (hors dépôt git)
 
 ## Espace client
 
 - **Client** (`compte/...`) : tableau de bord, suivi de l'avancement de ses projets (devis → en cours → validation → livré),
   téléchargement de ses documents, demandes avec fil de messages, profil.
+- **Supervision** (`supervision/...`, super administrateur uniquement) : tableau de bord personnalisable (blocs,
+  ordre, largeur, période, page d'arrivée après connexion), audience des pages publiques (mesure interne sans cookie
+  ni IP : visiteurs, pages, provenance, appareils, heures), journal d'activité (connexions et échecs, comptes,
+  demandes, projets, documents, droits), activité de chaque compte, état technique du site.
 - **Administration** (`administration/...`) : tableau de bord, demandes (formulaire de contact + demandes des clients,
   réponse par mail et dans l'espace, statut), projets (création pour un client, étape, message visible, dépôt de documents),
   clients et droits.
@@ -46,6 +52,8 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 
 - **utilisateur** (client) : espace client complet, profil, mail, mot de passe, photo, suppression du compte
 - **administrateur** : demandes, projets, documents, clients ; peut passer un utilisateur en administrateur
-- **superAdministrateur** : gestion complète (mail, rôle, validation du compte) de tous les utilisateurs
+- **superAdministrateur** : gestion complète (mail, rôle, validation du compte) de tous les utilisateurs, et accès
+  exclusif à la supervision. Il arrive sur la supervision après connexion (réglable dans *Personnaliser*). Son rôle est
+  revérifié en base à chaque page de supervision : un compte rétrogradé perd l'accès immédiatement.
 
 Toutes les requêtes POST sont protégées par un jeton CSRF (`Securite::csrfField()` à inclure dans chaque formulaire).
