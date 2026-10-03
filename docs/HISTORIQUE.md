@@ -81,7 +81,7 @@ circulaire.
 Chromium à 390, 992, 1100, 1200, 1280, 1440 et 1920 px : aucune erreur JavaScript, pas de défilement horizontal,
 pas de chevauchement titre / cycle ; survol (pause puis reprise) et mouvement réduit testés ; vidéo du cycle
 enregistrée et vérifiée image par image.
-**Référence** : PR « Cycle animé des prestations »
+**Référence** : PR #9
 **Suites** : faire valider l'ordre et les libellés des étapes par le propriétaire ; contrôler l'animation sur
 le site en ligne après fusion (téléphone et ordinateur).
 
