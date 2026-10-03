@@ -36,9 +36,9 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Valider les tarifs indicatifs** ajoutés faute d'information dans le brief : forfait mensuel de gestion,
       facturation, image de marque (« sur devis »), acquisition clients (300 €/mois), site + blog (450 €),
       e-commerce (700 €). Fichiers `inc/content_*.php`.
-- [ ] **Cycle animé du hero de l'accueil** (`inc/partials/cycle.php`) : textes réécrits le 2026-10-03 à la demande
-      du propriétaire (Étude de marché → Business plan → Statuts & Kbis → Site internet → Marketing → Gestion & RH) ;
-      à valider sur le site en ligne après fusion.
+- [ ] **Cycle animé du hero de l'accueil** (`inc/partials/cycle.php`) : restructuré le 2026-10-03 en quatre phases à
+      la demande du propriétaire (Conception → Création → Gestion → Performance) ; à valider sur le site en ligne
+      après fusion.
 - [ ] **Photos réelles** de l'équipe ou des locaux à intégrer à la place des photos de stock si disponibles.
 - [ ] **Anciennes copies du site** sur `webycloudy.fr` et `webycloudy.xyz` (hébergement Hostinger) : ancienne
       version PHP avec le dossier `.idea`, domaines qui ne pointent pas vers Hostinger. À supprimer ou à rediriger.
@@ -48,6 +48,45 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-03 — Cycle animé : les quatre temps Conception, Création, Gestion, Performance
+
+**Demande** : suivre le cycle logique des choses — on commence par la conception, ensuite la création, ensuite la
+gestion et la performance — avec des mots plus éloquents pour le cercle et ses étapes.
+
+**Réalisé** :
+- Le cercle passe de six prestations à **quatre phases**. La lecture commence en haut à gauche et se fait dans le
+  sens des aiguilles d'une montre, comme une page. Ensuite, la croissance nourrit de nouveaux projets et le cycle
+  recommence. Chaque phase porte son nom et ses deux prestations, placés à l'extérieur du cercle. Au centre
+  s'affichent une promesse et une phrase de détail :
+
+  | Phase | Prestations | Promesse | Détail |
+  |---|---|---|---|
+  | Conception | Étude de marché · Business plan | Donner forme à votre idée | Un projet étudié, chiffré et prêt à convaincre. |
+  | Création | Statuts & Kbis · Site & identité | Donner vie à votre entreprise | Société immatriculée, image affirmée, site en ligne. |
+  | Gestion | Devis & factures · Paie & RH | Gérer en toute sérénité | Administratif, paie et RH : nous gérons, vous validez. |
+  | Performance | Stratégie marketing · Acquisition clients | Accélérer votre croissance | Une stratégie mesurable pour vendre plus, et plus cher. |
+
+  Les formules « Nous gérons, vous validez » et « vendre plus, et plus cher » sont celles des pages Gestion et
+  Marketing.
+- Une couleur par phase, tirée de la charte : or, orange, cyan, violet. L'arc de progression se colore phase par
+  phase, et le centre comme le point lumineux prennent la couleur de la phase en cours.
+- Icônes : compas (conception), fusée (création), dossier (gestion), courbe de croissance (performance).
+- Rythme : 3,6 s par phase, dont la moitié de pause ; un tour dure environ 14 s.
+- Petits écrans : le logo du centre est masqué jusqu'à 425 px de large environ, il est déjà dans le menu. Le
+  détail est masqué en dessous de 335 px. La marge au-dessus du cercle est augmentée sur mobile pour les libellés
+  du haut.
+
+**Fichiers / zones touchés** : `inc/partials/cycle.php`, `public/CSS/theme.css`, `public/Javascript/main.js`,
+`docs/DECISIONS.md`, `docs/CHARTE_GRAPHIQUE.md`
+**Vérifications** : `php -l` ; Chromium à 320, 360, 390, 412, 430, 768, 992, 1200 et 1440 px. Pour chaque phase,
+contrôle automatique qu'aucun texte du centre ne touche une pastille ou un libellé, et qu'aucun libellé ne touche
+un autre libellé, une flèche, les badges du hero (mobile) ou le menu (ordinateur). Aucun défilement horizontal,
+aucune erreur JavaScript. Pause au survol, reprise et mouvement réduit retestés ; vidéo d'un tour vérifiée.
+**Référence** : PR #9
+**Suites** : validation par le propriétaire sur le site en ligne.
 
 ---
 

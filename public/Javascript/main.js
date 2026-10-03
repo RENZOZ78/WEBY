@@ -77,18 +77,21 @@
     }, 2800);
   });
 
-  // cycle des prestations du hero : le point lumineux fait le tour, marque une pause sur chaque etape
-  // et l'allume ; l'arc de progression le suit. Survol ou focus d'une etape : pause sur celle-ci.
+  // cycle des prestations du hero : le point lumineux fait le tour, marque une pause sur chaque phase
+  // et l'allume ; l'arc de progression le suit, un segment de couleur par phase.
+  // Survol ou focus d'une phase : pause sur celle-ci.
   document.querySelectorAll(".wc-cycle").forEach(function (cycle) {
     var etapes = cycle.querySelectorAll(".cycle-step");
     var n = etapes.length;
     var orbite = cycle.querySelector(".cycle-orbit");
     var arc = cycle.querySelector(".ring-progress");
+    var segments = cycle.querySelectorAll(".ring-seg");
+    var depart = parseFloat(cycle.getAttribute("data-depart")) || 0;
     var num = cycle.querySelector(".cycle-num b");
     var titre = cycle.querySelector(".cycle-titre");
     var texte = cycle.querySelector(".cycle-texte");
     var phase = cycle.querySelector(".cycle-phase");
-    var duree = 2800, pose = .45, tour = duree * n;
+    var duree = 3600, pose = .5, tour = duree * n;
     var active = 0, survol = -1, changement = null;
 
     function afficher(k) {
@@ -103,7 +106,9 @@
         titre.textContent = el.getAttribute("data-titre");
         texte.textContent = el.getAttribute("data-texte");
         phase.textContent = el.getAttribute("data-phase");
-        cycle.classList.toggle("cyan", el.classList.contains("cyan"));
+        // le centre et le point lumineux prennent la couleur de la phase
+        var style = getComputedStyle(el);
+        ["--c", "--g", "--gt"].forEach(function (v) { cycle.style.setProperty(v, style.getPropertyValue(v)); });
         cycle.classList.remove("change");
       }, 250);
     }
@@ -139,15 +144,16 @@
       var pas = u < pose ? 0 : adoucir((u - pose) / (1 - pose));
       var position = k + pas; // en nombre d'etapes parcourues, de 0 a n
 
-      orbite.style.transform = "rotate(" + (position * 360 / n) + "deg)";
-      if (k === 0 && u < pose && !premierTour) {
-        // le tour vient de se boucler : l'arc complet s'efface avant de repartir
-        arc.style.strokeDashoffset = 0;
-        arc.style.opacity = 1 - u / pose;
-      } else {
-        arc.style.strokeDashoffset = n - position;
-        arc.style.opacity = 1;
-      }
+      orbite.style.transform = "rotate(" + (depart + position * 360 / n) + "deg)";
+      // le tour vient de se boucler : l'arc complet s'efface avant de repartir
+      var bouclage = k === 0 && u < pose && !premierTour;
+      arc.style.opacity = bouclage ? 1 - u / pose : 1;
+      segments.forEach(function (seg, j) {
+        var longueur = bouclage ? 1 : Math.max(0, Math.min(1, position - j));
+        seg.style.opacity = longueur > 0 ? 1 : 0;
+        seg.style.strokeDasharray = longueur + " " + n;
+        seg.style.strokeDashoffset = -j;
+      });
       var atteinte = Math.floor(position + 1e-6) % n;
       for (var j = 0; j <= Math.min(Math.floor(position + 1e-6), n - 1); j++) etapes[j].classList.add("vu");
       if (survol < 0) afficher(atteinte);

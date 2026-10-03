@@ -6,7 +6,7 @@ et ajouter la nouvelle (on garde la trace). Le détail du contexte est dans [`HI
 
 | Date | Décision | Raison |
 |---|---|---|
-| 2026-10-03 | Hero de l'accueil : cycle animé des prestations (Étude de marché → Business plan → Statuts & Kbis → Site internet → Marketing → Gestion & RH ; pour chacune, l'objectif client au centre) à la place de la photo et de la maquette chiffrée | montrer tout l'accompagnement d'un coup d'œil, sans chiffres inventés |
+| 2026-10-03 | Hero de l'accueil : cycle animé en quatre phases, Conception → Création → Gestion → Performance (deux prestations et une promesse par phase), à la place de la photo et de la maquette chiffrée | le cycle logique d'une entreprise, voulu par le propriétaire ; tout l'accompagnement d'un coup d'œil, sans chiffres inventés |
 | 2026-10-02 | GitHub (`docs/`) est la source de vérité commune à Claude Code, Cowork et Chat | un seul état du projet, lu avant d'agir, mis à jour après |
 | 2026-10-02 | Adresse du site : `info@webycloudy.com` (affichage, notifications, expéditeur) | boîte déjà utilisée, cohérente avec le SPF du domaine |
 | 2026-10-02 | Branche `V2` = production, déploiement Git automatique Hostinger ; travail sur branche + PR | mise en ligne sans manipulation, retour arrière par revert |
