@@ -36,9 +36,12 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Valider les tarifs indicatifs** ajoutés faute d'information dans le brief : forfait mensuel de gestion,
       facturation, image de marque (« sur devis »), acquisition clients (300 €/mois), site + blog (450 €),
       e-commerce (700 €). Fichiers `inc/content_*.php`.
-- [ ] **Cycle animé du hero de l'accueil** (`inc/partials/cycle.php`) : mis en ligne le 2026-10-03 (fusion de la
-      PR #9 dans `V2`, version validée par le propriétaire). Contrôler le rendu sur le site en ligne, sur téléphone
-      et sur ordinateur, avec la police Poppins.
+- [ ] **Cycle animé du hero de l'accueil** (`inc/partials/cycle.php`) : réellement en ligne depuis le redéploiement
+      du 2026-10-03 au soir (PR #9 et #10). Contrôler le rendu sur le site en ligne, sur téléphone et sur
+      ordinateur, avec la police Poppins.
+- [ ] **Déploiement automatique Hostinger** : il ne s'est plus déclenché entre la PR #4 et le 2026-10-03 (relancé à la
+      main). Après chaque fusion dans `V2`, vérifier que le serveur a reçu la nouvelle version ; chercher la cause
+      (webhook GitHub de l'installation Hostinger, à voir dans hPanel *Sites → webycloudy.com → Avancé → Git*).
 - [ ] **Photos réelles** de l'équipe ou des locaux à intégrer à la place des photos de stock si disponibles.
 - [ ] **Anciennes copies du site** sur `webycloudy.fr` et `webycloudy.xyz` (hébergement Hostinger) : ancienne
       version PHP avec le dossier `.idea`, domaines qui ne pointent pas vers Hostinger. À supprimer ou à rediriger.
@@ -48,6 +51,37 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-03 — Production bloquée depuis le 2 octobre : redéploiement et vérification de Hostinger
+
+**Demande** : reprendre le projet du cycle animé, relire l'historique et vérifier que la connexion avec Hostinger
+fonctionne (le propriétaire ne voyait toujours pas l'animation après les PR #9 et #10).
+
+**Réalisé** :
+- Connecteur Hostinger : **opérationnel** dans cette session (lecture des réglages Git, des fichiers et des crons).
+  Le site lui-même reste inaccessible depuis l'environnement de Claude Code (politique réseau).
+- Cause réelle trouvée : **le déploiement automatique ne partait plus depuis la PR #4** (2 octobre au matin).
+  Sur le serveur, il n'y avait ni `CLAUDE.md`, ni `docs/`, ni `inc/partials/cycle.php`, et `template.php` était
+  l'ancienne version. Les PR #5, #6, #7, #9 et #10 n'avaient jamais été mises en ligne. Ce n'était pas un problème
+  de cache.
+- Réglages Git vérifiés (dépôt `RENZOZ78/WEBY`, branche `V2`, racine du site, déploiement actif, installation
+  GitHub active), puis ré-enregistrés à l'identique par l'API (`hosting_git_update-auto-deployment-settings`) :
+  le déploiement est parti immédiatement.
+- Après déploiement : `cycle.php`, `theme.css`, `main.js`, `template.php` (liens `?v=`) et `docs/HISTORIQUE.md`
+  ont exactement la taille de la dernière version de `V2` (commit `10c73a6`, PR #10). La production est à jour.
+- Contrôles annexes : aucune tâche cron sur le compte ; les fichiers `.md` (dont `docs/`) sont bien refusés par
+  `.htaccess`, la documentation n'est donc pas lisible depuis le site.
+
+**Fichiers / zones touchés** : Hostinger : redéploiement Git de `webycloudy.com` ; `docs/HISTORIQUE.md`,
+`docs/DEPLOIEMENT.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : comparaison des fichiers du serveur avec `V2` par l'API de fichiers Hostinger (voir ci-dessus).
+Rendu visuel du site en ligne non vérifiable depuis cet environnement.
+**Référence** : PR de cette entrée (documentation uniquement)
+**Suites** : le propriétaire vérifie le cycle animé sur https://webycloudy.com (téléphone et ordinateur). Après
+chaque fusion dans `V2`, contrôler que le serveur a bien reçu la nouvelle version ; si non, redéployer comme
+ci-dessus. Trouver pourquoi le déclenchement automatique ne part plus (webhook GitHub de Hostinger).
 
 ---
 

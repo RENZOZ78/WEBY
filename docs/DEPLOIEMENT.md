@@ -4,7 +4,7 @@
 **À mettre à jour à chaque changement côté serveur** (voir [`CLAUDE.md`](../CLAUDE.md)).
 Aucun mot de passe ici : ils sont dans hPanel et dans `config/config.local.php` sur le serveur.
 
-Dernière mise à jour : 2026-10-02
+Dernière mise à jour : 2026-10-03
 
 ## Vue d'ensemble
 
@@ -28,6 +28,15 @@ Le déploiement Git automatique de Hostinger est actif sur la branche `V2` :
 Si un déploiement ne part pas, le relancer en ré-enregistrant les réglages dans hPanel
 (*Sites → webycloudy.com → Avancé → Git*), ou par l'API Hostinger
 (`hosting_git_update-auto-deployment-settings`, mêmes valeurs) : l'enregistrement déploie immédiatement.
+
+**Attention** : entre le 2026-10-02 (PR #4) et le 2026-10-03, aucune fusion n'a été déployée sans que rien ne le
+signale (PR #5 à #10 absentes du serveur). Après chaque fusion, **vérifier que la production a bien changé** :
+par l'API de fichiers Hostinger (`hosting_files_website-content` / `hosting_files_list-website-and-directories`),
+comparer un fichier modifié avec `V2` ; ou dans le navigateur, regarder le code source de la page. Sinon, relancer
+le déploiement comme ci-dessus. Dernier déploiement contrôlé : commit `10c73a6` (PR #10), le 2026-10-03.
+
+Réglages en place (vérifiés le 2026-10-03) : installation GitHub `RENZOZ78` active, dépôt `RENZOZ78/WEBY`,
+branche `V2`, déploiement à la racine du site (`public_html`), déploiement automatique activé.
 
 Fichiers présents sur le serveur mais **absents du dépôt** (le déploiement ne les écrase pas) :
 - `config/config.local.php` : identifiants de la base, adresse de contact, compte super-admin initial.
