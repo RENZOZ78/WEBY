@@ -36,8 +36,9 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Valider les tarifs indicatifs** ajoutés faute d'information dans le brief : forfait mensuel de gestion,
       facturation, image de marque (« sur devis »), acquisition clients (300 €/mois), site + blog (450 €),
       e-commerce (700 €). Fichiers `inc/content_*.php`.
-- [ ] **Cycle animé du hero de l'accueil** (`inc/partials/cycle.php`) : valider avec le propriétaire l'ordre et
-      les libellés des six étapes (Imaginer, Financer, Créer, Construire, Promouvoir, Gérer) et les textes courts.
+- [ ] **Cycle animé du hero de l'accueil** (`inc/partials/cycle.php`) : textes réécrits le 2026-10-03 à la demande
+      du propriétaire (Étude de marché → Business plan → Statuts & Kbis → Site internet → Marketing → Gestion & RH) ;
+      à valider sur le site en ligne après fusion.
 - [ ] **Photos réelles** de l'équipe ou des locaux à intégrer à la place des photos de stock si disponibles.
 - [ ] **Anciennes copies du site** sur `webycloudy.fr` et `webycloudy.xyz` (hébergement Hostinger) : ancienne
       version PHP avec le dossier `.idea`, domaines qui ne pointent pas vers Hostinger. À supprimer ou à rediriger.
@@ -47,6 +48,42 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-03 — Cycle animé : textes plus parlants et plus professionnels
+
+**Demande** : les textes du cercle ne sont pas assez parlants ni assez professionnels ; trouver des textes qui
+suivent mieux la logique de ce qui est fait.
+
+**Réalisé** :
+- Chaque étape a maintenant trois niveaux de texte, repris du vocabulaire des pages prestations :
+  - sous la pastille, **la prestation** telle qu'un client la cherche ;
+  - au centre, **l'objectif atteint pour le client** ;
+  - en dessous, **le détail concret** de ce qui est livré.
+- Au centre, la phase s'affiche aussi : « 01 / 06 · LANCEMENT » en or, « 04 / 06 · CROISSANCE » en cyan.
+
+  | Prestation | Objectif | Détail |
+  |---|---|---|
+  | Étude de marché | Valider votre idée | Analyse du marché, de la concurrence et de vos clients cibles |
+  | Business plan | Convaincre votre banque | Prévisionnel financier sur 3 ou 5 ans et dossier de prêt |
+  | Statuts & Kbis | Créer votre société | Choix du statut, immatriculation et aides ACRE / ARCE |
+  | Site internet | Être visible en ligne | Site vitrine ou e-commerce, référencement Google et maintenance |
+  | Marketing | Attirer vos clients | Plan d'action, image de marque, réseaux sociaux et publicité |
+  | Gestion & RH | Déléguer votre gestion | Devis et factures, fiches de paie, contrats de travail |
+
+- Icône de la première étape : loupe sur graphique (celle de l'étude de marché sur le site) au lieu de l'ampoule.
+- Mise en page du centre adaptée aux titres plus longs (taille réduite, coupures équilibrées). Sur les téléphones
+  de moins de 385 px de large (dont les Android à 360 px), le logo du centre est masqué : il est déjà dans le menu.
+  En dessous de 335 px, le détail et le « / 06 » sont masqués aussi : il reste la phase et l'objectif.
+
+**Fichiers / zones touchés** : `inc/partials/cycle.php`, `public/CSS/theme.css`, `public/Javascript/main.js`,
+`docs/DECISIONS.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : `php -l` ; Chromium à 320, 360, 390, 768, 992, 1200 et 1440 px. Pour chacune des six étapes,
+contrôle automatique qu'aucun texte du centre ne touche une pastille ou un libellé ; aucun défilement horizontal,
+aucune erreur JavaScript. Pause au survol, reprise et mouvement réduit retestés ; vidéo d'un tour vérifiée.
+**Référence** : PR #9
+**Suites** : validation des textes par le propriétaire sur le site en ligne.
 
 ---
 

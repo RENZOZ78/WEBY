@@ -87,6 +87,7 @@
     var num = cycle.querySelector(".cycle-num b");
     var titre = cycle.querySelector(".cycle-titre");
     var texte = cycle.querySelector(".cycle-texte");
+    var phase = cycle.querySelector(".cycle-phase");
     var duree = 2800, pose = .45, tour = duree * n;
     var active = 0, survol = -1, changement = null;
 
@@ -99,8 +100,9 @@
       changement = setTimeout(function () {
         var el = etapes[k];
         num.textContent = (k < 9 ? "0" : "") + (k + 1);
-        titre.textContent = el.querySelector(".lbl").textContent;
+        titre.textContent = el.getAttribute("data-titre");
         texte.textContent = el.getAttribute("data-texte");
+        phase.textContent = el.getAttribute("data-phase");
         cycle.classList.toggle("cyan", el.classList.contains("cyan"));
         cycle.classList.remove("change");
       }, 250);

@@ -547,21 +547,38 @@ a { text-decoration: none; }
 @keyframes arrow-nudge { 0%, 100% { transform: translateX(-2px); opacity: .5; } 50% { transform: translateX(2px); opacity: 1; } }
 
 .cycle-center {
-  position: absolute; left: 50%; top: 50%; width: 52%; transform: translate(-50%, -50%); z-index: 1;
+  position: absolute; left: 50%; top: 50%; width: 47%; transform: translate(-50%, -50%); z-index: 1;
   display: flex; flex-direction: column; align-items: center; text-align: center;
 }
 .cycle-center img { width: clamp(42px, 14cqw, 74px); height: auto; filter: drop-shadow(0 0 12px rgba(224, 171, 60, .5)); margin-bottom: .5rem; transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
 .wc-cycle.boucle .cycle-center img { transform: scale(1.12) rotate(-4deg); }
 .cycle-num { font-size: clamp(.62rem, 2.3cqw, .75rem); letter-spacing: .16em; color: var(--wc-muted); font-weight: 600; }
-.cycle-num b { color: var(--wc-gold-2); }
+.cycle-num b, .cycle-phase { color: var(--wc-gold-2); }
+.cycle-phase { text-transform: uppercase; }
+.wc-cycle.cyan .cycle-num b, .wc-cycle.cyan .cycle-phase { color: var(--wc-cyan); }
 .cycle-titre {
-  display: block; font-family: var(--wc-font-title); font-weight: 700; font-size: clamp(1.15rem, 5.4cqw, 1.75rem); line-height: 1.15; margin: .15rem 0 .3rem;
+  display: block; font-family: var(--wc-font-title); font-weight: 700; font-size: clamp(1rem, 4.6cqw, 1.5rem); line-height: 1.15; margin: .15rem 0 .3rem; text-wrap: balance;
   background: var(--wc-grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .wc-cycle.cyan .cycle-titre { background-image: var(--wc-grad-cyan); }
-.cycle-texte { font-size: clamp(.72rem, 2.9cqw, .92rem); line-height: 1.45; color: rgba(255, 255, 255, .78); min-height: 2.9em; }
+.cycle-texte { font-size: clamp(.72rem, 2.9cqw, .92rem); line-height: 1.45; color: rgba(255, 255, 255, .78); min-height: 2.9em; text-wrap: balance; }
 .cycle-titre, .cycle-texte, .cycle-num { transition: opacity .25s ease, transform .25s ease; }
-.wc-cycle.change .cycle-titre, .wc-cycle.change .cycle-texte, .wc-cycle.change .cycle-num b { opacity: 0; transform: translateY(6px); }
+.cycle-phase { transition: opacity .25s ease; }
+.wc-cycle.change .cycle-titre, .wc-cycle.change .cycle-texte, .wc-cycle.change .cycle-num b, .wc-cycle.change .cycle-phase { opacity: 0; transform: translateY(6px); }
+
+/* très petits écrans : le logo du centre (déjà dans le menu) laisse la place au texte */
+@container (max-width: 360px) {
+  .cycle-center { width: 38%; }
+  .cycle-center img { display: none; }
+  .cycle-titre { font-size: .95rem; }
+  .cycle-texte { font-size: .68rem; line-height: 1.35; }
+}
+@container (max-width: 310px) {
+  .cycle-center { width: 44%; top: 53%; }
+  .cycle-num { letter-spacing: .06em; }
+  .cycle-total { display: none; }
+  .cycle-texte { display: none; }
+}
 
 .cycle-steps { list-style: none; margin: 0; padding: 0; }
 .cycle-step { position: absolute; z-index: 3; width: 0; height: 0; }
