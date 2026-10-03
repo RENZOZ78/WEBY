@@ -1,10 +1,12 @@
 <?php
 
 require_once("controllers/Toolbox.class.php");
+require_once("models/Supervision/Audience.class.php");
 
   Abstract class MainController{
 
     protected function genererPage($data){
+      Audience::enregistrer();//mesure d'audience des pages publiques (supervision)
       extract($data);//creer la variable directement
       ob_start();
       require_once($view);

@@ -1,5 +1,6 @@
 <?php
   require_once("./controllers/MainController.controller.php");
+  require_once("./models/Supervision/Journal.class.php");
   require_once("models/Espace/Espace.model.php");
   require_once("models/Utilisateur/Utilisateur.model.php");
 
@@ -76,6 +77,7 @@
     public function document($id){
       $document = $this->espaceManager->getDocument($id, $this->login());
       if(!$document) throw new Exception("Ce document n'existe pas");
+      Journal::ajouter("document_telecharge", $document['nom']);
       Toolbox::envoyerFichier("storage/documents/".$document['fichier'], $document['nom']);
     }
 
@@ -107,6 +109,7 @@
       }
       $utilisateur = $this->utilisateurManager->getUserInformation($this->login());
       $id = $this->espaceManager->bdCreerDemande($this->login(), $this->login(), $utilisateur['mail'], mb_substr($sujet, 0, 150), $message);
+      Journal::ajouter("demande_client", "n°".$id." · ".mb_substr($sujet, 0, 150));
       $this->notifierAgence("Nouvelle demande client : ".$sujet, "Le client ".$this->login()." a envoyé une demande :\n\n".html_entity_decode($message)."\n\nRépondre : ".URL."administration/demande/".$id);
       Toolbox::ajouterMessageAlerte("Votre demande a bien été envoyée, nous vous répondons sous 48h.", Toolbox::COULEUR_VERTE);
       Toolbox::redirection("compte/demande/".$id);
@@ -119,6 +122,7 @@
         Toolbox::ajouterMessageAlerte("Le message est vide.", Toolbox::COULEUR_ROUGE);
       }else{
         $this->espaceManager->bdAjouterMessage($demande['id'], $this->login(), 0, $message);
+        Journal::ajouter("message_client", "demande n°".$demande['id']);
         $this->notifierAgence("Réponse client sur la demande n°".$demande['id'], $this->login()." a répondu :\n\n".html_entity_decode($message)."\n\nVoir : ".URL."administration/demande/".$demande['id']);
         Toolbox::ajouterMessageAlerte("Votre message a été envoyé.", Toolbox::COULEUR_VERTE);
       }

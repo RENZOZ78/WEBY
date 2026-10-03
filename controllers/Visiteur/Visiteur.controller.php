@@ -1,5 +1,6 @@
 <?php
   require_once("./controllers/MainController.controller.php");
+  require_once("./models/Supervision/Journal.class.php");
   require_once("models/Espace/Espace.model.php");
 
   class VisiteurController extends MainController{
@@ -119,6 +120,7 @@
       $sujet = $sujet !== "" ? mb_substr($sujet, 0, 150) : "Demande de contact";
       $login = Securite::estConnecte() ? $_SESSION['profil']['login'] : null;
       $id = $this->espaceManager->bdCreerDemande($login, Securite::secureHTML(mb_substr($nom, 0, 100)), Securite::secureHTML($mail), Securite::secureHTML($sujet), Securite::secureHTML($message));
+      Journal::ajouter("demande_contact", "n°".$id." · ".mb_substr($nom, 0, 60)." · ".mb_substr($sujet, 0, 100), $login);
 
       $corps = "Nouveau message depuis le site WebyCloudy (demande n°".$id.")\n\n"
         ."Nom : ".$nom."\nEmail : ".$mail."\nSujet : ".$sujet."\n\n".$message

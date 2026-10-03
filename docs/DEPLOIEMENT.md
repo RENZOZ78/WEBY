@@ -43,7 +43,17 @@ Fichiers présents sur le serveur mais **absents du dépôt** (le déploiement n
   Modèle : `config/config.local.example.php`.
 - `storage/.installed` : marqueur de fin d'installation. Le supprimer relance l'installation au chargement
   suivant (tables créées si absentes, compte super-admin créé s'il n'en existe aucun).
+- `storage/.schema` : version du schéma installée (2 depuis la supervision). Quand le code porte une version
+  plus récente (`Installation::VERSION`), les nouvelles tables de `database.sql` sont créées automatiquement au
+  premier chargement qui suit le déploiement, sans toucher aux données existantes.
+- `storage/.sel` : sel secret de la mesure d'audience (empreinte anonyme des visiteurs), créé automatiquement.
 - `storage/documents/` : documents déposés pour les clients.
+
+## Base de données
+
+Tables : `utilisateur`, `projets`, `documents`, `demandes`, `messages`, et depuis la supervision (version 2 du
+schéma) `visites` (mesure d'audience, sans IP), `journal` (journal d'activité, IP tronquée) et `preferences`
+(tableau de bord personnalisé). Visites et journal sont purgés automatiquement au-delà de 400 jours.
 
 ## Configuration
 

@@ -17,11 +17,13 @@
     require_once("./controllers/Utilisateur/Espace.controller.php");
     require_once("./controllers/Administrateur/Administrateur.controller.php");
     require_once("./controllers/SuperAdministrateur/SuperAdministrateur.controller.php");
+    require_once("./controllers/SuperAdministrateur/Supervision.controller.php");
     $visiteurController = new VisiteurController();
     $utilisateurController = new UtilisateurController();
     $espaceController = new EspaceController();
     $administrateurController = new AdministrateurController();
     $sAdministrateurController = new SAdministrateurController();
+    $supervisionController = new SupervisionController();
 
     //recupere un champ POST nettoyé
     function post($cle){
@@ -62,6 +64,7 @@
           "validation_contact" => "contact",
           "compte" => "compte/tableau",
           "administration" => "administration/tableau",
+          "supervision" => "supervision/tableau",
         ];
         Toolbox::redirection($retour[$page] ?? "accueils");
       }
@@ -288,6 +291,33 @@
                 $sAdministrateurController->validation_modification_full_utilisateur(
                   Securite::secureHTML(post('login')), Securite::secureHTML(post('mail')), post('role'), post('is_valid'));
               }
+              break;
+            default:
+              throw new Exception("La page n'existe pas");
+          }
+        break;
+        //supervision : espace reserve au super administrateur
+        case "supervision":
+          if(!Securite::estConnecte()){
+            Toolbox::ajouterMessageAlerte("Veuillez vous connecter !", Toolbox::COULEUR_ROUGE);
+            Toolbox::redirection("login");
+          }
+          if(!Securite::estSuperAdministrateur()){
+            Toolbox::ajouterMessageAlerte("La supervision est réservée au super administrateur.", Toolbox::COULEUR_ROUGE);
+            Toolbox::redirection(Securite::estAdministrateur() ? "administration/tableau" : "accueils");
+          }
+          $supervisionController->verifierAcces();
+          switch($url[1]){
+            case "":
+            case "tableau": $supervisionController->tableau(); break;
+            case "audience": $supervisionController->audience(); break;
+            case "activite": $supervisionController->activite(); break;
+            case "comptes": $supervisionController->comptes(); break;
+            case "systeme": $supervisionController->systeme(); break;
+            case "personnaliser": $supervisionController->personnaliser(); break;
+            case "validation_personnaliser":
+              if($_SERVER['REQUEST_METHOD'] !== "POST") Toolbox::redirection("supervision/personnaliser");
+              $supervisionController->validation_personnaliser();
               break;
             default:
               throw new Exception("La page n'existe pas");
