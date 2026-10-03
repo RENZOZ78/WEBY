@@ -4,16 +4,20 @@
   /**
    * Installation automatique : au premier lancement, cree les tables (database.sql)
    * et le compte super administrateur defini dans la configuration.
-   * Le fichier storage/.installed marque une installation terminee.
+   * Le fichier storage/.installed marque une installation terminee ; storage/.schema contient
+   * la version du schema installee : l'augmenter (VERSION) cree les nouvelles tables au chargement suivant.
    */
   class Installation extends Model{
 
     private const MARQUEUR = "storage/.installed";
+    private const SCHEMA = "storage/.schema";
+    //2 : tables de supervision (visites, journal, preferences)
+    private const VERSION = 2;
 
     //n'interrompt jamais le site : tant que la base n'est pas configuree, seules les pages
     //qui en ont besoin echouent (les pages publiques restent accessibles)
     public static function verifier(){
-      if(is_file(self::MARQUEUR)) return;
+      if(is_file(self::MARQUEUR) && (int)@file_get_contents(self::SCHEMA) >= self::VERSION) return;
       try {
         (new self())->installer();
       } catch (PDOException $e) {
@@ -40,6 +44,7 @@
         }
       }
       if(!is_dir("storage/documents")) mkdir("storage/documents", 0755, true);
-      file_put_contents(self::MARQUEUR, date("c"));
+      if(!is_file(self::MARQUEUR)) file_put_contents(self::MARQUEUR, date("c"));
+      file_put_contents(self::SCHEMA, (string)self::VERSION);
     }
   }

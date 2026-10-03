@@ -1,5 +1,6 @@
 <?php
   require_once("./controllers/MainController.controller.php");
+  require_once("./models/Supervision/Journal.class.php");
   require_once("models/Administrateur/Administrateur.model.php");
   require_once("models/Espace/Espace.model.php");
 
@@ -81,6 +82,7 @@
         Toolbox::redirection("administration/nouveauProjet");
       }
       $id = $this->espaceManager->bdCreerProjet($login, mb_substr($titre, 0, 150), $type, $etape, $note);
+      Journal::ajouter("projet_cree", "n°".$id." · ".mb_substr($titre, 0, 120)." · client ".$login);
       Toolbox::ajouterMessageAlerte("Le projet a été créé.", Toolbox::COULEUR_VERTE);
       Toolbox::redirection("administration/projet/".$id);
     }
@@ -92,7 +94,9 @@
       if($erreur){
         Toolbox::ajouterMessageAlerte($erreur, Toolbox::COULEUR_ROUGE);
       }else{
-        $this->espaceManager->bdModifierProjet($projet['id'], mb_substr($titre, 0, 150), $type, $etape, $note);
+        if($this->espaceManager->bdModifierProjet($projet['id'], mb_substr($titre, 0, 150), $type, $etape, $note)){
+          Journal::ajouter("projet_modifie", "n°".$projet['id']." · ".mb_substr($titre, 0, 120)." · ".(EspaceManager::ETAPES[(int)$etape] ?? ""));
+        }
         Toolbox::ajouterMessageAlerte("Le projet a été mis à jour.", Toolbox::COULEUR_VERTE);
       }
       Toolbox::redirection("administration/projet/".$projet['id']);
@@ -106,6 +110,7 @@
         if(is_file($chemin)) unlink($chemin);
       }
       $this->espaceManager->bdSupprimerProjet($projet['id']);
+      Journal::ajouter("projet_supprime", "n°".$projet['id']." · ".$projet['titre']." · client ".$projet['login']);
       Toolbox::ajouterMessageAlerte("Le projet et ses documents ont été supprimés.", Toolbox::COULEUR_ORANGE);
       Toolbox::redirection("administration/projets");
     }
@@ -120,6 +125,7 @@
         $fichier = Toolbox::ajoutDocument($file, "storage/documents/");
         $nom = $nom !== "" ? mb_substr($nom, 0, 150) : basename($file['name']);
         $this->espaceManager->bdAjouterDocument($projet['id'], $projet['login'], $nom, $fichier, $categorie, $file['size']);
+        Journal::ajouter("document_ajoute", $nom." · projet n°".$projet['id']." · client ".$projet['login']);
         Toolbox::ajouterMessageAlerte("Le document a été ajouté, le client peut le télécharger.", Toolbox::COULEUR_VERTE);
       } catch (\Exception $e) {
         Toolbox::ajouterMessageAlerte($e->getMessage(), Toolbox::COULEUR_ROUGE);
@@ -133,6 +139,7 @@
       $chemin = "storage/documents/".$document['fichier'];
       if(is_file($chemin)) unlink($chemin);
       $this->espaceManager->bdSupprimerDocument($document['id']);
+      Journal::ajouter("document_supprime", $document['nom']." · client ".$document['login']);
       Toolbox::ajouterMessageAlerte("Le document a été supprimé.", Toolbox::COULEUR_ORANGE);
       Toolbox::redirection("administration/projet/".$document['projet_id']);
     }
@@ -170,6 +177,7 @@
         Toolbox::ajouterMessageAlerte("La réponse est vide.", Toolbox::COULEUR_ROUGE);
       }else{
         $this->espaceManager->bdAjouterMessage($demande['id'], $_SESSION['profil']['login'], 1, $message);
+        Journal::ajouter("reponse_agence", "demande n°".$demande['id']." · ".$demande['nom']);
         $lien = $demande['login'] ? "\n\nSuivre votre demande : ".URL."compte/demande/".$demande['id'] : "";
         $envoye = Toolbox::envoyerMail(html_entity_decode($demande['mail']), "Re: ".html_entity_decode($demande['sujet']), "Bonjour ".html_entity_decode($demande['nom']).",\n\n".html_entity_decode($message).$lien."\n\nL'équipe WebyCloudy");
         Toolbox::ajouterMessageAlerte($envoye ? "Réponse enregistrée et envoyée par mail." : "Réponse enregistrée (le mail n'a pas pu partir).", $envoye ? Toolbox::COULEUR_VERTE : Toolbox::COULEUR_ORANGE);
@@ -181,6 +189,7 @@
       $demande = $this->espaceManager->getDemande($demandeId);
       if(!$demande) throw new Exception("Cette demande n'existe pas");
       if($this->espaceManager->bdChangerStatutDemande($demande['id'], $statut)){
+        Journal::ajouter("statut_demande", "demande n°".$demande['id']." · ".(EspaceManager::STATUTS_DEMANDE[$statut] ?? $statut));
         Toolbox::ajouterMessageAlerte("Statut mis à jour.", Toolbox::COULEUR_VERTE);
       }
       Toolbox::redirection("administration/demande/".$demande['id']);
@@ -206,6 +215,7 @@
       }elseif(!in_array($role, $rolesAutorises, true) || (!Securite::estSuperAdministrateur() && $roleActuel !== "utilisateur")){
         Toolbox::ajouterMessageAlerte("Vous n'avez pas les droits pour effectuer cette modification.", Toolbox::COULEUR_ROUGE);
       }elseif($this->administrateurManager->bdModificationRoleUser($login,$role)){
+        Journal::ajouter("role_modifie", $login." : ".$roleActuel." → ".$role);
         Toolbox::ajouterMessageAlerte("Le rôle a bien été modifié !", Toolbox::COULEUR_VERTE);
       }else{
         Toolbox::ajouterMessageAlerte("Aucune modification de rôle n'a été effectuée !", Toolbox::COULEUR_ORANGE);

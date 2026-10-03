@@ -2,6 +2,7 @@
   require_once("./controllers/MainController.controller.php");
   require_once("models/Utilisateur/Utilisateur.model.php");
   require_once("models/Espace/Espace.model.php");
+  require_once("models/Supervision/Journal.class.php");
 
   class UtilisateurController extends MainController{
 
@@ -29,15 +30,21 @@
       if($this->utilisateurManager->isCombinaisonValide($login, $password)){
           if($this->utilisateurManager->estCompteActive($login)){
             $this->connecter($login);
+            Journal::ajouter("connexion");
             Toolbox::ajouterMessageAlerte("Bon retour sur le site ".$login." !", Toolbox::COULEUR_VERTE);
-            Toolbox::redirection(Securite::estAdministrateur() || Securite::estSuperAdministrateur() ? "administration/tableau" : "compte/tableau");
+            if(Securite::estSuperAdministrateur()){
+              Toolbox::redirection(SupervisionController::pageAccueil($login));
+            }
+            Toolbox::redirection(Securite::estAdministrateur() ? "administration/tableau" : "compte/tableau");
           }else{
+            Journal::ajouter("connexion_non_validee", "", $login);
             $msg =  "Le compte de ".$login." n'a pas été activé par mail. ";
             $msg .= "<a href='".URL."renvoyerMailValidation/".rawurlencode($login)."'>Renvoyer le mail de validation</a>";
             Toolbox::ajouterMessageAlerte($msg, Toolbox::COULEUR_ROUGE);
             Toolbox::redirection("login");
           }
       }else {
+        Journal::ajouter("connexion_echec", "login essayé : ".mb_substr($login, 0, 50), null);
         Toolbox::ajouterMessageAlerte("La combinaison login / mot de passe n'est pas valide", Toolbox::COULEUR_ROUGE);
         Toolbox::redirection("login");
       }
@@ -69,6 +76,7 @@
 
     //ft page deconexion----------------
     public function deconnexion(){
+      if(Securite::estConnecte()) Journal::ajouter("deconnexion");
       unset($_SESSION['profil']);
       session_regenerate_id(true);
       Toolbox::ajouterMessageAlerte("Vous êtes maintenant déconnecté", Toolbox::COULEUR_ORANGE);
@@ -92,6 +100,7 @@
       $passwordCrypte = password_hash($password,PASSWORD_DEFAULT);
       $clef = random_int(10000000, 2147483647);
       if($this->utilisateurManager->bdCreerCompte($login,$passwordCrypte,$mail,$clef,"profils/profil.png","utilisateur")){
+        Journal::ajouter("inscription", "", $login);
         $this->sendMailValidation($login, $mail, $clef);
         Toolbox::ajouterMessageAlerte("Le compte a été créé, un mail de validation vous a été envoyé", Toolbox::COULEUR_VERTE);
         Toolbox::redirection("login");
@@ -122,6 +131,7 @@
     public function validation_mailCompte($login,$clef){
       if($login !== "" && ctype_digit((string)$clef) && $this->utilisateurManager->bdValidationMailCompte($login,$clef)){
         $this->connecter($login);
+        Journal::ajouter("compte_valide");
         Toolbox::ajouterMessageAlerte("Votre compte est bien activé !", Toolbox::COULEUR_VERTE);
         Toolbox::redirection("compte/tableau");
       }
@@ -134,6 +144,7 @@
       if(!filter_var(html_entity_decode($mail), FILTER_VALIDATE_EMAIL)){
         Toolbox::ajouterMessageAlerte("L'adresse mail n'est pas valide.", Toolbox::COULEUR_ROUGE);
       }elseif($this->utilisateurManager->bdValidationModificationMail($_SESSION['profil']['login'],$mail)){
+        Journal::ajouter("profil", "adresse mail modifiée");
         Toolbox::ajouterMessageAlerte("Le mail est bien modifié !", Toolbox::COULEUR_VERTE);
       }else{
         Toolbox::ajouterMessageAlerte("Aucune modification de mail effectuée !", Toolbox::COULEUR_ORANGE);
@@ -172,6 +183,7 @@
       }
       $passwordCrypte = password_hash($nouveauPassword,PASSWORD_DEFAULT);
       if($this->utilisateurManager->bdModificationPassword($_SESSION['profil']['login'],$passwordCrypte)){
+        Journal::ajouter("mot_de_passe");
         Toolbox::ajouterMessageAlerte('Le mot de passe a bien été modifié', Toolbox::COULEUR_VERTE);
         Toolbox::redirection("compte/profil");
       }
@@ -195,6 +207,7 @@
       }
 
       if($this->utilisateurManager->bdSuppressionCompte($login)){
+        Journal::ajouter("compte_supprime", "supprimé par le titulaire");
         unset($_SESSION['profil']);
         session_regenerate_id(true);
         Toolbox::ajouterMessageAlerte('La suppression du compte est effectuée.', Toolbox::COULEUR_VERTE);
@@ -219,6 +232,7 @@
         //Ajout de la nouvelle image dans la bdd
         $nomImageBD = "profils/".$_SESSION['profil']['login']."/".$nomImage;
         if($this->utilisateurManager->bdAjoutImage($_SESSION['profil']['login'],$nomImageBD)){
+          Journal::ajouter("profil", "photo de profil modifiée");
           Toolbox::ajouterMessageAlerte("La photo de profil a été modifiée", Toolbox::COULEUR_VERTE);
         }else{
           Toolbox::ajouterMessageAlerte("La modification de l'image n'a pas été effectuée", Toolbox::COULEUR_ROUGE);

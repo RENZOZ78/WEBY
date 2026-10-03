@@ -4,7 +4,7 @@
 À lire en premier, avant toute tâche ou tout conseil. Doit rester **court** (une page) : l'ancien part dans
 [`HISTORIQUE.md`](HISTORIQUE.md), les choix durables dans [`DECISIONS.md`](DECISIONS.md).
 
-Dernière mise à jour : 2026-10-03 — par Claude Code (production redéployée : elle était bloquée depuis la PR #4)
+Dernière mise à jour : 2026-10-03 — par Claude Code (espace de supervision du super admin, PR en attente de fusion)
 
 > Ce dépôt est **public** : ne rien écrire ici de confidentiel (mots de passe, données clients, chiffres privés).
 
@@ -13,7 +13,8 @@ Dernière mise à jour : 2026-10-03 — par Claude Code (production redéployée
 - **Site** : V2 en ligne sur https://webycloudy.com depuis le 2026-10-02 (PHP 8.4 / MySQL, Hostinger,
   branche `V2` déployée automatiquement). Détails : [`DEPLOIEMENT.md`](DEPLOIEMENT.md).
 - **Contenu du site** : vitrine de l'agence, prestations (lancement & financement, gestion, site internet,
-  marketing & croissance), espace client et administration.
+  marketing & croissance), espace client, administration, et supervision du super admin (audience, journal
+  d'activité, tableau de bord personnalisable) — en PR, pas encore en ligne.
 - **Phase** : validation de la V2 après mise en ligne (sécurité des accès, mails, tarifs, contenus).
 - **Charte graphique** : [`CHARTE_GRAPHIQUE.md`](CHARTE_GRAPHIQUE.md) — à suivre pour tout visuel (site, Instagram,
   Leboncoin, documents).

@@ -27,6 +27,10 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
+- [ ] **Supervision** (PR de l'entrée du 2026-10-03) : après fusion, vérifier que le serveur a reçu la version, que
+      `storage/.schema` contient `2` et que les tables `visites`, `journal`, `preferences` existent ; se connecter avec le
+      compte super-admin et parcourir *Supervision*. Ajouter `?utm_source=instagram` / `?utm_source=leboncoin` aux liens
+      publiés pour suivre ces sources. Décider si des administrateurs doivent avoir un accès partiel à la supervision.
 - [ ] **Compléter le tableau « Hors site »** de `docs/CONTEXTE_ACTIF.md` (SEO, Instagram, Leboncoin, acquisition).
 - [ ] **Changer les mots de passe** communiqués pendant la mise en ligne du 2026-10-02 : compte super-admin du site
       (`admin`, depuis *Mon profil*) et utilisateur MySQL `u181593296_weby` (hPanel, puis reporter le nouveau mot de
@@ -51,6 +55,51 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-03 — Espace de supervision du super administrateur
+
+**Demande** : un compte super admin avec une vue d'ensemble de tout ce qui se passe sur le site et de toutes les
+statistiques, avec un tableau de bord personnalisé et un accès personnalisé.
+
+**Réalisé** :
+- Le compte super-admin existant (`admin`) reçoit un espace dédié, **Supervision** (`supervision/...`), réservé
+  au rôle `superAdministrateur`. Aucun nouveau compte ni mot de passe créé (rien à mettre dans le dépôt).
+  Le rôle est relu en base à chaque page : un compte rétrogradé perd l'accès tout de suite.
+- **Tableau de bord personnalisable** : 10 blocs (chiffres clés, points d'attention, activité récente,
+  fréquentation, pages les plus vues, provenance, demandes, projets, comptes, état du site). Dans *Personnaliser* :
+  blocs affichés, ordre, largeur, période par défaut (7 j, 30 j, 90 j, 12 mois), page d'arrivée après connexion
+  (Supervision ou Administration). Préférences en base (table `preferences`).
+- **Audience** : mesure interne des pages publiques, sans cookie, sans outil externe, sans IP conservée
+  (empreinte anonyme qui change chaque jour). Visiteurs, pages vues, évolution, pages, provenance (Google,
+  Instagram, Leboncoin… et `?utm_source=`), appareils, heures, taux de contact. Robots, administrateurs et pages
+  privées exclus. Table `visites`.
+- **Journal d'activité** : connexions et échecs (IP tronquée, tentatives répétées signalées), créations et
+  suppressions de compte, demandes et réponses, projets, documents déposés et téléchargés, changements de rôle.
+  Filtres par catégorie, compte et période. Table `journal`. Visites et journal purgés après 400 jours.
+- **Comptes** : chaque compte avec rôle, validation, dernière connexion, connexions, échecs, projets, demandes,
+  documents. **État du site** : HTTPS, affichage des erreurs PHP, dossier des documents, mail, versions PHP et base,
+  date de la dernière mise à jour des fichiers, disque, taille des tables.
+- **Mise à jour de la base automatique** : `Installation` tient une version de schéma (`storage/.schema`) ; au premier
+  chargement après déploiement, les 3 nouvelles tables sont créées sans toucher aux données.
+- Lien *Supervision* dans le menu et dans la navigation de l'administration (super-admin uniquement).
+
+**Fichiers / zones touchés** : `controllers/SuperAdministrateur/Supervision.controller.php`, `models/Supervision/`,
+`views/SuperAdministrateur/supervision/`, `inc/partials/supervision_nav.php`, `public/CSS/supervision.css`,
+`index.php`, `database.sql`, `models/Installation.class.php`, `controllers/MainController.controller.php` (audience),
+contrôleurs Visiteur, Utilisateur, Espace, Administrateur, SuperAdministrateur (journal), `inc/header.php`,
+`inc/partials/admin_nav.php`, `.gitignore`, `README.md`, `docs/DEPLOIEMENT.md`, `docs/DECISIONS.md`
+**Vérifications** : `php -l` ; en local (PHP 8.3, MariaDB 10.11) : mise à niveau d'une base au schéma de `V2`
+(tables créées, données conservées) et installation neuve ; Chromium à 1440 et 390 px sur les 6 pages de
+supervision : aucun défilement horizontal, aucune erreur JavaScript, aucun warning PHP ; accès refusé à un
+administrateur simple, à un client, à un visiteur et à un super-admin rétrogradé en cours de session ;
+personnalisation (ordre, largeur, période, page d'arrivée) et retour à l'origine ; POST sans jeton CSRF refusé ;
+non-régression des parcours contact, création de compte, projet, dépôt et téléchargement de document, réponse,
+demande client, pages client et administration, avec les événements bien inscrits au journal.
+**Référence** : PR de cette entrée (branche `claude/super-admin-dashboard-km2fp2`)
+**Suites** : voir « Points en suspens » (contrôle après déploiement, liens `utm_source`, accès partiel éventuel
+pour les administrateurs). Les statistiques démarrent à la mise en ligne : pas d'historique avant.
 
 ---
 

@@ -70,3 +70,37 @@ CREATE TABLE IF NOT EXISTS messages (
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_messages_demande (demande_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Mesure d'audience (supervision) : une ligne par page publique vue.
+-- Aucune adresse IP n'est conservée : "visiteur" est une empreinte anonyme qui change chaque jour.
+CREATE TABLE IF NOT EXISTS visites (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  page VARCHAR(120) NOT NULL,
+  visiteur CHAR(16) NOT NULL,
+  source VARCHAR(80) NOT NULL DEFAULT 'direct',
+  appareil VARCHAR(12) NOT NULL DEFAULT 'ordinateur',
+  connecte TINYINT(1) NOT NULL DEFAULT 0,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_visites_date (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Journal d'activité (supervision) : connexions, comptes, demandes, projets, documents, droits
+CREATE TABLE IF NOT EXISTS journal (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  type VARCHAR(40) NOT NULL,
+  login VARCHAR(50) NULL,
+  detail VARCHAR(255) NOT NULL DEFAULT '',
+  ip VARCHAR(45) NOT NULL DEFAULT '',
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_journal_date (created_at),
+  INDEX idx_journal_type (type),
+  INDEX idx_journal_login (login)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Préférences d'un compte (ex. : widgets du tableau de bord de supervision)
+CREATE TABLE IF NOT EXISTS preferences (
+  login VARCHAR(50) NOT NULL,
+  cle VARCHAR(50) NOT NULL,
+  valeur TEXT NOT NULL,
+  PRIMARY KEY (login, cle)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
