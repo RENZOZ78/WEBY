@@ -39,9 +39,10 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Cycle animé du hero de l'accueil** (`inc/partials/cycle.php`) : réellement en ligne depuis le redéploiement
       du 2026-10-03 au soir (PR #9 et #10). Contrôler le rendu sur le site en ligne, sur téléphone et sur
       ordinateur, avec la police Poppins.
-- [ ] **Déploiement automatique Hostinger** : il ne s'est plus déclenché entre la PR #4 et le 2026-10-03 (relancé à la
-      main). Après chaque fusion dans `V2`, vérifier que le serveur a reçu la nouvelle version ; chercher la cause
-      (webhook GitHub de l'installation Hostinger, à voir dans hPanel *Sites → webycloudy.com → Avancé → Git*).
+- [ ] **Déploiement automatique Hostinger en panne** (constaté depuis la PR #4, confirmé par un test le 2026-10-03 :
+      la fusion de la PR #11 n'a pas été déployée). En attendant, **redéployer à la main après chaque fusion** dans
+      `V2` et vérifier le serveur. Cause à chercher : webhook Hostinger du dépôt sur GitHub (*Settings → Webhooks*),
+      ou reconnecter le dépôt dans hPanel (*Sites → webycloudy.com → Avancé → Git*).
 - [ ] **Photos réelles** de l'équipe ou des locaux à intégrer à la place des photos de stock si disponibles.
 - [ ] **Anciennes copies du site** sur `webycloudy.fr` et `webycloudy.xyz` (hébergement Hostinger) : ancienne
       version PHP avec le dossier `.idea`, domaines qui ne pointent pas vers Hostinger. À supprimer ou à rediriger.
@@ -51,6 +52,35 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-03 — Test du déploiement automatique : il ne part pas, redéploiement manuel
+
+**Demande** : fusionner la PR #11, puis enregistrer le résultat.
+
+**Réalisé** :
+- PR #11 fusionnée dans `V2` à la demande du propriétaire (commit `c57bfb8`, 19 h 20 UTC).
+- Test du déploiement automatique : plusieurs minutes après la fusion, les fichiers `docs/` du serveur étaient
+  toujours ceux de la PR #10. **Le déclenchement automatique par GitHub ne fonctionne pas**, alors que les réglages
+  Git de Hostinger sont corrects et que l'installation GitHub est active.
+- Déploiement relancé à la main (réglages Git ré-enregistrés à l'identique par l'API), puis contrôle de la
+  production : voir « Vérifications ».
+
+**Fichiers / zones touchés** : Hostinger : redéploiement Git de `webycloudy.com` ; `docs/HISTORIQUE.md`,
+`docs/DEPLOIEMENT.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : avant redéploiement manuel, `docs/HISTORIQUE.md` sur le serveur = 27 299 octets (version PR #10)
+plus de cinq minutes après la fusion. Après redéploiement : `docs/HISTORIQUE.md` (29 986), `docs/DEPLOIEMENT.md`
+(4 967) et `docs/CONTEXTE_ACTIF.md` (2 857) identiques à `V2` (commit `c57bfb8`). Production à jour.
+**Référence** : PR #11 (fusionnée) et PR de cette entrée
+**Suites** :
+- Tant que la cause n'est pas réglée, **chaque fusion dans `V2` doit être suivie d'un redéploiement manuel** :
+  hPanel (*Sites → webycloudy.com → Avancé → Git*, bouton de déploiement ou ré-enregistrement des réglages), ou
+  par l'API comme ci-dessus.
+- Cause à chercher par le propriétaire : sur GitHub, *Settings → Webhooks* du dépôt `RENZOZ78/WEBY` (un webhook
+  Hostinger doit exister, avec des livraisons récentes en succès) et *Settings → GitHub Apps* (accès de
+  l'application Hostinger au dépôt). Dans hPanel, déconnecter puis reconnecter le dépôt recrée en général le
+  webhook.
 
 ---
 
