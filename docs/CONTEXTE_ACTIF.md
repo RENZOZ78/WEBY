@@ -4,7 +4,7 @@
 À lire en premier, avant toute tâche ou tout conseil. Doit rester **court** (une page) : l'ancien part dans
 [`HISTORIQUE.md`](HISTORIQUE.md), les choix durables dans [`DECISIONS.md`](DECISIONS.md).
 
-Dernière mise à jour : 2026-10-03 — par Claude Code (cycle animé de l'accueil mis en ligne)
+Dernière mise à jour : 2026-10-03 — par Claude Code (production redéployée : elle était bloquée depuis la PR #4)
 
 > Ce dépôt est **public** : ne rien écrire ici de confidentiel (mots de passe, données clients, chiffres privés).
 
@@ -20,7 +20,8 @@ Dernière mise à jour : 2026-10-03 — par Claude Code (cycle animé de l'accue
 
 ## Priorités en cours (3 maximum)
 
-1. **Sécuriser la production** : changer les mots de passe communiqués pendant la mise en ligne, tester les mails.
+1. **Sécuriser la production** : changer les mots de passe communiqués pendant la mise en ligne, tester les mails,
+   contrôler après chaque fusion que le déploiement automatique est bien parti (il s'était arrêté après la PR #4).
 2. **Valider les contenus** : tarifs indicatifs, cycle animé de l'accueil (4 phases), photos réelles.
 3. **Nettoyer** : fichiers inutiles déployés (`.idea/`, `.vscode/`, `node_modules/`), `backup_v1`, anciennes copies
    sur `webycloudy.fr` / `.xyz`.
