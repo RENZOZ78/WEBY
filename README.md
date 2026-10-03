@@ -29,7 +29,7 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 
 - `index.php` : routeur (toutes les pages passent par lui)
 - `controllers/`, `models/`, `views/` : MVC par rôle (Visiteur, Utilisateur, Administrateur, SuperAdministrateur)
-- `inc/content_*.php` : contenu des pages publiques ; `inc/partials/` : sections réutilisables (tarifs, réalisations, contact…)
+- `inc/content_*.php` : contenu des pages publiques ; `inc/partials/` : sections réutilisables (tarifs, réalisations, contact, cycle animé du hero de l'accueil…)
 - `public/CSS/theme.css` : thème du site ; `public/Javascript/` : scripts
 - `storage/documents/` : fichiers des clients (hors dépôt git)
 

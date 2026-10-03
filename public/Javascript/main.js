@@ -77,6 +77,118 @@
     }, 2800);
   });
 
+  // cycle des prestations du hero : le point lumineux fait le tour, marque une pause sur chaque phase
+  // et l'allume ; l'arc de progression le suit, un segment de couleur par phase.
+  // Survol ou focus d'une phase : pause sur celle-ci.
+  document.querySelectorAll(".wc-cycle").forEach(function (cycle) {
+    var etapes = cycle.querySelectorAll(".cycle-step");
+    var n = etapes.length;
+    var orbite = cycle.querySelector(".cycle-orbit");
+    var arc = cycle.querySelector(".ring-progress");
+    var segments = cycle.querySelectorAll(".ring-seg");
+    var depart = parseFloat(cycle.getAttribute("data-depart")) || 0;
+    var num = cycle.querySelector(".cycle-num b");
+    var titre = cycle.querySelector(".cycle-titre");
+    var texte = cycle.querySelector(".cycle-texte");
+    var phase = cycle.querySelector(".cycle-phase");
+    var duree = 3600, pose = .5, tour = duree * n;
+    var active = 0, survol = -1, changement = null;
+
+    // relance une animation CSS portee par une classe (meme si elle vient de jouer)
+    function rejouer(el, classe, ms) {
+      el.classList.remove(classe);
+      void el.offsetWidth;
+      el.classList.add(classe);
+      clearTimeout(el["_" + classe]);
+      el["_" + classe] = setTimeout(function () { el.classList.remove(classe); }, ms);
+    }
+
+    function afficher(k) {
+      if (k === active) return;
+      active = k;
+      etapes.forEach(function (el, j) { el.classList.toggle("on", j === k); });
+      // le signal arrive : etincelles, ondes et reflet sur la phase atteinte
+      if (!reduit) rejouer(etapes[k], "eclat", 1300);
+      cycle.classList.add("change");
+      clearTimeout(changement);
+      changement = setTimeout(function () {
+        var el = etapes[k];
+        num.textContent = (k < 9 ? "0" : "") + (k + 1);
+        titre.textContent = el.getAttribute("data-titre");
+        texte.textContent = el.getAttribute("data-texte");
+        phase.textContent = el.getAttribute("data-phase");
+        // le centre et le point lumineux prennent la couleur de la phase
+        var style = getComputedStyle(el);
+        ["--c", "--g", "--gt", "--halo"].forEach(function (v) { cycle.style.setProperty(v, style.getPropertyValue(v)); });
+        cycle.classList.remove("change");
+        if (!reduit) rejouer(cycle, "revele", 950);
+      }, 250);
+    }
+
+    etapes.forEach(function (el, j) {
+      var lien = el.querySelector("a");
+      function entrer() { survol = j; afficher(j); }
+      function sortir() { survol = -1; }
+      lien.addEventListener("mouseenter", entrer);
+      lien.addEventListener("focus", entrer);
+      lien.addEventListener("mouseleave", sortir);
+      lien.addEventListener("blur", sortir);
+    });
+
+    if (reduit || !arc || !orbite) { etapes[0].classList.add("vu"); return; }
+
+    function adoucir(u) { return u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; }
+
+    var temps = 0, precedent = null, visible = true, enCours = false, premierTour = true, tourCourant = 0;
+    function image(t) {
+      if (precedent !== null && survol < 0) temps += Math.min(t - precedent, 100);
+      precedent = t;
+      var numTour = Math.floor(temps / tour);
+      if (numTour !== tourCourant) {
+        tourCourant = numTour; premierTour = false;
+        etapes.forEach(function (el) { el.classList.remove("vu"); });
+        cycle.classList.add("boucle");
+        setTimeout(function () { cycle.classList.remove("boucle"); }, 700);
+      }
+      var dansTour = temps % tour;
+      var k = Math.floor(dansTour / duree);
+      var u = (dansTour % duree) / duree;
+      var pas = u < pose ? 0 : adoucir((u - pose) / (1 - pose));
+      var position = k + pas; // en nombre d'etapes parcourues, de 0 a n
+
+      orbite.style.transform = "rotate(" + (depart + position * 360 / n) + "deg)";
+      cycle.classList.toggle("roule", pas > 0 && pas < 1);
+      // le tour vient de se boucler : l'arc complet s'efface avant de repartir
+      var bouclage = k === 0 && u < pose && !premierTour;
+      arc.style.opacity = bouclage ? 1 - u / pose : 1;
+      segments.forEach(function (seg, j) {
+        var longueur = bouclage ? 1 : Math.max(0, Math.min(1, position - j));
+        seg.style.opacity = longueur > 0 ? 1 : 0;
+        seg.style.strokeDasharray = longueur + " " + n;
+        seg.style.strokeDashoffset = -j;
+      });
+      var atteinte = Math.floor(position + 1e-6) % n;
+      for (var j = 0; j <= Math.min(Math.floor(position + 1e-6), n - 1); j++) etapes[j].classList.add("vu");
+      if (survol < 0) afficher(atteinte);
+      if (visible && !document.hidden) requestAnimationFrame(image); else enCours = false;
+    }
+
+    function relancer() {
+      if (enCours || !visible || document.hidden) return;
+      enCours = true; precedent = null;
+      requestAnimationFrame(image);
+    }
+    // l'animation s'arrete quand le cycle sort de l'ecran ou que l'onglet est masque
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        relancer();
+      }).observe(cycle);
+    }
+    document.addEventListener("visibilitychange", relancer);
+    relancer();
+  });
+
   // compteurs : les nombres montent quand la tuile devient visible
   function animerCompteur(el) {
     var cible = parseFloat(el.getAttribute("data-count"));
@@ -128,12 +240,12 @@
         var r = hero.getBoundingClientRect();
         var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
         scene.querySelector(".hero-img").style.transform = "rotateY(" + (x * 6) + "deg) rotateX(" + (-y * 6) + "deg)";
-        scene.querySelectorAll(".hero-card, .hero-mock").forEach(function (c, i) {
+        scene.querySelectorAll(".hero-card").forEach(function (c, i) {
           c.style.transform = "translate(" + (x * (14 + i * 8)) + "px, " + (y * (14 + i * 8)) + "px)";
         });
       });
       hero.addEventListener("mouseleave", function () {
-        scene.querySelectorAll(".hero-img, .hero-card, .hero-mock").forEach(function (c) { c.style.transform = ""; });
+        scene.querySelectorAll(".hero-img, .hero-card").forEach(function (c) { c.style.transform = ""; });
       });
     }
   }
