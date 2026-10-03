@@ -36,9 +36,9 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Valider les tarifs indicatifs** ajoutés faute d'information dans le brief : forfait mensuel de gestion,
       facturation, image de marque (« sur devis »), acquisition clients (300 €/mois), site + blog (450 €),
       e-commerce (700 €). Fichiers `inc/content_*.php`.
-- [ ] **Cycle animé du hero de l'accueil** (`inc/partials/cycle.php`) : restructuré le 2026-10-03 en quatre phases à
-      la demande du propriétaire (Conception → Création → Gestion → Performance) ; à valider sur le site en ligne
-      après fusion.
+- [ ] **Cycle animé du hero de l'accueil** (`inc/partials/cycle.php`) : mis en ligne le 2026-10-03 (fusion de la
+      PR #9 dans `V2`, version validée par le propriétaire). Contrôler le rendu sur le site en ligne, sur téléphone
+      et sur ordinateur, avec la police Poppins.
 - [ ] **Photos réelles** de l'équipe ou des locaux à intégrer à la place des photos de stock si disponibles.
 - [ ] **Anciennes copies du site** sur `webycloudy.fr` et `webycloudy.xyz` (hébergement Hostinger) : ancienne
       version PHP avec le dossier `.idea`, domaines qui ne pointent pas vers Hostinger. À supprimer ou à rediriger.
@@ -80,8 +80,9 @@ texte plus brillant sur la phase en cours ; pastilles et textes trop petits par 
 contrôle automatique qu'aucun texte du centre ne touche une pastille ou un libellé, et qu'aucun libellé ne touche
 un autre libellé, une flèche, les badges, le menu ou le bandeau défilant. Aucun défilement horizontal, aucune
 erreur JavaScript. Effets vérifiés image par image sur une vidéo ; pause au survol et mouvement réduit retestés.
-**Référence** : PR #9
-**Suites** : validation par le propriétaire sur le site en ligne.
+**Référence** : PR #9, fusionnée dans `V2` le 2026-10-03 à la demande du propriétaire (« intègre-moi la dernière
+version, elle est pas mal avec la lumière étincelante ») : déploiement automatique sur https://webycloudy.com.
+**Suites** : contrôler le rendu sur le site en ligne (téléphone et ordinateur).
 
 ---
 
