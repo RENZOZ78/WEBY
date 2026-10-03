@@ -77,6 +77,97 @@
     }, 2800);
   });
 
+  // cycle des prestations du hero : le point lumineux fait le tour, marque une pause sur chaque etape
+  // et l'allume ; l'arc de progression le suit. Survol ou focus d'une etape : pause sur celle-ci.
+  document.querySelectorAll(".wc-cycle").forEach(function (cycle) {
+    var etapes = cycle.querySelectorAll(".cycle-step");
+    var n = etapes.length;
+    var orbite = cycle.querySelector(".cycle-orbit");
+    var arc = cycle.querySelector(".ring-progress");
+    var num = cycle.querySelector(".cycle-num b");
+    var titre = cycle.querySelector(".cycle-titre");
+    var texte = cycle.querySelector(".cycle-texte");
+    var duree = 2800, pose = .45, tour = duree * n;
+    var active = 0, survol = -1, changement = null;
+
+    function afficher(k) {
+      if (k === active) return;
+      active = k;
+      etapes.forEach(function (el, j) { el.classList.toggle("on", j === k); });
+      cycle.classList.add("change");
+      clearTimeout(changement);
+      changement = setTimeout(function () {
+        var el = etapes[k];
+        num.textContent = (k < 9 ? "0" : "") + (k + 1);
+        titre.textContent = el.querySelector(".lbl").textContent;
+        texte.textContent = el.getAttribute("data-texte");
+        cycle.classList.toggle("cyan", el.classList.contains("cyan"));
+        cycle.classList.remove("change");
+      }, 250);
+    }
+
+    etapes.forEach(function (el, j) {
+      var lien = el.querySelector("a");
+      function entrer() { survol = j; afficher(j); }
+      function sortir() { survol = -1; }
+      lien.addEventListener("mouseenter", entrer);
+      lien.addEventListener("focus", entrer);
+      lien.addEventListener("mouseleave", sortir);
+      lien.addEventListener("blur", sortir);
+    });
+
+    if (reduit || !arc || !orbite) { etapes[0].classList.add("vu"); return; }
+
+    function adoucir(u) { return u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; }
+
+    var temps = 0, precedent = null, visible = true, enCours = false, premierTour = true, tourCourant = 0;
+    function image(t) {
+      if (precedent !== null && survol < 0) temps += Math.min(t - precedent, 100);
+      precedent = t;
+      var numTour = Math.floor(temps / tour);
+      if (numTour !== tourCourant) {
+        tourCourant = numTour; premierTour = false;
+        etapes.forEach(function (el) { el.classList.remove("vu"); });
+        cycle.classList.add("boucle");
+        setTimeout(function () { cycle.classList.remove("boucle"); }, 700);
+      }
+      var dansTour = temps % tour;
+      var k = Math.floor(dansTour / duree);
+      var u = (dansTour % duree) / duree;
+      var pas = u < pose ? 0 : adoucir((u - pose) / (1 - pose));
+      var position = k + pas; // en nombre d'etapes parcourues, de 0 a n
+
+      orbite.style.transform = "rotate(" + (position * 360 / n) + "deg)";
+      if (k === 0 && u < pose && !premierTour) {
+        // le tour vient de se boucler : l'arc complet s'efface avant de repartir
+        arc.style.strokeDashoffset = 0;
+        arc.style.opacity = 1 - u / pose;
+      } else {
+        arc.style.strokeDashoffset = n - position;
+        arc.style.opacity = 1;
+      }
+      var atteinte = Math.floor(position + 1e-6) % n;
+      for (var j = 0; j <= Math.min(Math.floor(position + 1e-6), n - 1); j++) etapes[j].classList.add("vu");
+      if (survol < 0) afficher(atteinte);
+      if (visible && !document.hidden) requestAnimationFrame(image); else enCours = false;
+    }
+
+    function relancer() {
+      if (enCours || !visible || document.hidden) return;
+      enCours = true; precedent = null;
+      requestAnimationFrame(image);
+    }
+    // l'animation s'arrete quand le cycle sort de l'ecran ou que l'onglet est masque
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        relancer();
+      }).observe(cycle);
+    }
+    document.addEventListener("visibilitychange", relancer);
+    relancer();
+  });
+
   // compteurs : les nombres montent quand la tuile devient visible
   function animerCompteur(el) {
     var cible = parseFloat(el.getAttribute("data-count"));
@@ -128,12 +219,12 @@
         var r = hero.getBoundingClientRect();
         var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
         scene.querySelector(".hero-img").style.transform = "rotateY(" + (x * 6) + "deg) rotateX(" + (-y * 6) + "deg)";
-        scene.querySelectorAll(".hero-card, .hero-mock").forEach(function (c, i) {
+        scene.querySelectorAll(".hero-card").forEach(function (c, i) {
           c.style.transform = "translate(" + (x * (14 + i * 8)) + "px, " + (y * (14 + i * 8)) + "px)";
         });
       });
       hero.addEventListener("mouseleave", function () {
-        scene.querySelectorAll(".hero-img, .hero-card, .hero-mock").forEach(function (c) { c.style.transform = ""; });
+        scene.querySelectorAll(".hero-img, .hero-card").forEach(function (c) { c.style.transform = ""; });
       });
     }
   }

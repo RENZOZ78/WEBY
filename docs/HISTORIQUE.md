@@ -36,8 +36,8 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Valider les tarifs indicatifs** ajoutés faute d'information dans le brief : forfait mensuel de gestion,
       facturation, image de marque (« sur devis »), acquisition clients (300 €/mois), site + blog (450 €),
       e-commerce (700 €). Fichiers `inc/content_*.php`.
-- [ ] **Chiffres de la maquette du hero** (+38 %, +120 prospects, × 2,4) : illustratifs, à remplacer par des
-      chiffres réels ou à retirer (`inc/header.php`).
+- [ ] **Cycle animé du hero de l'accueil** (`inc/partials/cycle.php`) : valider avec le propriétaire l'ordre et
+      les libellés des six étapes (Imaginer, Financer, Créer, Construire, Promouvoir, Gérer) et les textes courts.
 - [ ] **Photos réelles** de l'équipe ou des locaux à intégrer à la place des photos de stock si disponibles.
 - [ ] **Anciennes copies du site** sur `webycloudy.fr` et `webycloudy.xyz` (hébergement Hostinger) : ancienne
       version PHP avec le dossier `.idea`, domaines qui ne pointent pas vers Hostinger. À supprimer ou à rediriger.
@@ -47,6 +47,43 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-03 — Cycle animé des prestations en haut de l'accueil
+
+**Demande** : une animation de type motion design en haut de la page d'accueil, qui montre dans un ordre logique
+tout le processus des activités (de l'idée à la création, puis à la gestion) et toutes les prestations, de façon
+circulaire.
+
+**Réalisé** :
+- Nouveau visuel à droite du titre de l'accueil (`inc/partials/cycle.php`) : six étapes disposées en cercle,
+  dans le sens des aiguilles d'une montre — **Imaginer** (idée, étude de marché), **Financer** (business plan,
+  prêt bancaire), **Créer** (statuts, Kbis, ACRE), **Construire** (site internet, image de marque, SEO),
+  **Promouvoir** (réseaux sociaux, publicité, prospects), **Gérer** (paie, RH, devis et factures) — puis retour
+  à Imaginer. Or pour les étapes du pack Lancement, cyan pour celles du pack Croissance (charte).
+- Mouvement : un point lumineux fait le tour, marque une pause sur chaque étape et l'allume ; un arc en dégradé
+  le suit ; le centre (logo) affiche le numéro, le nom et le détail de l'étape. Le tour complet dure 17 s ; à la
+  fin du tour, l'arc s'efface et le logo fait un petit rebond. Anneaux pointillés qui tournent lentement,
+  flèches qui indiquent le sens. Apparition des étapes en cascade au chargement.
+- Chaque étape est un lien vers la page de la prestation ; le survol ou le focus clavier d'une étape met le
+  cycle en pause sur celle-ci. L'animation s'arrête quand le cycle n'est plus à l'écran ou que l'onglet est
+  masqué, et reste immobile si l'utilisateur demande la réduction des mouvements.
+- Le cycle remplace la photo, les deux cartes flottantes et la maquette de tableau de bord du hero de l'accueil :
+  les chiffres illustratifs (+38 %, + 120 prospects, × 2,4) ne sont donc plus affichés (point en suspens réglé).
+  Les pages prestations gardent leur visuel photo.
+- Titre de l'accueil : les mots qui tournent (« votre chiffre d'affaires »…) passent maintenant à la ligne sur
+  ordinateur au lieu de déborder de leur colonne (ils auraient chevauché le cycle entre 1100 et 1440 px).
+
+**Fichiers / zones touchés** : `inc/partials/cycle.php` (nouveau), `inc/header.php`, `public/CSS/theme.css`,
+`public/Javascript/main.js`, `docs/CHARTE_GRAPHIQUE.md`, `docs/CONTEXTE_ACTIF.md`, `docs/DECISIONS.md`, `README.md`
+**Vérifications** : `php -l` ; accueil, prestations et contact sans warning PHP en local (PHP 8.3, sans base) ;
+Chromium à 390, 992, 1100, 1200, 1280, 1440 et 1920 px : aucune erreur JavaScript, pas de défilement horizontal,
+pas de chevauchement titre / cycle ; survol (pause puis reprise) et mouvement réduit testés ; vidéo du cycle
+enregistrée et vérifiée image par image.
+**Référence** : PR « Cycle animé des prestations »
+**Suites** : faire valider l'ordre et les libellés des étapes par le propriétaire ; contrôler l'animation sur
+le site en ligne après fusion (téléphone et ordinateur).
 
 ---
 

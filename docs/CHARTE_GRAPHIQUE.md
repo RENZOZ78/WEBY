@@ -141,6 +141,9 @@ blancs très discrète, cartes à bordure fine et translucide.
   pour poser un texte blanc dessus.
 - Animations : douces et courtes (0,2 à 0,35 s), apparition par glissement vers le haut ; désactivées quand
   l'utilisateur demande la réduction des mouvements.
+- Exception : le **cycle des prestations** du hero de l'accueil (`inc/partials/cycle.php`) tourne en continu
+  (un tour en 17 s). Étapes en or pour le lancement, en cyan pour la croissance ; c'est le visuel de référence
+  pour présenter le processus WebyCloudy (Instagram, présentations).
 
 ## 7. Déclinaison hors site
 

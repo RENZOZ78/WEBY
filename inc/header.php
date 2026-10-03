@@ -114,23 +114,7 @@
           </div>
         </div>
         <div class="col-lg-6" data-aos="fade-left" data-aos-delay="150">
-          <div class="hero-visual hero-scene">
-            <img class="hero-img" src="<?= URL ?>public/Assets/images/entreprise/bs3.png" alt="Entrepreneurs qui travaillent sur leur business plan">
-            <div class="hero-card card-a">
-              <span class="icon"><i class="fas fa-file-signature"></i></span>
-              <span><strong>Kbis obtenu</strong>Statuts, immatriculation, ACRE</span>
-            </div>
-            <div class="hero-card card-b card-cyan">
-              <span class="icon"><i class="fas fa-rocket"></i></span>
-              <span><strong>Livré en 48h – 7j</strong>Business plan complet</span>
-            </div>
-            <div class="hero-mock" aria-hidden="true">
-              <div class="mock-head"><span><span class="dot"></span>Votre activité</span><span class="up" style="color:var(--wc-green)">+38 %</span></div>
-              <div class="bars"><i style="--h:35%;--i:0"></i><i style="--h:48%;--i:1"></i><i style="--h:42%;--i:2"></i><i style="--h:60%;--i:3"></i><i style="--h:55%;--i:4"></i><i style="--h:72%;--i:5"></i><i style="--h:68%;--i:6"></i><i style="--h:88%;--i:7"></i><i style="--h:100%;--i:8"></i></div>
-              <div class="kpi"><span><b>+ 120</b>prospects</span><span><b>Kbis</b>validé</span><span><b class="up">× 2,4</b>visibilité</span></div>
-              <div class="line"><i></i></div>
-            </div>
-          </div>
+          <?php include "inc/partials/cycle.php"; ?>
         </div>
       </div>
     </div>
