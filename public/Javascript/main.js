@@ -94,10 +94,21 @@
     var duree = 3600, pose = .5, tour = duree * n;
     var active = 0, survol = -1, changement = null;
 
+    // relance une animation CSS portee par une classe (meme si elle vient de jouer)
+    function rejouer(el, classe, ms) {
+      el.classList.remove(classe);
+      void el.offsetWidth;
+      el.classList.add(classe);
+      clearTimeout(el["_" + classe]);
+      el["_" + classe] = setTimeout(function () { el.classList.remove(classe); }, ms);
+    }
+
     function afficher(k) {
       if (k === active) return;
       active = k;
       etapes.forEach(function (el, j) { el.classList.toggle("on", j === k); });
+      // le signal arrive : etincelles, ondes et reflet sur la phase atteinte
+      if (!reduit) rejouer(etapes[k], "eclat", 1300);
       cycle.classList.add("change");
       clearTimeout(changement);
       changement = setTimeout(function () {
@@ -108,8 +119,9 @@
         phase.textContent = el.getAttribute("data-phase");
         // le centre et le point lumineux prennent la couleur de la phase
         var style = getComputedStyle(el);
-        ["--c", "--g", "--gt"].forEach(function (v) { cycle.style.setProperty(v, style.getPropertyValue(v)); });
+        ["--c", "--g", "--gt", "--halo"].forEach(function (v) { cycle.style.setProperty(v, style.getPropertyValue(v)); });
         cycle.classList.remove("change");
+        if (!reduit) rejouer(cycle, "revele", 950);
       }, 250);
     }
 
@@ -145,6 +157,7 @@
       var position = k + pas; // en nombre d'etapes parcourues, de 0 a n
 
       orbite.style.transform = "rotate(" + (depart + position * 360 / n) + "deg)";
+      cycle.classList.toggle("roule", pas > 0 && pas < 1);
       // le tour vient de se boucler : l'arc complet s'efface avant de repartir
       var bouclage = k === 0 && u < pose && !premierTour;
       arc.style.opacity = bouclage ? 1 - u / pose : 1;

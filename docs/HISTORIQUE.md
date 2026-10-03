@@ -51,6 +51,40 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 ---
 
+## 2026-10-03 — Cycle animé : effet étincelant à chaque phase, proportions rééquilibrées
+
+**Demande** : un effet plus étincelant, plus « magique », chaque fois que le signal arrive sur une phase, avec un
+texte plus brillant sur la phase en cours ; pastilles et textes trop petits par rapport au cercle, à équilibrer.
+
+**Réalisé** :
+- À chaque arrivée du signal sur une phase :
+  - gerbe d'étincelles et de petites étoiles projetées autour de la pastille ;
+  - flash de lumière derrière la pastille, deux ondes de choc et un reflet qui traverse la pastille ;
+  - le nom de la phase s'illumine, traversé par un reflet, puis reste lumineux tant que la phase est active ;
+  - au centre, le titre apparaît dans un éclat (du flou à la lumière, puis une lueur à la couleur de la phase).
+- La pastille active « respire » (halo qui pulse), et une traînée de comète suit le point lumineux pendant
+  ses déplacements.
+- Proportions :
+  - pastilles nettement plus grandes (jusqu'à 90 px au lieu de 72) ;
+  - noms des phases (jusqu'à 1,35 rem), prestations (jusqu'à 0,96 rem), titre central (jusqu'à 1,8 rem) et
+    détail (jusqu'à 1,04 rem) agrandis ;
+  - pastilles un peu écartées du centre ;
+  - logo central devenu un grand aigle en filigrane derrière le texte, plus lumineux au bouclage du cycle.
+- Deux titres et un détail resserrés pour tenir sur deux lignes à cette taille : « Donner vie à vos projets »
+  (Création), « Accélérer votre essor » et « Vendre plus, et plus cher, avec méthode. » (Performance).
+- Effets désactivés en mode « mouvement réduit ».
+
+**Fichiers / zones touchés** : `inc/partials/cycle.php`, `public/CSS/theme.css`, `public/Javascript/main.js`,
+`docs/CHARTE_GRAPHIQUE.md`
+**Vérifications** : `php -l` ; Chromium à 320, 360, 390, 412, 430, 768, 992, 1200 et 1440 px. Pour chaque phase,
+contrôle automatique qu'aucun texte du centre ne touche une pastille ou un libellé, et qu'aucun libellé ne touche
+un autre libellé, une flèche, les badges, le menu ou le bandeau défilant. Aucun défilement horizontal, aucune
+erreur JavaScript. Effets vérifiés image par image sur une vidéo ; pause au survol et mouvement réduit retestés.
+**Référence** : PR #9
+**Suites** : validation par le propriétaire sur le site en ligne.
+
+---
+
 ## 2026-10-03 — Cycle animé : les quatre temps Conception, Création, Gestion, Performance
 
 **Demande** : suivre le cycle logique des choses — on commence par la conception, ensuite la création, ensuite la

@@ -529,7 +529,7 @@ a { text-decoration: none; }
    Couleur de la phase en cours : --c (texte), --g (fond), --gt (titre), recopiées sur .wc-cycle par main.js */
 .wc-cycle {
   --c: var(--wc-gold-2); --g: var(--wc-grad-gold); --gt: var(--wc-grad-gold);
-  position: relative; width: min(100%, 520px); aspect-ratio: 1; margin: 0 auto 1.5rem; container-type: inline-size;
+  position: relative; width: min(100%, 520px); aspect-ratio: 1; margin: 1.5rem auto 2.5rem; container-type: inline-size;
 }
 .wc-cycle::before { content: ""; position: absolute; inset: 18%; border-radius: 50%; background: var(--wc-grad-cyan); filter: blur(70px); opacity: .32; }
 .cycle-rings { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
@@ -538,11 +538,20 @@ a { text-decoration: none; }
 .cycle-rings .ring-inner { stroke: rgba(224, 171, 60, .22); stroke-width: .25; stroke-dasharray: 4 3; animation: spin 40s linear infinite reverse; }
 .cycle-rings .ring-track { stroke: rgba(255, 255, 255, .1); stroke-width: .9; }
 .cycle-rings .ring-seg { stroke-width: 1.1; stroke-linecap: round; stroke-dasharray: 0 99; opacity: 0; filter: drop-shadow(0 0 1.5px currentColor); }
-.cycle-orbit { position: absolute; inset: 11%; border-radius: 50%; pointer-events: none; z-index: 2; }
+.cycle-orbit { position: absolute; inset: 12.5%; border-radius: 50%; pointer-events: none; z-index: 2; }
 .cycle-orbit i {
-  position: absolute; left: 50%; top: 0; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%;
-  background: #fff; box-shadow: 0 0 16px 5px var(--c); transition: box-shadow .4s ease;
+  position: absolute; left: 50%; top: 0; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 10px 3px #fff, 0 0 26px 9px var(--c); transition: box-shadow .4s ease;
 }
+/* traînée de comète derrière le point, visible seulement quand il se déplace */
+.cycle-orbit .trainee {
+  position: absolute; inset: -4px; border-radius: 50%; opacity: 0; transition: opacity .35s ease;
+  background: conic-gradient(from 0deg, transparent 0deg, transparent 290deg, var(--c) 358deg, transparent 360deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 6px), #000 calc(100% - 2px), transparent 100%);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 6px), #000 calc(100% - 2px), transparent 100%);
+  filter: blur(1.5px) drop-shadow(0 0 6px var(--c));
+}
+.wc-cycle.roule .cycle-orbit .trainee { opacity: 1; }
 .cycle-arrow { position: absolute; z-index: 1; transform: translate(-50%, -50%) rotate(var(--a)); color: rgba(255, 255, 255, .45); font-size: clamp(.6rem, 2.2cqw, .8rem); }
 .cycle-arrow i { animation: arrow-nudge 2.8s ease-in-out infinite; }
 @keyframes arrow-nudge { 0%, 100% { transform: translateX(-2px); opacity: .5; } 50% { transform: translateX(2px); opacity: 1; } }
@@ -551,27 +560,36 @@ a { text-decoration: none; }
   position: absolute; left: 50%; top: 50%; width: 46%; transform: translate(-50%, -50%); z-index: 1;
   display: flex; flex-direction: column; align-items: center; text-align: center;
 }
-.cycle-center img { width: clamp(42px, 13cqw, 70px); height: auto; filter: drop-shadow(0 0 12px rgba(224, 171, 60, .5)); margin-bottom: .5rem; transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
-.wc-cycle.boucle .cycle-center img { transform: scale(1.12) rotate(-4deg); }
-.cycle-num { font-size: clamp(.62rem, 2.3cqw, .75rem); letter-spacing: .16em; color: var(--wc-muted); font-weight: 600; }
+.cycle-filigrane {
+  position: absolute; left: 50%; top: 50%; width: 36%; height: auto; transform: translate(-50%, -54%); z-index: 0;
+  opacity: .13; filter: drop-shadow(0 0 24px rgba(224, 171, 60, .6)); pointer-events: none;
+  transition: opacity .6s ease, transform .6s cubic-bezier(.2, .8, .2, 1);
+}
+.wc-cycle.boucle .cycle-filigrane { opacity: .3; transform: translate(-50%, -54%) scale(1.08); }
+.cycle-num { font-size: clamp(.66rem, 2.6cqw, .84rem); letter-spacing: .16em; color: var(--wc-muted); font-weight: 600; }
 .cycle-num b, .cycle-phase { color: var(--c); transition: color .4s ease; }
 .cycle-phase { text-transform: uppercase; }
 .cycle-titre {
-  display: block; font-family: var(--wc-font-title); font-weight: 700; font-size: clamp(1rem, 4.6cqw, 1.5rem); line-height: 1.15; margin: .15rem 0 .3rem; text-wrap: balance;
+  display: block; font-family: var(--wc-font-title); font-weight: 700; font-size: clamp(1.1rem, 5.5cqw, 1.8rem); line-height: 1.12; margin: .2rem 0 .35rem; text-wrap: balance;
   background: var(--gt); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 12px var(--halo, rgba(224, 171, 60, .45)));
 }
-.cycle-texte { font-size: clamp(.72rem, 2.9cqw, .92rem); line-height: 1.45; color: rgba(255, 255, 255, .78); min-height: 2.9em; text-wrap: balance; }
+/* le titre de la phase atteinte apparaît dans un éclat de lumière */
+.wc-cycle.revele .cycle-titre { animation: titre-eclat .9s ease-out; }
+@keyframes titre-eclat {
+  0% { filter: blur(6px) brightness(2.2) drop-shadow(0 0 0 transparent); }
+  45% { filter: blur(0) brightness(1.7) drop-shadow(0 0 18px var(--c)); }
+  100% { filter: blur(0) brightness(1) drop-shadow(0 0 12px var(--halo, rgba(224, 171, 60, .45))); }
+}
+.cycle-texte { font-size: clamp(.76rem, 3.3cqw, 1.04rem); line-height: 1.45; color: rgba(255, 255, 255, .78); min-height: 2.9em; text-wrap: balance; }
 .cycle-titre, .cycle-texte, .cycle-num { transition: opacity .25s ease, transform .25s ease; }
 .wc-cycle.change .cycle-titre, .wc-cycle.change .cycle-texte, .wc-cycle.change .cycle-num b, .wc-cycle.change .cycle-phase { opacity: 0; transform: translateY(6px); }
 
 /* petits écrans : le logo du centre (déjà dans le menu) laisse la place au texte */
-@container (max-width: 400px) {
-  .cycle-center img { display: none; }
-}
 @container (max-width: 360px) {
-  .cycle-center { width: 42%; }
-  .cycle-titre { font-size: .95rem; }
-  .cycle-texte { font-size: .68rem; line-height: 1.35; }
+  .cycle-center { width: 44%; }
+  .cycle-titre { font-size: 1rem; }
+  .cycle-texte { font-size: .7rem; line-height: 1.35; }
 }
 @container (max-width: 310px) {
   .cycle-num { letter-spacing: .06em; }
@@ -602,8 +620,9 @@ a { text-decoration: none; }
   animation: step-pop .7s cubic-bezier(.3, 1.5, .5, 1) both; animation-delay: calc(var(--i) * .15s + .4s);
 }
 .cycle-step .icon {
-  width: clamp(46px, 14cqw, 72px); height: clamp(46px, 14cqw, 72px); border-radius: clamp(14px, 4cqw, 21px); display: grid; place-items: center;
-  font-size: clamp(1.05rem, 4.8cqw, 1.6rem); color: var(--c);
+  position: relative; overflow: hidden;
+  width: clamp(54px, 17cqw, 90px); height: clamp(54px, 17cqw, 90px); border-radius: clamp(16px, 5cqw, 26px); display: grid; place-items: center;
+  font-size: clamp(1.3rem, 6.2cqw, 2.05rem); color: var(--c);
   background: rgba(17, 28, 61, .92); border: 1px solid var(--wc-border-strong); box-shadow: var(--wc-shadow);
   transition: transform .45s cubic-bezier(.3, 1.5, .5, 1), background .35s ease, color .35s ease, box-shadow .35s ease, border-color .35s ease;
 }
@@ -612,15 +631,67 @@ a { text-decoration: none; }
   position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap;
   display: flex; flex-direction: column; align-items: center; line-height: 1.3;
 }
-.cycle-step.haut .lbl { bottom: 100%; margin-bottom: .5rem; }
-.cycle-step.bas .lbl { top: 100%; margin-top: .5rem; }
+.cycle-step.haut .lbl { bottom: 100%; margin-bottom: .7rem; }
+.cycle-step.bas .lbl { top: 100%; margin-top: .7rem; }
 .cycle-step .lbl strong {
-  font-family: var(--wc-font-title); font-weight: 700; font-size: clamp(.74rem, 3.1cqw, 1rem); letter-spacing: .02em;
-  color: rgba(255, 255, 255, .85); transition: color .35s ease;
+  font-family: var(--wc-font-title); font-weight: 700; font-size: clamp(.9rem, 4.3cqw, 1.35rem); letter-spacing: .02em;
+  color: rgba(255, 255, 255, .85); transition: color .35s ease, text-shadow .35s ease;
 }
-.cycle-step .lbl small { font-size: clamp(.6rem, 2.35cqw, .78rem); color: rgba(255, 255, 255, .58); transition: color .35s ease; }
-.cycle-step.on .icon { transform: scale(1.14); background: var(--g); color: var(--t); border-color: transparent; box-shadow: 0 0 40px var(--halo), 0 0 0 6px var(--anneau); }
-.cycle-step.on .lbl strong, .cycle-step a:hover .lbl strong, .cycle-step a:focus-visible .lbl strong { color: var(--c); }
+.cycle-step .lbl small { font-size: clamp(.68rem, 3.1cqw, .96rem); color: rgba(255, 255, 255, .6); transition: color .35s ease; }
+.cycle-step.on .icon {
+  transform: scale(1.12); background: var(--g); color: var(--t); border-color: transparent;
+  box-shadow: 0 0 40px var(--halo), 0 0 0 6px var(--anneau); animation: icone-respire 2.4s ease-in-out infinite;
+}
+@keyframes icone-respire { 50% { box-shadow: 0 0 64px var(--halo), 0 0 0 11px var(--anneau); } }
+/* phase en cours : nom lumineux, avec un reflet qui le traverse à l'arrivée du signal */
+.cycle-step.on .lbl strong {
+  color: #fff; text-shadow: 0 0 8px var(--c), 0 0 22px var(--c);
+  background: linear-gradient(100deg, #fff 0%, #fff 40%, var(--c) 50%, #fff 60%, #fff 100%) 120% 0 / 250% 100%;
+  -webkit-background-clip: text; background-clip: text;
+}
+/* text-shadow masquerait le reflet (fond découpé dans le texte) : lueur portée par filter pendant l'éclat */
+.cycle-step.eclat .lbl strong { -webkit-text-fill-color: transparent; text-shadow: none; filter: drop-shadow(0 0 7px var(--c)) drop-shadow(0 0 16px var(--c)); animation: nom-reflet 1.1s ease-out; }
+@keyframes nom-reflet { from { background-position: 120% 0; } to { background-position: -20% 0; } }
+.cycle-step a:hover .lbl strong, .cycle-step a:focus-visible .lbl strong { color: var(--c); }
+
+/* éclat à l'arrivée du signal : reflet sur la pastille, deux ondes de choc, gerbe d'étincelles */
+.cycle-step .icon::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-130%); pointer-events: none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .85) 50%, transparent 70%);
+}
+.cycle-step.eclat .icon::after { animation: icone-reflet .8s ease-out .1s; }
+@keyframes icone-reflet { to { transform: translateX(130%); } }
+.cycle-step .onde {
+  position: absolute; left: 50%; top: 50%; width: clamp(54px, 17cqw, 90px); height: clamp(54px, 17cqw, 90px);
+  border-radius: 30%; border: 3px solid var(--c); box-shadow: 0 0 22px var(--c), inset 0 0 14px var(--c);
+  transform: translate(-50%, -50%); opacity: 0; pointer-events: none;
+}
+.cycle-step.eclat .onde { animation: onde-choc 1.1s cubic-bezier(.2, .7, .3, 1); }
+.cycle-step.eclat .onde-2 { animation-delay: .18s; }
+@keyframes onde-choc { 0% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(2.6); border-radius: 50%; } }
+.cycle-step .eclats { position: absolute; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; }
+/* flash de lumière derrière la pastille */
+.cycle-step .eclats::before {
+  content: ""; position: absolute; left: 0; top: 0; width: clamp(80px, 26cqw, 140px); height: clamp(80px, 26cqw, 140px);
+  border-radius: 50%; background: radial-gradient(circle, #fff 0%, var(--c) 30%, transparent 68%);
+  transform: translate(-50%, -50%) scale(.3); opacity: 0; z-index: -1;
+}
+.cycle-step.eclat .eclats::before { animation: flash .75s ease-out; }
+@keyframes flash { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.3); } 25% { opacity: .85; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); } }
+.cycle-step .eclats i {
+  position: absolute; left: 0; top: 0; width: 8px; height: 8px; margin: -4px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 8px 3px var(--c), 0 0 18px 4px var(--c); opacity: 0;
+}
+.cycle-step .eclats i.etoile {
+  width: 18px; height: 18px; margin: -9px; border-radius: 0; box-shadow: none; background: #fff;
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+}
+.cycle-step.eclat .eclats i { animation: etincelle 1.25s cubic-bezier(.12, .8, .3, 1) var(--d) both; }
+@keyframes etincelle {
+  0% { opacity: 1; transform: rotate(var(--r)) translateY(calc(-.35 * var(--dist))) scale(1.4); }
+  65% { opacity: 1; }
+  100% { opacity: 0; transform: rotate(var(--r)) translateY(calc(-1 * var(--dist))) scale(.2); }
+}
 .cycle-step.on .lbl small, .cycle-step a:hover .lbl small { color: rgba(255, 255, 255, .85); }
 .cycle-step a:focus-visible { outline: none; }
 .cycle-step a:focus-visible .icon { outline: 2px solid var(--c); outline-offset: 3px; }
@@ -716,7 +787,7 @@ a { text-decoration: none; }
 @keyframes rise { to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee .track, .wc-hero .blob, .price-card.featured::before, .cycle-rings circle, .cycle-arrow i, .cycle-step a { animation: none !important; }
+  .marquee .track, .wc-hero .blob, .price-card.featured::before, .cycle-rings circle, .cycle-arrow i, .cycle-step a, .cycle-step .icon, .cycle-step .lbl strong { animation: none !important; }
   .cycle-orbit { display: none; }
   [data-aos="reveal"] { clip-path: none; }
   .stagger > * { opacity: 1; transform: none; animation: none; }

@@ -145,7 +145,8 @@ blancs très discrète, cartes à bordure fine et translucide.
   (un tour en 14 s environ). Ses quatre phases ont chacune une couleur : Conception or `#f3c868`, Création orange
   `#ff8a3d`, Gestion cyan `#3fd0ff`, Performance violet `#8b5cf6` (texte `#b69cff`). C'est le visuel de référence
   pour présenter le processus WebyCloudy (Instagram, présentations), avec les mêmes mots : Conception, Création,
-  Gestion, Performance.
+  Gestion, Performance. À chaque arrivée du signal sur une phase : étincelles, flash, ondes et reflet à la couleur
+  de la phase ; l'aigle du logo est en filigrane au centre.
 
 ## 7. Déclinaison hors site
 
