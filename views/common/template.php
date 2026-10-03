@@ -27,9 +27,10 @@
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
     <!-- Thème du site -->
-    <link href="<?= URL ?>public/CSS/theme.css" rel="stylesheet">
+    <?php $version = function($fichier){ return is_file($fichier) ? "?v=".filemtime($fichier) : ""; }; //change a chaque mise en ligne : evite les anciens fichiers en cache ?>
+    <link href="<?= URL ?>public/CSS/theme.css<?= $version("public/CSS/theme.css") ?>" rel="stylesheet">
     <?php foreach($custom_css as $no_css) : ?>
-      <link href="<?= URL ?>public/CSS/<?= $no_css ?>" rel="stylesheet">
+      <link href="<?= URL ?>public/CSS/<?= $no_css ?><?= $version("public/CSS/".$no_css) ?>" rel="stylesheet">
     <?php endforeach; ?>
   </head>
 
@@ -62,9 +63,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <script src="<?= URL ?>public/Javascript/main.js"></script>
+    <script src="<?= URL ?>public/Javascript/main.js<?= $version("public/Javascript/main.js") ?>"></script>
     <?php foreach($page_js as $fichier_js) : ?>
-      <script src="<?= URL ?>public/Javascript/<?= $fichier_js ?>"></script>
+      <script src="<?= URL ?>public/Javascript/<?= $fichier_js ?><?= $version("public/Javascript/".$fichier_js) ?>"></script>
     <?php endforeach; ?>
   </body>
 </html>

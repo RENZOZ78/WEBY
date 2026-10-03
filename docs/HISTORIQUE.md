@@ -51,6 +51,28 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 ---
 
+## 2026-10-03 — Feuille de style et script versionnés (anciens fichiers en cache)
+
+**Demande** : après la fusion de la PR #9, le propriétaire ne voit pas l'animation sur le site.
+
+**Réalisé** :
+- Constat : `V2` contient bien la fusion (`82bb1b6`). Le site n'a pas pu être consulté depuis l'environnement de
+  Claude Code (webycloudy.com bloqué par sa politique réseau ; connecteur Hostinger non autorisé).
+- Cause probable traitée : `theme.css` et `main.js` étaient appelés sans numéro de version. Le navigateur, ou le
+  cache de l'hébergeur, pouvait donc garder les anciens fichiers. Ils sont désormais appelés avec
+  `?v=<date de modification>` (aussi les CSS et JS propres à une page). Le numéro change à chaque déploiement.
+- La fusion de cette correction redéclenche aussi le déploiement automatique, au cas où le précédent ne serait
+  pas parti.
+
+**Fichiers / zones touchés** : `views/common/template.php`
+**Vérifications** : `php -l` ; accueil, prestations et contact en local : liens versionnés, aucun warning PHP ;
+cycle animé toujours affiché (390 et 1440 px), aucune erreur JavaScript.
+**Référence** : PR #10
+**Suites** : si l'animation n'apparaît toujours pas, vérifier dans hPanel (*Sites → webycloudy.com → Avancé →
+Git*) que le dernier déploiement porte le commit de la fusion, et vider le cache du site (LiteSpeed / CDN).
+
+---
+
 ## 2026-10-03 — Cycle animé : effet étincelant à chaque phase, proportions rééquilibrées
 
 **Demande** : un effet plus étincelant, plus « magique », chaque fois que le signal arrive sur une phase, avec un
