@@ -4,7 +4,7 @@
 À lire en premier, avant toute tâche ou tout conseil. Doit rester **court** (une page) : l'ancien part dans
 [`HISTORIQUE.md`](HISTORIQUE.md), les choix durables dans [`DECISIONS.md`](DECISIONS.md).
 
-Dernière mise à jour : 2026-10-03 — par Claude Code (espace de supervision du super admin, PR en attente de fusion)
+Dernière mise à jour : 2026-10-03 — par Claude Code (supervision du super admin en ligne, PR #13)
 
 > Ce dépôt est **public** : ne rien écrire ici de confidentiel (mots de passe, données clients, chiffres privés).
 
@@ -14,7 +14,7 @@ Dernière mise à jour : 2026-10-03 — par Claude Code (espace de supervision d
   branche `V2` déployée automatiquement). Détails : [`DEPLOIEMENT.md`](DEPLOIEMENT.md).
 - **Contenu du site** : vitrine de l'agence, prestations (lancement & financement, gestion, site internet,
   marketing & croissance), espace client, administration, et supervision du super admin (audience, journal
-  d'activité, tableau de bord personnalisable) — en PR, pas encore en ligne.
+  d'activité, tableau de bord personnalisable), en ligne depuis le 2026-10-03.
 - **Phase** : validation de la V2 après mise en ligne (sécurité des accès, mails, tarifs, contenus).
 - **Charte graphique** : [`CHARTE_GRAPHIQUE.md`](CHARTE_GRAPHIQUE.md) — à suivre pour tout visuel (site, Instagram,
   Leboncoin, documents).
@@ -22,7 +22,8 @@ Dernière mise à jour : 2026-10-03 — par Claude Code (espace de supervision d
 ## Priorités en cours (3 maximum)
 
 1. **Sécuriser la production** : changer les mots de passe communiqués pendant la mise en ligne, tester les mails,
-   contrôler après chaque fusion que le déploiement automatique est bien parti (il s'était arrêté après la PR #4).
+   contrôler après chaque fusion que le déploiement automatique est bien parti (il ne part plus tout seul :
+   relancé à la main pour les PR #5 à #10 et #13).
 2. **Valider les contenus** : tarifs indicatifs, cycle animé de l'accueil (4 phases), photos réelles.
 3. **Nettoyer** : fichiers inutiles déployés (`.idea/`, `.vscode/`, `node_modules/`), `backup_v1`, anciennes copies
    sur `webycloudy.fr` / `.xyz`.

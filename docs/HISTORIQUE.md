@@ -27,10 +27,10 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
-- [ ] **Supervision** (PR de l'entrée du 2026-10-03) : après fusion, vérifier que le serveur a reçu la version, que
-      `storage/.schema` contient `2` et que les tables `visites`, `journal`, `preferences` existent ; se connecter avec le
-      compte super-admin et parcourir *Supervision*. Ajouter `?utm_source=instagram` / `?utm_source=leboncoin` aux liens
-      publiés pour suivre ces sources. Décider si des administrateurs doivent avoir un accès partiel à la supervision.
+- [ ] **Supervision** (en ligne depuis le 2026-10-03, PR #13) : le propriétaire se connecte avec le compte `admin` et
+      parcourt *Supervision* (rendu à contrôler sur téléphone et ordinateur). Ajouter `?utm_source=instagram` /
+      `?utm_source=leboncoin` aux liens publiés pour suivre ces sources. Décider si des administrateurs doivent avoir
+      un accès partiel à la supervision.
 - [ ] **Compléter le tableau « Hors site »** de `docs/CONTEXTE_ACTIF.md` (SEO, Instagram, Leboncoin, acquisition).
 - [ ] **Changer les mots de passe** communiqués pendant la mise en ligne du 2026-10-02 : compte super-admin du site
       (`admin`, depuis *Mon profil*) et utilisateur MySQL `u181593296_weby` (hPanel, puis reporter le nouveau mot de
@@ -43,8 +43,8 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Cycle animé du hero de l'accueil** (`inc/partials/cycle.php`) : réellement en ligne depuis le redéploiement
       du 2026-10-03 au soir (PR #9 et #10). Contrôler le rendu sur le site en ligne, sur téléphone et sur
       ordinateur, avec la police Poppins.
-- [ ] **Déploiement automatique Hostinger** : il ne s'est plus déclenché entre la PR #4 et le 2026-10-03 (relancé à la
-      main). Après chaque fusion dans `V2`, vérifier que le serveur a reçu la nouvelle version ; chercher la cause
+- [ ] **Déploiement automatique Hostinger** : il ne s'est plus déclenché entre la PR #4 et le 2026-10-03, puis de
+      nouveau pas pour la PR #13 (relancé à la main les deux fois). Après chaque fusion dans `V2`, vérifier que le serveur a reçu la nouvelle version ; chercher la cause
       (webhook GitHub de l'installation Hostinger, à voir dans hPanel *Sites → webycloudy.com → Avancé → Git*).
 - [ ] **Photos réelles** de l'équipe ou des locaux à intégrer à la place des photos de stock si disponibles.
 - [ ] **Anciennes copies du site** sur `webycloudy.fr` et `webycloudy.xyz` (hébergement Hostinger) : ancienne
@@ -55,6 +55,33 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-03 — Supervision mise en ligne (PR #13), déploiement relancé à la main
+
+**Demande** : fusionner la PR de la supervision, vérifier le déploiement et donner les identifiants.
+
+**Réalisé** :
+- PR #13 fusionnée dans `V2` (commit `dba9746`).
+- Le déploiement automatique **n'est pas parti** : trois minutes après la fusion, le serveur n'avait toujours pas
+  `Supervision.controller.php`. Relancé en ré-enregistrant les réglages Git à l'identique par l'API Hostinger
+  (dépôt `RENZOZ78/WEBY`, branche `V2`, racine du site, déploiement actif).
+- Contrôle après redéploiement : `index.php`, `models/Installation.class.php`, `Supervision.controller.php`,
+  `SuperAdministrateur.controller.php`, `Supervision.model.php` et `supervision.css` ont exactement la taille de
+  `V2` (`dba9746`).
+- Base mise à niveau automatiquement : `storage/.schema` (version du schéma) et `storage/.sel` (sel de l'audience)
+  ont été créés sur le serveur au premier chargement, ce qui n'arrive qu'après la création des nouvelles tables.
+- Identifiants : compte super-admin existant `admin`, mot de passe inchangé (aucun mot de passe écrit ici).
+
+**Fichiers / zones touchés** : Hostinger : redéploiement Git ; `docs/HISTORIQUE.md`, `docs/DEPLOIEMENT.md`,
+`docs/CONTEXTE_ACTIF.md`
+**Vérifications** : API de fichiers Hostinger (tailles comparées à `V2`, présence de `storage/.schema` et
+`storage/.sel`). Pages de supervision non consultables depuis l'environnement de Claude Code (site bloqué par sa
+politique réseau).
+**Référence** : PR #13 (fusion `dba9746`) ; PR de cette entrée (documentation uniquement)
+**Suites** : le propriétaire se connecte et contrôle la supervision ; trouver pourquoi le déploiement automatique
+ne part plus (webhook GitHub de l'installation Hostinger).
 
 ---
 
@@ -97,7 +124,7 @@ administrateur simple, à un client, à un visiteur et à un super-admin rétrog
 personnalisation (ordre, largeur, période, page d'arrivée) et retour à l'origine ; POST sans jeton CSRF refusé ;
 non-régression des parcours contact, création de compte, projet, dépôt et téléchargement de document, réponse,
 demande client, pages client et administration, avec les événements bien inscrits au journal.
-**Référence** : PR de cette entrée (branche `claude/super-admin-dashboard-km2fp2`)
+**Référence** : PR #13, fusionnée dans `V2` le 2026-10-03 (`dba9746`)
 **Suites** : voir « Points en suspens » (contrôle après déploiement, liens `utm_source`, accès partiel éventuel
 pour les administrateurs). Les statistiques démarrent à la mise en ligne : pas d'historique avant.
 
