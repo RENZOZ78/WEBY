@@ -30,10 +30,10 @@ Si un déploiement ne part pas, le relancer en ré-enregistrant les réglages da
 (`hosting_git_update-auto-deployment-settings`, mêmes valeurs) : l'enregistrement déploie immédiatement.
 
 **Attention** : entre le 2026-10-02 (PR #4) et le 2026-10-03, aucune fusion n'a été déployée sans que rien ne le
-signale (PR #5 à #10 absentes du serveur). Après chaque fusion, **vérifier que la production a bien changé** :
+signale (PR #5 à #10 absentes du serveur) ; la PR #13 n'est pas partie non plus et a dû être relancée. Après chaque fusion, **vérifier que la production a bien changé** :
 par l'API de fichiers Hostinger (`hosting_files_website-content` / `hosting_files_list-website-and-directories`),
 comparer un fichier modifié avec `V2` ; ou dans le navigateur, regarder le code source de la page. Sinon, relancer
-le déploiement comme ci-dessus. Dernier déploiement contrôlé : commit `10c73a6` (PR #10), le 2026-10-03.
+le déploiement comme ci-dessus. Dernier déploiement contrôlé : commit `dba9746` (PR #13, supervision), le 2026-10-03, après relance manuelle.
 
 Réglages en place (vérifiés le 2026-10-03) : installation GitHub `RENZOZ78` active, dépôt `RENZOZ78/WEBY`,
 branche `V2`, déploiement à la racine du site (`public_html`), déploiement automatique activé.
