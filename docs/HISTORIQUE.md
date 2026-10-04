@@ -31,6 +31,8 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       `storage/.schema` contient `2` et que les tables `visites`, `journal`, `preferences` existent ; se connecter avec le
       compte super-admin et parcourir *Supervision*. Ajouter `?utm_source=instagram` / `?utm_source=leboncoin` aux liens
       publiés pour suivre ces sources. Décider si des administrateurs doivent avoir un accès partiel à la supervision.
+- [ ] **Réalisations** : après fusion, cliquer sur « Voir le site » de Fiteos sur webycloudy.com (doit ouvrir
+      `fiteos.click`) ; donner, s'ils existent, les noms de domaine de Delta-Immo et Magic Food Panam (encore sur Netlify).
 - [ ] **Compléter le tableau « Hors site »** de `docs/CONTEXTE_ACTIF.md` (SEO, Instagram, Leboncoin, acquisition).
 - [ ] **Changer les mots de passe** communiqués pendant la mise en ligne du 2026-10-02 : compte super-admin du site
       (`admin`, depuis *Mon profil*) et utilisateur MySQL `u181593296_weby` (hPanel, puis reporter le nouveau mot de
@@ -55,6 +57,28 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-04 — Réalisations : lien Fiteos vers fiteos.click, Dofinvest retiré
+
+**Demande** : vérifier que le lien vers le site de la salle de sport (Fiteos) pointe vers `fiteos.click` et non
+vers l'adresse Netlify ; retirer le site de Dorine (Dofinvest, présenté « Dorine Invest » dans l'ancien site V1).
+
+**Réalisé** :
+- Le lien de Fiteos pointait encore vers l'adresse Netlify (`cocky-einstein-d0b9f5.netlify.app`) : remplacé par
+  `https://fiteos.click/`. Le domaine est bien actif sur le compte Hostinger (vérifié par l'API).
+- Carte Dofinvest retirée de la section « Réalisations » (accueil et page *Site internet*). L'image `img/dif-cap.png`
+  est conservée dans le dépôt, elle n'est plus affichée.
+- Trois cartes au lieu de quatre : grille passée de 4 à 3 colonnes sur grand écran pour éviter un trou.
+
+**Fichiers / zones touchés** : `inc/partials/realisations.php`, `docs/DECISIONS.md`
+**Vérifications** : `php -l` ; rendu de la section en ligne de commande (3 cartes, liens corrects, aucun warning).
+`fiteos.click` n'est pas joignable depuis l'environnement de Claude Code (politique réseau) : contrôler le lien
+sur le site en ligne.
+**Référence** : PR de cette entrée (branche `claude/aerobic-dorine-links-m3ijve`)
+**Suites** : Delta-Immo et Magic Food Panam pointent encore vers des adresses Netlify ; les remplacer si ces sites
+ont un nom de domaine.
 
 ---
 
