@@ -6,6 +6,7 @@ et ajouter la nouvelle (on garde la trace). Le détail du contexte est dans [`HI
 
 | Date | Décision | Raison |
 |---|---|---|
+| 2026-10-04 | Réalisations affichées : Fiteos (lien vers son domaine `fiteos.click`), Delta-Immo, Magic Food Panam ; Dofinvest retiré | demande du propriétaire |
 | 2026-10-03 | Supervision réservée au super administrateur ; audience mesurée par le site lui-même (sans cookie, sans outil externe, sans IP conservée), journal d'activité en base | vue d'ensemble demandée par le propriétaire, sans bandeau de consentement ni dépendance à Google Analytics |
 | 2026-10-03 | Hero de l'accueil : cycle animé en quatre phases, Conception → Création → Gestion → Performance (deux prestations et une promesse par phase), à la place de la photo et de la maquette chiffrée | le cycle logique d'une entreprise, voulu par le propriétaire ; tout l'accompagnement d'un coup d'œil, sans chiffres inventés |
 | 2026-10-02 | GitHub (`docs/`) est la source de vérité commune à Claude Code, Cowork et Chat | un seul état du projet, lu avant d'agir, mis à jour après |
@@ -16,7 +17,7 @@ et ajouter la nouvelle (on garde la trace). Le détail du contexte est dans [`HI
 | 2026-10-01 | Design sombre (bleu nuit, or du logo, cyan, violet), Bootstrap 5.3 | image « pro qui donne envie » |
 | 2026-10-01 | Tables `produits` / `commandes` abandonnées au profit de `projets`, `documents`, `demandes`, `messages` | le site vend des prestations suivies, pas des produits |
 | 2026-10-01 | Le formulaire de contact crée une demande en base | rien ne se perd si le mail ne part pas |
-| 2026-10-01 | Uniquement de vraies réalisations (Fiteos, Delta-Immo, Magic Food Panam, Dofinvest) | suppression des faux logos clients |
+| ~~2026-10-01~~ | ~~Uniquement de vraies réalisations (Fiteos, Delta-Immo, Magic Food Panam, Dofinvest)~~ — remplacée le 2026-10-04 (Dofinvest retiré) ; le principe « uniquement de vraies réalisations » reste en vigueur | suppression des faux logos clients |
 
 ## Décisions proposées, non confirmées
 
