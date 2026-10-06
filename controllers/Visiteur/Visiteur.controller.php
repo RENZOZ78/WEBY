@@ -98,6 +98,28 @@
       ]);
     }
 
+    //ft page d'un metier : ses problematiques, nos solutions, ce qu'il y gagne-----------------
+    public function secteur($slug){
+      $secteurs = require "inc/secteurs.php";
+      if(!isset($secteurs[$slug])){
+        throw new Exception("Ce métier n'existe pas");
+      }
+      $secteur = $secteurs[$slug];
+      $this->generatePageWithOptions([
+        "view" => "./views/Visiteur/secteur.view.php",
+        "secteur" => $secteur,
+        "slug" => $slug,
+        "H1" => $secteur['titre'],
+        "uvp"=> "<i class=\"fas ".$secteur['icone']." me-2\"></i>".$secteur['nom'],
+        "hero_texte" => $secteur['accroche'],
+        "hero_boutons" => [["Voir nos solutions", "#solutions", "btn-gold"], ["Devis gratuit", "#contact", "btn-outline-light"]],
+        "hero_badges" => ["fa-comments|Premier échange gratuit", "fa-clock|Réponse sous 48h", "fa-video|Visio ou rendez-vous"],
+        "hero_liste" => ["fa-check", "Ce que nous réglons pour vous", array_column($secteur['solutions'], 1)],
+        "page_description" => $secteur['nom']." : ".mb_strtolower(mb_substr($secteur['qui'], 0, 1)).mb_substr($secteur['qui'], 1).". ".$secteur['accroche'],
+        "page_title"=> "WebyCloudy | ".$secteur['nom']." : nos solutions"
+      ]);
+    }
+
     //ft page contact----------------
     public function contact(){
       $this->generatePageWithOptions([

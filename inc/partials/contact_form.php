@@ -1,6 +1,6 @@
 <?php
   $site = $site ?? require("config/config.php");
-  $offreDemandee = isset($_GET['offre']) ? htmlspecialchars(substr((string)$_GET['offre'], 0, 80)) : "";
+  $offreDemandee = htmlspecialchars(mb_substr(isset($_GET['offre']) ? (string)$_GET['offre'] : ($offre_defaut ?? ""), 0, 100));
 ?>
 <section class="section section-alt" id="contact">
   <div class="container">

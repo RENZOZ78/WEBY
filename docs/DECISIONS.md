@@ -6,6 +6,7 @@ et ajouter la nouvelle (on garde la trace). Le détail du contexte est dans [`HI
 
 | Date | Décision | Raison |
 |---|---|---|
+| 2026-10-06 | Métiers accompagnés : bandeau défilant de cartes sans photo à l'accueil et une page par métier (`secteurs/{métier}`) avec problématiques, solutions reliées aux prestations et gains ; contenu centralisé dans `inc/secteurs.php` | demande du propriétaire ; que chaque visiteur se reconnaisse dans un problème concret au lieu de tuiles génériques |
 | 2026-10-06 | Réalisations : 4e carte **Sweet Home BTP**, site de démonstration de l'agence (entreprise fictive, `sweet-home-btp.webycloudy.com`), affichée avec la mention « site démo » ; exception assumée au principe « uniquement de vraies réalisations », qui reste la règle pour les clients | demande du propriétaire ; montrer le savoir-faire actuel sans faire passer la démo pour un client |
 | ~~2026-10-04~~ | ~~Réalisations affichées : Fiteos (lien vers son domaine `fiteos.click`), Delta-Immo, Magic Food Panam ; Dofinvest retiré~~ — complétée le 2026-10-06 (Sweet Home BTP ajouté) | demande du propriétaire |
 | 2026-10-03 | Supervision réservée au super administrateur ; audience mesurée par le site lui-même (sans cookie, sans outil externe, sans IP conservée), journal d'activité en base | vue d'ensemble demandée par le propriétaire, sans bandeau de consentement ni dépendance à Google Analytics |

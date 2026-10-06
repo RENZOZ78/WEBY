@@ -33,6 +33,9 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       publiés pour suivre ces sources. Décider si des administrateurs doivent avoir un accès partiel à la supervision.
 - [ ] **Réalisations** : après fusion, cliquer sur « Voir le site » de Fiteos (doit ouvrir `fiteos.click`) et de
       Sweet Home BTP (doit ouvrir `sweet-home-btp.webycloudy.com`) sur webycloudy.com ; donner, s'ils existent, les noms de domaine de Delta-Immo et Magic Food Panam (encore sur Netlify).
+- [ ] **Métiers** (entrée du 2026-10-06) : relire les problématiques et solutions des 12 métiers (`inc/secteurs.php`),
+      dire s'il faut ajouter ou retirer des métiers ; après fusion, tester le bandeau de l'accueil sur téléphone et
+      ouvrir quelques pages `secteurs/…`.
 - [ ] **Compléter le tableau « Hors site »** de `docs/CONTEXTE_ACTIF.md` (SEO, Instagram, Leboncoin, acquisition).
 - [ ] **Changer les mots de passe** communiqués pendant la mise en ligne du 2026-10-02 : compte super-admin du site
       (`admin`, depuis *Mon profil*) et utilisateur MySQL `u181593296_weby` (hPanel, puis reporter le nouveau mot de
@@ -57,6 +60,47 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-06 — Métiers : bandeau défilant à l'accueil et une page par métier
+
+**Demande** : remplacer la grille de tuiles « Secteurs — Nous accompagnons tous les entrepreneurs » de l'accueil, qui
+n'apportait pas grand-chose, par un bandeau qui défile en continu, horizontalement, avec chaque métier accompagné ;
+étoffer le contenu de chaque métier (problématiques, solutions, apports) pour que le visiteur se sente concerné,
+au lieu de tuiles qui menaient toutes au même formulaire. Avis demandé sur la présentation.
+
+**Réalisé** :
+- **12 métiers** décrits dans `inc/secteurs.php` : VTC & transport, BTP & artisans, restauration, commerce de
+  proximité, e-commerce, beauté & bien-être, professions libérales, immobilier, sport & coaching, services à la
+  personne, hôtellerie & tourisme, sociétés & start-up. Pour chacun : professions concernées, 4 problématiques,
+  4 solutions reliées à une prestation existante (lancement, gestion, site, marketing), 3 gains.
+- **Bandeau défilant** (`inc/partials/secteurs.php`) à la place de la grille : cartes sans photo de stock (les photos
+  ne correspondaient pas toujours au métier), avec icône, métier, professions concernées et 3 problématiques.
+  Défilement continu en boucle, pause au survol et au focus clavier, glissement au doigt, flèches pour avancer
+  d'une carte, arrêt hors écran ; sans animation si le visiteur a demandé à réduire les mouvements.
+- **Page par métier** `secteurs/{métier}` (ex. `secteurs/btp`) : en-tête propre au métier avec « Ce que nous
+  réglons pour vous », « Vous vous reconnaissez ? » (4 problématiques), « Nos solutions » (avec lien vers la
+  prestation), « Ce que vous y gagnez », formulaire de contact, puis les autres métiers en bandeau.
+  `secteurs` seul renvoie vers le bandeau de l'accueil ; un métier inconnu donne une page 404.
+- **« C'est mon cas »** sous chaque problématique : le sujet du formulaire est pré-rempli avec le métier et le
+  problème (ex. « Demande de devis : BTP & artisans – Paiements en retard »), pour savoir d'emblée pourquoi la
+  personne écrit. Le sujet est aussi pré-rempli avec le métier quand on arrive sur la page.
+- En-tête des pages : boutons et encadré de droite paramétrables (`hero_boutons`, `hero_liste`), sans changement
+  pour les pages existantes. Formulaire de contact : le sujet pré-rempli est coupé sans casser les accents.
+- Aucun chiffre ni résultat inventé ; les exemples cités (Fiteos, Delta-Immo) sont de vraies réalisations.
+
+**Fichiers / zones touchés** : `inc/secteurs.php`, `inc/partials/secteurs.php`, `inc/content_secteur.php`,
+`views/Visiteur/secteur.view.php`, `inc/content_accueil.php`, `inc/header.php`, `inc/partials/contact_form.php`,
+`controllers/Visiteur/Visiteur.controller.php`, `index.php`, `public/CSS/theme.css`, `public/Javascript/main.js`,
+`README.md`, `docs/DECISIONS.md`
+**Vérifications** : `php -l` ; en local (PHP 8.3, MariaDB) : accueil et les 12 pages métier en 200 sans warning PHP,
+métier inconnu en 404, `secteurs` redirigé ; Chromium à 1440 et 390 px : aucun défilement horizontal de la page,
+aucune erreur JavaScript, icônes toutes affichées, défilement automatique (~38 px/s), pause au survol, flèches,
+boucle sans saut ; « C'est mon cas » pré-remplit bien le sujet.
+**Référence** : PR de cette entrée (branche `claude/bandeau-metiers-fiches-le1kik`)
+**Suites** : relire les textes des 12 métiers (ajouter, retirer ou renommer des métiers dans `inc/secteurs.php`) ;
+après fusion, contrôler le bandeau sur téléphone (glissement au doigt) et sur ordinateur.
 
 ---
 
