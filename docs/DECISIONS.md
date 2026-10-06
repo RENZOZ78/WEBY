@@ -6,7 +6,8 @@ et ajouter la nouvelle (on garde la trace). Le détail du contexte est dans [`HI
 
 | Date | Décision | Raison |
 |---|---|---|
-| 2026-10-04 | Réalisations affichées : Fiteos (lien vers son domaine `fiteos.click`), Delta-Immo, Magic Food Panam ; Dofinvest retiré | demande du propriétaire |
+| 2026-10-06 | Réalisations : 4e carte **Sweet Home BTP**, site de démonstration de l'agence (entreprise fictive, `sweet-home-btp.webycloudy.com`), affichée avec la mention « site démo » ; exception assumée au principe « uniquement de vraies réalisations », qui reste la règle pour les clients | demande du propriétaire ; montrer le savoir-faire actuel sans faire passer la démo pour un client |
+| ~~2026-10-04~~ | ~~Réalisations affichées : Fiteos (lien vers son domaine `fiteos.click`), Delta-Immo, Magic Food Panam ; Dofinvest retiré~~ — complétée le 2026-10-06 (Sweet Home BTP ajouté) | demande du propriétaire |
 | 2026-10-03 | Supervision réservée au super administrateur ; audience mesurée par le site lui-même (sans cookie, sans outil externe, sans IP conservée), journal d'activité en base | vue d'ensemble demandée par le propriétaire, sans bandeau de consentement ni dépendance à Google Analytics |
 | 2026-10-03 | Hero de l'accueil : cycle animé en quatre phases, Conception → Création → Gestion → Performance (deux prestations et une promesse par phase), à la place de la photo et de la maquette chiffrée | le cycle logique d'une entreprise, voulu par le propriétaire ; tout l'accompagnement d'un coup d'œil, sans chiffres inventés |
 | 2026-10-02 | GitHub (`docs/`) est la source de vérité commune à Claude Code, Cowork et Chat | un seul état du projet, lu avant d'agir, mis à jour après |

@@ -31,8 +31,8 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       `storage/.schema` contient `2` et que les tables `visites`, `journal`, `preferences` existent ; se connecter avec le
       compte super-admin et parcourir *Supervision*. Ajouter `?utm_source=instagram` / `?utm_source=leboncoin` aux liens
       publiés pour suivre ces sources. Décider si des administrateurs doivent avoir un accès partiel à la supervision.
-- [ ] **Réalisations** : après fusion, cliquer sur « Voir le site » de Fiteos sur webycloudy.com (doit ouvrir
-      `fiteos.click`) ; donner, s'ils existent, les noms de domaine de Delta-Immo et Magic Food Panam (encore sur Netlify).
+- [ ] **Réalisations** : après fusion, cliquer sur « Voir le site » de Fiteos (doit ouvrir `fiteos.click`) et de
+      Sweet Home BTP (doit ouvrir `sweet-home-btp.webycloudy.com`) sur webycloudy.com ; donner, s'ils existent, les noms de domaine de Delta-Immo et Magic Food Panam (encore sur Netlify).
 - [ ] **Compléter le tableau « Hors site »** de `docs/CONTEXTE_ACTIF.md` (SEO, Instagram, Leboncoin, acquisition).
 - [ ] **Changer les mots de passe** communiqués pendant la mise en ligne du 2026-10-02 : compte super-admin du site
       (`admin`, depuis *Mon profil*) et utilisateur MySQL `u181593296_weby` (hPanel, puis reporter le nouveau mot de
@@ -57,6 +57,34 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-06 — Réalisations : site démo Sweet Home BTP ajouté en quatrième carte
+
+**Demande** : faire apparaître le site de démonstration Sweet Home parmi les sites exemples, en quatrième position,
+avec une image comme les trois autres et le lien vers le site.
+
+**Réalisé** :
+- Informations reprises du dépôt GitHub `RENZOZ78/sweet-home-btp` (site Next.js « démonstrateur Weby Cloudy »,
+  entreprise de bâtiment fictive) et de Hostinger (application Node.js en ligne sur
+  `sweet-home-btp.webycloudy.com`, créée le 2026-10-06 ; une copie existe aussi sur `sweet-home-btp.webycloudy.fr`).
+- 4e carte dans `inc/partials/realisations.php` (accueil et page *Site internet*) : catégorie « Bâtiment · site démo »,
+  description qui dit clairement qu'il s'agit d'une démonstration, bouton « Voir le site » vers
+  `https://sweet-home-btp.webycloudy.com/`.
+- Image `img/sweet-home-btp-cap.jpg` : capture de l'accueil du site démo (issue de `docs/captures/` du dépôt
+  Sweet Home), recadrée au format des vignettes (16:10), 116 Ko.
+- Quatre cartes : grille repassée à 4 colonnes sur grand écran (2 sur tablette, 1 sur mobile).
+- `DECISIONS.md` : exception au principe « uniquement de vraies réalisations » consignée (démo présentée comme telle).
+
+**Fichiers / zones touchés** : `inc/partials/realisations.php`, `img/sweet-home-btp-cap.jpg`, `docs/DECISIONS.md`
+**Vérifications** : `php -l` ; section rendue par le serveur PHP intégré avec `theme.css` et Bootstrap 5.3.3, capturée
+dans Chromium à 1440 px (4 colonnes alignées) et 390 px (cartes empilées) : aucun défilement horizontal, aucune erreur
+JavaScript, aucun warning PHP, image servie en 200. Pas de base MySQL dans l'environnement : page complète non
+parcourue en local. `sweet-home-btp.webycloudy.com` n'est pas joignable depuis l'environnement de Claude Code
+(politique réseau) : contrôler le lien sur le site en ligne.
+**Référence** : PR de cette entrée (branche `claude/sweet-home-weblicoudi-demo-ek09ug`)
+**Suites** : après fusion, cliquer sur « Voir le site » de Sweet Home BTP sur webycloudy.com.
 
 ---
 
