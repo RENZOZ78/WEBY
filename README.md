@@ -31,6 +31,8 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 - `controllers/`, `models/`, `views/` : MVC par rôle (Visiteur, Utilisateur, Administrateur, SuperAdministrateur)
 - `inc/content_*.php` : contenu des pages publiques ; `inc/partials/` : sections réutilisables (tarifs, réalisations, contact, cycle animé du hero de l'accueil…)
 - `public/CSS/theme.css` : thème du site ; `public/Javascript/` : scripts
+- `inc/secteurs.php` : les métiers accompagnés (problématiques, solutions, gains). Ils alimentent le bandeau défilant
+  de l'accueil (`inc/partials/secteurs.php`) et les pages `secteurs/{métier}` : ajouter un métier = ajouter une entrée
 - `models/Supervision/` : mesure d'audience (`Audience`), journal d'activité (`Journal::ajouter()` à appeler
   pour chaque action notable), statistiques de la supervision ; vues dans `views/SuperAdministrateur/supervision/`
 - `storage/documents/` : fichiers des clients (hors dépôt git)

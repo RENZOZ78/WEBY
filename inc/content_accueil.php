@@ -90,36 +90,8 @@
   </div>
 </section>
 
-<!-- SECTION SECTEURS ------------------------------->
-<?php
-  $secteurs = [
-    ["fa-taxi", "VTC & transport", "public/Assets/images/entreprise/vtc3.png"],
-    ["fa-helmet-safety", "BTP & artisans", "public/Assets/images/entreprise/entreprise3.png"],
-    ["fa-utensils", "Restauration", "img/pc_cafe.jpg"],
-    ["fa-cart-shopping", "E-commerce", "public/Assets/images/site%20internet/si2.png"],
-    ["fa-user-tie", "Professions libérales", "public/Assets/images/entreprise/ent.png"],
-    ["fa-building", "Sociétés & start-up", "public/Assets/images/entreprise/1_20230314_082639_0000.png"],
-  ];
-?>
-<section class="section">
-  <div class="container">
-    <div class="section-head" data-aos="fade-up">
-      <span class="kicker cyan">Secteurs</span>
-      <h2>Nous accompagnons tous les entrepreneurs</h2>
-      <p>VTC, BTP, restauration, e-commerce, professions libérales… partout en France, en visio ou en rendez-vous.</p>
-    </div>
-    <div class="row g-3">
-      <?php foreach($secteurs as $i => $secteur) : ?>
-        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="<?= $i * 70 ?>">
-          <a href="<?= URL ?>contact?offre=<?= rawurlencode($secteur[1]) ?>" class="sector">
-            <img src="<?= URL.$secteur[2] ?>" alt="" loading="lazy">
-            <span class="lbl"><i class="fas <?= $secteur[0] ?>"></i><?= $secteur[1] ?></span>
-          </a>
-        </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
+<!-- SECTION METIERS : bandeau défilant, une page par métier ------------------------------->
+<?php include "inc/partials/secteurs.php"; ?>
 
 <?php
   $features = [

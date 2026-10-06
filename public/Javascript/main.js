@@ -189,6 +189,91 @@
     relancer();
   });
 
+  // bandeau des metiers : defilement continu en boucle (la 2e copie de la liste prend le relais de la 1re).
+  // Pause au survol, au focus clavier et pendant que l'on fait glisser au doigt ; fleches pour avancer d'une carte.
+  document.querySelectorAll(".secteurs-band").forEach(function (band) {
+    var groupe = band.querySelector(".secteurs-groupe");
+    var section = band.closest("section");
+    var vitesse = 38; // pixels par seconde
+    var pos = 0, precedent = null, visible = true, enCours = false;
+    var survol = false, manuel = 0; // manuel : date jusqu'a laquelle le defilement automatique attend
+    band.classList.add("defile");
+
+    function periode() { return groupe.offsetWidth; }
+    // garde la position dans la 1re copie : le passage d'une copie a l'autre est invisible
+    function ramener() {
+      var p = periode();
+      if (p <= 0) return;
+      if (band.scrollLeft >= p) band.scrollLeft -= p;
+      else if (band.scrollLeft <= 0) band.scrollLeft += p;
+      pos = band.scrollLeft;
+    }
+    function attendre(ms) { manuel = Math.max(manuel, Date.now() + ms); }
+
+    band.addEventListener("mouseenter", function () { survol = true; });
+    band.addEventListener("mouseleave", function () { survol = false; });
+    band.addEventListener("focusin", function () { survol = true; });
+    band.addEventListener("focusout", function () { survol = false; });
+    band.addEventListener("pointerdown", function () { attendre(4000); });
+    band.addEventListener("touchstart", function () { attendre(4000); }, { passive: true });
+    band.addEventListener("wheel", function () { attendre(3000); }, { passive: true });
+    band.addEventListener("scroll", function () {
+      // defilement fait par la personne (doigt, molette, fleches) : on reprend sa position
+      if (Math.abs(band.scrollLeft - pos) > 2) {
+        attendre(2500);
+        if (!band._fleche) ramener(); else pos = band.scrollLeft;
+      }
+    }, { passive: true });
+
+    if (section) {
+      section.querySelectorAll(".secteurs-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var carte = groupe.querySelector("li");
+          var pas = carte ? carte.offsetWidth + parseFloat(getComputedStyle(groupe).columnGap || 0) : 300;
+          var sens = parseInt(btn.getAttribute("data-sens"), 10);
+          // on se place au milieu des deux copies pour que le defilement doux ne bute pas sur un bord
+          var p = periode();
+          if (band.scrollLeft < pas) band.scrollLeft += p;
+          else if (band.scrollLeft > p) band.scrollLeft -= p;
+          pos = band.scrollLeft;
+          attendre(5000);
+          clearTimeout(band._fleche);
+          band._fleche = setTimeout(function () { band._fleche = null; ramener(); }, 700);
+          band.scrollBy({ left: sens * pas, behavior: reduit ? "auto" : "smooth" });
+        });
+      });
+    }
+
+    pos = band.scrollLeft = 1;
+    if (reduit) return;
+
+    function image(t) {
+      var dt = precedent === null ? 0 : Math.min(t - precedent, 100);
+      precedent = t;
+      if (!survol && Date.now() > manuel && !band._fleche) {
+        pos += vitesse * dt / 1000;
+        var p = periode();
+        if (p > 0 && pos >= p) pos -= p;
+        band.scrollLeft = pos;
+      }
+      if (visible && !document.hidden) requestAnimationFrame(image); else { enCours = false; precedent = null; }
+    }
+    function relancer() {
+      if (enCours || !visible || document.hidden) return;
+      enCours = true; precedent = null;
+      requestAnimationFrame(image);
+    }
+    // le defilement s'arrete quand le bandeau sort de l'ecran ou que l'onglet est masque
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        relancer();
+      }).observe(band);
+    }
+    document.addEventListener("visibilitychange", relancer);
+    relancer();
+  });
+
   // compteurs : les nombres montent quand la tuile devient visible
   function animerCompteur(el) {
     var cible = parseFloat(el.getAttribute("data-count"));

@@ -146,13 +146,14 @@
     <span class="blob blob-1"></span><span class="blob blob-2"></span>
     <div class="container">
       <div class="row align-items-center g-5">
-        <div class="<?= !empty($hero_image) ? 'col-lg-7' : 'col-lg-9' ?>" data-aos="fade-up">
+        <div class="<?= !empty($hero_image) || !empty($hero_liste) ? 'col-lg-7' : 'col-lg-9' ?>" data-aos="fade-up">
           <span class="eyebrow"><?= $uvp ?></span>
           <h1><?= $H1 ?></h1>
           <?php if(!empty($hero_texte)) : ?><p class="lead"><?= $hero_texte ?></p><?php endif; ?>
           <div class="d-flex flex-wrap gap-3 mt-4">
-            <a href="<?= URL ?>contact" class="btn btn-gold">Devis gratuit</a>
-            <a href="#tarifs" class="btn btn-outline-light">Voir les tarifs</a>
+            <?php foreach($hero_boutons ?? [["Devis gratuit", URL."contact", "btn-gold"], ["Voir les tarifs", "#tarifs", "btn-outline-light"]] as [$libelle, $lien, $classe]) : ?>
+              <a href="<?= $lien ?>" class="btn <?= $classe ?>"><?= $libelle ?></a>
+            <?php endforeach; ?>
           </div>
           <?php if(!empty($hero_badges)) : ?>
             <div class="hero-badges">
@@ -169,6 +170,17 @@
               <?php if(!empty($hero_carte)) : [$icone, $titre, $texte] = explode("|", $hero_carte, 3); ?>
                 <div class="hero-card card-a"><span class="icon"><i class="fas <?= $icone ?>"></i></span><span><strong><?= $titre ?></strong><?= $texte ?></span></div>
               <?php endif; ?>
+            </div>
+          </div>
+        <?php elseif(!empty($hero_liste)) : [$icone, $titre, $points] = $hero_liste; ?>
+          <div class="col-lg-5" data-aos="fade-left" data-aos-delay="150">
+            <div class="hero-liste">
+              <strong><?= $titre ?></strong>
+              <ul class="stagger">
+                <?php foreach($points as $point) : ?>
+                  <li><i class="fas <?= $icone ?>"></i><?= $point ?></li>
+                <?php endforeach; ?>
+              </ul>
             </div>
           </div>
         <?php endif; ?>

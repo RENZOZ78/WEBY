@@ -90,6 +90,13 @@
           redirectionPermanente($url[1] === "gestion" ? "prestations/gestion" : "prestations/lancement");
         break;
 
+        case "secteurs":
+          if($url[1] === ""){
+            Toolbox::redirection("accueils#secteurs");
+          }
+          $visiteurController->secteur($url[1]);
+        break;
+
         case "contact":
           $visiteurController->contact();
           break;
