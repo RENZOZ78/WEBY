@@ -4,6 +4,7 @@
     ["Salle de sport", "Fiteos", "Site commercial pour une salle de sport.", "img/gym-accueil.jpg", "https://fiteos.click/"],
     ["Agence immobilière", "Delta-Immo", "Site d'agence immobilière qui présente des biens d'exception.", "img/img-portfolio2.jpg", "https://relaxed-lewin-d05331.netlify.app/"],
     ["Restauration", "Magic Food Panam", "Restaurant en ligne proposant une grande variété de délicieux plats.", "img/magic-food-cap.png", "https://elaborate-dango-33f458.netlify.app/"],
+    ["Bâtiment · site démo", "Sweet Home BTP", "Site de démonstration pour une entreprise de rénovation tous corps d'état : devis en ligne, réalisations avant / après.", "img/sweet-home-btp-cap.jpg", "https://sweet-home-btp.webycloudy.com/"],
   ];
 ?>
 <section class="section section-alt" id="realisations">
@@ -15,7 +16,7 @@
     </div>
     <div class="row g-4">
       <?php foreach($realisations as $i => $projet) : ?>
-        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
           <article class="project-card tilt">
             <div class="thumb"><img src="<?= URL.$projet[3] ?>" alt="Aperçu du site <?= $projet[1] ?>" loading="lazy"></div>
             <div class="body">
