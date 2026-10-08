@@ -4,6 +4,10 @@
   $custom_css = $custom_css ?? [];
   $page_js = $page_js ?? [];
   $page_courante = trim($_GET['page'] ?? "accueils", "/");
+  //referencement : pages privees, formulaires de compte et erreurs exclus de Google ; les autres declarent leur adresse officielle
+  $page_privee = in_array(explode("/", $page_courante)[0], ["login", "creerCompte", "compte", "administration", "supervision", "renvoyerMailValidation", "validationMail"], true);
+  $page_noindex = $page_privee || http_response_code() >= 400;
+  $page_canonique = rtrim($site['site_url'], "/")."/".(in_array($page_courante, ["", "accueils"], true) ? "" : $page_courante);
 ?>
 <!DOCTYPE html>
 <html lang="fr" data-bs-theme="dark">
@@ -12,6 +16,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?= htmlspecialchars($page_description) ?>">
     <meta name="theme-color" content="#070d1f">
+    <?php if($page_noindex) : ?>
+      <meta name="robots" content="noindex">
+    <?php else : ?>
+      <link rel="canonical" href="<?= htmlspecialchars($page_canonique) ?>">
+    <?php endif; ?>
     <title><?= htmlspecialchars(trim($page_title)) ?></title>
 
     <link rel="icon" type="image/png" href="<?= URL ?>img/favicon.png">

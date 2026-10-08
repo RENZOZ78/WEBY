@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /compte/
+Disallow: /administration/
+Disallow: /supervision/
+Disallow: /validation
+
+Sitemap: https://webycloudy.com/sitemap.xml

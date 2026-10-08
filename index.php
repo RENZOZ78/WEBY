@@ -69,9 +69,23 @@
         Toolbox::redirection($retour[$page] ?? "accueils");
       }
 
+      //adresses de l'ancien site statique (V1) encore connues de Google : redirigees au lieu d'une page 404
+      $anciennesPages = [
+        "index.html" => "",
+        "index.htm" => "",
+        "accueil" => "",
+        "projets.html" => "prestations/sites#realisations",
+        "projets" => "prestations/sites#realisations",
+      ];
+      if(isset($anciennesPages[$page]) && $url[1] === ""){
+        redirectionPermanente($anciennesPages[$page]);
+      }
+
       //routage vers les différentes pages
       switch($page){
         case "accueils": $visiteurController->accueil();
+        break;
+        case "sitemap.xml": $visiteurController->planDuSite();
         break;
         case "prestations":
           switch($url[1]){

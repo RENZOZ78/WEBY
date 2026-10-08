@@ -36,6 +36,10 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Métiers** (entrée du 2026-10-06) : relire les problématiques et solutions des 12 métiers (`inc/secteurs.php`),
       dire s'il faut ajouter ou retirer des métiers ; après fusion, tester le bandeau de l'accueil sur téléphone et
       ouvrir quelques pages `secteurs/…`.
+- [ ] **Search Console** (entrée du 2026-10-08) : après fusion, vérifier que `https://webycloudy.com/projets.html`
+      redirige vers *Site internet* et que `https://webycloudy.com/sitemap.xml` s'affiche ; dans Search Console,
+      *Sitemaps* → envoyer `sitemap.xml`, puis *Indexation des pages* → *Introuvable (404)* → « Valider la correction ».
+      Si d'autres adresses restent en 404, les lister (bouton de la ligne) pour ajouter leur redirection.
 - [ ] **Compléter le tableau « Hors site »** de `docs/CONTEXTE_ACTIF.md` (SEO, Instagram, Leboncoin, acquisition).
 - [ ] **Changer les mots de passe** communiqués pendant la mise en ligne du 2026-10-02 : compte super-admin du site
       (`admin`, depuis *Mon profil*) et utilisateur MySQL `u181593296_weby` (hPanel, puis reporter le nouveau mot de
@@ -60,6 +64,43 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-08 — Search Console : erreurs 404 et pages en double corrigées
+
+**Demande** : le propriétaire reçoit des mails de Google Search Console (« De nouvelles raisons empêchent l'indexation
+des pages », motif *Introuvable (404)*, le 2026-10-07) ; comprendre le message et régler le problème.
+
+**Réalisé** :
+- **Diagnostic** : rapport *Indexation des pages* au 2026-10-04 : 8 pages indexées, 6 non indexées pour 3 motifs —
+  *Introuvable (404)*, *Page en double sans URL canonique sélectionnée par l'utilisateur*, *Page avec redirection*.
+  Google connaît encore les pages de l'ancien site statique V1 (`index.html`, `projets.html`) ; depuis la mise en ligne
+  de la V2 le 2026-10-02 elles n'existent plus sur le serveur (vérifié par l'API de fichiers Hostinger) et répondaient
+  en 404. Les doublons viennent de l'accueil servi sous plusieurs adresses (`/`, `/accueils`, `/?utm_source=…`)
+  sans URL canonique. La V2 n'avait ni `robots.txt` ni plan du site.
+- **Anciennes adresses redirigées (301)** dans `index.php` : `index.html`, `index.htm`, `accueil` → accueil ;
+  `projets.html`, `projets` → *Site internet*, section réalisations.
+- **URL canonique** sur chaque page publique (`<link rel="canonical">`, adresse `https://webycloudy.com/…`, sans
+  paramètres) : `/`, `/accueils` et les liens `?utm_source=` comptent pour une seule page. Adresse réglable par
+  `site_url` dans `config/config.php`.
+- **`noindex`** sur les pages d'erreur, la connexion, la création de compte et les espaces privés.
+- **Plan du site** `sitemap.xml` généré par le site (accueil, 4 prestations, contact, 12 pages métier ; un métier
+  ajouté dans `inc/secteurs.php` y apparaît tout seul) et **`robots.txt`** qui le déclare et écarte les espaces
+  privés et les validations de formulaire.
+- *Page avec redirection* : normal (`http://`, `www.` et `secteurs` redirigent), rien à corriger.
+
+**Fichiers / zones touchés** : `index.php`, `views/common/template.php`, `controllers/Visiteur/Visiteur.controller.php`,
+`config/config.php`, `robots.txt`, `README.md`, `docs/DEPLOIEMENT.md`, `docs/DECISIONS.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : `php -l` ; serveur PHP intégré (PHP 8.3, sans base) : `index.html`, `accueil` → 301 vers
+l'accueil, `projets.html` → 301 vers `prestations/sites#realisations` ; `/`, `/accueils`, `/?utm_source=instagram`
+→ canonique `https://webycloudy.com/` ; pages prestations, contact et métiers avec leur canonique ; `login`,
+métier inconnu et page inexistante en `noindex` (404 pour les deux derniers) ; `sitemap.xml` valide avec 18 adresses ;
+aucun warning PHP. Le site en ligne n'est pas joignable depuis l'environnement de Claude Code : la liste exacte des
+adresses en 404 vue par Google n'a pas pu être lue (Search Console non connectée).
+**Référence** : PR #18 (branche `ccr-841e1d28-qc81j9`)
+**Suites** : après fusion, envoyer le sitemap dans Search Console et lancer « Valider la correction » sur le motif 404 ;
+signaler toute autre adresse encore en 404.
 
 ---
 

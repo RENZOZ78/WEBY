@@ -15,6 +15,8 @@
   }
 
   $config = [
+    //adresse officielle du site : URL canoniques et plan du site (sitemap.xml) donnés à Google
+    "site_url" => config_env("SITE_URL", "https://webycloudy.com/"),
     "db_host" => config_env("DB_HOST", "127.0.0.1"),
     "db_name" => config_env("DB_NAME", "webycloudy"),
     "db_user" => config_env("DB_USER", "root"),

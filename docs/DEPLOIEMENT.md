@@ -58,6 +58,8 @@ schéma) `visites` (mesure d'audience, sans IP), `journal` (journal d'activité,
 ## Configuration
 
 - `config/config.php` (versionné) : valeurs par défaut, téléphone, adresse mail, horaires affichés.
+- `site_url` (dans `config.php`, `https://webycloudy.com/` par défaut) : adresse officielle utilisée pour les URL
+  canoniques et le plan du site `sitemap.xml` déclaré dans `robots.txt` (Google Search Console).
 - `config/config.local.php` (serveur uniquement) : surcharge `config.php` (base de données, comptes).
 - Pour changer le mot de passe MySQL : le modifier dans hPanel (*Bases de données MySQL*), puis reporter le
   nouveau mot de passe dans `config/config.local.php` via le gestionnaire de fichiers.
