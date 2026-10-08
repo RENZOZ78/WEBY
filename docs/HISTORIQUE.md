@@ -98,7 +98,7 @@ l'accueil, `projets.html` → 301 vers `prestations/sites#realisations` ; `/`, `
 métier inconnu et page inexistante en `noindex` (404 pour les deux derniers) ; `sitemap.xml` valide avec 18 adresses ;
 aucun warning PHP. Le site en ligne n'est pas joignable depuis l'environnement de Claude Code : la liste exacte des
 adresses en 404 vue par Google n'a pas pu être lue (Search Console non connectée).
-**Référence** : PR de cette entrée (branche `ccr-841e1d28-qc81j9`)
+**Référence** : PR #18 (branche `ccr-841e1d28-qc81j9`)
 **Suites** : après fusion, envoyer le sitemap dans Search Console et lancer « Valider la correction » sur le motif 404 ;
 signaler toute autre adresse encore en 404.
 
