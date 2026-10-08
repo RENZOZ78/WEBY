@@ -4,7 +4,7 @@
 À lire en premier, avant toute tâche ou tout conseil. Doit rester **court** (une page) : l'ancien part dans
 [`HISTORIQUE.md`](HISTORIQUE.md), les choix durables dans [`DECISIONS.md`](DECISIONS.md).
 
-Dernière mise à jour : 2026-10-06 — par Claude Code (métiers : bandeau défilant et une page par métier, en PR)
+Dernière mise à jour : 2026-10-08 — par Claude Code (Search Console : erreurs 404 et pages en double corrigées, en PR)
 
 > Ce dépôt est **public** : ne rien écrire ici de confidentiel (mots de passe, données clients, chiffres privés).
 
@@ -35,7 +35,7 @@ Le détail à cocher est dans « Points en suspens » de [`HISTORIQUE.md`](HISTO
 
 | Sujet | État | Dernière avancée |
 |---|---|---|
-| SEO | non renseigné | — |
+| SEO | Search Console active ; 8 pages indexées, 6 non (404 de l'ancien site, doublons) au 2026-10-04 | 2026-10-08 : redirections V1, URL canoniques, `sitemap.xml` et `robots.txt` (PR) ; envoyer le sitemap après fusion |
 | Instagram | non renseigné | — |
 | Leboncoin | non renseigné | — |
 | Acquisition / conversion | non renseigné | — |

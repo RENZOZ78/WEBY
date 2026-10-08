@@ -175,6 +175,23 @@
       ]);
     }
 
+    //plan du site pour Google (sitemap.xml) : pages publiques et une page par métier
+    public function planDuSite(){
+      $site = require "config/config.php";
+      $base = rtrim($site['site_url'], "/")."/";
+      $pages = ["", "prestations/lancement", "prestations/gestion", "prestations/sites", "prestations/marketing", "contact"];
+      foreach(array_keys(require "inc/secteurs.php") as $slug){
+        $pages[] = "secteurs/".$slug;
+      }
+      header("Content-Type: application/xml; charset=UTF-8");
+      echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+      echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+      foreach($pages as $chemin){
+        echo "  <url><loc>".htmlspecialchars($base.$chemin, ENT_XML1)."</loc></url>\n";
+      }
+      echo "</urlset>\n";
+    }
+
     public function pageErreur($msg, $code = 404){
       parent::pageErreur($msg, $code);
     }

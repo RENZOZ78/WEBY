@@ -27,7 +27,10 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 
 ## Structure
 
-- `index.php` : routeur (toutes les pages passent par lui)
+- `index.php` : routeur (toutes les pages passent par lui) ; redirige aussi les adresses de l'ancien site V1
+  (`index.html`, `projets.html`) et sert le plan du site `sitemap.xml` (`VisiteurController::planDuSite()`)
+- `robots.txt` : consignes aux moteurs de recherche ; `views/common/template.php` déclare l'URL canonique de chaque
+  page publique (`site_url` dans `config/config.php`) et met `noindex` sur les erreurs, la connexion et les espaces privés
 - `controllers/`, `models/`, `views/` : MVC par rôle (Visiteur, Utilisateur, Administrateur, SuperAdministrateur)
 - `inc/content_*.php` : contenu des pages publiques ; `inc/partials/` : sections réutilisables (tarifs, réalisations, contact, cycle animé du hero de l'accueil…)
 - `public/CSS/theme.css` : thème du site ; `public/Javascript/` : scripts
