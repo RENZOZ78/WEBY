@@ -32,7 +32,7 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       complète* sous le login (sur téléphone il est dans la dernière colonne, à faire glisser) et s'il doit pouvoir
       supprimer d'autres comptes que les non validés. Si de nouveaux comptes de robots apparaissent, envisager un
       captcha (Cloudflare Turnstile ou hCaptcha, clé à créer par le propriétaire).
-- [ ] **Spam du formulaire de contact** (entrée du 2026-10-30) : après fusion, supprimer les demandes « traffic » de
+- [ ] **Spam du formulaire de contact** (en ligne depuis le 2026-10-30, PR #23) : supprimer les demandes « traffic » de
       Stephen et Christopher (ouvrir la demande → *Supprimer (spam)*) ; envoyer un vrai message de test depuis le site
       (il doit arriver) ; surveiller dans *Supervision → Journal* (catégorie *Sécurité*) les « Message de contact
       bloqué » : si un vrai client y apparaît, assouplir le filtre ; si du spam passe encore, envisager un captcha.
@@ -81,6 +81,24 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-30 — Filtre anti-spam du contact en ligne
+
+**Demande** : fusionner la PR #23.
+
+**Réalisé** :
+- PR #23 fusionnée dans `V2` (commit `9912889`). Le déploiement automatique Hostinger est parti seul : la nouvelle
+  version était en ligne environ 10 s après la fusion.
+
+**Fichiers / zones touchés** : Hostinger (déploiement de `V2`), `docs/HISTORIQUE.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : site en ligne lu depuis l'environnement de Claude Code : le formulaire de contact de l'accueil et de
+la page *Contact* porte le champ d'heure d'ouverture ; accueil, contact, une page métier, *Site internet*, connexion et
+`sitemap.xml` en 200 ; `administration/suppressionDemande` sans session renvoie vers la connexion. Aucun message de test
+envoyé en production (un vrai mail serait parti si le filtre l'avait laissé passer) : le test est laissé au propriétaire.
+**Référence** : PR #23 (fusion `9912889`) ; PR de cette entrée
+**Suites** : voir « Spam du formulaire de contact » dans les points en suspens.
 
 ---
 
