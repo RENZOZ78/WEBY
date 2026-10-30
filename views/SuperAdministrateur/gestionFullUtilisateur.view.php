@@ -34,7 +34,17 @@
                   </select>
                 </td>
                 <td class="text-end">
-                  <button form="<?= $formId ?>" type="submit" class="btn btn-primary btn-sm"><i class="fas fa-floppy-disk me-1"></i>Enregistrer</button>
+                  <div class="d-inline-flex flex-wrap justify-content-end gap-2">
+                    <button form="<?= $formId ?>" type="submit" class="btn btn-primary btn-sm"><i class="fas fa-floppy-disk me-1"></i>Enregistrer</button>
+                    <?php if((int)$utilisateur['is_valid'] === 0 && $utilisateur['role'] === "utilisateur" && $utilisateur['login'] !== $_SESSION['profil']['login']) : ?>
+                      <form method="POST" action="<?= URL ?>administration/suppressionCompteNonValide"
+                            data-confirm="Supprimer définitivement le compte non validé <?= $utilisateur['login'] ?> ?">
+                        <?= Securite::csrfField() ?>
+                        <input type="hidden" name="login" value="<?= $utilisateur['login'] ?>">
+                        <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash me-1"></i>Supprimer</button>
+                      </form>
+                    <?php endif; ?>
+                  </div>
                 </td>
               </tr>
             <?php endforeach; ?>

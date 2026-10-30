@@ -15,6 +15,10 @@
       </div>
       <form method="post" action="<?= URL ?>validation_creerCompte" class="form-card needs-validation" novalidate>
         <?= Securite::csrfField() ?>
+        <div class="hp-field" aria-hidden="true">
+          <label for="site_web">Ne pas remplir</label>
+          <input type="text" id="site_web" name="site_web" tabindex="-1" autocomplete="off">
+        </div>
         <h2 class="h4 mb-1">Créez votre compte</h2>
         <p class="text-muted-wc mb-4">Un mail de validation vous sera envoyé.</p>
 
@@ -22,9 +26,11 @@
           <label for="login" class="form-label">Login</label>
           <div class="input-group has-validation">
             <span class="input-group-text"><i class="far fa-user"></i></span>
-            <input type="text" class="form-control" id="login" name="login" autocomplete="username" required maxlength="50">
-            <div class="invalid-feedback">Choisissez un login.</div>
+            <input type="text" class="form-control" id="login" name="login" autocomplete="username" required
+                   minlength="3" maxlength="30" pattern="[A-Za-z0-9._\-]{3,30}" aria-describedby="login-aide">
+            <div class="invalid-feedback">De 3 à 30 caractères : lettres sans accent, chiffres, point, tiret ou tiret bas.</div>
           </div>
+          <div id="login-aide" class="form-text">Lettres sans accent, chiffres, point, tiret ou tiret bas (ex. : jean.dupont).</div>
         </div>
 
         <div class="mb-3">

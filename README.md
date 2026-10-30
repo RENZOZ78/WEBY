@@ -57,7 +57,8 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 
 - **utilisateur** (client) : espace client complet, profil, mail, mot de passe, photo, suppression du compte
 - **administrateur** : demandes, projets, documents, clients ; peut passer un utilisateur en administrateur
-- **superAdministrateur** : gestion complète (mail, rôle, validation du compte) de tous les utilisateurs, et accès
+- **superAdministrateur** : gestion complète (mail, rôle, validation du compte) de tous les utilisateurs, suppression
+  des comptes jamais validés (inscriptions de robots), et accès
   exclusif à la supervision. Il arrive sur la supervision après connexion (réglable dans *Personnaliser*). Son rôle est
   revérifié en base à chaque page de supervision : un compte rétrogradé perd l'accès immédiatement.
 

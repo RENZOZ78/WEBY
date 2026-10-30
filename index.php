@@ -139,6 +139,10 @@
           $visiteurController->creerCompte();
             break;
         case "validation_creerCompte":
+          //champ piège invisible : rempli uniquement par les robots (aucun compte créé, aucun mail envoyé)
+          if(post('site_web') !== ""){
+            Toolbox::redirection("creerCompte");
+          }
           if (post('login') !== "" && post('password') !== "" && post('mail') !== ""){
             $login = Securite::secureHTML(post('login'));
             $password = Securite::secureHTML($_POST['password']);
@@ -302,12 +306,17 @@
             //pages reservees au super administrateur
             case "gestionFullUtilisateur":
             case "validationModificationFullUtilisateur":
+            case "suppressionCompteNonValide":
               if(!Securite::estSuperAdministrateur()){
                 Toolbox::ajouterMessageAlerte("Cette page est réservée au super administrateur", Toolbox::COULEUR_ROUGE);
                 Toolbox::redirection("administration/tableau");
               }
               if($url[1] === "gestionFullUtilisateur"){
                 $sAdministrateurController->gestion_full_utilisateur();
+              }elseif($url[1] === "suppressionCompteNonValide"){
+                //uniquement via le formulaire (POST + jeton CSRF)
+                if($_SERVER['REQUEST_METHOD'] !== "POST") Toolbox::redirection("administration/gestionFullUtilisateur");
+                $sAdministrateurController->suppression_compte_non_valide(Securite::secureHTML(post('login')));
               }else{
                 $sAdministrateurController->validation_modification_full_utilisateur(
                   Securite::secureHTML(post('login')), Securite::secureHTML(post('mail')), post('role'), post('is_valid'));
