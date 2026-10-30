@@ -4,7 +4,7 @@
 À lire en premier, avant toute tâche ou tout conseil. Doit rester **court** (une page) : l'ancien part dans
 [`HISTORIQUE.md`](HISTORIQUE.md), les choix durables dans [`DECISIONS.md`](DECISIONS.md).
 
-Dernière mise à jour : 2026-10-30 — par Claude Code (inscription : comptes de robots et mails de spam bloqués, en PR)
+Dernière mise à jour : 2026-10-30 — par Claude Code (correctif anti-robots en ligne, compte du robot supprimé)
 
 > Ce dépôt est **public** : ne rien écrire ici de confidentiel (mots de passe, données clients, chiffres privés).
 
@@ -22,7 +22,6 @@ Dernière mise à jour : 2026-10-30 — par Claude Code (inscription : comptes d
 ## Priorités en cours (3 maximum)
 
 1. **Sécuriser la production** : changer les mots de passe communiqués pendant la mise en ligne, tester les mails,
-   supprimer le compte de robot créé à l'inscription (correctif anti-spam en PR),
    contrôler après chaque fusion que le déploiement automatique est bien parti (il s'était arrêté après la PR #4).
 2. **Valider les contenus** : tarifs indicatifs, cycle animé de l'accueil (4 phases), textes des 12 métiers, photos réelles.
 3. **Nettoyer** : fichiers inutiles déployés (`.idea/`, `.vscode/`, `node_modules/`), `backup_v1`, anciennes copies

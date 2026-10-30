@@ -27,10 +27,11 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
-- [ ] **Inscriptions de robots** (entrée du 2026-10-30) : après fusion, dans *Administration → Gestion complète*,
-      supprimer le compte « * * * <a href="http://kariangroup.ru/go-na » (bouton *Supprimer*) ; créer un compte de test
-      pour vérifier que le mail de validation arrive. Si de nouveaux comptes de robots apparaissent malgré tout,
-      envisager un captcha (Cloudflare Turnstile ou hCaptcha, clé à créer par le propriétaire).
+- [ ] **Inscriptions de robots** (entrées du 2026-10-30) : créer un compte de test pour vérifier que le mail de
+      validation arrive (il commence par « Bonjour, ») ; dire s'il faut placer le bouton *Supprimer* de *Gestion
+      complète* sous le login (sur téléphone il est dans la dernière colonne, à faire glisser) et s'il doit pouvoir
+      supprimer d'autres comptes que les non validés. Si de nouveaux comptes de robots apparaissent, envisager un
+      captcha (Cloudflare Turnstile ou hCaptcha, clé à créer par le propriétaire).
 - [ ] **Supervision** (PR de l'entrée du 2026-10-03) : après fusion, vérifier que le serveur a reçu la version, que
       `storage/.schema` contient `2` et que les tables `visites`, `journal`, `preferences` existent ; se connecter avec le
       compte super-admin et parcourir *Supervision*. Ajouter `?utm_source=instagram` / `?utm_source=leboncoin` aux liens
@@ -59,6 +60,9 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Déploiement automatique Hostinger** : il ne s'est plus déclenché entre la PR #4 et le 2026-10-03 (relancé à la
       main). Après chaque fusion dans `V2`, vérifier que le serveur a reçu la nouvelle version ; chercher la cause
       (webhook GitHub de l'installation Hostinger, à voir dans hPanel *Sites → webycloudy.com → Avancé → Git*).
+      Il a fonctionné seul pour la PR #19 (2026-10-30, version en ligne environ 20 s après la fusion).
+- [ ] **PHP** (entrée du 2026-10-30) : après fusion de la PR #20, vérifier que le site ne renvoie plus l'en-tête
+      `X-Powered-By` ; vérifier le passage à PHP 8.4.28 (correctif de CVE-2026-115560) quand elle sortira.
 - [ ] **Photos réelles** de l'équipe ou des locaux à intégrer à la place des photos de stock si disponibles.
 - [ ] **Anciennes copies du site** sur `webycloudy.fr` et `webycloudy.xyz` (hébergement Hostinger) : ancienne
       version PHP avec le dossier `.idea`, domaines qui ne pointent pas vers Hostinger. À supprimer ou à rediriger.
@@ -68,6 +72,49 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-30 — Faille PHP « PHP2Shell » : version du serveur vérifiée, version de PHP masquée
+
+**Demande** : faut-il mettre à jour PHP après l'annonce d'une faille PHP ? Puis masquer la version de PHP.
+
+**Réalisé** :
+- Faille « PHP2Shell » (CVE-2026-109618 et CVE-2026-109619, exécution de code à distance, exploitée) corrigée le
+  2026-10-21 dans PHP 8.4.27. Le site en ligne répond `X-Powered-By: PHP/8.4.27` : Hostinger a déjà installé la
+  version corrigée, rien à faire. Une autre faille (CVE-2026-115560) sera corrigée dans la prochaine version (8.4.28).
+- Version de PHP masquée : `header_remove("X-Powered-By")` en tête de `index.php` ; le site n'indique plus sa
+  version de PHP aux visiteurs (et aux robots qui cherchent des serveurs vulnérables).
+
+**Fichiers / zones touchés** : `index.php`
+**Vérifications** : `php -l` ; serveur PHP intégré avec `expose_php` activé : l'en-tête est présent sans la ligne et
+absent avec ; accueil, contact, connexion et `sitemap.xml` en 200 sans l'en-tête.
+**Référence** : PR #20 (branche `claude/https-injection-signup-a5ja6l`)
+**Suites** : après fusion, vérifier que `https://webycloudy.com/` ne renvoie plus `X-Powered-By` ; contrôler que PHP
+passe en 8.4.28 quand elle sortira (hPanel, *Configuration PHP*).
+
+---
+
+## 2026-10-30 — Correctif anti-robots en ligne, compte du robot supprimé
+
+**Demande** : fusionner la PR #19 ; trouver le bouton *Supprimer* pour retirer le compte du robot.
+
+**Réalisé** :
+- PR #19 fusionnée dans `V2` (commit `9e479a0`). Le déploiement automatique Hostinger est parti seul : le nouveau
+  formulaire d'inscription (contrôle du login, champ piège) était en ligne environ 20 s après la fusion.
+- Sur téléphone, le bouton *Supprimer* de *Gestion complète* est dans la dernière colonne (*Action*) : il faut faire
+  glisser le tableau vers la gauche pour le voir. Indiqué au propriétaire, qui a supprimé le compte du robot.
+- Proposé de placer le bouton sous le login pour qu'il soit visible sans glisser ; le propriétaire réfléchit, ainsi
+  qu'à étendre la suppression à d'autres comptes (attention : supprimer un client efface ses projets et documents).
+
+**Fichiers / zones touchés** : Hostinger (déploiement de `V2`), base de production (compte du robot supprimé par le
+propriétaire), `docs/HISTORIQUE.md`, `docs/DEPLOIEMENT.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : site en ligne lu depuis l'environnement de Claude Code : `creerCompte` sert le nouveau formulaire
+(champ piège, `maxlength="30"`, motif du login) ; accueil, contact, connexion, *Site internet* et `sitemap.xml` en 200.
+Aucun compte de test créé en production (un vrai mail serait parti). La suppression du robot est confirmée par le
+propriétaire, pas vérifiée par Claude Code (pas d'accès à la base de production).
+**Référence** : PR #19 (fusion `9e479a0`) ; PR de cette entrée
+**Suites** : compte de test pour le mail de validation ; décisions sur le bouton *Supprimer* (voir « Points en suspens »).
 
 ---
 

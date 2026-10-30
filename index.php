@@ -1,5 +1,8 @@
 <?php
 
+    //ne pas annoncer la version de PHP du serveur (en-tete X-Powered-By)
+    header_remove("X-Powered-By");
+
     session_set_cookie_params([
       "httponly" => true,
       "samesite" => "Lax",
