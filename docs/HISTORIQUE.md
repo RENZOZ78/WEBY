@@ -61,6 +61,8 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       main). Après chaque fusion dans `V2`, vérifier que le serveur a reçu la nouvelle version ; chercher la cause
       (webhook GitHub de l'installation Hostinger, à voir dans hPanel *Sites → webycloudy.com → Avancé → Git*).
       Il a fonctionné seul pour la PR #19 (2026-10-30, version en ligne environ 20 s après la fusion).
+- [ ] **PHP** (entrée du 2026-10-30) : après fusion de la PR #20, vérifier que le site ne renvoie plus l'en-tête
+      `X-Powered-By` ; vérifier le passage à PHP 8.4.28 (correctif de CVE-2026-115560) quand elle sortira.
 - [ ] **Photos réelles** de l'équipe ou des locaux à intégrer à la place des photos de stock si disponibles.
 - [ ] **Anciennes copies du site** sur `webycloudy.fr` et `webycloudy.xyz` (hébergement Hostinger) : ancienne
       version PHP avec le dossier `.idea`, domaines qui ne pointent pas vers Hostinger. À supprimer ou à rediriger.
@@ -70,6 +72,26 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-30 — Faille PHP « PHP2Shell » : version du serveur vérifiée, version de PHP masquée
+
+**Demande** : faut-il mettre à jour PHP après l'annonce d'une faille PHP ? Puis masquer la version de PHP.
+
+**Réalisé** :
+- Faille « PHP2Shell » (CVE-2026-109618 et CVE-2026-109619, exécution de code à distance, exploitée) corrigée le
+  2026-10-21 dans PHP 8.4.27. Le site en ligne répond `X-Powered-By: PHP/8.4.27` : Hostinger a déjà installé la
+  version corrigée, rien à faire. Une autre faille (CVE-2026-115560) sera corrigée dans la prochaine version (8.4.28).
+- Version de PHP masquée : `header_remove("X-Powered-By")` en tête de `index.php` ; le site n'indique plus sa
+  version de PHP aux visiteurs (et aux robots qui cherchent des serveurs vulnérables).
+
+**Fichiers / zones touchés** : `index.php`
+**Vérifications** : `php -l` ; serveur PHP intégré avec `expose_php` activé : l'en-tête est présent sans la ligne et
+absent avec ; accueil, contact, connexion et `sitemap.xml` en 200 sans l'en-tête.
+**Référence** : PR #20 (branche `claude/https-injection-signup-a5ja6l`)
+**Suites** : après fusion, vérifier que `https://webycloudy.com/` ne renvoie plus `X-Powered-By` ; contrôler que PHP
+passe en 8.4.28 quand elle sortira (hPanel, *Configuration PHP*).
 
 ---
 
