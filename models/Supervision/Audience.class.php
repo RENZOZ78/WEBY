@@ -51,18 +51,30 @@
     //jeton de la page en cours, insere dans la page par le gabarit (null : page non mesuree)
     private static $jeton = null;
 
+    //categories des pages servies (table pages_servies) => libelle affiche dans la supervision
+    public const CATEGORIES_ROBOTS = [
+      "robot" => "Robots déclarés",
+      "spam" => "Spam de provenance",
+      "navigateur" => "Robots déguisés (sans JavaScript)",
+    ];
+
     //prepare la mesure de la page affichee (appele a la generation de chaque page) ; ne bloque jamais le site.
-    //Rien n'est enregistre ici : la page contient un jeton signe que le navigateur renvoie (main.js) une fois
-    //la page affichee. Les robots qui n'executent pas le JavaScript ne sont donc pas comptes.
+    //La page servie est notee dans pages_servies (robots compris, pour les compter a part) ; pour un navigateur,
+    //la page contient un jeton signe que main.js renvoie une fois la page affichee : seule cette confirmation
+    //compte une visite (pages_vues). Les robots qui n'executent pas le JavaScript ne sont donc pas comptes.
     public static function preparer(){
       try {
         self::$jeton = null;
         if(($_SERVER['REQUEST_METHOD'] ?? "GET") !== "GET" || http_response_code() !== 200) return;
-        if(!self::visiteurCompte()) return;
+        if(Securite::estAdministrateur() || Securite::estSuperAdministrateur()) return;
         $page = self::pageCourante();
         if($page === null) return;
+        $agent = (string)($_SERVER['HTTP_USER_AGENT'] ?? "");
         $source = self::source();
-        if(preg_match(self::SOURCES_SPAM, $source)) return;
+        $categorie = ($agent === "" || preg_match(self::ROBOTS, $agent)) ? "robot" : (preg_match(self::SOURCES_SPAM, $source) ? "spam" : "navigateur");
+        $stmt = (new self())->getBdd()->prepare("INSERT INTO pages_servies (page, visiteur, source, categorie) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$page, self::empreinte($agent), mb_substr($source, 0, 80), $categorie]);
+        if($categorie !== "navigateur") return;
         $donnees = rtrim(strtr(base64_encode(json_encode(["p" => $page, "s" => $source, "t" => time()])), "+/", "-_"), "=");
         self::$jeton = $donnees.".".hash_hmac("sha256", $donnees, self::sel());
       } catch (Throwable $e) {
@@ -84,7 +96,7 @@
         if($mesure === null) return;
         $type = (string)($_POST['type'] ?? "vue");
         $agent = (string)$_SERVER['HTTP_USER_AGENT'];
-        $empreinte = substr(hash("sha256", ($_SERVER['REMOTE_ADDR'] ?? "")."|".$agent."|".date("Y-m-d")."|".self::sel()), 0, 16);
+        $empreinte = self::empreinte($agent);
         $bdd = (new self())->getBdd();
         if($type === "vue"){
           //une seule page vue par jeton : un jeton rejoue (meme visiteur, meme page, meme seconde d'affichage) est ignore
@@ -103,13 +115,19 @@
         //purge occasionnelle des donnees anciennes
         if(random_int(1, 300) === 1){
           $limite = date("Y-m-d", strtotime("-".self::CONSERVATION_JOURS." days"));
-          foreach(["pages_vues", "clics_contact", "visites", "journal"] as $table){
+          foreach(["pages_vues", "pages_servies", "clics_contact", "visites", "journal"] as $table){
             $bdd->prepare("DELETE FROM ".$table." WHERE created_at < ?")->execute([$limite]);
           }
         }
       } catch (Throwable $e) {
         error_log("Audience : ".$e->getMessage());
       }
+    }
+
+    //empreinte anonyme du visiteur (IP + navigateur + jour + sel secret), identique a la generation de la page
+    //et a la confirmation du navigateur : c'est ce qui permet de reconnaitre les pages jamais confirmees
+    private static function empreinte($agent){
+      return substr(hash("sha256", ($_SERVER['REMOTE_ADDR'] ?? "")."|".$agent."|".date("Y-m-d")."|".self::sel()), 0, 16);
     }
 
     //visiteur a compter : navigateur declare (pas un robot connu), ni administrateur ni super administrateur

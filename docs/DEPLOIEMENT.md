@@ -55,7 +55,8 @@ Tables : `utilisateur`, `projets`, `documents`, `demandes`, `messages`, et depui
 schéma) `visites` (mesure d'audience, sans IP), `journal` (journal d'activité, IP tronquée) et `preferences`
 (tableau de bord personnalisé). Depuis la version 3 du schéma : `pages_vues` (mesure d'audience envoyée par le
 navigateur, sans IP ; remplace `visites`, qui n'est plus alimentée ni affichée et peut être supprimée à la main) et
-`clics_contact` (clics sur le téléphone, le mail, WhatsApp). Ces tables et le journal sont purgés automatiquement au-delà
+`pages_servies` (toutes les pages publiques servies, robots compris, pour compter les robots écartés) et
+`clics_contact` (clics sur le téléphone, le mail, WhatsApp). Ces tables, `visites` et le journal sont purgés automatiquement au-delà
 de 400 jours.
 
 ## Configuration

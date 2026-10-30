@@ -48,7 +48,7 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 - **Supervision** (`supervision/...`, super administrateur uniquement) : tableau de bord personnalisable (blocs,
   ordre, largeur, période, page d'arrivée après connexion), audience des pages publiques (mesure interne sans cookie
   ni IP, comptée par le navigateur pour écarter les robots : visiteurs, pages, provenance, appareils, heures, clics
-  sur le téléphone, le mail et WhatsApp), journal d'activité (connexions et échecs, comptes,
+  sur le téléphone, le mail et WhatsApp, robots et spams écartés comptés à part), journal d'activité (connexions et échecs, comptes,
   demandes, projets, documents, droits), activité de chaque compte, état technique du site.
 - **Administration** (`administration/...`) : tableau de bord, demandes (formulaire de contact + demandes des clients,
   réponse par mail et dans l'espace, statut), projets (création pour un client, étape, message visible, dépôt de documents),

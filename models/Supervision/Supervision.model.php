@@ -97,6 +97,25 @@
       return ["types" => $types, "visiteurs" => $visiteurs];
     }
 
+    //robots et spam ecartes de l'audience : visiteurs (une empreinte par jour) et pages servies, par categorie.
+    //Un "navigateur" est un robot deguise quand aucune de ses pages du jour n'a ete confirmee par le navigateur
+    //(pas de JavaScript) ; une vraie personne qui repart en moins d'une seconde ou sans JavaScript y est comptee aussi.
+    public function getRobots($jours){
+      $nonConfirme = "(s.categorie <> 'navigateur' OR NOT EXISTS (SELECT 1 FROM pages_vues v WHERE v.visiteur = s.visiteur
+          AND v.created_at >= DATE(s.created_at) AND v.created_at < DATE(s.created_at) + INTERVAL 1 DAY))";
+      $depuis = self::debutPeriode($jours);
+      $lignes = $this->requete("SELECT s.categorie, COUNT(*) AS pages, COUNT(DISTINCT s.visiteur, DATE(s.created_at)) AS visiteurs
+          FROM pages_servies s WHERE s.created_at >= ? AND ".$nonConfirme." GROUP BY s.categorie", [$depuis])->fetchAll(PDO::FETCH_ASSOC);
+      $index = array_column($lignes, null, "categorie");
+      $categories = [];
+      foreach(Audience::CATEGORIES_ROBOTS as $categorie => $libelle){
+        $categories[$categorie] = ["libelle" => $libelle, "visiteurs" => (int)($index[$categorie]['visiteurs'] ?? 0), "pages" => (int)($index[$categorie]['pages'] ?? 0)];
+      }
+      //total sans doublon (un meme robot peut relever de deux categories)
+      $visiteurs = (int)$this->valeur("SELECT COUNT(DISTINCT s.visiteur, DATE(s.created_at)) FROM pages_servies s WHERE s.created_at >= ? AND ".$nonConfirme, [$depuis]);
+      return ["categories" => $categories, "visiteurs" => $visiteurs, "pages" => array_sum(array_column($categories, "pages"))];
+    }
+
     //date de la premiere page vue mesuree par le navigateur (debut des chiffres fiables), null si aucune
     public function getDebutMesure(){
       $debut = $this->valeur("SELECT MIN(created_at) FROM pages_vues");

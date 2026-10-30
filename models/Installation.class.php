@@ -12,7 +12,7 @@
     private const MARQUEUR = "storage/.installed";
     private const SCHEMA = "storage/.schema";
     //2 : tables de supervision (visites, journal, preferences)
-    //3 : mesure d'audience par le navigateur (pages_vues) et clics de contact (clics_contact)
+    //3 : mesure d'audience par le navigateur (pages_vues, pages_servies) et clics de contact (clics_contact)
     private const VERSION = 3;
 
     //n'interrompt jamais le site : tant que la base n'est pas configuree, seules les pages

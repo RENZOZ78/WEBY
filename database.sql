@@ -95,7 +95,21 @@ CREATE TABLE IF NOT EXISTS pages_vues (
   appareil VARCHAR(12) NOT NULL DEFAULT 'ordinateur',
   connecte TINYINT(1) NOT NULL DEFAULT 0,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_pages_vues_date (created_at)
+  INDEX idx_pages_vues_date (created_at),
+  INDEX idx_pages_vues_visiteur (visiteur, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Pages publiques servies par le serveur, robots compris (catégorie : robot déclaré, spam de provenance ou
+-- navigateur). Sert à compter les robots écartés : un "navigateur" dont aucune page n'est confirmée dans pages_vues
+-- le même jour est un robot déguisé. Même empreinte anonyme que pages_vues, aucune IP conservée.
+CREATE TABLE IF NOT EXISTS pages_servies (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  page VARCHAR(120) NOT NULL,
+  visiteur CHAR(16) NOT NULL,
+  source VARCHAR(80) NOT NULL DEFAULT 'direct',
+  categorie VARCHAR(12) NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_pages_servies_date (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Clics sur le téléphone, le mail ou WhatsApp affichés sur le site (contacts qui ne passent pas par le formulaire)

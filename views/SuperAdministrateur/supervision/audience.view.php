@@ -48,6 +48,18 @@
             Ces contacts n'apparaissent pas dans les demandes : l'appel ou le mail part directement de leur appareil.</p>
         </div>
       </div>
+      <div class="col-12">
+        <div class="dash-card">
+          <h2><span><i class="fas fa-robot"></i>Robots et spams écartés</span></h2>
+          <p class="sv-resume"><strong><?= sv_nombre($robots['visiteurs']) ?></strong> robot(s) · <strong><?= sv_nombre($robots['pages']) ?></strong> page(s) demandée(s)
+            <?php if($a['visiteurs'] + $robots['visiteurs'] > 0) : ?> · <strong><?= round($robots['visiteurs'] * 100 / ($a['visiteurs'] + $robots['visiteurs'])) ?> %</strong> des visiteurs<?php endif; ?></p>
+          <?= sv_classement(array_map(function($c){ return [$c['libelle'], $c['visiteurs'], $c['pages']." pages"]; }, array_values($robots['categories']))) ?>
+          <p class="sv-note">Non comptés dans les visiteurs ci-dessus. <em>Robots déclarés</em> : moteurs de recherche et outils qui se
+            présentent comme tels. <em>Spam de provenance</em> : visites prétendant venir de sites de spam. <em>Robots déguisés</em> :
+            se présentent comme un navigateur mais n'affichent jamais la page (estimation : une personne sans JavaScript ou qui
+            repart en moins d'une seconde y est aussi comptée).</p>
+        </div>
+      </div>
       <div class="col-lg-6">
         <div class="dash-card">
           <h2><span><i class="fas fa-mobile-screen"></i>Appareils</span></h2>

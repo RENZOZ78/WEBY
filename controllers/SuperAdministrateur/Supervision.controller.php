@@ -124,7 +124,10 @@
       //seules les donnees des widgets affiches sont calculees
       $donnees = ["prefs" => $prefs, "periode" => $periode];
       $besoin = function($ids) use ($affiches){ return (bool)array_intersect((array)$ids, $affiches); };
-      if($besoin(["chiffres", "audience"])) $donnees['audience'] = $m->getAudienceComparee($periode);
+      if($besoin(["chiffres", "audience"])){
+        $donnees['audience'] = $m->getAudienceComparee($periode);
+        $donnees['robots'] = $m->getRobots($periode);
+      }
       if($besoin("audience")){
         $donnees['serie'] = $m->getVisitesSerie($periode);
         $donnees['debut_mesure'] = $m->getDebutMesure();
@@ -164,6 +167,7 @@
         "appareils" => $m->getRepartitionVisites("appareil", $periode, 3),
         "conversion" => $m->getConversion($periode),
         "clics" => $m->getClicsContact($periode),
+        "robots" => $m->getRobots($periode),
         "debut_mesure" => $m->getDebutMesure(),
       ]);
     }
