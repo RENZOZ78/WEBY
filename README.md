@@ -36,7 +36,8 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 - `public/CSS/theme.css` : thème du site ; `public/Javascript/` : scripts
 - `inc/secteurs.php` : les métiers accompagnés (problématiques, solutions, gains). Ils alimentent le bandeau défilant
   de l'accueil (`inc/partials/secteurs.php`) et les pages `secteurs/{métier}` : ajouter un métier = ajouter une entrée
-- `models/Supervision/` : mesure d'audience (`Audience`), journal d'activité (`Journal::ajouter()` à appeler
+- `models/Supervision/` : mesure d'audience (`Audience` : la page contient un jeton signé, `main.js` le renvoie
+  à l'adresse `mesure` une fois la page affichée, puis à chaque clic sur le téléphone, le mail ou WhatsApp), journal d'activité (`Journal::ajouter()` à appeler
   pour chaque action notable), statistiques de la supervision ; vues dans `views/SuperAdministrateur/supervision/`
 - `storage/documents/` : fichiers des clients (hors dépôt git)
 
@@ -46,7 +47,8 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
   téléchargement de ses documents, demandes avec fil de messages, profil.
 - **Supervision** (`supervision/...`, super administrateur uniquement) : tableau de bord personnalisable (blocs,
   ordre, largeur, période, page d'arrivée après connexion), audience des pages publiques (mesure interne sans cookie
-  ni IP : visiteurs, pages, provenance, appareils, heures), journal d'activité (connexions et échecs, comptes,
+  ni IP, comptée par le navigateur pour écarter les robots : visiteurs, pages, provenance, appareils, heures, clics
+  sur le téléphone, le mail et WhatsApp), journal d'activité (connexions et échecs, comptes,
   demandes, projets, documents, droits), activité de chaque compte, état technique du site.
 - **Administration** (`administration/...`) : tableau de bord, demandes (formulaire de contact + demandes des clients,
   réponse par mail et dans l'espace, statut), projets (création pour un client, étape, message visible, dépôt de documents),

@@ -6,7 +6,7 @@ require_once("models/Supervision/Audience.class.php");
   Abstract class MainController{
 
     protected function genererPage($data){
-      Audience::enregistrer();//mesure d'audience des pages publiques (supervision)
+      Audience::preparer();//mesure d'audience des pages publiques (supervision), envoyee ensuite par le navigateur
       extract($data);//creer la variable directement
       ob_start();
       require_once($view);

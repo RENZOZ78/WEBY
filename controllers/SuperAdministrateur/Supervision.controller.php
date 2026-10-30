@@ -125,7 +125,10 @@
       $donnees = ["prefs" => $prefs, "periode" => $periode];
       $besoin = function($ids) use ($affiches){ return (bool)array_intersect((array)$ids, $affiches); };
       if($besoin(["chiffres", "audience"])) $donnees['audience'] = $m->getAudienceComparee($periode);
-      if($besoin("audience")) $donnees['serie'] = $m->getVisitesSerie($periode);
+      if($besoin("audience")){
+        $donnees['serie'] = $m->getVisitesSerie($periode);
+        $donnees['debut_mesure'] = $m->getDebutMesure();
+      }
       if($besoin(["chiffres", "comptes"])) $donnees['comptes'] = $m->getStatsComptes($periode);
       if($besoin(["chiffres", "demandes", "alertes"])) $donnees['demandes'] = $m->getStatsDemandes($periode);
       if($besoin(["chiffres", "projets", "alertes"])) $donnees['projets'] = $m->getStatsProjets();
@@ -160,6 +163,8 @@
         "sources" => $m->getRepartitionVisites("source", $periode, 15),
         "appareils" => $m->getRepartitionVisites("appareil", $periode, 3),
         "conversion" => $m->getConversion($periode),
+        "clics" => $m->getClicsContact($periode),
+        "debut_mesure" => $m->getDebutMesure(),
       ]);
     }
 

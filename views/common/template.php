@@ -22,6 +22,9 @@
       <link rel="canonical" href="<?= htmlspecialchars($page_canonique) ?>">
     <?php endif; ?>
     <title><?= htmlspecialchars(trim($page_title)) ?></title>
+    <?php if(Audience::jeton() !== null) : //mesure d'audience : renvoyee par main.js une fois la page affichee ?>
+      <meta name="wc-mesure" content="<?= htmlspecialchars(Audience::jeton()) ?>" data-csrf="<?= Securite::csrfToken() ?>" data-url="<?= URL ?>mesure">
+    <?php endif; ?>
 
     <link rel="icon" type="image/png" href="<?= URL ?>img/favicon.png">
 

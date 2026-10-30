@@ -43,7 +43,7 @@ Fichiers présents sur le serveur mais **absents du dépôt** (le déploiement n
   Modèle : `config/config.local.example.php`.
 - `storage/.installed` : marqueur de fin d'installation. Le supprimer relance l'installation au chargement
   suivant (tables créées si absentes, compte super-admin créé s'il n'en existe aucun).
-- `storage/.schema` : version du schéma installée (2 depuis la supervision). Quand le code porte une version
+- `storage/.schema` : version du schéma installée (2 depuis la supervision, 3 depuis la mesure par le navigateur). Quand le code porte une version
   plus récente (`Installation::VERSION`), les nouvelles tables de `database.sql` sont créées automatiquement au
   premier chargement qui suit le déploiement, sans toucher aux données existantes.
 - `storage/.sel` : sel secret de la mesure d'audience (empreinte anonyme des visiteurs), créé automatiquement.
@@ -53,7 +53,10 @@ Fichiers présents sur le serveur mais **absents du dépôt** (le déploiement n
 
 Tables : `utilisateur`, `projets`, `documents`, `demandes`, `messages`, et depuis la supervision (version 2 du
 schéma) `visites` (mesure d'audience, sans IP), `journal` (journal d'activité, IP tronquée) et `preferences`
-(tableau de bord personnalisé). Visites et journal sont purgés automatiquement au-delà de 400 jours.
+(tableau de bord personnalisé). Depuis la version 3 du schéma : `pages_vues` (mesure d'audience envoyée par le
+navigateur, sans IP ; remplace `visites`, qui n'est plus alimentée ni affichée et peut être supprimée à la main) et
+`clics_contact` (clics sur le téléphone, le mail, WhatsApp). Ces tables et le journal sont purgés automatiquement au-delà
+de 400 jours.
 
 ## Configuration
 

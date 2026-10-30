@@ -71,8 +71,8 @@ CREATE TABLE IF NOT EXISTS messages (
   INDEX idx_messages_demande (demande_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Mesure d'audience (supervision) : une ligne par page publique vue.
--- Aucune adresse IP n'est conservée : "visiteur" est une empreinte anonyme qui change chaque jour.
+-- Ancienne mesure d'audience (jusqu'au schéma 2) : comptée côté serveur, robots déguisés en navigateurs compris.
+-- N'est plus alimentée ni affichée ; vidée peu à peu par la purge (400 jours), peut être supprimée à la main.
 CREATE TABLE IF NOT EXISTS visites (
   id INT AUTO_INCREMENT PRIMARY KEY,
   page VARCHAR(120) NOT NULL,
@@ -82,6 +82,32 @@ CREATE TABLE IF NOT EXISTS visites (
   connecte TINYINT(1) NOT NULL DEFAULT 0,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_visites_date (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Mesure d'audience (supervision) : une ligne par page publique vue, envoyée par le navigateur du visiteur
+-- (script de main.js) : les robots qui n'exécutent pas le JavaScript ne sont pas comptés.
+-- Aucune adresse IP n'est conservée : "visiteur" est une empreinte anonyme qui change chaque jour.
+CREATE TABLE IF NOT EXISTS pages_vues (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  page VARCHAR(120) NOT NULL,
+  visiteur CHAR(16) NOT NULL,
+  source VARCHAR(80) NOT NULL DEFAULT 'direct',
+  appareil VARCHAR(12) NOT NULL DEFAULT 'ordinateur',
+  connecte TINYINT(1) NOT NULL DEFAULT 0,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_pages_vues_date (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Clics sur le téléphone, le mail ou WhatsApp affichés sur le site (contacts qui ne passent pas par le formulaire)
+CREATE TABLE IF NOT EXISTS clics_contact (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  type VARCHAR(12) NOT NULL,
+  page VARCHAR(120) NOT NULL,
+  visiteur CHAR(16) NOT NULL,
+  source VARCHAR(80) NOT NULL DEFAULT 'direct',
+  appareil VARCHAR(12) NOT NULL DEFAULT 'ordinateur',
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_clics_contact_date (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Journal d'activité (supervision) : connexions, comptes, demandes, projets, documents, droits

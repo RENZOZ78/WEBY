@@ -2,10 +2,13 @@
   require_once(__DIR__."/../Model.class.php");
 
   /**
-   * Mesure d'audience interne (supervision du super administrateur), sans outil externe ni cookie.
-   * Une ligne par page publique vue. Aucune adresse IP n'est conservee : le visiteur est une empreinte
-   * anonyme (IP + navigateur + jour + sel secret) qui change chaque jour.
-   * Ne sont pas comptes : les robots, les administrateurs et les pages privees (espace client, administration).
+   * Mesure d'audience interne (supervision du super administrateur), sans outil externe ni cookie de mesure.
+   * Une ligne par page publique vue (table pages_vues), envoyee par le navigateur une fois la page affichee,
+   * et une ligne par clic sur le telephone, le mail ou WhatsApp (table clics_contact).
+   * Aucune adresse IP n'est conservee : le visiteur est une empreinte anonyme (IP + navigateur + jour + sel secret)
+   * qui change chaque jour.
+   * Ne sont pas comptes : les robots (declares ou sans JavaScript), les visites venues de sites de spam,
+   * les administrateurs et les pages privees (espace client, administration).
    */
   class Audience extends Model{
 
@@ -36,30 +39,94 @@
 
     private const ROBOTS = '/bot|crawl|spider|slurp|preview|monitor|scan|curl|wget|python|java\/|go-http|headless|lighthouse|pingdom|uptime|facebookexternalhit|semrush|ahrefs/i';
 
-    //enregistre la page affichee (appele a la generation de chaque page) ; ne bloque jamais le site
-    public static function enregistrer(){
+    //sites de spam de referent : des robots visitent le site en se faisant passer pour ces sites (visite non comptee)
+    private const SOURCES_SPAM = '/addurl|linkbuilding|backlink|traffic|trafic|seo-|-seo|onoda-|five\.co\.in|wnnkd|semalt|buttons-for|best-seo|free-share/i';
+
+    //clics de contact mesures (type envoye par le navigateur => libelle)
+    public const CLICS = ["telephone" => "Téléphone", "mail" => "Mail", "whatsapp" => "WhatsApp"];
+
+    //duree de validite du jeton de mesure (onglet laisse ouvert avant un clic sur le telephone)
+    private const VALIDITE_JETON = 12 * 3600;
+
+    //jeton de la page en cours, insere dans la page par le gabarit (null : page non mesuree)
+    private static $jeton = null;
+
+    //prepare la mesure de la page affichee (appele a la generation de chaque page) ; ne bloque jamais le site.
+    //Rien n'est enregistre ici : la page contient un jeton signe que le navigateur renvoie (main.js) une fois
+    //la page affichee. Les robots qui n'executent pas le JavaScript ne sont donc pas comptes.
+    public static function preparer(){
       try {
+        self::$jeton = null;
         if(($_SERVER['REQUEST_METHOD'] ?? "GET") !== "GET" || http_response_code() !== 200) return;
-        if(Securite::estAdministrateur() || Securite::estSuperAdministrateur()) return;
-        $agent = (string)($_SERVER['HTTP_USER_AGENT'] ?? "");
-        if($agent === "" || preg_match(self::ROBOTS, $agent)) return;
+        if(!self::visiteurCompte()) return;
         $page = self::pageCourante();
         if($page === null) return;
+        $source = self::source();
+        if(preg_match(self::SOURCES_SPAM, $source)) return;
+        $donnees = rtrim(strtr(base64_encode(json_encode(["p" => $page, "s" => $source, "t" => time()])), "+/", "-_"), "=");
+        self::$jeton = $donnees.".".hash_hmac("sha256", $donnees, self::sel());
+      } catch (Throwable $e) {
+        error_log("Audience : ".$e->getMessage());
+      }
+    }
 
+    public static function jeton(){
+      return self::$jeton;
+    }
+
+    //reception d'une mesure envoyee par le navigateur (adresse "mesure", POST) : page vue ou clic de contact.
+    //Repond toujours 204 sans contenu : un envoi refuse ne renseigne pas son auteur.
+    public static function recevoir(){
+      http_response_code(204);
+      try {
+        if(($_SERVER['REQUEST_METHOD'] ?? "") !== "POST" || !Securite::verifierCsrf() || !self::visiteurCompte()) return;
+        $mesure = self::lireJeton((string)($_POST['jeton'] ?? ""));
+        if($mesure === null) return;
+        $type = (string)($_POST['type'] ?? "vue");
+        $agent = (string)$_SERVER['HTTP_USER_AGENT'];
         $empreinte = substr(hash("sha256", ($_SERVER['REMOTE_ADDR'] ?? "")."|".$agent."|".date("Y-m-d")."|".self::sel()), 0, 16);
         $bdd = (new self())->getBdd();
-        $stmt = $bdd->prepare("INSERT INTO visites (page, visiteur, source, appareil, connecte) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$page, $empreinte, self::source(), self::appareil($agent), Securite::estConnecte() ? 1 : 0]);
+        if($type === "vue"){
+          //une seule page vue par jeton : un jeton rejoue (meme visiteur, meme page, meme seconde d'affichage) est ignore
+          $cle = "mesure_".substr(hash("sha256", (string)$_POST['jeton']), 0, 16);
+          if(isset($_SESSION[$cle])) return;
+          $_SESSION[$cle] = 1;
+          $stmt = $bdd->prepare("INSERT INTO pages_vues (page, visiteur, source, appareil, connecte) VALUES (?, ?, ?, ?, ?)");
+          $stmt->execute([$mesure['p'], $empreinte, $mesure['s'], self::appareil($agent), Securite::estConnecte() ? 1 : 0]);
+        }elseif(isset(self::CLICS[$type])){
+          $stmt = $bdd->prepare("INSERT INTO clics_contact (type, page, visiteur, source, appareil) VALUES (?, ?, ?, ?, ?)");
+          $stmt->execute([$type, $mesure['p'], $empreinte, $mesure['s'], self::appareil($agent)]);
+        }else{
+          return;
+        }
 
         //purge occasionnelle des donnees anciennes
         if(random_int(1, 300) === 1){
           $limite = date("Y-m-d", strtotime("-".self::CONSERVATION_JOURS." days"));
-          $bdd->prepare("DELETE FROM visites WHERE created_at < ?")->execute([$limite]);
-          $bdd->prepare("DELETE FROM journal WHERE created_at < ?")->execute([$limite]);
+          foreach(["pages_vues", "clics_contact", "visites", "journal"] as $table){
+            $bdd->prepare("DELETE FROM ".$table." WHERE created_at < ?")->execute([$limite]);
+          }
         }
       } catch (Throwable $e) {
         error_log("Audience : ".$e->getMessage());
       }
+    }
+
+    //visiteur a compter : navigateur declare (pas un robot connu), ni administrateur ni super administrateur
+    private static function visiteurCompte(){
+      if(Securite::estAdministrateur() || Securite::estSuperAdministrateur()) return false;
+      $agent = (string)($_SERVER['HTTP_USER_AGENT'] ?? "");
+      return $agent !== "" && !preg_match(self::ROBOTS, $agent);
+    }
+
+    //contenu d'un jeton signe et encore valable, sinon null
+    private static function lireJeton($jeton){
+      $parties = explode(".", $jeton);
+      if(count($parties) !== 2 || !hash_equals(hash_hmac("sha256", $parties[0], self::sel()), $parties[1])) return null;
+      $mesure = json_decode((string)base64_decode(strtr($parties[0], "-_", "+/")), true);
+      if(!is_array($mesure) || !isset($mesure['p'], $mesure['s'], $mesure['t'])) return null;
+      if(time() - (int)$mesure['t'] > self::VALIDITE_JETON) return null;
+      return ["p" => mb_substr((string)$mesure['p'], 0, 120), "s" => mb_substr((string)$mesure['s'], 0, 80)];
     }
 
     //page publique courante (ex. "prestations/sites"), null pour une page privee
@@ -67,7 +134,7 @@
       $segments = array_values(array_filter(explode("/", trim((string)($_GET['page'] ?? ""), "/")), "strlen"));
       $page = $segments[0] ?? "accueils";
       if(in_array($page, ["compte", "administration", "supervision"], true)) return null;
-      if($page === "prestations" && isset($segments[1])) $page .= "/".$segments[1];
+      if(in_array($page, ["prestations", "secteurs"], true) && isset($segments[1])) $page .= "/".$segments[1];
       return mb_substr(preg_replace('/[^A-Za-z0-9_\/-]/', '', $page), 0, 120);
     }
 
@@ -104,6 +171,12 @@
     }
 
     public static function nomPage($page){
-      return self::PAGES[$page] ?? $page;
+      if(isset(self::PAGES[$page])) return self::PAGES[$page];
+      if(strpos($page, "secteurs/") === 0){
+        $secteurs = require "inc/secteurs.php";
+        $slug = substr($page, 9);
+        return "Métier : ".($secteurs[$slug]['nom'] ?? $slug);
+      }
+      return $page;
     }
   }

@@ -30,7 +30,7 @@
     public function getAudience($depuis, $jusqua = null){
       $jusqua = $jusqua ?? date("Y-m-d H:i:s", strtotime("+1 day"));
       $ligne = $this->requete("SELECT COUNT(*) AS vues, COUNT(DISTINCT visiteur, DATE(created_at)) AS visiteurs,
-          SUM(appareil = 'mobile') AS mobiles FROM visites WHERE created_at >= ? AND created_at < ?", [$depuis, $jusqua])->fetch(PDO::FETCH_ASSOC);
+          SUM(appareil = 'mobile') AS mobiles FROM pages_vues WHERE created_at >= ? AND created_at < ?", [$depuis, $jusqua])->fetch(PDO::FETCH_ASSOC);
       return ["vues" => (int)$ligne['vues'], "visiteurs" => (int)$ligne['visiteurs'], "mobiles" => (int)$ligne['mobiles']];
     }
 
@@ -46,7 +46,7 @@
       $parMois = $jours > 90;
       $format = $parMois ? "%Y-%m" : "%Y-%m-%d";
       $lignes = $this->requete("SELECT DATE_FORMAT(created_at, '".$format."') AS jour, COUNT(*) AS vues,
-          COUNT(DISTINCT visiteur, DATE(created_at)) AS visiteurs FROM visites WHERE created_at >= ? GROUP BY jour", [self::debutPeriode($jours)])->fetchAll(PDO::FETCH_ASSOC);
+          COUNT(DISTINCT visiteur, DATE(created_at)) AS visiteurs FROM pages_vues WHERE created_at >= ? GROUP BY jour", [self::debutPeriode($jours)])->fetchAll(PDO::FETCH_ASSOC);
       $index = array_column($lignes, null, "jour");
       $serie = [];
       $moisFr = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
@@ -68,29 +68,50 @@
       return $serie;
     }
 
-    //classement d'une colonne de la table visites : pages par pages vues, sources et appareils par visiteurs
+    //classement d'une colonne de la table pages_vues : pages par pages vues, sources et appareils par visiteurs
     public function getRepartitionVisites($colonne, $jours, $limite = 8){
       if(!in_array($colonne, ["page", "source", "appareil"], true)) return [];
       return $this->requete("SELECT ".$colonne." AS cle, COUNT(*) AS vues, COUNT(DISTINCT visiteur, DATE(created_at)) AS visiteurs
-          FROM visites WHERE created_at >= ? GROUP BY ".$colonne." ORDER BY ".($colonne === "page" ? "vues" : "visiteurs")." DESC LIMIT ".(int)$limite, [self::debutPeriode($jours)])->fetchAll(PDO::FETCH_ASSOC);
+          FROM pages_vues WHERE created_at >= ? GROUP BY ".$colonne." ORDER BY ".($colonne === "page" ? "vues" : "visiteurs")." DESC LIMIT ".(int)$limite, [self::debutPeriode($jours)])->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //pages vues par heure de la journee (0 a 23)
     public function getVisitesParHeure($jours){
-      $lignes = $this->requete("SELECT HOUR(created_at) AS h, COUNT(*) AS vues FROM visites WHERE created_at >= ? GROUP BY h", [self::debutPeriode($jours)])->fetchAll(PDO::FETCH_KEY_PAIR);
+      $lignes = $this->requete("SELECT HOUR(created_at) AS h, COUNT(*) AS vues FROM pages_vues WHERE created_at >= ? GROUP BY h", [self::debutPeriode($jours)])->fetchAll(PDO::FETCH_KEY_PAIR);
       $serie = [];
       for($h = 0; $h < 24; $h++) $serie[] = ["cle" => $h, "libelle" => $h."h", "vues" => (int)($lignes[$h] ?? 0)];
       return $serie;
     }
 
-    //conversion : messages de contact et creations de compte rapportes aux visiteurs de la periode
+    //clics sur le telephone, le mail ou WhatsApp : visiteurs qui ont clique (une fois par jour et par type) et clics
+    public function getClicsContact($jours){
+      $lignes = $this->requete("SELECT type, COUNT(*) AS clics, COUNT(DISTINCT visiteur, DATE(created_at)) AS visiteurs
+          FROM clics_contact WHERE created_at >= ? GROUP BY type", [self::debutPeriode($jours)])->fetchAll(PDO::FETCH_ASSOC);
+      $index = array_column($lignes, null, "type");
+      $types = [];
+      foreach(Audience::CLICS as $type => $libelle){
+        $types[$type] = ["libelle" => $libelle, "clics" => (int)($index[$type]['clics'] ?? 0), "visiteurs" => (int)($index[$type]['visiteurs'] ?? 0)];
+      }
+      //un visiteur qui clique sur le telephone puis sur le mail ne compte qu'une fois
+      $visiteurs = (int)$this->valeur("SELECT COUNT(DISTINCT visiteur, DATE(created_at)) FROM clics_contact WHERE created_at >= ?", [self::debutPeriode($jours)]);
+      return ["types" => $types, "visiteurs" => $visiteurs];
+    }
+
+    //date de la premiere page vue mesuree par le navigateur (debut des chiffres fiables), null si aucune
+    public function getDebutMesure(){
+      $debut = $this->valeur("SELECT MIN(created_at) FROM pages_vues");
+      return $debut ?: null;
+    }
+
+    //conversion : messages de contact, creations de compte et clics de contact rapportes aux visiteurs de la periode
     public function getConversion($jours){
       $depuis = self::debutPeriode($jours);
-      $visiteurs = (int)$this->valeur("SELECT COUNT(DISTINCT visiteur, DATE(created_at)) FROM visites WHERE created_at >= ?", [$depuis]);
+      $visiteurs = (int)$this->valeur("SELECT COUNT(DISTINCT visiteur, DATE(created_at)) FROM pages_vues WHERE created_at >= ?", [$depuis]);
       $demandes = (int)$this->valeur("SELECT COUNT(*) FROM demandes WHERE login IS NULL AND created_at >= ?", [$depuis]);
       $inscriptions = (int)$this->valeur("SELECT COUNT(*) FROM journal WHERE type = 'inscription' AND created_at >= ?", [$depuis]);
-      return ["visiteurs" => $visiteurs, "demandes" => $demandes, "inscriptions" => $inscriptions,
-        "taux" => $visiteurs > 0 ? round(($demandes + $inscriptions) * 100 / $visiteurs, 1) : null];
+      $clics = $this->getClicsContact($jours)['visiteurs'];
+      return ["visiteurs" => $visiteurs, "demandes" => $demandes, "inscriptions" => $inscriptions, "clics" => $clics,
+        "taux" => $visiteurs > 0 ? round(($demandes + $inscriptions + $clics) * 100 / $visiteurs, 1) : null];
     }
 
     /* ---------- Comptes ---------- */

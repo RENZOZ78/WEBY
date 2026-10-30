@@ -58,6 +58,12 @@
       }
       $url = array_pad($url, 3, "");
 
+      //mesure d'audience envoyee par le navigateur (main.js) : jeton anti-CSRF verifie sans redirection, reponse vide
+      if($page === "mesure"){
+        Audience::recevoir();
+        exit();
+      }
+
       //toutes les requetes POST doivent contenir le jeton anti-CSRF
       if($_SERVER['REQUEST_METHOD'] === "POST" && !Securite::verifierCsrf()){
         Toolbox::ajouterMessageAlerte("Votre session a expiré, merci de renvoyer le formulaire.", Toolbox::COULEUR_ROUGE);
