@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="dash-card mb-4">
+        <div class="dash-card h-auto mb-4">
           <h2><span><i class="fas fa-circle-info"></i>Demande n°<?= $demande['id'] ?></span></h2>
           <p class="mb-1"><strong><?= $demande['nom'] ?></strong> <?= $demande['login'] ? '<span class="role-badge">client '.$demande['login'].'</span>' : '<span class="status-badge">visiteur</span>' ?></p>
           <p class="mb-1"><a href="mailto:<?= $demande['mail'] ?>" class="text-white"><i class="fas fa-envelope me-2 text-warning"></i><?= $demande['mail'] ?></a></p>
@@ -33,7 +33,7 @@
             <a href="<?= URL ?>administration/nouveauProjet?client=<?= rawurlencode($demande['login']) ?>" class="btn btn-outline-navy btn-sm mt-3"><i class="fas fa-plus me-1"></i>Créer un projet pour ce client</a>
           <?php endif; ?>
         </div>
-        <div class="dash-card">
+        <div class="dash-card h-auto">
           <h2><span><i class="fas fa-tag"></i>Statut</span></h2>
           <form method="post" action="<?= URL ?>administration/validation_statutDemande">
             <?= Securite::csrfField() ?>
@@ -46,6 +46,19 @@
             <button type="submit" class="btn btn-light w-100">Mettre à jour</button>
           </form>
         </div>
+        <?php if(Securite::estSuperAdministrateur()) : ?>
+          <div class="dash-card h-auto mt-4">
+            <h2><span><i class="fas fa-ban"></i>Spam</span></h2>
+            <p class="text-muted-wc small">Message publicitaire, robot ou faux contact : la demande et ses messages sont supprimés
+              définitivement et ne comptent plus dans les statistiques. La suppression est notée au journal.</p>
+            <form method="post" action="<?= URL ?>administration/suppressionDemande"
+                  data-confirm="Supprimer définitivement la demande n°<?= $demande['id'] ?> de <?= $demande['nom'] ?> ?">
+              <?= Securite::csrfField() ?>
+              <input type="hidden" name="demande_id" value="<?= $demande['id'] ?>">
+              <button type="submit" class="btn btn-outline-danger w-100"><i class="fas fa-trash me-2"></i>Supprimer (spam)</button>
+            </form>
+          </div>
+        <?php endif; ?>
       </div>
     </div>
   </div>

@@ -63,6 +63,18 @@
       Toolbox::redirection("administration/gestionFullUtilisateur");
     }
 
+    //suppression d'une demande (spam, faux contact) et de ses messages ; tracee au journal
+    public function suppression_demande($id){
+      $demande = $this->espaceManager->getDemande($id);
+      if($demande && $this->espaceManager->bdSupprimerDemande($demande['id'])){
+        Journal::ajouter("demande_supprimee", "n°".$demande['id']." · ".html_entity_decode($demande['nom'])." · ".html_entity_decode($demande['sujet']));
+        Toolbox::ajouterMessageAlerte("La demande n°".$demande['id']." a été supprimée.", Toolbox::COULEUR_VERTE);
+      }else{
+        Toolbox::ajouterMessageAlerte("Cette demande n'existe pas ou a déjà été supprimée.", Toolbox::COULEUR_ROUGE);
+      }
+      Toolbox::redirection("administration/demandes");
+    }
+
     public function pageErreur($msg, $code = 404){
       parent::pageErreur($msg, $code);
     }

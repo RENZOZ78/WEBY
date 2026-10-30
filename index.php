@@ -14,6 +14,7 @@
 
     require_once("./controllers/Toolbox.class.php");
     require_once("./controllers/securite.class.php");
+    require_once("./controllers/antiSpam.class.php");
     require_once("./models/Installation.class.php");
     require_once("./controllers/Visiteur/Visiteur.controller.php");
     require_once("./controllers/Utilisateur/Utilisateur.controller.php");
@@ -128,7 +129,7 @@
           if(post('site_web') !== ""){
             Toolbox::redirection("contact");
           }
-          $visiteurController->validation_contact(post('nom'), post('mail'), post('message'), post('sujet'));
+          $visiteurController->validation_contact(post('nom'), post('mail'), post('message'), post('sujet'), post('ouverture'));
           break;
         case "login":
           $visiteurController->login();
@@ -316,12 +317,17 @@
             case "gestionFullUtilisateur":
             case "validationModificationFullUtilisateur":
             case "suppressionCompteNonValide":
+            case "suppressionDemande":
               if(!Securite::estSuperAdministrateur()){
                 Toolbox::ajouterMessageAlerte("Cette page est réservée au super administrateur", Toolbox::COULEUR_ROUGE);
                 Toolbox::redirection("administration/tableau");
               }
               if($url[1] === "gestionFullUtilisateur"){
                 $sAdministrateurController->gestion_full_utilisateur();
+              }elseif($url[1] === "suppressionDemande"){
+                //uniquement via le formulaire (POST + jeton CSRF)
+                if($_SERVER['REQUEST_METHOD'] !== "POST") Toolbox::redirection("administration/demandes");
+                $sAdministrateurController->suppression_demande((int)post('demande_id'));
               }elseif($url[1] === "suppressionCompteNonValide"){
                 //uniquement via le formulaire (POST + jeton CSRF)
                 if($_SERVER['REQUEST_METHOD'] !== "POST") Toolbox::redirection("administration/gestionFullUtilisateur");

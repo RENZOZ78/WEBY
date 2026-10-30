@@ -35,6 +35,8 @@
       "message_client" => ["Réponse d'un client", "fa-comment", "demandes"],
       "reponse_agence" => ["Réponse de l'agence", "fa-reply", "demandes"],
       "statut_demande" => ["Statut de demande changé", "fa-flag", "demandes"],
+      "demande_supprimee" => ["Demande supprimée (spam)", "fa-trash", "demandes"],
+      "contact_bloque" => ["Message de contact bloqué (spam)", "fa-shield-halved", "securite"],
       "projet_cree" => ["Projet créé", "fa-diagram-project", "projets"],
       "projet_modifie" => ["Projet mis à jour", "fa-pen-to-square", "projets"],
       "projet_supprime" => ["Projet supprimé", "fa-trash", "projets"],

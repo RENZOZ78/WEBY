@@ -143,6 +143,21 @@
       return $this->requete("UPDATE demandes SET statut = ? WHERE id = ?", [$statut, (int)$id])->rowCount() > 0;
     }
 
+    //supprime une demande et son fil de messages (demande de spam, super administrateur)
+    public function bdSupprimerDemande($id){
+      $bdd = $this->getBdd();
+      $bdd->beginTransaction();
+      try {
+        $this->requete("DELETE FROM messages WHERE demande_id = ?", [(int)$id]);
+        $supprimee = $this->requete("DELETE FROM demandes WHERE id = ?", [(int)$id])->rowCount() > 0;
+        $bdd->commit();
+        return $supprimee;
+      } catch (Exception $e) {
+        $bdd->rollBack();
+        throw $e;
+      }
+    }
+
     /* ---------- Suppression d'un compte ---------- */
 
     //supprime toutes les donnees liees a un login (projets, documents, demandes, messages) ; renvoie les fichiers a effacer

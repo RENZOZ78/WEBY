@@ -39,6 +39,8 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 - `models/Supervision/` : mesure d'audience (`Audience` : la page contient un jeton signé, `main.js` le renvoie
   à l'adresse `mesure` une fois la page affichée, puis à chaque clic sur le téléphone, le mail ou WhatsApp), journal d'activité (`Journal::ajouter()` à appeler
   pour chaque action notable), statistiques de la supervision ; vues dans `views/SuperAdministrateur/supervision/`
+- `controllers/antiSpam.class.php` : filtre anti-spam du formulaire de contact (délai minimum depuis l'affichage,
+  liens, formules de démarchage), en plus du champ piège invisible
 - `storage/documents/` : fichiers des clients (hors dépôt git)
 
 ## Espace client
@@ -60,7 +62,8 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 - **utilisateur** (client) : espace client complet, profil, mail, mot de passe, photo, suppression du compte
 - **administrateur** : demandes, projets, documents, clients ; peut passer un utilisateur en administrateur
 - **superAdministrateur** : gestion complète (mail, rôle, validation du compte) de tous les utilisateurs, suppression
-  des comptes jamais validés (inscriptions de robots), et accès
+  des comptes jamais validés (inscriptions de robots) et des demandes de spam (bouton *Supprimer (spam)* d'une
+  demande), et accès
   exclusif à la supervision. Il arrive sur la supervision après connexion (réglable dans *Personnaliser*). Son rôle est
   revérifié en base à chaque page de supervision : un compte rétrogradé perd l'accès immédiatement.
 
