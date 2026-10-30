@@ -33,7 +33,7 @@ Si un déploiement ne part pas, le relancer en ré-enregistrant les réglages da
 signale (PR #5 à #10 absentes du serveur). Après chaque fusion, **vérifier que la production a bien changé** :
 par l'API de fichiers Hostinger (`hosting_files_website-content` / `hosting_files_list-website-and-directories`),
 comparer un fichier modifié avec `V2` ; ou dans le navigateur, regarder le code source de la page. Sinon, relancer
-le déploiement comme ci-dessus. Dernier déploiement contrôlé : commit `10c73a6` (PR #10), le 2026-10-03.
+le déploiement comme ci-dessus. Dernier déploiement contrôlé : commit `9e479a0` (PR #19), le 2026-10-30.
 
 Réglages en place (vérifiés le 2026-10-03) : installation GitHub `RENZOZ78` active, dépôt `RENZOZ78/WEBY`,
 branche `V2`, déploiement à la racine du site (`public_html`), déploiement automatique activé.
