@@ -32,6 +32,10 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       complète* sous le login (sur téléphone il est dans la dernière colonne, à faire glisser) et s'il doit pouvoir
       supprimer d'autres comptes que les non validés. Si de nouveaux comptes de robots apparaissent, envisager un
       captcha (Cloudflare Turnstile ou hCaptcha, clé à créer par le propriétaire).
+- [ ] **Spam du formulaire de contact** (entrée du 2026-10-30) : après fusion, supprimer les demandes « traffic » de
+      Stephen et Christopher (ouvrir la demande → *Supprimer (spam)*) ; envoyer un vrai message de test depuis le site
+      (il doit arriver) ; surveiller dans *Supervision → Journal* (catégorie *Sécurité*) les « Message de contact
+      bloqué » : si un vrai client y apparaît, assouplir le filtre ; si du spam passe encore, envisager un captcha.
 - [ ] **Audience par le navigateur** (en ligne depuis le 2026-10-30, PR #21) : vérifier que `storage/.schema` contient `3`
       et que les tables `pages_vues`, `pages_servies` et `clics_contact` existent ; ouvrir le site sur téléphone (sans être connecté en
       administrateur), cliquer sur le numéro du pied de page, puis voir la visite et le clic dans *Supervision →
@@ -77,6 +81,44 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-30 — Demandes de spam : filtre du formulaire de contact et bouton de suppression
+
+**Demande** : les messages de « Christopher » et « Stephen » (sujet « traffic ») semblent faux ; mettre en place un
+moyen de supprimer ces demandes et un filtre anti-spam sur le formulaire de contact.
+
+**Réalisé** :
+- **Diagnostic** : démarchage typique (vente de trafic ou de référencement), envoyé en masse ; le champ piège ne l'a
+  pas arrêté (humain ou robot plus évolué). Conseillé de ne pas répondre ni cliquer, et de les marquer comme
+  indésirables dans la boîte mail. Il n'existait aucun moyen de supprimer une demande.
+- **Bouton *Supprimer (spam)*** sur la page d'une demande, réservé au super administrateur, avec confirmation : la
+  demande et ses messages sont supprimés (ils ne comptent plus dans les demandes, les points d'attention ni le taux de
+  contact). Trace au journal (« Demande supprimée (spam) »). Un administrateur simple ne voit pas le bouton et une
+  requête forcée est refusée.
+- **Filtre anti-spam du formulaire de contact** (`controllers/antiSpam.class.php`), en plus du champ piège : le
+  formulaire porte son heure d'affichage, signée avec le jeton anti-CSRF ; il est refusé s'il est envoyé moins de 3 s
+  après l'affichage ou sans heure valable, s'il contient du code de lien (`<a href`, `[url`), plus de 2 liens ou une
+  formule de démarchage en anglais (« traffic », backlinks, guest post, casino, crypto…). « SEO », « trafic » et un lien
+  seul (le site actuel d'un client) restent acceptés. Rien n'est enregistré ni envoyé ; le visiteur voit un message avec
+  le mail et le téléphone de l'agence et retrouve son texte dans le formulaire ; le refus est noté au journal
+  (« Message de contact bloqué (spam) », catégorie *Sécurité*, avec la raison).
+- Page d'une demande : les cartes de la colonne de droite gardent leur hauteur naturelle (elles s'étiraient sur toute
+  la hauteur de la colonne, défaut déjà présent, aggravé par la nouvelle carte).
+
+**Fichiers / zones touchés** : `controllers/antiSpam.class.php` (nouveau), `controllers/Visiteur/Visiteur.controller.php`,
+`controllers/SuperAdministrateur/SuperAdministrateur.controller.php`, `models/Espace/Espace.model.php`,
+`models/Supervision/Journal.class.php`, `index.php`, `inc/partials/contact_form.php`, `views/Administrateur/demande.view.php`,
+`README.md`, `docs/DECISIONS.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : `php -l` ; en local (PHP 8.3, MariaDB non strict) : refusés et notés au journal, sans demande créée :
+envoi immédiat, sans heure d'ouverture, heure falsifiée, sujet « traffic », 3 liens, `<a href=…>` ; accepté : message avec
+un lien, « SEO » et « trafic » ; Chromium sur téléphone : message tapé normalement reçu, message « traffic » refusé
+avec le texte conservé ; super administrateur (390 et 1440 px) : carte *Spam*, confirmation, demande et messages
+supprimés, événement au journal ; administrateur simple : pas de carte, requête forcée refusée ; formulaire présent sur
+l'accueil, le contact et les pages métiers ; aucun défilement horizontal, aucune erreur JavaScript, aucun warning PHP.
+**Référence** : PR de la branche `claude/visitors-no-requests-605re1`
+**Suites** : voir « Spam du formulaire de contact » dans les points en suspens.
 
 ---
 

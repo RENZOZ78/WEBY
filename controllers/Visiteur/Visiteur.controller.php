@@ -133,11 +133,21 @@
     }
 
     //ft qui traite le formulaire de contact : enregistre la demande puis previent l'agence par mail
-    public function validation_contact($nom, $mail, $message, $sujet){
+    public function validation_contact($nom, $mail, $message, $sujet, $ouverture){
       $config = require("config/config.php");
       if($nom === "" || $message === "" || !filter_var($mail, FILTER_VALIDATE_EMAIL)){
         Toolbox::ajouterMessageAlerte("Merci de renseigner votre nom, un email valide et votre message.", Toolbox::COULEUR_ROUGE);
         Toolbox::redirection("contact");
+      }
+      //filtre anti-spam : rien n'est enregistre ni envoye ; le texte saisi est remis dans le formulaire
+      $motif = AntiSpam::motif($ouverture, $nom, $sujet, $message);
+      if($motif !== null){
+        Journal::ajouter("contact_bloque", $motif." · ".mb_substr($nom, 0, 60)." · ".mb_substr($sujet, 0, 80));
+        $_SESSION['contact_brouillon'] = ["nom" => $nom, "mail" => $mail, "sujet" => $sujet, "message" => $message];
+        Toolbox::ajouterMessageAlerte("Votre message n'a pas pu être envoyé : il ressemble à un message publicitaire automatique "
+          ."(envoi trop rapide, liens ou démarchage). S'il s'agit d'une erreur, vérifiez-le et renvoyez-le, ou écrivez-nous directement à "
+          .htmlspecialchars($config['mail_contact'])." ou appelez le ".htmlspecialchars($config['telephone']).".", Toolbox::COULEUR_ROUGE);
+        Toolbox::redirection("contact#contact");
       }
       $sujet = $sujet !== "" ? mb_substr($sujet, 0, 150) : "Demande de contact";
       $login = Securite::estConnecte() ? $_SESSION['profil']['login'] : null;

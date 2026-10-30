@@ -1,6 +1,10 @@
 <?php
   $site = $site ?? require("config/config.php");
   $offreDemandee = htmlspecialchars(mb_substr(isset($_GET['offre']) ? (string)$_GET['offre'] : ($offre_defaut ?? ""), 0, 100));
+  //message refuse par le filtre anti-spam : le texte saisi est remis dans le formulaire
+  $brouillon = array_map("htmlspecialchars", $_SESSION['contact_brouillon'] ?? []);
+  unset($_SESSION['contact_brouillon']);
+  $sujetDefaut = $brouillon['sujet'] ?? ($offreDemandee ? 'Demande de devis : '.$offreDemandee : '');
 ?>
 <section class="section section-alt" id="contact">
   <div class="container">
@@ -27,6 +31,7 @@
       <div class="col-lg-7" data-aos="fade-left">
         <form method="post" action="<?= URL ?>validation_contact" class="form-card needs-validation" novalidate>
           <?= Securite::csrfField() ?>
+          <input type="hidden" name="ouverture" value="<?= AntiSpam::jetonOuverture() ?>">
           <div class="hp-field" aria-hidden="true">
             <label for="site_web">Ne pas remplir</label>
             <input type="text" id="site_web" name="site_web" tabindex="-1" autocomplete="off">
@@ -34,21 +39,21 @@
           <div class="row g-3">
             <div class="col-md-6">
               <label for="contact-nom" class="form-label">Nom</label>
-              <input type="text" class="form-control" id="contact-nom" name="nom" autocomplete="name" required maxlength="100">
+              <input type="text" class="form-control" id="contact-nom" name="nom" autocomplete="name" required maxlength="100" value="<?= $brouillon['nom'] ?? "" ?>">
               <div class="invalid-feedback">Indiquez votre nom.</div>
             </div>
             <div class="col-md-6">
               <label for="contact-mail" class="form-label">Email</label>
-              <input type="email" class="form-control" id="contact-mail" name="mail" autocomplete="email" required maxlength="150">
+              <input type="email" class="form-control" id="contact-mail" name="mail" autocomplete="email" required maxlength="150" value="<?= $brouillon['mail'] ?? "" ?>">
               <div class="invalid-feedback">Indiquez une adresse email valide.</div>
             </div>
             <div class="col-12">
               <label for="contact-sujet" class="form-label">Sujet</label>
-              <input type="text" class="form-control" id="contact-sujet" name="sujet" maxlength="120" value="<?= $offreDemandee ? 'Demande de devis : '.$offreDemandee : '' ?>" placeholder="Création de site, de société, publicité…">
+              <input type="text" class="form-control" id="contact-sujet" name="sujet" maxlength="120" value="<?= $sujetDefaut ?>" placeholder="Création de site, de société, publicité…">
             </div>
             <div class="col-12">
               <label for="contact-message" class="form-label">Message</label>
-              <textarea class="form-control" id="contact-message" name="message" rows="5" required maxlength="5000" placeholder="Décrivez votre projet en quelques lignes"></textarea>
+              <textarea class="form-control" id="contact-message" name="message" rows="5" required maxlength="5000" placeholder="Décrivez votre projet en quelques lignes"><?= $brouillon['message'] ?? "" ?></textarea>
               <div class="invalid-feedback">Écrivez votre message.</div>
             </div>
             <div class="col-12">

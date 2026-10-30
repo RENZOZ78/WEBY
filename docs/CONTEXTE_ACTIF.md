@@ -4,7 +4,7 @@
 À lire en premier, avant toute tâche ou tout conseil. Doit rester **court** (une page) : l'ancien part dans
 [`HISTORIQUE.md`](HISTORIQUE.md), les choix durables dans [`DECISIONS.md`](DECISIONS.md).
 
-Dernière mise à jour : 2026-10-30 — par Claude Code (audience par le navigateur en ligne, PR #21)
+Dernière mise à jour : 2026-10-30 — par Claude Code (filtre anti-spam du contact, suppression des demandes de spam)
 
 > Ce dépôt est **public** : ne rien écrire ici de confidentiel (mots de passe, données clients, chiffres privés).
 
@@ -38,7 +38,7 @@ Le détail à cocher est dans « Points en suspens » de [`HISTORIQUE.md`](HISTO
 | SEO | Search Console active ; 8 pages indexées, 6 non (404 de l'ancien site, doublons) au 2026-10-04 | 2026-10-08 : redirections V1, URL canoniques, `sitemap.xml` et `robots.txt` (PR) ; envoyer le sitemap après fusion |
 | Instagram | non renseigné | — |
 | Leboncoin | non renseigné | — |
-| Acquisition / conversion | Très peu de vrais visiteurs : les 464 « visiteurs » d'octobre étaient surtout des robots ; aucune vraie demande | 2026-10-30 : audience comptée par le navigateur et clics téléphone / mail mesurés, robots comptés à part (en ligne, PR #21) ; priorité : amener du trafic, puis renforcer la confiance |
+| Acquisition / conversion | Très peu de vrais visiteurs : les 464 « visiteurs » d'octobre étaient surtout des robots ; aucune vraie demande | 2026-10-30 : audience comptée par le navigateur et clics téléphone / mail mesurés, robots comptés à part (en ligne, PR #21) ; les 2 « demandes » reçues étaient du spam : filtre anti-spam et suppression des demandes (PR) ; priorité : amener du trafic, puis renforcer la confiance |
 
 ## Sujets ouverts / à trancher
 
