@@ -110,7 +110,7 @@ comptes non validés, suppression d'un compte validé ou de son propre compte re
 compte du robot supprimé et tracé au journal ; pages d'administration, de supervision, d'accueil et de contact en 200
 sans warning PHP ; Chromium à 390 et 1440 px : contrôle du login dans le navigateur, champ piège invisible,
 confirmation avant suppression, aucun défilement horizontal, aucune erreur JavaScript.
-**Référence** : PR de cette entrée (branche `claude/https-injection-signup-a5ja6l`)
+**Référence** : PR #19 (branche `claude/https-injection-signup-a5ja6l`)
 **Suites** : après fusion, supprimer le compte du robot et tester une inscription réelle (voir « Points en suspens »).
 
 ---
