@@ -85,6 +85,11 @@
 
     //ft qui valide un compte , en verifiant que le login n'existe pas
     public function validation_creerCompte($login,$password,$mail){
+      //login limite a des caracteres simples : empeche d'y glisser un lien ou du HTML (robots de spam)
+      if(!self::estLoginValide($login)){
+        Toolbox::ajouterMessageAlerte("Le login doit faire de 3 à 30 caractères : lettres sans accent, chiffres, point, tiret ou tiret bas.", Toolbox::COULEUR_ROUGE);
+        Toolbox::redirection("creerCompte");
+      }
       if(!filter_var(html_entity_decode($mail), FILTER_VALIDATE_EMAIL)){
         Toolbox::ajouterMessageAlerte("L'adresse mail n'est pas valide.", Toolbox::COULEUR_ROUGE);
         Toolbox::redirection("creerCompte");
@@ -109,18 +114,32 @@
       Toolbox::redirection("creerCompte");
     }
 
+    //format accepte pour un nouveau login (les comptes existants ne sont pas concernes)
+    public static function estLoginValide($login){
+      return preg_match('/^[A-Za-z0-9._-]{3,30}$/', (string)$login) === 1;
+    }
+
     //ft  qui valide l'envoie de mailde  validation_login
+    //le login n'est pas repris dans le texte du mail : un robot ne peut pas s'en servir pour faire envoyer
+    //son lien publicitaire par le site a l'adresse d'un tiers
     private function sendMailValidation($login,$mail,$clef){
       $urlVerification = URL."validationMail/".rawurlencode($login)."/".$clef;
       $sujet = "Création du compte sur le site WebyCloudy";
-      $message = "Bonjour ".html_entity_decode($login).",\n\nPour valider votre compte, veuillez cliquer sur le lien suivant :\n".$urlVerification."\n\nL'équipe WebyCloudy";
+      $message = "Bonjour,\n\nPour valider votre compte WebyCloudy, veuillez cliquer sur le lien suivant :\n".$urlVerification."\n\nSi vous n'avez pas créé de compte, ignorez ce mail.\n\nL'équipe WebyCloudy";
       Toolbox::sendMail(html_entity_decode($mail),$sujet,$message);
     }
 
     public function renvoyerMailValidation($login){
       $utilisateur = $this->utilisateurManager->getUserInformation($login);
       if($utilisateur && (int)$utilisateur['is_valid'] === 0){
+        //au plus un mail par quart d'heure et 3 renvois par jour pour un meme compte (pas de bombardement d'une adresse)
+        if(Journal::compter(["inscription", "mail_validation_renvoye"], $login, 15) > 0
+          || Journal::compter(["mail_validation_renvoye"], $login, 1440) >= 3){
+          Toolbox::ajouterMessageAlerte("Un mail de validation a déjà été envoyé récemment. Vérifiez vos courriers indésirables ou réessayez plus tard.", Toolbox::COULEUR_ORANGE);
+          Toolbox::redirection("login");
+        }
         $this->sendMailValidation($login,$utilisateur['mail'],$utilisateur['clef']);
+        Journal::ajouter("mail_validation_renvoye", "", $login);
       }else{
         Toolbox::ajouterMessageAlerte("Aucun compte en attente de validation pour ce login.", Toolbox::COULEUR_ORANGE);
       }

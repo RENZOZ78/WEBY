@@ -26,6 +26,7 @@
       "deconnexion" => ["Déconnexion", "fa-right-from-bracket", "securite"],
       "mot_de_passe" => ["Mot de passe changé", "fa-key", "securite"],
       "inscription" => ["Création de compte", "fa-user-plus", "comptes"],
+      "mail_validation_renvoye" => ["Mail de validation renvoyé", "fa-envelope-circle-check", "comptes"],
       "compte_valide" => ["Compte validé par mail", "fa-user-check", "comptes"],
       "profil" => ["Profil modifié", "fa-user-pen", "comptes"],
       "compte_supprime" => ["Compte supprimé", "fa-user-xmark", "comptes"],
@@ -52,6 +53,20 @@
         $stmt->execute([$type, $login !== null ? mb_substr((string)$login, 0, 50) : null, mb_substr((string)$detail, 0, 255), self::ipAnonyme()]);
       } catch (Throwable $e) {
         error_log("Journal : ".$e->getMessage());
+      }
+    }
+
+    //nombre d'evenements de ces types pour un login sur les dernieres minutes (0 si le journal est indisponible)
+    public static function compter($types, $login, $minutes){
+      try {
+        $marques = implode(",", array_fill(0, count($types), "?"));
+        $stmt = (new self())->getBdd()->prepare("SELECT COUNT(*) FROM journal WHERE type IN (".$marques.") AND login = ?
+          AND created_at >= NOW() - INTERVAL ? MINUTE");
+        $stmt->execute(array_merge($types, [mb_substr((string)$login, 0, 50), (int)$minutes]));
+        return (int)$stmt->fetchColumn();
+      } catch (Throwable $e) {
+        error_log("Journal : ".$e->getMessage());
+        return 0;
       }
     }
 

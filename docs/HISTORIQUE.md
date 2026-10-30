@@ -27,6 +27,10 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
+- [ ] **Inscriptions de robots** (entrée du 2026-10-30) : après fusion, dans *Administration → Gestion complète*,
+      supprimer le compte « * * * <a href="http://kariangroup.ru/go-na » (bouton *Supprimer*) ; créer un compte de test
+      pour vérifier que le mail de validation arrive. Si de nouveaux comptes de robots apparaissent malgré tout,
+      envisager un captcha (Cloudflare Turnstile ou hCaptcha, clé à créer par le propriétaire).
 - [ ] **Supervision** (PR de l'entrée du 2026-10-03) : après fusion, vérifier que le serveur a reçu la version, que
       `storage/.schema` contient `2` et que les tables `visites`, `journal`, `preferences` existent ; se connecter avec le
       compte super-admin et parcourir *Supervision*. Ajouter `?utm_source=instagram` / `?utm_source=leboncoin` aux liens
@@ -64,6 +68,50 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-30 — Inscription : comptes de robots et mails de spam bloqués
+
+**Demande** : un compte au login étrange, « * * * <a href="http://kariangroup.ru/go-na », est apparu dans
+*Administration → Droits* ; le propriétaire demande s'il s'agit d'une injection, d'un problème de sécurité.
+
+**Réalisé** :
+- **Diagnostic** : pas d'injection réussie. Le login est encodé en HTML à l'enregistrement et les requêtes SQL sont
+  préparées : la balise s'affiche en texte (c'est pour cela qu'on la voit) et n'est jamais exécutée. Le login est
+  coupé à 50 caractères (encodé, il dépasse la colonne `login VARCHAR(50)` et MySQL le tronque sans erreur en
+  production). C'est un **robot de spam** : il remplit le formulaire d'inscription avec un lien publicitaire comme
+  login et l'adresse mail d'un tiers. Le site envoyait alors, depuis `info@webycloudy.com`, un mail « Bonjour
+  <login> » contenant ce lien : le site servait de relais à spam, ce qui nuit à la réputation du domaine (mails de
+  l'agence classés en indésirables). Le lien « Renvoyer le mail de validation » (`renvoyerMailValidation/…`)
+  permettait en plus de renvoyer ce mail sans limite.
+- **Login limité** à 3 à 30 caractères : lettres sans accent, chiffres, point, tiret, tiret bas (contrôle côté serveur
+  et dans le navigateur, avec une aide sous le champ). Les comptes existants ne sont pas concernés.
+- **Champ piège invisible** dans le formulaire d'inscription (comme celui du contact) : rempli, rien n'est créé ni
+  envoyé.
+- **Mail de validation sans le login** : « Bonjour, » puis le lien ; un login ne peut plus faire passer de texte dans
+  un mail envoyé par le site. Ajout de « Si vous n'avez pas créé de compte, ignorez ce mail. »
+- **Renvoi du mail de validation limité** : au plus un mail par quart d'heure et 3 renvois par jour pour un compte
+  (compté dans le journal d'activité, nouvel événement « Mail de validation renvoyé »).
+- **Suppression des comptes non validés** par le super administrateur : bouton *Supprimer* dans *Gestion complète*,
+  uniquement sur les comptes client jamais validés (pas sur un compte validé, un administrateur ni son propre
+  compte), avec confirmation ; projets, documents et demandes rattachés sont supprimés aussi ; trace au journal.
+
+**Fichiers / zones touchés** : `index.php`, `controllers/Utilisateur/Utilisateur.controller.php`,
+`controllers/SuperAdministrateur/SuperAdministrateur.controller.php`, `models/SuperAdministrateur/SuperAdministrateur.model.php`,
+`models/Supervision/Journal.class.php`, `inc/content_creerCompte.php`, `views/SuperAdministrateur/gestionFullUtilisateur.view.php`,
+`README.md`, `docs/DECISIONS.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : `php -l` ; en local (PHP 8.3, MariaDB 10.11 en mode non strict comme la production) : le login
+du robot, reproduit à l'identique, est bien tronqué à 50 caractères avant correction ; après correction, inscription
+avec ce login refusée (aucun compte, aucun mail), champ piège rempli → rien créé, logins trop courts, trop longs, avec
+espace, accent, `/` ou `:` refusés, `jean.dupont` accepté avec mail « Bonjour, » ; renvoi refusé juste après
+l'inscription, 3 renvois maximum sur une journée, de nouveau possible le lendemain ; *Supprimer* présent sur les seuls
+comptes non validés, suppression d'un compte validé ou de son propre compte refusée (même en forçant la requête),
+compte du robot supprimé et tracé au journal ; pages d'administration, de supervision, d'accueil et de contact en 200
+sans warning PHP ; Chromium à 390 et 1440 px : contrôle du login dans le navigateur, champ piège invisible,
+confirmation avant suppression, aucun défilement horizontal, aucune erreur JavaScript.
+**Référence** : PR de cette entrée (branche `claude/https-injection-signup-a5ja6l`)
+**Suites** : après fusion, supprimer le compte du robot et tester une inscription réelle (voir « Points en suspens »).
 
 ---
 

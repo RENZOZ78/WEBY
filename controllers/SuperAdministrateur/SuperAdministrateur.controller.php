@@ -2,13 +2,16 @@
   require_once("./controllers/MainController.controller.php");
   require_once("./models/Supervision/Journal.class.php");
   require_once("models/SuperAdministrateur/SuperAdministrateur.model.php");
+  require_once("models/Espace/Espace.model.php");
 
   class SAdministrateurController extends MainController{
 
     private $sAdministrateurManager;
+    private $espaceManager;
 
     public function __construct(){
       $this->sAdministrateurManager = new SAdministrateurManager();
+      $this->espaceManager = new EspaceManager();
     }
 
     public function gestion_full_utilisateur(){
@@ -40,6 +43,22 @@
         Toolbox::ajouterMessageAlerte("L'utilisateur ".$login." a bien été modifié !", Toolbox::COULEUR_VERTE);
       }else{
         Toolbox::ajouterMessageAlerte("Aucune modification n'a été effectuée.", Toolbox::COULEUR_ORANGE);
+      }
+      Toolbox::redirection("administration/gestionFullUtilisateur");
+    }
+
+    //suppression d'un compte jamais valide (inscription de robot) et de ce qui y serait rattache
+    public function suppression_compte_non_valide($login){
+      if($login !== "" && $login !== $_SESSION['profil']['login'] && $this->sAdministrateurManager->bdSuppressionCompteNonValide($login)){
+        $fichiers = $this->espaceManager->bdSupprimerDonneesUtilisateur($login);
+        foreach($fichiers as $fichier){
+          $chemin = "storage/documents/".$fichier;
+          if(is_file($chemin)) unlink($chemin);
+        }
+        Journal::ajouter("compte_supprime", $login." · compte non validé supprimé par le super administrateur");
+        Toolbox::ajouterMessageAlerte("Le compte non validé a été supprimé.", Toolbox::COULEUR_VERTE);
+      }else{
+        Toolbox::ajouterMessageAlerte("Seul un compte client non validé peut être supprimé ici.", Toolbox::COULEUR_ROUGE);
       }
       Toolbox::redirection("administration/gestionFullUtilisateur");
     }
