@@ -32,7 +32,7 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       complète* sous le login (sur téléphone il est dans la dernière colonne, à faire glisser) et s'il doit pouvoir
       supprimer d'autres comptes que les non validés. Si de nouveaux comptes de robots apparaissent, envisager un
       captcha (Cloudflare Turnstile ou hCaptcha, clé à créer par le propriétaire).
-- [ ] **Audience par le navigateur** (entrée du 2026-10-30) : après fusion, vérifier que `storage/.schema` contient `3`
+- [ ] **Audience par le navigateur** (en ligne depuis le 2026-10-30, PR #21) : vérifier que `storage/.schema` contient `3`
       et que les tables `pages_vues`, `pages_servies` et `clics_contact` existent ; ouvrir le site sur téléphone (sans être connecté en
       administrateur), cliquer sur le numéro du pied de page, puis voir la visite et le clic dans *Supervision →
       Audience*. Les chiffres repartent de zéro : attendre deux à trois semaines avant de juger le taux de contact.
@@ -77,6 +77,24 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-30 — Audience par le navigateur en ligne
+
+**Demande** : valider (fusionner) la PR #21.
+
+**Réalisé** :
+- PR #21 fusionnée dans `V2` (commit `e6726b1`). Le déploiement automatique Hostinger est parti seul : la nouvelle
+  version était en ligne moins d'une minute après la fusion.
+
+**Fichiers / zones touchés** : Hostinger (déploiement de `V2`), `docs/HISTORIQUE.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : site en ligne lu depuis l'environnement de Claude Code : la page d'accueil contient la balise de mesure
+pour un navigateur et pas pour Googlebot ; `mesure` répond 204 ; accueil, contact, une page métier, *Site internet*,
+connexion et `sitemap.xml` en 200. La création des tables (schéma 3) et l'enregistrement des visites ne sont pas
+vérifiables sans accès à la base : à contrôler par le propriétaire (voir « Points en suspens »).
+**Référence** : PR #21 (fusion `e6726b1`) ; PR de cette entrée
+**Suites** : vérifications de « Audience par le navigateur » dans les points en suspens.
 
 ---
 
