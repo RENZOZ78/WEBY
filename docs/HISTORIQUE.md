@@ -32,6 +32,11 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       complète* sous le login (sur téléphone il est dans la dernière colonne, à faire glisser) et s'il doit pouvoir
       supprimer d'autres comptes que les non validés. Si de nouveaux comptes de robots apparaissent, envisager un
       captcha (Cloudflare Turnstile ou hCaptcha, clé à créer par le propriétaire).
+- [ ] **Audience par le navigateur** (entrée du 2026-10-30) : après fusion, vérifier que `storage/.schema` contient `3`
+      et que les tables `pages_vues`, `pages_servies` et `clics_contact` existent ; ouvrir le site sur téléphone (sans être connecté en
+      administrateur), cliquer sur le numéro du pied de page, puis voir la visite et le clic dans *Supervision →
+      Audience*. Les chiffres repartent de zéro : attendre deux à trois semaines avant de juger le taux de contact.
+      Plus tard, si l'historique ne sert pas : supprimer la table `visites` (phpMyAdmin, `DROP TABLE visites`).
 - [ ] **Supervision** (PR de l'entrée du 2026-10-03) : après fusion, vérifier que le serveur a reçu la version, que
       `storage/.schema` contient `2` et que les tables `visites`, `journal`, `preferences` existent ; se connecter avec le
       compte super-admin et parcourir *Supervision*. Ajouter `?utm_source=instagram` / `?utm_source=leboncoin` aux liens
@@ -72,6 +77,85 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-10-30 — Audience : nombre de robots et de spams écartés affiché
+
+**Demande** : faire quand même figurer, à côté des statistiques, le nombre de visiteurs qui sont des robots ou du spam.
+
+**Réalisé** :
+- Chaque page publique servie est notée dans une nouvelle table `pages_servies` (même empreinte anonyme, sans IP), avec
+  sa catégorie : *robot déclaré* (navigateur qui se présente comme un robot, ou aucun), *spam de provenance* (visite
+  prétendant venir d'un site de spam) ou *navigateur*. Un « navigateur » dont aucune page du jour n'a été confirmée par
+  le navigateur (pas de JavaScript) est un *robot déguisé*. Les vrais visiteurs ne sont pas comptés comme robots.
+- **Tableau de bord** : « + N robot(s) écarté(s) » sous le nombre de visiteurs, et « N robots et spams écartés » dans
+  le bloc *Visiteurs par jour*. **Audience** : bloc *Robots et spams écartés* (total, pages demandées, part des
+  visiteurs, détail par catégorie, explication). C'est une estimation : une vraie personne sans JavaScript, ou qui
+  repart en moins d'une seconde, est comptée parmi les robots déguisés.
+- Index `(visiteur, created_at)` sur `pages_vues` pour ce calcul. Toujours le schéma 3 (PR #21 pas encore fusionnée).
+
+**Fichiers / zones touchés** : `models/Supervision/Audience.class.php`, `models/Supervision/Supervision.model.php`,
+`models/Installation.class.php`, `database.sql`, `controllers/SuperAdministrateur/Supervision.controller.php`,
+`views/SuperAdministrateur/supervision/audience.view.php`, `views/SuperAdministrateur/supervision/widgets/audience.php`,
+`views/SuperAdministrateur/supervision/widgets/chiffres.php`, `README.md`, `docs/DEPLOIEMENT.md`, `docs/DECISIONS.md`
+**Vérifications** : `php -l` ; en local, base au schéma 2 → schéma 3 avec les trois nouvelles tables. Googlebot (2
+pages) et le Chromium sans écran du script de test (page de connexion) comptés en robots déclarés, une visite venant de
+`addurl.in` en spam, un faux Firefox (`curl`, 3 pages, sans JavaScript) en robot déguisé ; le vrai visiteur Chromium
+(5 pages confirmées) n'est compté qu'en visiteur. Tableau de bord et *Audience* à 390 et 1440 px : affichage correct,
+aucun défilement horizontal, aucune erreur JavaScript, aucun warning PHP.
+**Référence** : PR #21 (branche `claude/visitors-no-requests-605re1`)
+**Suites** : celles de l'entrée suivante.
+
+---
+
+## 2026-10-30 — Audience : robots écartés, clics sur le téléphone et le mail mesurés
+
+**Demande** : 464 visiteurs en 30 jours et aucune vraie demande : problème de design ou de confiance ? Puis : compter
+seulement les vrais navigateurs et mesurer les clics sur le téléphone, le mail et WhatsApp.
+
+**Réalisé** :
+- **Diagnostic** (capture de la supervision) : la plupart des « visiteurs » étaient des robots. 412 sur 464 en accès
+  direct, seulement 10 venus de Google, des sources de spam (onoda-19es.blog, five.co.in, wnnkd.com, addurl.in,
+  linkbuildingpack…), 17 % de mobiles seulement, la page *secteurs* presque aussi vue que l'accueil (robot qui ouvre
+  toutes les pages) ; les « demandes » étaient elles aussi du spam (« traffic »). La mesure n'écartait que les robots
+  qui se déclarent comme tels ; un visiteur est compté une fois par jour (464 = visiteurs-jours). Conclusion donnée au
+  propriétaire : peu de vrais visiteurs, donc 0 demande n'est pas anormal ; le premier chantier est l'acquisition, puis
+  les éléments de confiance (photo, avis, SIRET, photos réelles, délai de réponse, téléphone visible).
+- **Mesure par le navigateur** : la page n'est plus comptée à sa génération. Elle contient un jeton signé (page,
+  provenance, heure ; valable 12 h) que `main.js` renvoie en POST à l'adresse `mesure`, avec le jeton anti-CSRF de la
+  session, une fois la page visible à l'écran. Les robots qui n'exécutent pas le JavaScript ou ne gardent pas le cookie
+  de session ne sont plus comptés ; un même jeton ne compte qu'une page vue. L'adresse `mesure` répond toujours 204,
+  sans redirection ni message.
+- **Sites de spam** : une visite venue d'un site de spam de référent (liste et mots-clés dans `Audience::SOURCES_SPAM`)
+  n'est pas comptée.
+- **Clics de contact** : un clic sur un lien `tel:`, `mailto:` ou WhatsApp (`wa.me`, `api.whatsapp.com`) est enregistré
+  (une fois par type et par page affichée). Nouveau bloc *Contacts directs* dans *Audience* ; les clics entrent dans le
+  taux de contact (un visiteur qui clique sur le téléphone puis le mail compte une fois). Le site n'a pas encore de lien
+  WhatsApp : il sera compté dès qu'il en aura un.
+- **Pages métiers** comptées séparément (`secteurs/vtc` → « Métier : VTC & transport ») au lieu d'un seul « secteurs ».
+- **Schéma version 3** : tables `pages_vues` et `clics_contact`, créées automatiquement au premier chargement après le
+  déploiement. L'ancienne table `visites` est gardée (rien n'est effacé) mais n'est plus affichée : les chiffres
+  repartent de zéro, avec la mention « Mesure par le navigateur depuis le … ».
+
+**Fichiers / zones touchés** : `models/Supervision/Audience.class.php`, `models/Supervision/Supervision.model.php`,
+`models/Installation.class.php`, `database.sql`, `index.php`, `controllers/MainController.controller.php`,
+`controllers/SuperAdministrateur/Supervision.controller.php`, `views/common/template.php`, `public/Javascript/main.js`,
+`views/SuperAdministrateur/supervision/audience.view.php`, `views/SuperAdministrateur/supervision/widgets/audience.php`,
+`views/SuperAdministrateur/supervision/widgets/chiffres.php`, `README.md`, `docs/DEPLOIEMENT.md`, `docs/DECISIONS.md`,
+`docs/CONTEXTE_ACTIF.md`
+**Vérifications** : `php -l` ; en local (PHP 8.3, MariaDB en mode non strict comme la production), base au schéma 2 avec
+des visites existantes : passage automatique au schéma 3, anciennes visites conservées. Afficher une page n'enregistre
+plus rien ; la balise de mesure est absente pour un robot déclaré, une visite venue d'un site de spam et un super
+administrateur connecté. Envois refusés sans rien enregistrer : jeton falsifié, jeton de plus de 12 h, jeton anti-CSRF
+faux ou absent, pas de cookie de session, robot, GET, type inconnu, page vue rejouée ; envois valides enregistrés. Avec
+Chromium (téléphone) : 5 pages parcourues → 5 pages vues (accueil, contact, métier, site internet) ; deux clics sur le
+téléphone et un sur le mail → 1 clic téléphone et 1 clic mail. *Supervision* (tableau de bord et *Audience*) à 390 et
+1440 px : affichage correct, taux de contact à 100 % pour un visiteur qui a cliqué deux fois, aucun défilement
+horizontal, aucune erreur JavaScript, aucun warning PHP.
+**Référence** : PR de la branche `claude/visitors-no-requests-605re1`
+**Suites** : vérifications après fusion (voir « Points en suspens ») ; travailler l'acquisition (Google, Instagram,
+Leboncoin avec `?utm_source=`) et les éléments de confiance du site.
 
 ---
 

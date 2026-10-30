@@ -299,6 +299,44 @@
     compteurs.forEach(function (el) { io.observe(el); });
   }
 
+  // mesure d'audience (supervision) : la page vue est envoyee une fois la page reellement affichee,
+  // puis chaque clic sur le telephone, le mail ou WhatsApp (une fois par type et par page).
+  // Rien n'est envoye sur les pages non mesurees (pages privees, administrateurs) : la balise est absente.
+  var mesure = document.querySelector("meta[name=wc-mesure]");
+  if (mesure) {
+    var envoyer = function (type) {
+      var donnees = new FormData();
+      donnees.append("jeton", mesure.getAttribute("content"));
+      donnees.append("csrf", mesure.getAttribute("data-csrf"));
+      donnees.append("type", type);
+      var url = mesure.getAttribute("data-url");
+      if (navigator.sendBeacon && navigator.sendBeacon(url, donnees)) return;
+      if (window.fetch) fetch(url, { method: "POST", body: donnees, credentials: "same-origin", keepalive: true }).catch(function () {});
+    };
+    // page ouverte en arriere-plan ou prechargee : comptee seulement quand elle devient visible
+    var vueEnvoyee = false;
+    var envoyerVue = function () {
+      if (vueEnvoyee || document.visibilityState !== "visible") return;
+      vueEnvoyee = true;
+      setTimeout(function () { envoyer("vue"); }, 800);
+    };
+    envoyerVue();
+    document.addEventListener("visibilitychange", envoyerVue);
+
+    var clics = {};
+    document.addEventListener("click", function (e) {
+      var lien = e.target.closest ? e.target.closest("a[href]") : null;
+      if (!lien) return;
+      var href = lien.getAttribute("href").toLowerCase();
+      var type = href.indexOf("tel:") === 0 ? "telephone"
+        : href.indexOf("mailto:") === 0 ? "mail"
+        : /^https?:\/\/(wa\.me|api\.whatsapp\.com|chat\.whatsapp\.com)\//.test(href) ? "whatsapp" : null;
+      if (!type || clics[type]) return;
+      clics[type] = true;
+      envoyer(type);
+    });
+  }
+
   // inclinaison 3D des cartes au passage de la souris
   if (!reduit && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     document.querySelectorAll(".tilt").forEach(function (card) {

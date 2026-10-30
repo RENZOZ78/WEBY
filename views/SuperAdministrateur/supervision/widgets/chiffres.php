@@ -1,11 +1,11 @@
 <?php
   $a = $audience['actuelle']; $p = $audience['precedente'];
   $tuiles = [
-    ["icon" => "fa-eye", "classe" => "cyan", "val" => sv_nombre($a['visiteurs']), "lbl" => "visiteurs", "evo" => sv_evolution($a['visiteurs'], $p['visiteurs']), "lien" => "supervision/audience"],
+    ["icon" => "fa-eye", "classe" => "cyan", "val" => sv_nombre($a['visiteurs']), "lbl" => "visiteurs", "evo" => sv_evolution($a['visiteurs'], $p['visiteurs']).'<small class="sv-evo d-block">+ '.sv_nombre($robots['visiteurs']).' robot(s) écarté(s)</small>', "lien" => "supervision/audience"],
     ["icon" => "fa-file-lines", "classe" => "", "val" => sv_nombre($a['vues']), "lbl" => "pages vues", "evo" => sv_evolution($a['vues'], $p['vues']), "lien" => "supervision/audience"],
     ["icon" => "fa-inbox", "classe" => "pink", "val" => sv_nombre($demandes['periode']), "lbl" => "demandes reçues", "evo" => "", "lien" => "administration/demandes"],
     ["icon" => "fa-user-plus", "classe" => "green", "val" => sv_nombre($comptes['inscriptions']), "lbl" => "comptes créés", "evo" => "", "lien" => "supervision/comptes"],
-    ["icon" => "fa-percent", "classe" => "", "val" => $conversion['taux'] === null ? "—" : str_replace(".", ",", (string)$conversion['taux'])." %", "lbl" => "taux de contact", "evo" => "", "lien" => "supervision/audience"],
+    ["icon" => "fa-percent", "classe" => "", "val" => $conversion['taux'] === null ? "—" : str_replace(".", ",", (string)$conversion['taux'])." %", "lbl" => "taux de contact", "evo" => '<small class="sv-evo">'.sv_nombre($conversion['clics']).' clic(s) tél., mail</small>', "lien" => "supervision/audience"],
     ["icon" => "fa-diagram-project", "classe" => "cyan", "val" => sv_nombre($projets['total'] - (int)($projets['etapes'][4] ?? 0)), "lbl" => "projets en cours", "evo" => "", "lien" => "administration/projets"],
   ];
 ?>
