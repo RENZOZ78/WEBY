@@ -24,6 +24,7 @@ et ajouter la nouvelle (on garde la trace). Le détail du contexte est dans [`HI
 | 2026-10-01 | Tables `produits` / `commandes` abandonnées au profit de `projets`, `documents`, `demandes`, `messages` | le site vend des prestations suivies, pas des produits |
 | 2026-10-01 | Le formulaire de contact crée une demande en base | rien ne se perd si le mail ne part pas |
 | ~~2026-10-01~~ | ~~Uniquement de vraies réalisations (Fiteos, Delta-Immo, Magic Food Panam, Dofinvest)~~ — remplacée le 2026-10-04 (Dofinvest retiré) ; le principe « uniquement de vraies réalisations » reste en vigueur | suppression des faux logos clients |
+| 2026-11-21 | Les corrections issues de l'audit design sont regroupées dans une branche `V3` (créée à partir de `V2`) ; `V2` reste la production, intacte, jusqu'à validation de la V3 par le propriétaire | tester la nouvelle version en entier avant de la mettre en ligne, et pouvoir revenir à la V2 en cas de problème |
 
 ## Décisions proposées, non confirmées
 

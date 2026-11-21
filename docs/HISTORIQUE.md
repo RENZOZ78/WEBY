@@ -103,7 +103,7 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 **Fichiers / zones touchés** : `docs/audits/2026-11-21-audit-design.md` (rapport), cet historique
 **Vérifications** : 0 erreur JavaScript, 0 requête en échec, pas de défilement horizontal en 390 px ;
 `/mentions-legales` renvoie 404 ; `/accueils` répond 200 en plus de `/`
-**Référence** : PR #25
+**Référence** : PR #25 (vers `V3`)
 **Suites** : voir « Audit design du 2026-11-21 » dans les points en suspens
 
 ---
