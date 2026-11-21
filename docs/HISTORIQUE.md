@@ -135,7 +135,7 @@ Impeccable avant → après : accueil 88 → 14 signaux (1440) et 81 → 13 (390
 15 → 6 et 12 → 6 ; halos 25 → 0, ombres lumineuses 21 → 0, textes en dégradé 12 → 0, contraste 6 → 0, palette
 violet/cyan 3 → 0, rebond 1 → 0, textes trop petits 3 → 0, longueur de ligne 1 → 0. Restent les signaux liés au
 balisage (sur-titres en capitales, tuiles d'icônes, existence du bandeau défilant, police Inter de la charte).
-**Référence** : PR de la branche `claude/weby-4-style-sobre`
+**Référence** : PR #29 (branche `claude/weby-4-style-sobre`)
 **Suites** : voir « Points en suspens » (retrait du script d'inclinaison, bouton pause du bandeau, couleurs d'arc du
 cycle dans le PHP, sur-titres).
 
