@@ -93,25 +93,6 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 ---
 
-## 2026-11-21 — Audit design et ergonomie du site (critique Impeccable)
-
-**Demande** : vérifier le site en ligne et donner un avis.
-
-**Réalisé** :
-- Critique Impeccable (méthode pbakaus/impeccable) sur https://webycloudy.com : revue design par un agent
-  (captures 1440 et 390 px de l'accueil, d'une prestation, de deux pages métier et du contact) et analyse
-  automatique par un second agent (détecteur Impeccable sur les sources et les pages en ligne, console navigateur).
-- Note : 22/32 (heuristiques de Nielsen, 2 non applicables à une vitrine) — « Acceptable ».
-- Aucun changement du site : avis seulement, corrections à décider par le propriétaire.
-
-**Fichiers / zones touchés** : `docs/audits/2026-11-21-audit-design.md` (rapport), cet historique
-**Vérifications** : 0 erreur JavaScript, 0 requête en échec, pas de défilement horizontal en 390 px ;
-`/mentions-legales` renvoie 404 ; `/accueils` répond 200 en plus de `/`
-**Référence** : PR #25 (vers `V3`)
-**Suites** : voir « Audit design du 2026-11-21 » dans les points en suspens
-
----
-
 ## 2026-11-21 — Audit design, mission 2/4 : textes et chemin vers le contact
 
 **Demande** : après l'audit design du site (PR #25, `docs/audits/2026-11-21-audit-design.md`), retirer les affirmations
@@ -155,6 +136,25 @@ aucun constat sur les règles ajoutées.
 **Référence** : PR #26, branche `claude/weby-2-textes-contact` (brouillon, PR vers `V3`, la branche du chantier créée à
 partir de `V2` ; `V2` reste la production et n'est pas touchée)
 **Suites** : voir « Audit design, mission 2 » dans les points en suspens.
+
+---
+
+## 2026-11-21 — Audit design et ergonomie du site (critique Impeccable)
+
+**Demande** : vérifier le site en ligne et donner un avis.
+
+**Réalisé** :
+- Critique Impeccable (méthode pbakaus/impeccable) sur https://webycloudy.com : revue design par un agent
+  (captures 1440 et 390 px de l'accueil, d'une prestation, de deux pages métier et du contact) et analyse
+  automatique par un second agent (détecteur Impeccable sur les sources et les pages en ligne, console navigateur).
+- Note : 22/32 (heuristiques de Nielsen, 2 non applicables à une vitrine) — « Acceptable ».
+- Aucun changement du site : avis seulement, corrections à décider par le propriétaire.
+
+**Fichiers / zones touchés** : `docs/audits/2026-11-21-audit-design.md` (rapport), cet historique
+**Vérifications** : 0 erreur JavaScript, 0 requête en échec, pas de défilement horizontal en 390 px ;
+`/mentions-legales` renvoie 404 ; `/accueils` répond 200 en plus de `/`
+**Référence** : PR #25 (vers `V3`)
+**Suites** : voir « Audit design du 2026-11-21 » dans les points en suspens
 
 ---
 
