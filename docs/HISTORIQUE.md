@@ -96,25 +96,6 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 ---
 
-## 2026-11-21 — Audit design et ergonomie du site (critique Impeccable)
-
-**Demande** : vérifier le site en ligne et donner un avis.
-
-**Réalisé** :
-- Critique Impeccable (méthode pbakaus/impeccable) sur https://webycloudy.com : revue design par un agent
-  (captures 1440 et 390 px de l'accueil, d'une prestation, de deux pages métier et du contact) et analyse
-  automatique par un second agent (détecteur Impeccable sur les sources et les pages en ligne, console navigateur).
-- Note : 22/32 (heuristiques de Nielsen, 2 non applicables à une vitrine) — « Acceptable ».
-- Aucun changement du site : avis seulement, corrections à décider par le propriétaire.
-
-**Fichiers / zones touchés** : `docs/audits/2026-11-21-audit-design.md` (rapport), cet historique
-**Vérifications** : 0 erreur JavaScript, 0 requête en échec, pas de défilement horizontal en 390 px ;
-`/mentions-legales` renvoie 404 ; `/accueils` répond 200 en plus de `/`
-**Référence** : PR #25 (vers `V3`)
-**Suites** : voir « Audit design du 2026-11-21 » dans les points en suspens
-
----
-
 ## 2026-11-21 — Accueil plus court et navigation des métiers (mission 3 du chantier design)
 
 **Demande** : après l'audit design du 2026-11-21 (PR #25), raccourcir l'accueil (8 200 px sur ordinateur, 16 900 px sur
@@ -157,8 +138,27 @@ aucune erreur JavaScript, aucune requête en échec, aucun défilement horizonta
 clavier, page métier ouverte avec les flèches et Entrée ; barre sur une ligne à 992, 1100 et 1280 px ; bandeau : pause,
 reprise, flèches au clavier, mouvement réduit (pas de défilement, bouton pause masqué) ; captures relues. Non testé :
 la barre avec un compte administrateur connecté (mêmes boutons, deux entrées de plus).
-**Référence** : PR #28 (branche `claude/weby-3-accueil-navigation`)
+**Référence** : PR #28 vers `V3` (branche `claude/weby-3-accueil-navigation`) ; rien ne part en production tant que la V3 n'est pas validée
 **Suites** : voir « Accueil court et menu « Votre métier » » dans les points en suspens.
+
+---
+
+## 2026-11-21 — Audit design et ergonomie du site (critique Impeccable)
+
+**Demande** : vérifier le site en ligne et donner un avis.
+
+**Réalisé** :
+- Critique Impeccable (méthode pbakaus/impeccable) sur https://webycloudy.com : revue design par un agent
+  (captures 1440 et 390 px de l'accueil, d'une prestation, de deux pages métier et du contact) et analyse
+  automatique par un second agent (détecteur Impeccable sur les sources et les pages en ligne, console navigateur).
+- Note : 22/32 (heuristiques de Nielsen, 2 non applicables à une vitrine) — « Acceptable ».
+- Aucun changement du site : avis seulement, corrections à décider par le propriétaire.
+
+**Fichiers / zones touchés** : `docs/audits/2026-11-21-audit-design.md` (rapport), cet historique
+**Vérifications** : 0 erreur JavaScript, 0 requête en échec, pas de défilement horizontal en 390 px ;
+`/mentions-legales` renvoie 404 ; `/accueils` répond 200 en plus de `/`
+**Référence** : PR #25 (vers `V3`)
+**Suites** : voir « Audit design du 2026-11-21 » dans les points en suspens
 
 ---
 
