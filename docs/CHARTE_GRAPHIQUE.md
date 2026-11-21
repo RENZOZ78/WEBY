@@ -1,6 +1,7 @@
 # Charte graphique — WebyCloudy
 
-Kit de marque extrait du site V2 (https://webycloudy.com) tel qu'il est en ligne au 2026-10-02.
+Kit de marque extrait du site V2 (https://webycloudy.com), mis à jour le 2026-11-21 : **style plus sobre**
+(décision du propriétaire) — même identité bleu nuit + or, mais or en aplat, sans halo lumineux ni texte en dégradé.
 **Source de vérité technique** : `public/CSS/theme.css` (variables `--wc-*`) et `inc/header.php`.
 Si le thème change, mettre ce document à jour dans la même PR.
 
@@ -18,7 +19,7 @@ business plans, présentations.
 | Nom écrit en texte | **Weby**Cloudy, en un seul mot, W et C en capitales |
 | Écriture du nom | Poppins Bold (700) ; « Weby » en blanc `#ffffff`, « Cloudy » en or clair `#f3c868` |
 | Disposition sur le site | fichier du logo à gauche, nom en Poppins à droite, centrés verticalement (le nom apparaît donc aussi, en petit, sous l'aigle) |
-| Halo | lueur dorée autour du logo sur fond sombre : `drop-shadow(0 0 12px rgba(224,171,60,.5))` |
+| Halo | aucun : le logo est posé tel quel sur le fond sombre (l'ancienne lueur dorée est retirée) |
 | Taille sur le site | 46 px de haut dans le menu (38 px au défilement), 56 px en pied de page |
 
 `logo_aigle.png` et `logo_aigle2.png` portent l'ancien nom « Weby Weba Solutions » : ne pas les utiliser.
@@ -53,17 +54,16 @@ Règles d'usage :
 |---|---|---|
 | Or — couleur principale | `#e0ab3c` | `--wc-gold` |
 | Or clair — liens, icônes, accents de texte | `#f3c868` | `--wc-gold-2` |
-| Orange — fin du dégradé or | `#ff8a3d` | `--wc-orange` |
+| Ambre — problèmes à résoudre, phase « Création » du cycle | `#f09a55` | `--wc-orange` |
 | Texte posé sur l'or | `#1a1205` | — |
 
 ### Accents
 
 | Rôle | Hex | Variable |
 |---|---|---|
-| Cyan — second accent (pack Croissance, données) | `#3fd0ff` | `--wc-cyan` |
-| Bleu — milieu du dégradé cyan | `#5b7cff` | — |
-| Violet — troisième accent | `#8b5cf6` | `--wc-violet` |
-| Rose — notifications, badges | `#ff5c8a` | `--wc-pink` |
+| Bleu ciel — accent secondaire discret (pack Croissance, solutions, informations) ; remplace le cyan vif | `#8fc4ea` | `--wc-cyan` |
+| Bleu glacier — variante claire du bleu ciel ; remplace le violet | `#c9d6f5` | `--wc-violet` |
+| Rose — notifications, badges d'état uniquement | `#ff5c8a` (fond de pastille avec texte blanc : `#c2335f`) | `--wc-pink` |
 
 ### Texte
 
@@ -72,6 +72,12 @@ Règles d'usage :
 | Titres | `#ffffff` | — |
 | Texte courant | `#eef1f8` | `--wc-text` |
 | Texte secondaire | `#a7b0ca` | `--wc-muted` |
+| Texte indicatif des champs (placeholder) | `#939ebd` | — |
+| Contour des champs et des boutons discrets | blanc à 40 % | `--wc-border-control` |
+| Anneau de focus clavier | or clair `#f3c868`, 2 px, décalé de 2 px | `--wc-focus` |
+
+Contraste : tout texte fait au moins 4,5:1 sur son fond (3:1 pour les grands titres et les contours des éléments
+cliquables). Aucun texte sous 12 px, y compris sur téléphone.
 
 ### États
 
@@ -81,17 +87,20 @@ Règles d'usage :
 | Erreur | `#ff6b6b` | `--wc-red` |
 | Avertissement | or `#e0ab3c` | `--wc-gold` |
 
-### Dégradés (tous à 135°)
+### Aplats et dégradés
+
+Plus de dégradé de couleur sur les boutons, les textes, les chiffres ou les pastilles : **l'or est en aplat**
+(`#e0ab3c`, `#f3c868` au survol et pour les textes). Les variables `--wc-grad-gold`, `--wc-grad-cyan` et
+`--wc-grad-pink` existent encore pour compatibilité mais donnent un aplat : ne plus les utiliser.
 
 | Nom | Composition | Usage |
 |---|---|---|
-| Or | `#f3c868` → `#e0ab3c` (45 %) → `#ff8a3d` | bouton principal, mots mis en avant, chiffres |
-| Cyan | `#3fd0ff` → `#5b7cff` (55 %) → `#8b5cf6` | bouton secondaire, pack Croissance |
-| Rose | `#ff5c8a` → `#8b5cf6` | halos décoratifs, badge super-administrateur |
-| Fond du hero | `#0a1330` → `#0e1a40` (60 %) → `#121f4d`, à 160° | bandeau d'en-tête, fonds de visuels |
+| Fond du hero | `#0a1330` → `#0d183a` (60 %) → `#101c45`, à 160° | bandeau d'en-tête, fonds de visuels (seul dégradé conservé, ton sur ton) |
+| Bandeau d'appel | `#15244f` → `#1b2b5f`, à 135° | bloc « contactez-nous », ton sur ton |
 
 Proportions à respecter : environ 70 % de bleu nuit, 20 % de blanc et gris-bleu (texte), 10 % d'or.
-Le cyan, le violet et le rose restent des touches ; l'or est la seule couleur d'action principale.
+Le bleu ciel et le rose restent des touches ; **l'or est la seule couleur d'action** (un bouton secondaire est un
+simple contour blanc, jamais une deuxième couleur).
 
 ## 3. Typographie
 
@@ -103,8 +112,11 @@ Le cyan, le violet et le rose restent des touches ; l'or est la seule couleur d'
 
 - Titres : blancs, interlettrage resserré (-0,015 em).
 - Texte courant : interligne 1,75.
-- Sur-titres (« kicker ») : capitales, 0,78 rem, graisse 700, interlettrage 0,16 em, or clair ou cyan.
-- Tailles de titres du site : H1 de 2,2 à 3,9 rem ; H2 de 1,8 à 2,6 rem (adaptées à la largeur d'écran).
+- Sur-titres (« kicker ») : capitales, 0,78 rem, graisse 700, interlettrage 0,16 em, or clair ou bleu ciel.
+- Mots mis en avant dans un titre : or clair en aplat (plus de texte en dégradé).
+- Tailles de titres du site : H1 de 2,2 à 3,9 rem ; H2 de 1,8 à 2,6 rem (adaptées à la largeur d'écran). Le titre de
+  l'accueil s'ajuste à sa colonne pour que le mot qui change tienne toujours sur une ligne.
+- Paragraphes d'introduction : 75 caractères par ligne au plus.
 
 Les deux polices sont gratuites (Google Fonts) et disponibles dans Canva.
 
@@ -119,39 +131,43 @@ Les deux polices sont gratuites (Google Fonts) et disponibles dans Canva.
 | Pastilles d'icône | carré arrondi de 44 à 58 px, arrondi 12 à 16 px |
 | Ombre | `0 10px 30px rgba(0,0,0,.35)` |
 | Ombre forte | `0 30px 70px rgba(0,0,0,.5)` |
-| Lueur or | `0 0 40px rgba(224,171,60,.35)` |
-| Lueur cyan | `0 0 40px rgba(63,208,255,.3)` |
+| Lueurs colorées | aucune (ni halo autour des boutons, des icônes ou du logo, ni ombre colorée) |
 
-Signature visuelle : fond bleu nuit, halos flous de couleur (or, bleu, rose) dans les angles, trame de points
-blancs très discrète, cartes à bordure fine et translucide.
+Signature visuelle : fond bleu nuit uni, or en aplat réservé aux actions et aux repères, trame de points blancs
+très discrète dans l'en-tête, cartes à bordure fine et translucide. Pas de halos flous de couleur.
 
 ## 5. Composants
 
-- **Bouton principal** : dégradé or, texte `#1a1205`, pilule, graisse 600, ombre dorée.
-- **Bouton secondaire** : dégradé cyan, texte blanc.
-- **Bouton discret** : fond blanc à 6 %, bordure blanche à 18 %, texte blanc.
-- **Étiquette / sur-titre encadré** : fond or à 12 %, bordure or à 35 %, texte or clair, capitales.
-- **Carte** : fond `#111c3d`, bordure blanche à 9 %, arrondi 20 px ; se soulève au survol.
-- **Offre vedette** : fond bleu `#1a2a5c` → `#2a2a6e`, bordure or, lueur or.
-- **Icônes** : Font Awesome 6 (version gratuite), en or clair ou sur pastille en dégradé.
+- **Bouton principal** : or en aplat `#e0ab3c` (or clair au survol), texte `#1a1205`, pilule, graisse 600, ombre neutre.
+- **Bouton secondaire** : contour blanc à 50 %, texte blanc, fond transparent (blanc plein au survol).
+- **Bouton discret** : fond blanc à 6 %, bordure blanche à 40 %, texte blanc.
+- **Sur-titre** : texte or clair en capitales, sans encadré. Étiquette des packs : fond or à 15 %, bordure or à 40 %.
+- **Focus clavier** : anneau or clair de 2 px autour de tout élément cliquable ou champ.
+- **Carte** : fond `#111c3d`, bordure blanche à 9 %, arrondi 20 px ; au survol, ombre et bordure plus marquées
+  (léger soulèvement de 3 px au plus, pas d'inclinaison).
+- **Offre vedette** : surface relevée `#172550`, filet or, prix en or clair ; ni lueur ni bordure animée.
+- **Icônes** : Font Awesome 6 (version gratuite), en or clair ou bleu ciel sur pastille discrète, ou en sombre
+  sur pastille or.
 
 ## 6. Images et mouvement
 
 - Photos : cadrage professionnel (équipe, bureau, entrepreneurs), bord arrondi, fondu sombre bleu nuit en bas
   pour poser un texte blanc dessus.
-- Animations : douces et courtes (0,2 à 0,35 s), apparition par glissement vers le haut ; désactivées quand
-  l'utilisateur demande la réduction des mouvements.
+- Animations : douces et courtes (0,2 à 0,35 s), sans rebond, apparition par glissement vers le haut ; désactivées
+  quand l'utilisateur demande la réduction des mouvements. Le bandeau défilant de l'accueil est lent (un tour en
+  90 s) et s'arrête au survol ou au toucher.
 - Exception : le **cycle des prestations** du hero de l'accueil (`inc/partials/cycle.php`) tourne en continu
-  (un tour en 14 s environ). Ses quatre phases ont chacune une couleur : Conception or `#f3c868`, Création orange
-  `#ff8a3d`, Gestion cyan `#3fd0ff`, Performance violet `#8b5cf6` (texte `#b69cff`). C'est le visuel de référence
-  pour présenter le processus WebyCloudy (Instagram, présentations), avec les mêmes mots : Conception, Création,
-  Gestion, Performance. À chaque arrivée du signal sur une phase : étincelles, flash, ondes et reflet à la couleur
-  de la phase ; l'aigle du logo est en filigrane au centre.
+  (un tour en 14 s environ). Ses quatre phases ont chacune une teinte en aplat : Conception or clair `#f3c868`,
+  Création ambre `#f0a868`, Gestion bleu ciel `#8fc4ea`, Performance bleu glacier `#c9d6f5`. C'est le visuel de
+  référence pour présenter le processus WebyCloudy (Instagram, présentations), avec les mêmes mots : Conception,
+  Création, Gestion, Performance. À chaque arrivée du signal sur une phase : la pastille se remplit de la teinte de
+  la phase et une seule onde fine s'élargit (plus d'étincelles, de flash ni de reflet) ; l'aigle du logo est en
+  filigrane au centre.
 
 ## 7. Déclinaison hors site
 
-- **Instagram** : fond `#070d1f` ou dégradé du hero, titre en Poppins Bold blanc avec un mot clé en dégradé or,
-  texte en Inter, logo en bas, un seul accent (or) par visuel ; cyan réservé aux contenus « croissance ».
+- **Instagram** : fond `#070d1f` ou dégradé du hero, titre en Poppins Bold blanc avec un mot clé en or clair (aplat),
+  texte en Inter, logo en bas, un seul accent (or) par visuel ; bleu ciel réservé aux contenus « croissance ».
 - **Leboncoin** : première photo sur fond bleu nuit avec le logo et la promesse en blanc et or, lisible en
   vignette.
 - **Documents clients** (devis, business plan) : pour l'impression, texte bleu nuit `#070d1f` sur fond blanc,
