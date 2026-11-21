@@ -10,8 +10,10 @@
   <div class="container">
     <div class="row g-5">
       <div class="col-lg-5" data-aos="fade-right">
-        <span class="kicker">Contact</span>
-        <h2 class="mb-3">Parlons de votre projet</h2>
+        <?php if(empty($contact_sans_titre)) : //page contact : ce titre est deja celui du haut de page ?>
+          <span class="kicker">Contact</span>
+          <h2 class="mb-3">Parlons de votre projet</h2>
+        <?php endif; ?>
         <p class="text-muted-wc mb-4">Devis gratuit. Écrivez-nous ou appelez-nous : nous vous répondons sous 48h, partout en France, en visio ou en rendez-vous.</p>
         <div class="contact-info">
           <div class="item">
@@ -58,6 +60,7 @@
             </div>
             <div class="col-12">
               <button type="submit" class="btn btn-gold btn-lg w-100"><i class="fas fa-paper-plane me-2"></i>Envoyer le message</button>
+              <p class="form-reassurance">Sans engagement · Réponse sous 48h ouvrées</p>
             </div>
           </div>
         </form>
