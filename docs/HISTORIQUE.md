@@ -27,6 +27,10 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
+- [ ] **Audit design, mission 2** (entrée du 2026-11-21) : `inc/partials/pricing.php` : bouton
+      « Demander un devis », libellé unique à appliquer (transmis à la mission 3). À confirmer par le propriétaire : « Sans engagement » sous le formulaire, et le
+      terme « Journal officiel (JO) » pour l'annonce de création (elle paraît en général dans un journal d'annonces
+      légales). Après fusion : tester la barre « Appeler / Devis gratuit » sur un vrai téléphone (iPhone compris).
 - [ ] **Inscriptions de robots** (entrées du 2026-10-30) : créer un compte de test pour vérifier que le mail de
       validation arrive (il commence par « Bonjour, ») ; dire s'il faut placer le bouton *Supprimer* de *Gestion
       complète* sous le login (sur téléphone il est dans la dernière colonne, à faire glisser) et s'il doit pouvoir
@@ -86,6 +90,52 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       justifier les « 95 % de clients satisfaits » ; ajouter un bloc « Qui suis-je » avec photo ; bouton « Appeler »
       sur mobile ; raccourcir l'accueil (offre et prix répétés 3 fois) ; mettre les 12 métiers dans le menu ;
       contraste du bouton cyan (2,3:1) et des champs du formulaire ; réalisations hors `*.netlify.app`.
+
+---
+
+## 2026-11-21 — Audit design, mission 2/4 : textes et chemin vers le contact
+
+**Demande** : après l'audit design du site (PR #25, `docs/audits/2026-11-21-audit-design.md`), retirer les affirmations
+invérifiables, clarifier les textes et rendre l'appel et le devis accessibles partout, surtout sur téléphone
+(méthode Impeccable, `clarify` et `adapt`). Chantier en quatre missions menées en parallèle ; celle-ci est la 2.
+
+**Réalisé** :
+- **« 95 % » retiré** partout (haut de l'accueil, chiffres clés par défaut, pages *Lancement* et *Marketing*, y compris
+  le haut de ces deux pages, dont les textes sont dans le contrôleur), sans chiffre de remplacement : à la place, des faits déjà affichés ailleurs sur le site (devis et
+  premier échange gratuits, réponse sous 48h, paiement en 2x ou 3x sans frais dès 200 €).
+- **Haut de l'accueil** : bouton principal « Demander un devis gratuit » (vers `contact`), bouton secondaire d'appel
+  affichant le numéro (`tel:`) ; « Découvrir nos packs » devient un lien discret sous les deux boutons.
+- **Bandeau d'appel** (`cta.php`, bas des pages) : « Allons-y ! » remplacé par « Demander un devis gratuit » et un vrai
+  bouton d'appel avec le numéro, suivis des horaires.
+- **Barre fixe sur téléphone** (moins de 768 px), pages visiteur uniquement (ni connexion, ni espace client, ni
+  administration) : « Appeler » et « Devis gratuit ». Le pied de page et le bouton « retour en haut » lui laissent la
+  place ; elle s'efface pendant la saisie d'un formulaire (clavier ouvert) et respecte les zones sûres iOS. Sur la
+  page contact, « Devis gratuit » descend au formulaire au lieu de recharger la page.
+- **Clics téléphone** : les nouveaux liens `tel:` sont comptés par le suivi existant de `main.js` (aucun changement
+  de JavaScript nécessaire).
+- **Formulaire de contact** : ligne « Sans engagement · Réponse sous 48h ouvrées » sous le bouton d'envoi. Page
+  contact : le titre « Parlons de votre projet » n'apparaît plus qu'une fois (celui du haut de page).
+- **Jargon expliqué** à la première occurrence : Kbis, greffe, CMA, JO, ACRE, ARCE (*Lancement*), SEO (*Site
+  internet*), e-réputation (*Marketing*). *Gestion* : DPAE et DSN étaient déjà expliqués, rien à changer.
+- **Libellé unique** « Demander un devis gratuit » dans les fichiers de la mission, dont le bouton du haut des pages
+  métiers (« Devis gratuit » reste dans la barre de navigation et la barre fixe).
+
+**Fichiers / zones touchés** : `inc/header.php` (haut de page uniquement), `inc/partials/stats.php`,
+`inc/partials/cta.php`, `inc/partials/contact_form.php`, `inc/partials/barre_mobile.php` (nouveau),
+`inc/content_contact.php`, `inc/content_lancement.php`, `inc/content_site.php`, `inc/content_marketing.php`,
+`views/common/template.php` (une ligne), `controllers/Visiteur/Visiteur.controller.php` (textes affichés uniquement,
+aucune logique), `public/CSS/theme.css` (section « Mission 2 » ajoutée à la fin, aucune règle
+existante modifiée), `README.md`, `docs/DECISIONS.md`
+**Vérifications** : `php -l` sur chaque fichier PHP modifié ; site en local (PHP 8.3, MariaDB 10.11) ; avec Chromium
+à 1440×900 et 390×844 : accueil, contact, les quatre prestations, une page métier — aucun warning PHP, aucune erreur
+JavaScript, aucune requête en échec, aucun défilement horizontal ; captures regardées (haut de l'accueil, bandeau
+d'appel, formulaire, bas de page). Barre absente sur ordinateur et sur la page de connexion ; sur téléphone elle ne
+recouvre ni la dernière ligne du pied de page ni le bouton d'envoi, et disparaît pendant la saisie. Clic sur le
+téléphone de la barre et du bandeau : une ligne `telephone` dans `clics_contact` à chaque fois. Détecteur Impeccable :
+aucun constat sur les règles ajoutées.
+**Référence** : PR #26, branche `claude/weby-2-textes-contact` (brouillon, PR vers `V3`, la branche du chantier créée à
+partir de `V2` ; `V2` reste la production et n'est pas touchée)
+**Suites** : voir « Audit design, mission 2 » dans les points en suspens.
 
 ---
 

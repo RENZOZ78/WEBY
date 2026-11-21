@@ -25,6 +25,7 @@ et ajouter la nouvelle (on garde la trace). Le détail du contexte est dans [`HI
 | 2026-10-01 | Le formulaire de contact crée une demande en base | rien ne se perd si le mail ne part pas |
 | ~~2026-10-01~~ | ~~Uniquement de vraies réalisations (Fiteos, Delta-Immo, Magic Food Panam, Dofinvest)~~ — remplacée le 2026-10-04 (Dofinvest retiré) ; le principe « uniquement de vraies réalisations » reste en vigueur | suppression des faux logos clients |
 | 2026-11-21 | Les corrections issues de l'audit design sont regroupées dans une branche `V3` (créée à partir de `V2`) ; `V2` reste la production, intacte, jusqu'à validation de la V3 par le propriétaire ; à la mise en ligne, le déploiement Hostinger basculera sur `V3` et `V2` sera gardée comme version de secours (pas de fusion de `V3` dans `V2`) | tester la nouvelle version en entier avant de la mettre en ligne, et pouvoir revenir à la V2 en cas de problème |
+| 2026-11-21 | Aucun chiffre de preuve sans base vérifiable (« 95 % » retiré) ; libellé unique de l'action principale : « Demander un devis gratuit » (« Devis gratuit » toléré dans la navigation et la barre fixe mobile) ; appel et devis toujours à portée sur téléphone (barre fixe) | audit design du 2026-11-21 : preuves invérifiables, cinq libellés pour la même action, pas de bouton d'appel sur mobile |
 
 ## Décisions proposées, non confirmées
 

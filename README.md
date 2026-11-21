@@ -32,7 +32,9 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 - `robots.txt` : consignes aux moteurs de recherche ; `views/common/template.php` déclare l'URL canonique de chaque
   page publique (`site_url` dans `config/config.php`) et met `noindex` sur les erreurs, la connexion et les espaces privés
 - `controllers/`, `models/`, `views/` : MVC par rôle (Visiteur, Utilisateur, Administrateur, SuperAdministrateur)
-- `inc/content_*.php` : contenu des pages publiques ; `inc/partials/` : sections réutilisables (tarifs, réalisations, contact, cycle animé du hero de l'accueil…)
+- `inc/content_*.php` : contenu des pages publiques ; `inc/partials/` : sections réutilisables (tarifs, réalisations, contact, cycle animé du hero de l'accueil…) ;
+  `inc/partials/barre_mobile.php` : barre fixe « Appeler / Devis gratuit » sur téléphone, incluse par
+  `views/common/template.php` sur les pages visiteur uniquement
 - `public/CSS/theme.css` : thème du site ; `public/Javascript/` : scripts
 - `inc/secteurs.php` : les métiers accompagnés (problématiques, solutions, gains). Ils alimentent le bandeau défilant
   de l'accueil (`inc/partials/secteurs.php`) et les pages `secteurs/{métier}` : ajouter un métier = ajouter une entrée
