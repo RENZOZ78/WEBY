@@ -32,7 +32,6 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
 - `robots.txt` : consignes aux moteurs de recherche ; `views/common/template.php` déclare l'URL canonique de chaque
   page publique (`site_url` dans `config/config.php`) et met `noindex` sur les erreurs, la connexion et les espaces privés
 - `controllers/`, `models/`, `views/` : MVC par rôle (Visiteur, Utilisateur, Administrateur, SuperAdministrateur)
-- `inc/content_*.php` : contenu des pages publiques ; `inc/partials/` : sections réutilisables (tarifs, réalisations, contact, cycle animé du hero de l'accueil…)
 - `config/config.php` : outre le téléphone et les horaires, l'identité légale de l'éditeur (`legal_*`), l'hébergeur
   (`hebergeur_*`) et le bloc « Qui suis-je » (`qui_*`). Les pages `mentions-legales` et `confidentialite`
   (`inc/content_mentions_legales.php`, `inc/content_confidentialite.php`, outils dans `inc/legal.php`) affichent
@@ -40,6 +39,9 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
   `inc/partials/qui_suis_je.php` (contact, accueil) reste masqué tant que prénom, texte ou photo manquent.
   La politique de confidentialité décrit les traitements du code : la mettre à jour si une collecte change
 - `inc/footer.php` : pied de page (prestations, les 12 métiers de `inc/secteurs.php`, liens légaux, SIRET si renseigné)
+- `inc/content_*.php` : contenu des pages publiques ; `inc/partials/` : sections réutilisables (tarifs, réalisations, contact, cycle animé du hero de l'accueil…) ;
+  `inc/partials/barre_mobile.php` : barre fixe « Appeler / Devis gratuit » sur téléphone, incluse par
+  `views/common/template.php` sur les pages visiteur uniquement
 - `public/CSS/theme.css` : thème du site ; `public/Javascript/` : scripts
 - `inc/secteurs.php` : les métiers accompagnés (problématiques, solutions, gains). Ils alimentent le bandeau défilant
   de l'accueil (`inc/partials/secteurs.php`) et les pages `secteurs/{métier}` : ajouter un métier = ajouter une entrée

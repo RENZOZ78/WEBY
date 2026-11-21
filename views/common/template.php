@@ -69,6 +69,7 @@
       <?= $page_content ?>
     </main>
 
+    <?php if(!$page_privee) include "inc/partials/barre_mobile.php"; //barre Appeler / Devis gratuit, sur telephone, pages visiteur uniquement ?>
     <?php require_once("inc/footer.php"); ?>
 
     <button class="back-top" type="button" aria-label="Revenir en haut de la page"><i class="fas fa-arrow-up"></i></button>

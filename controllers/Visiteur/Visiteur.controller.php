@@ -44,9 +44,9 @@
         "view" => "./views/Visiteur/lancement.view.php",
         "H1" => "Business plan & création de société",
         "uvp"=> "Pack Lancement & Financement",
-        "hero_texte" => "Vous lancez votre projet ? Mettez toutes les chances de votre côté pour convaincre votre banquier et l'administration. 95 % de nos clients ont validé leur dossier.",
+        "hero_texte" => "Vous lancez votre projet ? Mettez toutes les chances de votre côté pour convaincre votre banquier et l'administration. Le devis et le premier échange sont gratuits.",
         "hero_image" => "public/Assets/images/entreprise/BP3.png",
-        "hero_carte" => "fa-building-columns|Prêt bancaire|95 % de dossiers validés",
+        "hero_carte" => "fa-building-columns|Prêt bancaire|Un dossier de 30 pages",
         "hero_badges" => ["fa-file-invoice|Business plan dès 299 €", "fa-stamp|Création dès 200 € + frais", "fa-bolt|Livraison 48h à 7 jours"],
         "page_description" => "Business plan professionnel, prévisionnel financier, création de société (SASU, SARL, EURL, micro-entreprise) et aide au prêt bancaire.",
         "page_title"=> "WebyCloudy | Business plan & création de société"
@@ -92,7 +92,7 @@
         "hero_texte" => "Votre société manque de visibilité ? Vous n'obtenez pas autant de clients que vous le souhaitez ? Audit, acquisition clients et image de marque : nous avons la solution.",
         "hero_image" => "public/Assets/images/site%20internet/rx3.png",
         "hero_carte" => "fa-users-viewfinder|Prospects qualifiés|Audit + acquisition",
-        "hero_badges" => ["fa-bullhorn|Dès 500 €", "fa-chart-line|Vendre plus et plus cher", "fa-star|95 % de clients satisfaits"],
+        "hero_badges" => ["fa-bullhorn|Dès 500 €", "fa-chart-line|Vendre plus et plus cher", "fa-comments|Premier échange gratuit"],
         "page_description" => "Audit d'activité, acquisition de clients, réseaux sociaux, publicité et image de marque.",
         "page_title"=> "WebyCloudy | Stratégie marketing & croissance"
       ]);
@@ -112,7 +112,7 @@
         "H1" => $secteur['titre'],
         "uvp"=> "<i class=\"fas ".$secteur['icone']." me-2\"></i>".$secteur['nom'],
         "hero_texte" => $secteur['accroche'],
-        "hero_boutons" => [["Voir nos solutions", "#solutions", "btn-gold"], ["Devis gratuit", "#contact", "btn-outline-light"]],
+        "hero_boutons" => [["Voir nos solutions", "#solutions", "btn-gold"], ["Demander un devis gratuit", "#contact", "btn-outline-light"]],
         "hero_badges" => ["fa-comments|Premier échange gratuit", "fa-clock|Réponse sous 48h", "fa-video|Visio ou rendez-vous"],
         "hero_liste" => ["fa-check", "Ce que nous réglons pour vous", array_column($secteur['solutions'], 1)],
         "page_description" => $secteur['nom']." : ".mb_strtolower(mb_substr($secteur['qui'], 0, 1)).mb_substr($secteur['qui'], 1).". ".$secteur['accroche'],

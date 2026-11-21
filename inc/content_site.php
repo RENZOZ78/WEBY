@@ -12,7 +12,7 @@
     ],
     "points" => [
       ["fa-laptop-code", "Site vitrine ou e-commerce", "Un site moderne et responsive, parfaitement lisible sur PC, tablette et mobile. Boutique en ligne, prise de rendez-vous, agenda : tout est possible."],
-      ["fa-magnifying-glass", "Référencement (SEO)", "Pages optimisées, textes travaillés, fiche Google : pour être trouvé par vos clients quand ils vous cherchent."],
+      ["fa-magnifying-glass", "Référencement sur Google (SEO)", "Le SEO, c'est le travail qui fait remonter votre site dans les résultats de Google : pages optimisées, textes travaillés, fiche Google. Vos clients vous trouvent quand ils vous cherchent."],
       ["fa-screwdriver-wrench", "Maintenance et fluidité garanties", "Mises à jour, sauvegardes, sécurité et rapidité : votre site reste fluide et disponible."],
     ],
   ];
@@ -36,8 +36,8 @@
     "titre" => "Choisissez le site qu'il vous faut",
     "texte" => "Nom de domaine, hébergement, référencement et maintenance : tout est compris.",
     "offres" => [
-      ["nom" => "Site vitrine", "prix" => "300 €", "periode" => "", "vedette" => true, "details" => ["Responsive PC / mobile", "Référencement SEO", "Nom de domaine & hébergement", "Maintenance"]],
-      ["nom" => "Site + blog", "prix" => "450 €", "periode" => "", "details" => ["Tout le site vitrine", "Espace membre", "Articles optimisés SEO", "Maintenance"]],
+      ["nom" => "Site vitrine", "prix" => "300 €", "periode" => "", "vedette" => true, "details" => ["Responsive PC / mobile", "Référencement sur Google (SEO)", "Nom de domaine & hébergement", "Maintenance"]],
+      ["nom" => "Site + blog", "prix" => "450 €", "periode" => "", "details" => ["Tout le site vitrine", "Espace membre", "Articles optimisés pour Google (SEO)", "Maintenance"]],
       ["nom" => "Site e-commerce", "prix" => "700 €", "periode" => "", "details" => ["Tout le site vitrine", "Catalogue & panier", "Paiement sécurisé", "Maintenance"]],
     ],
   ];
