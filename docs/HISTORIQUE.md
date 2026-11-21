@@ -133,7 +133,7 @@ versionné) : repères « à compléter » et bandeau visibles puis disparus, bl
 ligne SIRET du pied de page absente puis affichée ; `/accueils` → 301 vers `/` (avec et sans paramètres), 404
 conservée pour une adresse inconnue, `sitemap.xml` 18 adresses puis 20 ; aucun warning PHP, aucune erreur JavaScript,
 aucun défilement horizontal ; captures relues.
-**Référence** : PR en brouillon de la branche `claude/weby-1-confiance-legal`
+**Référence** : PR #27 (brouillon, branche `claude/weby-1-confiance-legal`)
 **Suites** : voir « Identité légale et « Qui suis-je » » dans les points en suspens.
 
 ---
