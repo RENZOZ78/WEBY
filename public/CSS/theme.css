@@ -967,6 +967,10 @@ a { text-decoration: none; }
 @media (max-width: 991.98px) {
   /* le menu ouvert reste entièrement accessible sur téléphone : il défile dans la hauteur de l'écran */
   .wc-nav .navbar-collapse { max-height: calc(100vh - 5.5rem); max-height: calc(100dvh - 5.5rem); overflow-y: auto; overscroll-behavior: contain; }
+  /* sous 768 px la barre fixe du bas (mission 2) occupe le pied de l'écran : le menu s'arrête au-dessus d'elle */
+  @media (max-width: 767.98px) {
+    .wc-nav .navbar-collapse { max-height: calc(100vh - 5.5rem - var(--wc-barre-mobile, 0rem)); max-height: calc(100dvh - 5.5rem - var(--wc-barre-mobile, 0rem) - env(safe-area-inset-bottom, 0px)); }
+  }
   .wc-nav button.nav-link { width: 100%; text-align: left; }
   .wc-nav .dropdown-item { padding-top: .7rem; padding-bottom: .7rem; }
 }

@@ -63,11 +63,10 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       Sweet Home BTP (doit ouvrir `sweet-home-btp.webycloudy.com`) sur webycloudy.com ; donner, s'ils existent, les noms de domaine de Delta-Immo et Magic Food Panam (encore sur Netlify).
 - [ ] **Accueil court et menu « Votre métier »** (entrée du 2026-11-21, mission 3) : relire l'accueil raccourci et dire
       si la grille des 6 prestations ou la méthode en 4 étapes manquent ; valider la ligne de tarif « Gestion &
-      administratif — à partir de 30 € / acte RH » (prix repris de la page *Gestion*). Hors périmètre de cette mission, à
-      traiter ailleurs : bouton « Allons-y ! » de `inc/partials/cta.php`, boutons « Devis gratuit » du haut des pages
-      (`inc/header.php` hors menu, `controllers/Visiteur/Visiteur.controller.php`), redirection `secteurs` →
-      `accueils#secteurs` et autres `accueils` de `index.php`, hauteur de la section *Réalisations* sur téléphone
-      (2 178 px), liens `*.netlify.app` de Delta-Immo et Magic Food Panam (décision du propriétaire en attente).
+      administratif — à partir de 30 € / acte RH » (prix repris de la page *Gestion*). Restent hors de cette mission :
+      hauteur de la section *Réalisations* sur téléphone (2 178 px) et liens `*.netlify.app` de Delta-Immo et Magic Food
+      Panam (décision du propriétaire en attente). Le bouton de `cta.php`, les boutons du haut des pages et la
+      redirection de `/accueils` ont été traités par les missions 1 et 2 (PR #26 et #27).
 - [ ] **Métiers** (entrée du 2026-10-06) : relire les problématiques et solutions des 12 métiers (`inc/secteurs.php`),
       dire s'il faut ajouter ou retirer des métiers ; après fusion, tester le bandeau de l'accueil sur téléphone et
       ouvrir quelques pages `secteurs/…`.
@@ -127,6 +126,7 @@ Impeccable (`distill`, `layout`), sans refonte du style.
   ligne *Gestion & administratif* (30 € / acte RH, prix de la page *Gestion*) pour que les 4 pages prestations restent
   accessibles depuis l'accueil. Les pages prestations gardent leurs cartes.
 - **Hauteur de l'accueil** : 8 215 → 6 196 px à 1440 px (−25 %) ; 16 855 → 10 858 px à 390 px (−36 %).
+  Après fusion de la V3 (bloc « Qui suis-je » et pied de page de la mission 1) : 6 408 px et 11 557 px.
 - **Menu** (`inc/header.php`, bloc `<nav>`) : nouvelle entrée **« Votre métier »** (les 12 métiers, lus dans
   `inc/secteurs.php`, sur 2 colonnes sur ordinateur, liste dans le menu mobile) ; les déroulants (*Prestations*,
   *Votre métier*, *Administration*, compte) sont de vrais boutons (plus de `href="#"`), utilisables au clavier (Entrée,
@@ -150,10 +150,16 @@ Impeccable (`distill`, `layout`), sans refonte du style.
 sur l'accueil (`/` et `/accueils`), 2 pages métier, les 4 pages prestations, contact et connexion : aucun warning PHP,
 aucune erreur JavaScript, aucune requête en échec, aucun défilement horizontal ; menu « Votre métier » ouvert au
 clavier, page métier ouverte avec les flèches et Entrée ; barre sur une ligne à 992, 1100 et 1280 px ; bandeau : pause,
-reprise, flèches au clavier, mouvement réduit (pas de défilement, bouton pause masqué) ; captures relues. Non testé :
+reprise, flèches au clavier, mouvement réduit (pas de défilement, bouton pause masqué) ; captures relues. Après fusion
+de `V3` (missions 1 et 2) : mêmes contrôles refaits sur l'accueil, une page métier, une page prestation, le contact et
+les mentions légales ; le menu mobile ouvert s'arrête au-dessus de la barre fixe du bas (corrigé) ; pied de page avec
+les 12 métiers ; aucun lien vers `accueils`. Non testé :
 la barre avec un compte administrateur connecté (mêmes boutons, deux entrées de plus).
 **Référence** : PR #28 vers `V3` (branche `claude/weby-3-accueil-navigation`) ; rien ne part en production tant que la V3 n'est pas validée
 **Suites** : voir « Accueil court et menu « Votre métier » » dans les points en suspens.
+
+---
+
 ## 2026-11-21 — Confiance : mentions légales, confidentialité, « Qui suis-je », pied de page
 
 **Demande** : mission 1/4 du chantier qui suit l'audit design (PR #25) : le site n'a ni mentions légales
