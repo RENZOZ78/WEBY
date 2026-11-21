@@ -123,6 +123,7 @@
   ];
   include "inc/partials/pricing.php";
 
+  include "inc/partials/qui_suis_je.php";
   $cta_titre = "Appelez-nous pour transformer votre activité";
   include "inc/partials/cta.php";
 

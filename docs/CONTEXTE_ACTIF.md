@@ -4,7 +4,7 @@
 À lire en premier, avant toute tâche ou tout conseil. Doit rester **court** (une page) : l'ancien part dans
 [`HISTORIQUE.md`](HISTORIQUE.md), les choix durables dans [`DECISIONS.md`](DECISIONS.md).
 
-Dernière mise à jour : 2026-11-21 — par Claude Code (audit design, lancement de la V3)
+Dernière mise à jour : 2026-11-21 — par Claude Code (audit design, lancement de la V3 ; pages légales, « Qui suis-je », pied de page : PR #27 vers `V3`)
 
 > Ce dépôt est **public** : ne rien écrire ici de confidentiel (mots de passe, données clients, chiffres privés).
 
@@ -44,6 +44,9 @@ Le détail à cocher est dans « Points en suspens » de [`HISTORIQUE.md`](HISTO
 
 ## Sujets ouverts / à trancher
 
+- **Identité légale** (PR #27 vers `V3`, 2026-11-21) : le propriétaire doit fournir SIRET, forme juridique, nom du
+  responsable de publication, adresse, photo et texte de présentation (`config/config.php`) avant la mise en ligne
+  des mentions légales, de la politique de confidentialité et du bloc « Qui suis-je ».
 - Lien entre ce site (agence, `webycloudy.com`) et la plateforme de documents IA (projet Firebase
   `weby-cloudy-prod`, autre dépôt) : deux produits distincts sous le même nom — positionnement à clarifier.
 

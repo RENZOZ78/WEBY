@@ -24,6 +24,8 @@
       "prestations/sites" => "Site internet",
       "prestations/marketing" => "Marketing & croissance",
       "contact" => "Contact",
+      "mentions-legales" => "Mentions légales",
+      "confidentialite" => "Confidentialité",
       "login" => "Connexion",
       "creerCompte" => "Création de compte",
     ];

@@ -27,6 +27,16 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
+- [ ] **Identité légale et « Qui suis-je »** (entrée du 2026-11-21, PR #27 vers `V3`) : avant la mise en ligne de la V3, renseigner dans
+      `config/config.php` : `legal_nom`, `legal_forme`, `legal_siret`, `legal_adresse`, `legal_responsable` (et, selon le
+      statut, `legal_capital`, `legal_rcs`, `legal_tva`) ; pour le bloc « Qui suis-je » : `qui_prenom`, `qui_texte`,
+      `qui_photo` (photo à déposer dans le dépôt, ex. `public/Assets/images/accueil/`), `qui_role` facultatif. Tant que
+      c'est vide, les pages légales affichent « à compléter » et le bloc reste masqué. Relire la politique de
+      confidentialité (durée de conservation des demandes de contact à décider) ; le téléphone de l'hébergeur n'est
+      pas publié par Hostinger (clé `hebergeur_telephone` vide). Hors périmètre, à reprendre : liens `accueils` du menu
+      (`inc/header.php`), de la page d'erreur et des redirections internes (ils passent par la redirection 301) ;
+      polices et bibliothèques chargées
+      chez Google Fonts / jsDelivr (les héberger sur le site éviterait de transmettre l'IP des visiteurs).
 - [ ] **Audit design, mission 2** (entrée du 2026-11-21) : `inc/partials/pricing.php` : bouton
       « Demander un devis », libellé unique à appliquer (transmis à la mission 3). À confirmer par le propriétaire : « Sans engagement » sous le formulaire, et le
       terme « Journal officiel (JO) » pour l'annonce de création (elle paraît en général dans un journal d'annonces
@@ -90,6 +100,53 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       justifier les « 95 % de clients satisfaits » ; ajouter un bloc « Qui suis-je » avec photo ; bouton « Appeler »
       sur mobile ; raccourcir l'accueil (offre et prix répétés 3 fois) ; mettre les 12 métiers dans le menu ;
       contraste du bouton cyan (2,3:1) et des champs du formulaire ; réalisations hors `*.netlify.app`.
+
+---
+
+## 2026-11-21 — Confiance : mentions légales, confidentialité, « Qui suis-je », pied de page
+
+**Demande** : mission 1/4 du chantier qui suit l'audit design (PR #25) : le site n'a ni mentions légales
+(`/mentions-legales` en 404), ni politique de confidentialité, ni identité visible. Construire la structure sans
+inventer aucune donnée.
+
+**Réalisé** :
+- **Clés d'identité légale** dans `config/config.php`, vides, à remplir par le propriétaire (`legal_*`, `qui_*`).
+  Hébergeur renseigné d'après les conditions générales de Hostinger (entité contractante pour l'Union européenne :
+  Hostinger International Limited, Larnaca, Chypre) ; Hostinger ne publie pas de téléphone : clé laissée vide.
+- **Pages `/mentions-legales` et `/confidentialite`** : chaque valeur vient de la config ; une valeur obligatoire
+  vide s'affiche « À compléter » (repère orange) avec un bandeau « Page incomplète » qui liste les clés manquantes.
+  Tant que c'est incomplet, les pages envoient `X-Robots-Tag: noindex` et ne sont pas dans `sitemap.xml` ; elles y
+  entrent seules une fois la config remplie. La politique de confidentialité décrit les traitements réels du code :
+  formulaire de contact et filtre anti-spam, espace client, journal (IP tronquée, 400 jours), mesure d'audience
+  maison (sans cookie ni IP, 400 jours), cookie de session seul, fichiers chargés chez Google Fonts et jsDelivr,
+  hébergeur, droits et CNIL.
+- **Bloc « Qui suis-je »** (`inc/partials/qui_suis_je.php`) : photo, prénom, fonction, parcours, téléphone et mail.
+  Masqué tant que prénom, texte ou photo manquent (ou que le fichier photo n'existe pas). Inclus sur la page contact
+  et sur l'accueil (une ligne avant l'appel à l'action final).
+- **Pied de page** : colonne « Métiers » (les 12 pages `secteurs/…`, lues dans `inc/secteurs.php`), liens Mentions
+  légales et Confidentialité, forme juridique et SIRET affichés seulement s'ils sont renseignés, logo et « Accueil »
+  vers `/`, « Fait avec passion pour les entrepreneurs » remplacé par « Devis gratuit, réponse sous 48 h ouvrées ».
+- **`/accueils` redirigé (301) vers `/`**, paramètres conservés (`utm_source`) ; l'URL canonique de l'accueil était
+  déjà `/`. Les redirections internes vers `accueils` (messages après connexion, etc.) continuent de fonctionner.
+- Hors périmètre touché par nécessité, ajouts seulement : `controllers/Visiteur/Visiteur.controller.php` (deux
+  méthodes de page et le plan du site, qui y est généré) ; `models/Supervision/Audience.class.php` (nom lisible des
+  deux pages dans *Supervision → Audience*, ajout autorisé par la conversation maître).
+
+**Fichiers / zones touchés** : `config/config.php`, `index.php`, `controllers/Visiteur/Visiteur.controller.php`,
+`models/Supervision/Audience.class.php`, `inc/legal.php`, `inc/content_mentions_legales.php`, `inc/content_confidentialite.php`, `inc/partials/qui_suis_je.php`
+(nouveaux), `views/Visiteur/mentionsLegales.view.php`, `views/Visiteur/confidentialite.view.php` (nouveaux),
+`views/Visiteur/contact.view.php`, `inc/content_accueil.php` (une ligne), `inc/footer.php`, `public/CSS/theme.css`
+(section « Mission 1 » en fin de fichier), `README.md`, `docs/DECISIONS.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : `php -l` sur tous les PHP modifiés ; en local (PHP 8.3, MariaDB), Chromium à 1440x900 et 390x844 :
+mentions légales, confidentialité, contact, accueil, config vide puis remplie de valeurs fictives (fichier local non
+versionné) : repères « à compléter » et bandeau visibles puis disparus, bloc « Qui suis-je » absent puis affiché,
+ligne SIRET du pied de page absente puis affichée ; `/accueils` → 301 vers `/` (avec et sans paramètres), 404
+conservée pour une adresse inconnue, `sitemap.xml` 18 adresses puis 20 ; aucun warning PHP, aucune erreur JavaScript,
+aucun défilement horizontal ; captures relues. Après fusion de `V3` (mission 2) dans la branche : mêmes pages aux
+deux tailles, la barre fixe « Appeler / Devis gratuit » apparaît sur les pages légales et ne masque pas la fin du pied
+de page (32 px d'écart sur téléphone).
+**Référence** : PR #27 vers `V3` (branche `claude/weby-1-confiance-legal`)
+**Suites** : voir « Identité légale et « Qui suis-je » » dans les points en suspens.
 
 ---
 
