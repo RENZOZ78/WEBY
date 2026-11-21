@@ -34,8 +34,8 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       c'est vide, les pages légales affichent « à compléter » et le bloc reste masqué. Relire la politique de
       confidentialité (durée de conservation des demandes de contact à décider) ; le téléphone de l'hébergeur n'est
       pas publié par Hostinger (clé `hebergeur_telephone` vide). Hors périmètre, à reprendre : liens `accueils` du menu
-      (`inc/header.php`), de la page d'erreur et des redirections internes (ils passent par la redirection 301) ; nom
-      lisible des deux pages dans *Supervision → Audience* (`Audience::PAGES`) ; polices et bibliothèques chargées
+      (`inc/header.php`), de la page d'erreur et des redirections internes (ils passent par la redirection 301) ;
+      polices et bibliothèques chargées
       chez Google Fonts / jsDelivr (les héberger sur le site éviterait de transmettre l'IP des visiteurs).
 - [ ] **Inscriptions de robots** (entrées du 2026-10-30) : créer un compte de test pour vérifier que le mail de
       validation arrive (il commence par « Bonjour, ») ; dire s'il faut placer le bouton *Supprimer* de *Gestion
@@ -120,10 +120,11 @@ inventer aucune donnée.
 - **`/accueils` redirigé (301) vers `/`**, paramètres conservés (`utm_source`) ; l'URL canonique de l'accueil était
   déjà `/`. Les redirections internes vers `accueils` (messages après connexion, etc.) continuent de fonctionner.
 - Hors périmètre touché par nécessité, ajouts seulement : `controllers/Visiteur/Visiteur.controller.php` (deux
-  méthodes de page et le plan du site, qui y est généré).
+  méthodes de page et le plan du site, qui y est généré) ; `models/Supervision/Audience.class.php` (nom lisible des
+  deux pages dans *Supervision → Audience*, ajout autorisé par la conversation maître).
 
 **Fichiers / zones touchés** : `config/config.php`, `index.php`, `controllers/Visiteur/Visiteur.controller.php`,
-`inc/legal.php`, `inc/content_mentions_legales.php`, `inc/content_confidentialite.php`, `inc/partials/qui_suis_je.php`
+`models/Supervision/Audience.class.php`, `inc/legal.php`, `inc/content_mentions_legales.php`, `inc/content_confidentialite.php`, `inc/partials/qui_suis_je.php`
 (nouveaux), `views/Visiteur/mentionsLegales.view.php`, `views/Visiteur/confidentialite.view.php` (nouveaux),
 `views/Visiteur/contact.view.php`, `inc/content_accueil.php` (une ligne), `inc/footer.php`, `public/CSS/theme.css`
 (section « Mission 1 » en fin de fichier), `README.md`, `docs/DECISIONS.md`, `docs/CONTEXTE_ACTIF.md`
