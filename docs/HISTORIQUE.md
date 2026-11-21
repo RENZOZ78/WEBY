@@ -133,7 +133,7 @@ aucune erreur JavaScript, aucune requête en échec, aucun défilement horizonta
 clavier, page métier ouverte avec les flèches et Entrée ; barre sur une ligne à 992, 1100 et 1280 px ; bandeau : pause,
 reprise, flèches au clavier, mouvement réduit (pas de défilement, bouton pause masqué) ; captures relues. Non testé :
 la barre avec un compte administrateur connecté (mêmes boutons, deux entrées de plus).
-**Référence** : PR de la branche `claude/weby-3-accueil-navigation`
+**Référence** : PR #28 (branche `claude/weby-3-accueil-navigation`)
 **Suites** : voir « Accueil court et menu « Votre métier » » dans les points en suspens.
 
 ---
