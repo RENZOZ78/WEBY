@@ -81,7 +81,7 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
-- [ ] **Audit design du 2026-11-21** (`.impeccable/critique/`) : à trancher par le propriétaire avant correction —
+- [ ] **Audit design du 2026-11-21** (`docs/audits/2026-11-21-audit-design.md`) : à trancher par le propriétaire avant correction —
       créer la page Mentions légales (404 aujourd'hui, obligatoire) et afficher SIRET / forme juridique ; retirer ou
       justifier les « 95 % de clients satisfaits » ; ajouter un bloc « Qui suis-je » avec photo ; bouton « Appeler »
       sur mobile ; raccourcir l'accueil (offre et prix répétés 3 fois) ; mettre les 12 métiers dans le menu ;
@@ -100,10 +100,10 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - Note : 22/32 (heuristiques de Nielsen, 2 non applicables à une vitrine) — « Acceptable ».
 - Aucun changement du site : avis seulement, corrections à décider par le propriétaire.
 
-**Fichiers / zones touchés** : `.impeccable/critique/2026-11-21T23-05-05Z__webycloudy-com.md` (rapport), cet historique
+**Fichiers / zones touchés** : `docs/audits/2026-11-21-audit-design.md` (rapport), cet historique
 **Vérifications** : 0 erreur JavaScript, 0 requête en échec, pas de défilement horizontal en 390 px ;
 `/mentions-legales` renvoie 404 ; `/accueils` répond 200 en plus de `/`
-**Référence** : PR de la branche `claude/affectionate-knuth-183v4i`
+**Référence** : PR #25
 **Suites** : voir « Audit design du 2026-11-21 » dans les points en suspens
 
 ---
