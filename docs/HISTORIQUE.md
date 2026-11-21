@@ -27,6 +27,14 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
+- [ ] **Style plus sobre** (entrée du 2026-11-21, mission 4/4) : après fusion, regarder l'accueil sur téléphone et sur
+      ordinateur (titre sur deux lignes sans trou, cycle sans étincelles, bouton « Découvrir le pack » du pack
+      Croissance en simple contour) et dire si les quatre teintes du cycle conviennent (or clair, ambre, bleu ciel, bleu
+      glacier). Restent à faire hors CSS, par la conversation maître ou une autre mission : retirer de `main.js`
+      l'inclinaison 3D des cartes (`.tilt`, neutralisée en CSS), ajouter un vrai bouton pause au bandeau défilant
+      (`inc/header.php`, aujourd'hui pause au survol ou au toucher seulement), remplacer dans `inc/partials/cycle.php`
+      les couleurs d'arc `$couleursArc` par celles de la charte (`#f3c868`, `#f0a868`, `#8fc4ea`, `#c9d6f5`), décider du
+      sort des sur-titres en capitales et des chiffres 01–04 des solutions (signalés par le détecteur, liés au balisage).
 - [ ] **Inscriptions de robots** (entrées du 2026-10-30) : créer un compte de test pour vérifier que le mail de
       validation arrive (il commence par « Bonjour, ») ; dire s'il faut placer le bouton *Supprimer* de *Gestion
       complète* sous le login (sur téléphone il est dans la dernière colonne, à faire glisser) et s'il doit pouvoir
@@ -83,6 +91,53 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
 
 ---
+
+## 2026-11-21 — Style plus sobre et lisibilité (mission 4/4 du chantier après audit design)
+
+**Demande** : garder l'identité (bleu nuit + or) mais en plus sobre, et corriger les textes difficiles à lire relevés
+par l'audit design du 2026-11-21 (PR #25). Travail en CSS uniquement, méthode Impeccable (`quieter` puis `polish`).
+
+**Réalisé** :
+- **Or en aplat, plus d'effets lumineux** : halos radiaux du hero, des sections, des packs, des cartes métier et du
+  bandeau d'appel retirés ; ombres colorées des boutons et des pastilles remplacées par une ombre neutre ; textes en
+  dégradé (mot du titre, chiffres clés, prix, numéros d'étape, code d'erreur) passés en couleur unie ; lueur du logo,
+  bordure tournante de l'offre vedette, reflet des boutons et inclinaison 3D des cartes supprimés.
+- **Palette** : le cyan vif devient un bleu ciel discret (`#8fc4ea`), le violet un bleu glacier (`#c9d6f5`), l'orange un
+  ambre plus doux (`#f09a55`). `.btn-cyan` (« Découvrir le pack », « Ajouter au projet » de l'administration) devient
+  un bouton secondaire en contour blanc : l'or reste la seule couleur d'action.
+- **Contrastes** (mesurés sur les pixels réellement affichés, 1440 et 390 px) : bouton secondaire 16,7:1 (était 2,3) ;
+  textes indicatifs du formulaire 6,9:1 (3,2) ; texte du centre du cycle 9,6:1 (3,4), « / 04 » 8,4:1 (4,0), petits
+  libellés des phases 9,3 à 14:1 (4,0 à 4,4) ; liens « Contact » et « Espace client » 13:1 (3,8 et 3,9) ; badges du hero
+  11,9:1 (4,48) ; sur-titre du hero sur téléphone 10,8 à 11,3:1 (2,5 à 3,0) ; chiffres 01–04 des solutions 5,5:1
+  (illisibles). Contour des champs et des boutons discrets porté à 40 % de blanc (3:1), pastille de compteur rose
+  foncée pour son texte blanc.
+- **Tailles** : plus aucun texte sous 12 px sur téléphone (cycle, étiquettes des cartes métier, fil de messages,
+  étapes de projet, compteurs, `code`).
+- **Focus clavier** : anneau or clair de 2 px, identique sur liens, boutons, champs, menu, accordéon et cartes
+  cliquables (12,2:1 sur le fond), à la place des anneaux bleus de Bootstrap.
+- **Titre de l'accueil** : le mot qui change occupe sa propre ligne et ne revient jamais à la ligne ; la taille du
+  titre suit la largeur de sa colonne. Le titre fait 2 lignes à toutes les largeurs (320 à 1440 px), quel que soit le
+  mot : l'écart entre le titre et le paragraphe passe d'environ 100 px à 19 px, sans saut de mise en page.
+- **Mouvement** : plus de rebond (courbe de sortie douce) ; cycle du hero calmé (une seule onde fine à l'arrivée sur
+  une phase, plus d'étincelles, de flash ni de reflet) ; bandeau défilant ralenti (90 s au lieu de 40) et en pause au
+  survol ou au toucher ; soulèvement des cartes limité à 3 px ; `prefers-reduced-motion` coupe toutes les animations
+  (0 animation active mesurée).
+- **Lecture** : paragraphes d'introduction limités à 62 caractères de large, titres équilibrés (`text-wrap`).
+- Charte graphique et décisions mises à jour (style sobre).
+
+**Fichiers / zones touchés** : `public/CSS/theme.css`, `docs/CHARTE_GRAPHIQUE.md`, `docs/DECISIONS.md`,
+`docs/audits/captures-2026-11-21-style-sobre/` (captures avant / après), `docs/HISTORIQUE.md`. Aucun fichier PHP ni
+JavaScript modifié.
+**Vérifications** : site local (PHP 8.3 + MariaDB 10.11) ; Chromium à 1440×900 et 390×844 sur l'accueil, une
+prestation, un métier, contact, connexion, tableau de bord et profil client, administration (tableau, nouveau projet),
+supervision : aucun warning PHP, aucune erreur JavaScript, aucun défilement horizontal, captures relues. Détecteur
+Impeccable avant → après : accueil 88 → 14 signaux (1440) et 81 → 13 (390), page métier 65 → 14 et 63 → 18, contact
+15 → 6 et 12 → 6 ; halos 25 → 0, ombres lumineuses 21 → 0, textes en dégradé 12 → 0, contraste 6 → 0, palette
+violet/cyan 3 → 0, rebond 1 → 0, textes trop petits 3 → 0, longueur de ligne 1 → 0. Restent les signaux liés au
+balisage (sur-titres en capitales, tuiles d'icônes, existence du bandeau défilant, police Inter de la charte).
+**Référence** : PR de la branche `claude/weby-4-style-sobre`
+**Suites** : voir « Points en suspens » (retrait du script d'inclinaison, bouton pause du bandeau, couleurs d'arc du
+cycle dans le PHP, sur-titres).
 
 ## 2026-10-30 — Demandes de spam : filtre du formulaire de contact et bouton de suppression
 
