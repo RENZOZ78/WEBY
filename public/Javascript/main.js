@@ -352,25 +352,8 @@
     });
   }
 
-  // inclinaison 3D des cartes au passage de la souris
+  // parallaxe du visuel du hero (souris uniquement)
   if (!reduit && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-    document.querySelectorAll(".tilt").forEach(function (card) {
-      if (!card.querySelector(".shine")) { var s = document.createElement("span"); s.className = "shine"; card.appendChild(s); }
-      card.addEventListener("mousemove", function (e) {
-        var r = card.getBoundingClientRect();
-        var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-        card.classList.add("is-tilting");
-        card.style.transform = "perspective(900px) rotateX(" + ((.5 - y) * 6).toFixed(2) + "deg) rotateY(" + ((x - .5) * 8).toFixed(2) + "deg) translateY(-6px)";
-        card.style.setProperty("--mx", (x * 100) + "%");
-        card.style.setProperty("--my", (y * 100) + "%");
-      });
-      card.addEventListener("mouseleave", function () {
-        card.classList.remove("is-tilting");
-        card.style.transform = "";
-      });
-    });
-
-    // parallaxe douce du visuel du hero
     var scene = document.querySelector(".hero-scene");
     if (scene) {
       var hero = scene.closest(".wc-hero");

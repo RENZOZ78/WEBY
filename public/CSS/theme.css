@@ -154,7 +154,7 @@ a { text-decoration: none; }
   background: linear-gradient(to bottom, transparent, var(--wc-bg));
 }
 .wc-hero > .container { position: relative; z-index: 1; }
-.wc-hero h1 { color: #fff; font-size: clamp(2.2rem, 4.8vw, 3.9rem); line-height: 1.08; margin-bottom: 1.2rem; }
+.wc-hero h1 { color: #fff; font-size: clamp(2rem, 4.8vw, 3.4rem); line-height: 1.08; margin-bottom: 1.2rem; } /* même échelle que le titre de l'accueil */
 .wc-hero h1 .accent { color: var(--wc-gold-2); }
 .wc-hero .lead { color: #d3d9e8; font-size: 1.15rem; max-width: 36rem; }
 .wc-hero.hero-compact { padding: 7.5rem 0 3rem; }
@@ -470,6 +470,8 @@ a { text-decoration: none; }
   opacity: 0; pointer-events: none; transform: translateY(10px); transition: opacity .25s ease, transform .25s ease;
 }
 .back-top.show { opacity: 1; pointer-events: auto; transform: none; }
+/* téléphone : le bas du pied de page (copyright, forme juridique, SIRET) s'arrête au-dessus du bouton « retour en haut » */
+@media (max-width: 767.98px) { .wc-footer { padding-bottom: calc(1.2rem + 46px + 1rem); } }
 
 /* ---------- Accessibilité ---------- */
 .skip-link { position: absolute; left: -9999px; top: 0; z-index: 2000; background: #fff; color: #0b1630; padding: .6rem 1rem; border-radius: 8px; }
@@ -510,7 +512,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 }
 .rotating > span.on { opacity: 1; visibility: visible; transform: none; transition: opacity .35s ease, transform .35s var(--wc-ease), visibility 0s; }
 .wc-hero .row > div:has(> h1 .rotating) { container-type: inline-size; }
-.wc-hero h1:has(.rotating) { font-size: min(clamp(2rem, 4.8vw, 3.9rem), 8.6cqw); }
+.wc-hero h1:has(.rotating) { font-size: min(clamp(2rem, 4.8vw, 3.4rem), 8.6cqw); }
 @supports not (width: 1cqw) { .rotating > span { white-space: normal; } }
 
 /* visuel du hero des pages prestations : photo + cartes flottantes */
@@ -667,11 +669,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .pack-card:hover .pack-bg img { opacity: .3; transform: scale(1.02); }
 .pack-card > *:not(.pack-bg) { position: relative; z-index: 1; }
 
-/* cartes .tilt : plus d'inclinaison 3D ni de reflet au survol (main.js pose encore une transformation en ligne,
-   neutralisée ici) ; le survol se lit par l'ombre et la bordure */
-.tilt, .tilt.is-tilting { transform: none !important; transition: box-shadow .25s ease, border-color .25s ease; }
-.tilt .shine { display: none; }
-
 /* compteurs */
 .stat-tile .val { font-variant-numeric: tabular-nums; }
 
@@ -794,9 +791,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .legal-fiche .chiffres { font-variant-numeric: tabular-nums; }
 
 /* valeur obligatoire non renseignée : doit sauter aux yeux */
-.a-completer { display: inline-flex; align-items: center; gap: .45rem; padding: .15rem .6rem; border: 1px dashed var(--wc-orange); border-radius: 8px; background: rgba(255, 138, 61, .16); color: #ffd9bf; font-weight: 600; font-size: .95em; }
+.a-completer { display: inline-flex; align-items: center; gap: .45rem; padding: .15rem .6rem; border: 1px dashed var(--wc-orange); border-radius: 8px; background: rgba(240, 154, 85, .16); color: #ffd9bf; font-weight: 600; font-size: .95em; }
 .a-completer i { color: var(--wc-orange); font-size: .85em; }
-.legal-alerte { display: flex; gap: 1rem; margin: 0 auto 3rem; max-width: 60.5rem; padding: 1.25rem 1.4rem; border: 1px solid var(--wc-orange); border-radius: var(--wc-radius-sm); background: rgba(255, 138, 61, .12); color: #ffe6d4; }
+.legal-alerte { display: flex; gap: 1rem; margin: 0 auto 3rem; max-width: 60.5rem; padding: 1.25rem 1.4rem; border: 1px solid var(--wc-orange); border-radius: var(--wc-radius-sm); background: rgba(240, 154, 85, .12); color: #ffe6d4; }
 .legal-alerte > i { color: var(--wc-orange); font-size: 1.3rem; margin-top: .15rem; }
 .legal-alerte strong { display: block; color: #fff; font-size: 1.08rem; }
 .legal-alerte p { margin: .3rem 0 .5rem; line-height: 1.6; }
@@ -838,7 +835,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .btn-tel { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
 
 /* haut de l'accueil : lien discret vers les packs, sous les deux boutons */
-.hero-lien { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.25rem; padding: .35rem 0; color: rgba(255, 255, 255, .82); font-weight: 500; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .35); text-underline-offset: .3em; }
+.hero-lien { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.25rem; padding: .35rem 0; color: #d3d9e8; font-weight: 500; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .45); text-underline-offset: .3em; }
 .hero-lien:hover, .hero-lien:focus-visible { color: var(--wc-gold-2); text-decoration-color: currentColor; }
 .hero-lien i { font-size: .8em; }
 
@@ -863,7 +860,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   .barre-mobile .btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 48px; padding: .5rem .75rem; white-space: nowrap; box-shadow: none; }
   .barre-mobile .btn:hover, .barre-mobile .btn:focus { transform: none; }
   /* la barre ne recouvre ni le bas du pied de page ni le bouton « retour en haut » */
-  .barre-mobile ~ .wc-footer { padding-bottom: calc(2rem + var(--wc-barre-mobile) + env(safe-area-inset-bottom, 0px)); }
+  .barre-mobile ~ .wc-footer { padding-bottom: calc(1.2rem + 46px + 1rem + var(--wc-barre-mobile) + env(safe-area-inset-bottom, 0px)); } /* + la hauteur du bouton « retour en haut » */
   .barre-mobile ~ .back-top { bottom: calc(1.2rem + var(--wc-barre-mobile) + env(safe-area-inset-bottom, 0px)); }
   /* pendant la saisie (clavier ouvert), la barre s'efface pour laisser voir le formulaire et son bouton d'envoi */
   body:has(.form-control:focus) .barre-mobile { display: none; }

@@ -9,7 +9,7 @@
     ["Gestion", "cyan", "fa-folder-open", ["Devis & factures", "Paie & RH"], "Gérer en toute sérénité", "Administratif, paie et RH\u{00A0}: nous gérons, vous validez.", "prestations/gestion"],
     ["Performance", "violet", "fa-chart-line", ["Stratégie marketing", "Acquisition clients"], "Accélérer votre essor", "Vendre plus, et plus cher, avec méthode.", "prestations/marketing"],
   ];
-  $couleursArc = ["or" => "#f3c868", "orange" => "#ff8a3d", "cyan" => "#3fd0ff", "violet" => "#8b5cf6"];
+  $couleursArc = ["or" => "#f3c868", "orange" => "#f0a868", "cyan" => "#8fc4ea", "violet" => "#c9d6f5"]; // teintes de la charte (style sobre)
   $nbEtapes = count($etapesCycle);
   $depart = -45; // première étape en haut à gauche : le cycle se lit comme une page
   $rayon = 40; // rayon du cercle des étapes, en % du côté du visuel

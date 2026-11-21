@@ -30,11 +30,9 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Style plus sobre** (entrée du 2026-11-21, mission 4/4) : après fusion, regarder l'accueil sur téléphone et sur
       ordinateur (titre sur deux lignes sans trou, cycle sans étincelles, bouton « Découvrir le pack » du pack
       Croissance en simple contour) et dire si les quatre teintes du cycle conviennent (or clair, ambre, bleu ciel, bleu
-      glacier). Restent à faire hors CSS, par la conversation maître ou une autre mission : retirer de `main.js`
-      l'inclinaison 3D des cartes (`.tilt`, neutralisée en CSS), ajouter un vrai bouton pause au bandeau défilant
-      (`inc/header.php`, aujourd'hui pause au survol ou au toucher seulement), remplacer dans `inc/partials/cycle.php`
-      les couleurs d'arc `$couleursArc` par celles de la charte (`#f3c868`, `#f0a868`, `#8fc4ea`, `#c9d6f5`), décider du
-      sort des sur-titres en capitales et des chiffres 01–04 des solutions (signalés par le détecteur, liés au balisage).
+      glacier). Restent à décider : un vrai bouton pause pour le bandeau défilant du haut d'accueil (`inc/header.php`,
+      aujourd'hui pause au survol ou au toucher seulement), le sort des sur-titres en capitales et des chiffres 01–04
+      des solutions (signalés par le détecteur, liés au balisage).
 - [ ] **Identité légale et « Qui suis-je »** (entrée du 2026-11-21, PR #27 vers `V3`) : avant la mise en ligne de la V3, renseigner dans
       `config/config.php` : `legal_nom`, `legal_forme`, `legal_siret`, `legal_adresse`, `legal_responsable` (et, selon le
       statut, `legal_capital`, `legal_rcs`, `legal_tva`) ; pour le bloc « Qui suis-je » : `qui_prenom`, `qui_texte`,
@@ -148,21 +146,29 @@ par l'audit design du 2026-11-21 (PR #25). Travail en CSS uniquement, méthode I
   survol ou au toucher ; soulèvement des cartes limité à 3 px ; `prefers-reduced-motion` coupe toutes les animations
   (0 animation active mesurée).
 - **Lecture** : paragraphes d'introduction limités à 62 caractères de large, titres équilibrés (`text-wrap`).
+- **Après fusion de `V3`** (missions 1 à 3) : sections CSS des trois missions harmonisées (ambre de la charte, lien
+  « Découvrir nos packs ») ; script d'inclinaison 3D des cartes retiré de `main.js` ; couleurs des arcs du cycle
+  alignées sur la charte dans `inc/partials/cycle.php` ; titres des autres pages ramenés à la même échelle que celui
+  de l'accueil (3,4 rem au plus au lieu de 3,9) ; sur téléphone, le bas du pied de page (copyright, forme juridique,
+  SIRET) s'arrête 16 px au-dessus du bouton « retour en haut » au lieu de passer dessous.
 - Charte graphique et décisions mises à jour (style sobre).
 
 **Fichiers / zones touchés** : `public/CSS/theme.css`, `docs/CHARTE_GRAPHIQUE.md`, `docs/DECISIONS.md`,
-`docs/audits/captures-2026-11-21-style-sobre/` (captures avant / après), `docs/HISTORIQUE.md`. Aucun fichier PHP ni
-JavaScript modifié.
-**Vérifications** : site local (PHP 8.3 + MariaDB 10.11) ; Chromium à 1440×900 et 390×844 sur l'accueil, une
-prestation, un métier, contact, connexion, tableau de bord et profil client, administration (tableau, nouveau projet),
-supervision : aucun warning PHP, aucune erreur JavaScript, aucun défilement horizontal, captures relues. Détecteur
-Impeccable avant → après : accueil 88 → 14 signaux (1440) et 81 → 13 (390), page métier 65 → 14 et 63 → 18, contact
-15 → 6 et 12 → 6 ; halos 25 → 0, ombres lumineuses 21 → 0, textes en dégradé 12 → 0, contraste 6 → 0, palette
-violet/cyan 3 → 0, rebond 1 → 0, textes trop petits 3 → 0, longueur de ligne 1 → 0. Restent les signaux liés au
-balisage (sur-titres en capitales, tuiles d'icônes, existence du bandeau défilant, police Inter de la charte).
-**Référence** : PR #29 (branche `claude/weby-4-style-sobre`)
-**Suites** : voir « Points en suspens » (retrait du script d'inclinaison, bouton pause du bandeau, couleurs d'arc du
-cycle dans le PHP, sur-titres).
+`docs/audits/captures-2026-11-21-style-sobre/` (captures avant / après), `docs/HISTORIQUE.md` ; après fusion de `V3`,
+à la demande de la conversation maître : `public/Javascript/main.js` (retrait de l'inclinaison), `inc/partials/cycle.php`
+(couleurs des arcs).
+**Vérifications** : `php -l` et `node --check` sur les fichiers modifiés ; site local (PHP 8.3 + MariaDB 10.11) sur la
+`V3` assemblée ; Chromium à 1440×900 et 390×844 sur l'accueil, une prestation, un métier, contact, mentions légales,
+confidentialité, connexion, tableau de bord et profil client, administration (tableau, nouveau projet), supervision :
+aucun warning PHP, aucune erreur JavaScript, aucun défilement horizontal, captures relues. 166 mesures de contraste
+conformes (pixels réellement affichés), aucun texte sous 12 px. Détecteur Impeccable, `V3` avant → après, sur 6 pages
+et 2 largeurs : 296 → 78 signaux (accueil 68 → 8 à 1440 et 60 → 7 à 390 ; métier 36 → 13 et 39 → 17 ; prestation
+24 → 7 et 22 → 7 ; contact 14 → 5 et 11 → 5 ; mentions légales 5 → 2 et 5 → 3 ; connexion 6 → 2) ; halos 60 → 0,
+ombres lumineuses 57 → 0, textes en dégradé 32 → 0, contraste 20 → 0, palette violet/cyan 10 → 0, rebond 2 → 0, textes
+trop petits 3 → 0, longueur de ligne 1 → 0. Restent les signaux liés au balisage (sur-titres en capitales, tuiles
+d'icônes, bandeau défilant, police Inter de la charte).
+**Référence** : PR #29 vers `V3` (branche `claude/weby-4-style-sobre`)
+**Suites** : voir « Points en suspens » (bouton pause du bandeau du haut d'accueil, sur-titres).
 
 ## 2026-11-21 — Accueil plus court et navigation des métiers (mission 3 du chantier design)
 
