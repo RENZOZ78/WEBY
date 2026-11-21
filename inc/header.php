@@ -13,7 +13,7 @@
 <!-- Navigation ---------------------------------------->
 <nav class="navbar navbar-expand-lg wc-nav<?= $estCompact ? ' nav-solid' : '' ?>" id="main-nav" aria-label="Navigation principale">
   <div class="container">
-    <a href="<?= URL ?>accueils" class="navbar-brand">
+    <a href="<?= URL ?>" class="navbar-brand" aria-label="WebyCloudy, retour à l'accueil">
       <img src="<?= URL ?>public/Assets/images/accueil/logo_aigle.svg" alt="" width="58" height="47">
       <span class="brand-text">Weby<span>Cloudy</span></span>
     </a>
@@ -25,13 +25,13 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
         <li class="nav-item">
-          <a href="<?= URL ?>accueils" class="nav-link<?= $actif(["accueils", ""]) ?>">Accueil</a>
+          <a href="<?= URL ?>" class="nav-link<?= $actif(["accueils", ""]) ?>"<?= $actif(["accueils", ""]) ? ' aria-current="page"' : '' ?>>Accueil</a>
         </li>
 
         <!-- deroulant prestations -->
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle<?= $actif("prestations") ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">Prestations</a>
-          <ul class="dropdown-menu">
+          <button type="button" class="nav-link dropdown-toggle<?= $actif("prestations") ?>" id="menu-prestations" data-bs-toggle="dropdown" aria-expanded="false">Prestations</button>
+          <ul class="dropdown-menu" aria-labelledby="menu-prestations">
             <li><h6 class="dropdown-header text-uppercase small" style="color:var(--wc-gold-2)">Lancement &amp; financement</h6></li>
             <li><a class="dropdown-item" href="<?= URL ?>prestations/lancement"><i class="fas fa-rocket"></i>Business plan &amp; création de société</a></li>
             <li><hr class="dropdown-divider"></li>
@@ -39,6 +39,16 @@
             <li><a class="dropdown-item" href="<?= URL ?>prestations/gestion"><i class="fas fa-folder-open"></i>Gestion &amp; administratif</a></li>
             <li><a class="dropdown-item" href="<?= URL ?>prestations/sites"><i class="fas fa-laptop-code"></i>Site internet</a></li>
             <li><a class="dropdown-item" href="<?= URL ?>prestations/marketing"><i class="fas fa-bullhorn"></i>Marketing &amp; croissance</a></li>
+          </ul>
+        </li>
+
+        <!-- deroulant metiers : une page par metier (donnees : inc/secteurs.php) -->
+        <li class="nav-item dropdown">
+          <button type="button" class="nav-link dropdown-toggle<?= $actif("secteurs") ?>" id="menu-secteurs" data-bs-toggle="dropdown" aria-expanded="false">Votre métier</button>
+          <ul class="dropdown-menu menu-metiers" aria-labelledby="menu-secteurs">
+            <?php foreach(require "inc/secteurs.php" as $slugMenu => $metierMenu) : ?>
+              <li><a class="dropdown-item<?= $page_courante === "secteurs/".$slugMenu ? ' active' : '' ?>" href="<?= URL ?>secteurs/<?= $slugMenu ?>"<?= $page_courante === "secteurs/".$slugMenu ? ' aria-current="page"' : '' ?>><i class="fas <?= $metierMenu['icone'] ?>" aria-hidden="true"></i><?= $metierMenu['nom'] ?></a></li>
+            <?php endforeach; ?>
           </ul>
         </li>
 
@@ -56,8 +66,8 @@
         <!-- espace administration -->
         <?php if($estAdmin) : ?>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle<?= $actif("administration") ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administration</a>
-            <ul class="dropdown-menu dropdown-menu-end">
+            <button type="button" class="nav-link dropdown-toggle<?= $actif("administration") ?>" id="menu-administration" data-bs-toggle="dropdown" aria-expanded="false">Administration</button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menu-administration">
               <li><a class="dropdown-item" href="<?= URL ?>administration/tableau"><i class="fas fa-gauge-high"></i>Tableau de bord</a></li>
               <li><a class="dropdown-item" href="<?= URL ?>administration/demandes"><i class="fas fa-inbox"></i>Demandes</a></li>
               <li><a class="dropdown-item" href="<?= URL ?>administration/projets"><i class="fas fa-diagram-project"></i>Projets</a></li>
@@ -77,10 +87,10 @@
           </li>
         <?php else : ?>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle<?= $actif("compte") ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="nav-link dropdown-toggle<?= $actif("compte") ?>" id="menu-compte" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="far fa-user me-1"></i><?= $_SESSION['profil']['login'] ?>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menu-compte">
               <li><a class="dropdown-item" href="<?= URL ?>compte/tableau"><i class="fas fa-gauge-high"></i>Mon espace</a></li>
               <li><a class="dropdown-item" href="<?= URL ?>compte/projets"><i class="fas fa-diagram-project"></i>Mes projets</a></li>
               <li><a class="dropdown-item" href="<?= URL ?>compte/documents"><i class="fas fa-folder-open"></i>Mes documents</a></li>

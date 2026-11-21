@@ -841,3 +841,60 @@ a { text-decoration: none; }
   [data-aos="reveal"] { clip-path: none; }
   .stagger > * { opacity: 1; transform: none; animation: none; }
 }
+
+
+/* === Mission 3 : accueil et navigation === */
+/* Menu : les déroulants sont de vrais boutons (plus de lien vide) */
+.wc-nav button.nav-link { font: inherit; font-weight: 500; line-height: inherit; }
+.wc-nav .nav-link:focus-visible, .wc-nav .dropdown-item:focus-visible, .wc-nav .navbar-brand:focus-visible { outline: 2px solid var(--wc-gold-2); outline-offset: 2px; }
+.wc-nav .dropdown-item.active i { color: #1a1205; }
+/* Menu « Votre métier » : 12 métiers sur deux colonnes à partir de la tablette large */
+@media (min-width: 992px) {
+  .wc-nav .menu-metiers.show { display: grid; grid-template-columns: repeat(2, max-content); column-gap: .25rem; width: max-content; }
+  .wc-nav .menu-metiers .dropdown-item { white-space: nowrap; }
+}
+@media (min-width: 992px) {
+  /* une entrée de plus dans la barre : les libellés restent sur une ligne */
+  .wc-nav .nav-link, .wc-nav .nav-cta .btn { white-space: nowrap; }
+  .wc-nav .navbar-nav { flex-wrap: wrap; justify-content: flex-end; }
+}
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .wc-nav .nav-link { padding: .5rem .6rem !important; font-size: .94rem; }
+  .wc-nav .navbar-brand { font-size: 1.15rem; margin-right: .5rem; }
+}
+@media (max-width: 991.98px) {
+  /* le menu ouvert reste entièrement accessible sur téléphone : il défile dans la hauteur de l'écran */
+  .wc-nav .navbar-collapse { max-height: calc(100vh - 5.5rem); max-height: calc(100dvh - 5.5rem); overflow-y: auto; overscroll-behavior: contain; }
+  .wc-nav button.nav-link { width: 100%; text-align: left; }
+  .wc-nav .dropdown-item { padding-top: .7rem; padding-bottom: .7rem; }
+}
+
+/* Bandeau des métiers : bouton pause et aide sous les flèches */
+.secteurs-aide-ligne { text-align: center; margin-top: .75rem; }
+.secteurs-btn:focus-visible { outline: 2px solid var(--wc-gold-2); outline-offset: 2px; }
+.secteurs-pause[hidden] { display: none; }
+.secteurs-pause[aria-pressed="true"] { border-color: var(--wc-gold-2); color: var(--wc-gold-2); }
+
+/* Tarifs en lignes (accueil) : une ligne par offre, sans carte */
+.tarifs-liste { list-style: none; margin: 0 auto; padding: 0; max-width: 60rem; border-top: 1px solid var(--wc-border-strong); }
+.tarifs-liste > li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; column-gap: 2rem; row-gap: .5rem; padding: 1.15rem .25rem; border-bottom: 1px solid var(--wc-border); }
+.tarifs-liste h3 { font-size: 1.1rem; margin: 0 0 .2rem; }
+.tarifs-liste p { margin: 0; color: var(--wc-muted); font-size: .92rem; line-height: 1.5; }
+.tarif-prix { white-space: nowrap; text-align: right; color: var(--wc-muted); font-size: .9rem; font-variant-numeric: tabular-nums; }
+.tarif-prix b { font-family: var(--wc-font-title); font-size: 1.45rem; font-weight: 700; color: var(--wc-gold-2); margin-left: .25rem; }
+.tarif-actions { min-width: 8.5rem; text-align: right; }
+.tarif-actions .link-arrow { font-size: .92rem; padding: .5rem 0; }
+@media (max-width: 767.98px) {
+  .tarifs-liste > li { grid-template-columns: minmax(0, 1fr) auto; column-gap: 1rem; padding: 1rem 0; }
+  .tarif-nom { grid-column: 1 / -1; }
+  .tarif-prix { text-align: left; }
+}
+
+/* Pages métier : liens fixes vers les autres métiers */
+.metiers-liens { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: .75rem; }
+.metiers-liens a { display: flex; align-items: flex-start; gap: .85rem; height: 100%; padding: .9rem 1rem; border: 1px solid var(--wc-border); border-radius: var(--wc-radius-sm); color: var(--wc-text); transition: border-color .2s ease, background .2s ease; }
+.metiers-liens a:hover, .metiers-liens a:focus-visible { border-color: var(--wc-gold-2); background: rgba(255, 255, 255, .04); color: #fff; }
+.metiers-liens a:focus-visible { outline: 2px solid var(--wc-gold-2); outline-offset: 2px; }
+.metiers-liens i { color: var(--wc-gold-2); width: 1.4rem; text-align: center; margin-top: .25rem; flex: 0 0 auto; }
+.metiers-liens strong { display: block; font-family: var(--wc-font-title); font-weight: 600; line-height: 1.3; }
+.metiers-liens small { display: block; color: var(--wc-muted); font-size: .82rem; line-height: 1.45; margin-top: .15rem; }

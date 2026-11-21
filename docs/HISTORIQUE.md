@@ -47,6 +47,13 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       publiés pour suivre ces sources. Décider si des administrateurs doivent avoir un accès partiel à la supervision.
 - [ ] **Réalisations** : après fusion, cliquer sur « Voir le site » de Fiteos (doit ouvrir `fiteos.click`) et de
       Sweet Home BTP (doit ouvrir `sweet-home-btp.webycloudy.com`) sur webycloudy.com ; donner, s'ils existent, les noms de domaine de Delta-Immo et Magic Food Panam (encore sur Netlify).
+- [ ] **Accueil court et menu « Votre métier »** (entrée du 2026-11-21, mission 3) : relire l'accueil raccourci et dire
+      si la grille des 6 prestations ou la méthode en 4 étapes manquent ; valider la ligne de tarif « Gestion &
+      administratif — à partir de 30 € / acte RH » (prix repris de la page *Gestion*). Hors périmètre de cette mission, à
+      traiter ailleurs : bouton « Allons-y ! » de `inc/partials/cta.php`, boutons « Devis gratuit » du haut des pages
+      (`inc/header.php` hors menu, `controllers/Visiteur/Visiteur.controller.php`), redirection `secteurs` →
+      `accueils#secteurs` et autres `accueils` de `index.php`, hauteur de la section *Réalisations* sur téléphone
+      (2 178 px), liens `*.netlify.app` de Delta-Immo et Magic Food Panam (décision du propriétaire en attente).
 - [ ] **Métiers** (entrée du 2026-10-06) : relire les problématiques et solutions des 12 métiers (`inc/secteurs.php`),
       dire s'il faut ajouter ou retirer des métiers ; après fusion, tester le bandeau de l'accueil sur téléphone et
       ouvrir quelques pages `secteurs/…`.
@@ -81,6 +88,53 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+
+---
+
+## 2026-11-21 — Accueil plus court et navigation des métiers (mission 3 du chantier design)
+
+**Demande** : après l'audit design du 2026-11-21 (PR #25), raccourcir l'accueil (8 200 px sur ordinateur, 16 900 px sur
+téléphone, offre et prix présentés trois fois) et rendre les 12 pages métier accessibles depuis le menu. Méthode
+Impeccable (`distill`, `layout`), sans refonte du style.
+
+**Réalisé** :
+- **Accueil** (`inc/content_accueil.php`) : ordre = haut de page, 2 packs, **métiers** (remontés juste après les
+  packs), chiffres, réalisations, tarifs, appel à l'action, contact. Retirés de l'accueil : la **grille des
+  6 prestations** (elle répétait les packs et les tarifs, avec des photos de banque d'images, et pesait 1 456 px sur
+  ordinateur et 3 498 px sur téléphone) et la **méthode en 4 étapes** (même idée que le cycle animé du haut de page,
+  validé par le propriétaire). Aucun fichier supprimé : les partiels servent toujours aux pages prestations et métier.
+- **Tarifs de l'accueil en lignes** (`inc/partials/pricing.php`, option `"compact"`) : une ligne par offre (nom,
+  contenu, prix « à partir de », lien « Voir le détail » vers la page de la prestation) au lieu de 4 cartes ; ajout de la
+  ligne *Gestion & administratif* (30 € / acte RH, prix de la page *Gestion*) pour que les 4 pages prestations restent
+  accessibles depuis l'accueil. Les pages prestations gardent leurs cartes.
+- **Hauteur de l'accueil** : 8 215 → 6 196 px à 1440 px (−25 %) ; 16 855 → 10 858 px à 390 px (−36 %).
+- **Menu** (`inc/header.php`, bloc `<nav>`) : nouvelle entrée **« Votre métier »** (les 12 métiers, lus dans
+  `inc/secteurs.php`, sur 2 colonnes sur ordinateur, liste dans le menu mobile) ; les déroulants (*Prestations*,
+  *Votre métier*, *Administration*, compte) sont de vrais boutons (plus de `href="#"`), utilisables au clavier (Entrée,
+  flèches, Échap) ; le logo et *Accueil* pointent vers `/` et non plus `/accueils` ; page en cours signalée
+  (`aria-current`) ; le menu mobile défile s'il dépasse l'écran ; libellés sur une ligne entre 992 et 1200 px.
+- **Bandeau des métiers** (`inc/partials/secteurs.php`, `main.js`) : le message « Survolez une carte pour mettre en
+  pause » s'affichait encore sur un téléphone émulé (il dépendait de la détection du survol) : remplacé par une aide
+  unique valable partout ; ajout d'un **bouton pause / lecture** (clavier et tactile) ; flèches et cartes parcourables
+  au clavier (vérifié).
+- **Pages métier** (`inc/content_secteur.php`) : bouton « Demander un devis gratuit » sous les solutions (mène au
+  formulaire de la page) ; « C'est mon cas » est conservé comme lien de reconnaissance : il mène au formulaire de la
+  page, prérempli avec le métier et le casse-tête choisi ; en bas de page, le bandeau défilant est remplacé par des
+  **liens fixes vers les 11 autres métiers** (plus simples au clavier et au doigt, utiles au référencement).
+- **Libellé unique** « Demander un devis gratuit » sur l'accueil (packs, tarifs) et les grilles de tarifs.
+- Réalisations : liens `*.netlify.app` **non modifiés** (décision du propriétaire en attente).
+
+**Fichiers / zones touchés** : `inc/content_accueil.php`, `inc/header.php` (bloc `<nav>`), `inc/partials/secteurs.php`,
+`inc/partials/pricing.php`, `inc/content_secteur.php`, `public/Javascript/main.js` (bandeau des métiers),
+`public/CSS/theme.css` (section « Mission 3 » ajoutée en fin de fichier), `README.md`, `docs/DECISIONS.md`
+**Vérifications** : `php -l` sur les 5 fichiers PHP ; site en local (PHP 8.3, MariaDB) ; Chromium à 1440x900 et 390x844
+sur l'accueil (`/` et `/accueils`), 2 pages métier, les 4 pages prestations, contact et connexion : aucun warning PHP,
+aucune erreur JavaScript, aucune requête en échec, aucun défilement horizontal ; menu « Votre métier » ouvert au
+clavier, page métier ouverte avec les flèches et Entrée ; barre sur une ligne à 992, 1100 et 1280 px ; bandeau : pause,
+reprise, flèches au clavier, mouvement réduit (pas de défilement, bouton pause masqué) ; captures relues. Non testé :
+la barre avec un compte administrateur connecté (mêmes boutons, deux entrées de plus).
+**Référence** : PR de la branche `claude/weby-3-accueil-navigation`
+**Suites** : voir « Accueil court et menu « Votre métier » » dans les points en suspens.
 
 ---
 

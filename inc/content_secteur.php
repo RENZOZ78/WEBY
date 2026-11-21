@@ -54,6 +54,7 @@
         </div>
       <?php endforeach; ?>
     </div>
+    <p class="text-center mt-5 mb-0" data-aos="fade-up"><a href="#contact" class="btn btn-gold btn-lg">Demander un devis gratuit</a></p>
   </div>
 </section>
 
@@ -72,11 +73,26 @@
   $offre_defaut = $secteur['nom'];
   include "inc/partials/contact_form.php";
 
-  $bandeau = [
-    "kicker" => "Les autres métiers",
-    "titre" => "Nous accompagnons aussi",
-    "texte" => "Votre activité touche plusieurs domaines ? Découvrez ce que nous faisons pour les autres métiers.",
-    "exclu" => $slug,
-  ];
-  include "inc/partials/secteurs.php";
+  /* Bas de page : liens fixes vers les autres métiers (plus de bandeau défilant ici : il reste sur l'accueil).
+   * Des liens simples se parcourent au clavier et au doigt, et relient les pages métier entre elles pour Google. */
+  $autresMetiers = require "inc/secteurs.php";
+  unset($autresMetiers[$slug]);
 ?>
+<section class="section section-alt" id="autres-metiers">
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <h2>Nous accompagnons aussi</h2>
+      <p>Votre activité touche plusieurs domaines ? Voyez ce que nous faisons pour les autres métiers.</p>
+    </div>
+    <ul class="metiers-liens" data-aos="fade-up">
+      <?php foreach($autresMetiers as $slugMetier => $metier) : ?>
+        <li>
+          <a href="<?= URL ?>secteurs/<?= $slugMetier ?>">
+            <i class="fas <?= $metier['icone'] ?>" aria-hidden="true"></i>
+            <span><strong><?= $metier['nom'] ?></strong><small><?= $metier['qui'] ?></small></span>
+          </a>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+</section>
