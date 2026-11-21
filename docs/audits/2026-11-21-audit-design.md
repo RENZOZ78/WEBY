@@ -1,4 +1,3 @@
----
 # Critique Impeccable — https://webycloudy.com (2026-11-21)
 
 Method: dual-agent (A : revue design · B : détecteur + navigateur)
