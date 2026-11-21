@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="secteurs-band" data-aos="fade-up" style="--nb: <?= $nbSecteurs ?>">
+  <div class="secteurs-band" role="region" aria-label="Métiers accompagnés" data-aos="fade-up" style="--nb: <?= $nbSecteurs ?>">
     <?php for($copie = 0; $copie < 2; $copie++) : // la 2e copie sert uniquement à boucler le défilement sans coupure ?>
       <ul class="secteurs-groupe"<?= $copie ? ' aria-hidden="true" inert' : '' ?>>
         <?php foreach($listeSecteurs as $slugMetier => $metier) : ?>
@@ -44,9 +44,13 @@
 
   <div class="container">
     <div class="secteurs-controles">
-      <button type="button" class="secteurs-btn" data-sens="-1" aria-label="Métiers précédents"><i class="fas fa-arrow-left"></i></button>
-      <span class="secteurs-aide"><span class="souris">Survolez une carte pour mettre en pause</span><span class="tactile">Faites glisser pour parcourir les métiers</span></span>
-      <button type="button" class="secteurs-btn" data-sens="1" aria-label="Métiers suivants"><i class="fas fa-arrow-right"></i></button>
+      <button type="button" class="secteurs-btn" data-sens="-1" aria-label="Métiers précédents"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+      <button type="button" class="secteurs-btn secteurs-pause" aria-pressed="false" aria-label="Mettre le défilement en pause" hidden><i class="fas fa-pause" aria-hidden="true"></i></button>
+      <button type="button" class="secteurs-btn" data-sens="1" aria-label="Métiers suivants"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+    </div>
+    <?php /* une seule aide, valable à la souris, au clavier et au doigt (plus de « Survolez… » sur téléphone) */ ?>
+    <div class="secteurs-aide-ligne">
+      <span class="secteurs-aide">Faites glisser ou utilisez les flèches pour parcourir les métiers<span class="secteurs-aide-pause" hidden> ; le bouton pause arrête le défilement</span>.</span>
     </div>
   </div>
 </section>

@@ -44,7 +44,8 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
   `views/common/template.php` sur les pages visiteur uniquement
 - `public/CSS/theme.css` : thème du site ; `public/Javascript/` : scripts
 - `inc/secteurs.php` : les métiers accompagnés (problématiques, solutions, gains). Ils alimentent le bandeau défilant
-  de l'accueil (`inc/partials/secteurs.php`) et les pages `secteurs/{métier}` : ajouter un métier = ajouter une entrée
+  de l'accueil (`inc/partials/secteurs.php`), le menu « Votre métier » de la barre de navigation (`inc/header.php`),
+  les pages `secteurs/{métier}` et leurs liens « Nous accompagnons aussi » : ajouter un métier = ajouter une entrée
 - `models/Supervision/` : mesure d'audience (`Audience` : la page contient un jeton signé, `main.js` le renvoie
   à l'adresse `mesure` une fois la page affichée, puis à chaque clic sur le téléphone, le mail ou WhatsApp), journal d'activité (`Journal::ajouter()` à appeler
   pour chaque action notable), statistiques de la supervision ; vues dans `views/SuperAdministrateur/supervision/`
