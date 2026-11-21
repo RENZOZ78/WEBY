@@ -42,7 +42,7 @@ Le détail à cocher est dans « Points en suspens » de [`HISTORIQUE.md`](HISTO
 
 ## Sujets ouverts / à trancher
 
-- **Identité légale** (PR en brouillon du 2026-11-21) : le propriétaire doit fournir SIRET, forme juridique, nom du
+- **Identité légale** (PR #27 vers `V3`, en brouillon, 2026-11-21) : le propriétaire doit fournir SIRET, forme juridique, nom du
   responsable de publication, adresse, photo et texte de présentation (`config/config.php`) avant la mise en ligne
   des mentions légales, de la politique de confidentialité et du bloc « Qui suis-je ».
 - Lien entre ce site (agence, `webycloudy.com`) et la plateforme de documents IA (projet Firebase

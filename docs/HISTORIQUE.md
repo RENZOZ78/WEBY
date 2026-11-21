@@ -27,7 +27,7 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
-- [ ] **Identité légale et « Qui suis-je »** (entrée du 2026-11-21, PR en brouillon) : avant fusion, renseigner dans
+- [ ] **Identité légale et « Qui suis-je »** (entrée du 2026-11-21, PR #27 vers `V3`, en brouillon) : avant fusion, renseigner dans
       `config/config.php` : `legal_nom`, `legal_forme`, `legal_siret`, `legal_adresse`, `legal_responsable` (et, selon le
       statut, `legal_capital`, `legal_rcs`, `legal_tva`) ; pour le bloc « Qui suis-je » : `qui_prenom`, `qui_texte`,
       `qui_photo` (photo à déposer dans le dépôt, ex. `public/Assets/images/accueil/`), `qui_role` facultatif. Tant que
@@ -133,7 +133,7 @@ versionné) : repères « à compléter » et bandeau visibles puis disparus, bl
 ligne SIRET du pied de page absente puis affichée ; `/accueils` → 301 vers `/` (avec et sans paramètres), 404
 conservée pour une adresse inconnue, `sitemap.xml` 18 adresses puis 20 ; aucun warning PHP, aucune erreur JavaScript,
 aucun défilement horizontal ; captures relues.
-**Référence** : PR #27 (brouillon, branche `claude/weby-1-confiance-legal`)
+**Référence** : PR #27 vers `V3` (brouillon, branche `claude/weby-1-confiance-legal`)
 **Suites** : voir « Identité légale et « Qui suis-je » » dans les points en suspens.
 
 ---
