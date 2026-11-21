@@ -4,7 +4,7 @@
 À lire en premier, avant toute tâche ou tout conseil. Doit rester **court** (une page) : l'ancien part dans
 [`HISTORIQUE.md`](HISTORIQUE.md), les choix durables dans [`DECISIONS.md`](DECISIONS.md).
 
-Dernière mise à jour : 2026-10-30 — par Claude Code (filtre anti-spam du contact, suppression des demandes de spam)
+Dernière mise à jour : 2026-11-21 — par Claude Code (audit design, lancement de la V3 ; pages légales, « Qui suis-je », pied de page : PR #27 vers `V3`)
 
 > Ce dépôt est **public** : ne rien écrire ici de confidentiel (mots de passe, données clients, chiffres privés).
 
@@ -16,6 +16,8 @@ Dernière mise à jour : 2026-10-30 — par Claude Code (filtre anti-spam du con
   marketing & croissance), une page par métier accompagné (12 métiers, `secteurs/…`, en PR), espace client, administration, et supervision du super admin (audience, journal
   d'activité, tableau de bord personnalisable) — en PR, pas encore en ligne.
 - **Phase** : validation de la V2 après mise en ligne (sécurité des accès, mails, tarifs, contenus).
+- **V3 en préparation** (depuis le 2026-11-21) : branche `V3`, corrections de l'audit design
+  ([`audits/2026-11-21-audit-design.md`](audits/2026-11-21-audit-design.md)) réparties en 4 PR vers `V3`. `V2` reste en ligne et intacte.
 - **Charte graphique** : [`CHARTE_GRAPHIQUE.md`](CHARTE_GRAPHIQUE.md) — à suivre pour tout visuel (site, Instagram,
   Leboncoin, documents).
 
@@ -42,6 +44,9 @@ Le détail à cocher est dans « Points en suspens » de [`HISTORIQUE.md`](HISTO
 
 ## Sujets ouverts / à trancher
 
+- **Identité légale** (PR #27 vers `V3`, 2026-11-21) : le propriétaire doit fournir SIRET, forme juridique, nom du
+  responsable de publication, adresse, photo et texte de présentation (`config/config.php`) avant la mise en ligne
+  des mentions légales, de la politique de confidentialité et du bloc « Qui suis-je ».
 - Lien entre ce site (agence, `webycloudy.com`) et la plateforme de documents IA (projet Firebase
   `weby-cloudy-prod`, autre dépôt) : deux produits distincts sous le même nom — positionnement à clarifier.
 

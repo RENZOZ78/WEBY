@@ -1,7 +1,7 @@
 <?php
   /* Chiffres clés (identiques sur toutes les pages publiques) */
   $chiffres = $chiffres ?? [
-    ["95 %", "de clients satisfaits", 95, " %"],
+    ["Gratuit", "le devis et le premier échange"],
     ["48h – 7j", "livraison express"],
     ["30", "pages de business plan", 30, " pages"],
     ["2x · 3x", "paiement sans frais dès 200 €"],

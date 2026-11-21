@@ -226,7 +226,7 @@
     }, { passive: true });
 
     if (section) {
-      section.querySelectorAll(".secteurs-btn").forEach(function (btn) {
+      section.querySelectorAll(".secteurs-btn[data-sens]").forEach(function (btn) {
         btn.addEventListener("click", function () {
           var carte = groupe.querySelector("li");
           var pas = carte ? carte.offsetWidth + parseFloat(getComputedStyle(groupe).columnGap || 0) : 300;
@@ -247,10 +247,25 @@
     pos = band.scrollLeft = 1;
     if (reduit) return;
 
+    // bouton pause / lecture : arrete le defilement sans souris (clavier, ecran tactile)
+    var enPause = false;
+    var boutonPause = section && section.querySelector(".secteurs-pause");
+    if (boutonPause) {
+      boutonPause.hidden = false;
+      var aidePause = section.querySelector(".secteurs-aide-pause");
+      if (aidePause) aidePause.hidden = false;
+      boutonPause.addEventListener("click", function () {
+        enPause = !enPause;
+        boutonPause.setAttribute("aria-pressed", enPause ? "true" : "false");
+        var icone = boutonPause.querySelector("i");
+        if (icone) icone.className = enPause ? "fas fa-play" : "fas fa-pause";
+      });
+    }
+
     function image(t) {
       var dt = precedent === null ? 0 : Math.min(t - precedent, 100);
       precedent = t;
-      if (!survol && Date.now() > manuel && !band._fleche) {
+      if (!survol && !enPause && Date.now() > manuel && !band._fleche) {
         pos += vitesse * dt / 1000;
         var p = periode();
         if (p > 0 && pos >= p) pos -= p;

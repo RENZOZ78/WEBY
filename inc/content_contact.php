@@ -1,5 +1,8 @@
 <?php
+  //le titre « Parlons de votre projet » est deja en haut de la page : pas de second titre au-dessus du formulaire
+  $contact_sans_titre = true;
   include "inc/partials/contact_form.php";
+  unset($contact_sans_titre);
 
   $features = [
     "kicker" => "Nos garanties",

@@ -35,6 +35,20 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       (`inc/header.php`, aujourd'hui pause au survol ou au toucher seulement), remplacer dans `inc/partials/cycle.php`
       les couleurs d'arc `$couleursArc` par celles de la charte (`#f3c868`, `#f0a868`, `#8fc4ea`, `#c9d6f5`), décider du
       sort des sur-titres en capitales et des chiffres 01–04 des solutions (signalés par le détecteur, liés au balisage).
+- [ ] **Identité légale et « Qui suis-je »** (entrée du 2026-11-21, PR #27 vers `V3`) : avant la mise en ligne de la V3, renseigner dans
+      `config/config.php` : `legal_nom`, `legal_forme`, `legal_siret`, `legal_adresse`, `legal_responsable` (et, selon le
+      statut, `legal_capital`, `legal_rcs`, `legal_tva`) ; pour le bloc « Qui suis-je » : `qui_prenom`, `qui_texte`,
+      `qui_photo` (photo à déposer dans le dépôt, ex. `public/Assets/images/accueil/`), `qui_role` facultatif. Tant que
+      c'est vide, les pages légales affichent « à compléter » et le bloc reste masqué. Relire la politique de
+      confidentialité (durée de conservation des demandes de contact à décider) ; le téléphone de l'hébergeur n'est
+      pas publié par Hostinger (clé `hebergeur_telephone` vide). Hors périmètre, à reprendre : liens `accueils` du menu
+      (`inc/header.php`), de la page d'erreur et des redirections internes (ils passent par la redirection 301) ;
+      polices et bibliothèques chargées
+      chez Google Fonts / jsDelivr (les héberger sur le site éviterait de transmettre l'IP des visiteurs).
+- [ ] **Audit design, mission 2** (entrée du 2026-11-21) : `inc/partials/pricing.php` : bouton
+      « Demander un devis », libellé unique à appliquer (transmis à la mission 3). À confirmer par le propriétaire : « Sans engagement » sous le formulaire, et le
+      terme « Journal officiel (JO) » pour l'annonce de création (elle paraît en général dans un journal d'annonces
+      légales). Après fusion : tester la barre « Appeler / Devis gratuit » sur un vrai téléphone (iPhone compris).
 - [ ] **Inscriptions de robots** (entrées du 2026-10-30) : créer un compte de test pour vérifier que le mail de
       validation arrive (il commence par « Bonjour, ») ; dire s'il faut placer le bouton *Supprimer* de *Gestion
       complète* sous le login (sur téléphone il est dans la dernière colonne, à faire glisser) et s'il doit pouvoir
@@ -55,6 +69,12 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       publiés pour suivre ces sources. Décider si des administrateurs doivent avoir un accès partiel à la supervision.
 - [ ] **Réalisations** : après fusion, cliquer sur « Voir le site » de Fiteos (doit ouvrir `fiteos.click`) et de
       Sweet Home BTP (doit ouvrir `sweet-home-btp.webycloudy.com`) sur webycloudy.com ; donner, s'ils existent, les noms de domaine de Delta-Immo et Magic Food Panam (encore sur Netlify).
+- [ ] **Accueil court et menu « Votre métier »** (entrée du 2026-11-21, mission 3) : relire l'accueil raccourci et dire
+      si la grille des 6 prestations ou la méthode en 4 étapes manquent ; valider la ligne de tarif « Gestion &
+      administratif — à partir de 30 € / acte RH » (prix repris de la page *Gestion*). Restent hors de cette mission :
+      hauteur de la section *Réalisations* sur téléphone (2 178 px) et liens `*.netlify.app` de Delta-Immo et Magic Food
+      Panam (décision du propriétaire en attente). Le bouton de `cta.php`, les boutons du haut des pages et la
+      redirection de `/accueils` ont été traités par les missions 1 et 2 (PR #26 et #27).
 - [ ] **Métiers** (entrée du 2026-10-06) : relire les problématiques et solutions des 12 métiers (`inc/secteurs.php`),
       dire s'il faut ajouter ou retirer des métiers ; après fusion, tester le bandeau de l'accueil sur téléphone et
       ouvrir quelques pages `secteurs/…`.
@@ -89,6 +109,11 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
+- [ ] **Audit design du 2026-11-21** (`docs/audits/2026-11-21-audit-design.md`) : à trancher par le propriétaire avant correction —
+      créer la page Mentions légales (404 aujourd'hui, obligatoire) et afficher SIRET / forme juridique ; retirer ou
+      justifier les « 95 % de clients satisfaits » ; ajouter un bloc « Qui suis-je » avec photo ; bouton « Appeler »
+      sur mobile ; raccourcir l'accueil (offre et prix répétés 3 fois) ; mettre les 12 métiers dans le menu ;
+      contraste du bouton cyan (2,3:1) et des champs du formulaire ; réalisations hors `*.netlify.app`.
 
 ---
 
@@ -138,6 +163,169 @@ balisage (sur-titres en capitales, tuiles d'icônes, existence du bandeau défil
 **Référence** : PR #29 (branche `claude/weby-4-style-sobre`)
 **Suites** : voir « Points en suspens » (retrait du script d'inclinaison, bouton pause du bandeau, couleurs d'arc du
 cycle dans le PHP, sur-titres).
+
+## 2026-11-21 — Accueil plus court et navigation des métiers (mission 3 du chantier design)
+
+**Demande** : après l'audit design du 2026-11-21 (PR #25), raccourcir l'accueil (8 200 px sur ordinateur, 16 900 px sur
+téléphone, offre et prix présentés trois fois) et rendre les 12 pages métier accessibles depuis le menu. Méthode
+Impeccable (`distill`, `layout`), sans refonte du style.
+
+**Réalisé** :
+- **Accueil** (`inc/content_accueil.php`) : ordre = haut de page, 2 packs, **métiers** (remontés juste après les
+  packs), chiffres, réalisations, tarifs, appel à l'action, contact. Retirés de l'accueil : la **grille des
+  6 prestations** (elle répétait les packs et les tarifs, avec des photos de banque d'images, et pesait 1 456 px sur
+  ordinateur et 3 498 px sur téléphone) et la **méthode en 4 étapes** (même idée que le cycle animé du haut de page,
+  validé par le propriétaire). Aucun fichier supprimé : les partiels servent toujours aux pages prestations et métier.
+- **Tarifs de l'accueil en lignes** (`inc/partials/pricing.php`, option `"compact"`) : une ligne par offre (nom,
+  contenu, prix « à partir de », lien « Voir le détail » vers la page de la prestation) au lieu de 4 cartes ; ajout de la
+  ligne *Gestion & administratif* (30 € / acte RH, prix de la page *Gestion*) pour que les 4 pages prestations restent
+  accessibles depuis l'accueil. Les pages prestations gardent leurs cartes.
+- **Hauteur de l'accueil** : 8 215 → 6 196 px à 1440 px (−25 %) ; 16 855 → 10 858 px à 390 px (−36 %).
+  Après fusion de la V3 (bloc « Qui suis-je » et pied de page de la mission 1) : 6 408 px et 11 557 px.
+- **Menu** (`inc/header.php`, bloc `<nav>`) : nouvelle entrée **« Votre métier »** (les 12 métiers, lus dans
+  `inc/secteurs.php`, sur 2 colonnes sur ordinateur, liste dans le menu mobile) ; les déroulants (*Prestations*,
+  *Votre métier*, *Administration*, compte) sont de vrais boutons (plus de `href="#"`), utilisables au clavier (Entrée,
+  flèches, Échap) ; le logo et *Accueil* pointent vers `/` et non plus `/accueils` ; page en cours signalée
+  (`aria-current`) ; le menu mobile défile s'il dépasse l'écran ; libellés sur une ligne entre 992 et 1200 px.
+- **Bandeau des métiers** (`inc/partials/secteurs.php`, `main.js`) : le message « Survolez une carte pour mettre en
+  pause » s'affichait encore sur un téléphone émulé (il dépendait de la détection du survol) : remplacé par une aide
+  unique valable partout ; ajout d'un **bouton pause / lecture** (clavier et tactile) ; flèches et cartes parcourables
+  au clavier (vérifié).
+- **Pages métier** (`inc/content_secteur.php`) : bouton « Demander un devis gratuit » sous les solutions (mène au
+  formulaire de la page) ; « C'est mon cas » est conservé comme lien de reconnaissance : il mène au formulaire de la
+  page, prérempli avec le métier et le casse-tête choisi ; en bas de page, le bandeau défilant est remplacé par des
+  **liens fixes vers les 11 autres métiers** (plus simples au clavier et au doigt, utiles au référencement).
+- **Libellé unique** « Demander un devis gratuit » sur l'accueil (packs, tarifs) et les grilles de tarifs.
+- Réalisations : liens `*.netlify.app` **non modifiés** (décision du propriétaire en attente).
+
+**Fichiers / zones touchés** : `inc/content_accueil.php`, `inc/header.php` (bloc `<nav>`), `inc/partials/secteurs.php`,
+`inc/partials/pricing.php`, `inc/content_secteur.php`, `public/Javascript/main.js` (bandeau des métiers),
+`public/CSS/theme.css` (section « Mission 3 » ajoutée en fin de fichier), `README.md`, `docs/DECISIONS.md`
+**Vérifications** : `php -l` sur les 5 fichiers PHP ; site en local (PHP 8.3, MariaDB) ; Chromium à 1440x900 et 390x844
+sur l'accueil (`/` et `/accueils`), 2 pages métier, les 4 pages prestations, contact et connexion : aucun warning PHP,
+aucune erreur JavaScript, aucune requête en échec, aucun défilement horizontal ; menu « Votre métier » ouvert au
+clavier, page métier ouverte avec les flèches et Entrée ; barre sur une ligne à 992, 1100 et 1280 px ; bandeau : pause,
+reprise, flèches au clavier, mouvement réduit (pas de défilement, bouton pause masqué) ; captures relues. Après fusion
+de `V3` (missions 1 et 2) : mêmes contrôles refaits sur l'accueil, une page métier, une page prestation, le contact et
+les mentions légales ; le menu mobile ouvert s'arrête au-dessus de la barre fixe du bas (corrigé) ; pied de page avec
+les 12 métiers ; aucun lien vers `accueils`. Non testé :
+la barre avec un compte administrateur connecté (mêmes boutons, deux entrées de plus).
+**Référence** : PR #28 vers `V3` (branche `claude/weby-3-accueil-navigation`) ; rien ne part en production tant que la V3 n'est pas validée
+**Suites** : voir « Accueil court et menu « Votre métier » » dans les points en suspens.
+
+---
+
+## 2026-11-21 — Confiance : mentions légales, confidentialité, « Qui suis-je », pied de page
+
+**Demande** : mission 1/4 du chantier qui suit l'audit design (PR #25) : le site n'a ni mentions légales
+(`/mentions-legales` en 404), ni politique de confidentialité, ni identité visible. Construire la structure sans
+inventer aucune donnée.
+
+**Réalisé** :
+- **Clés d'identité légale** dans `config/config.php`, vides, à remplir par le propriétaire (`legal_*`, `qui_*`).
+  Hébergeur renseigné d'après les conditions générales de Hostinger (entité contractante pour l'Union européenne :
+  Hostinger International Limited, Larnaca, Chypre) ; Hostinger ne publie pas de téléphone : clé laissée vide.
+- **Pages `/mentions-legales` et `/confidentialite`** : chaque valeur vient de la config ; une valeur obligatoire
+  vide s'affiche « À compléter » (repère orange) avec un bandeau « Page incomplète » qui liste les clés manquantes.
+  Tant que c'est incomplet, les pages envoient `X-Robots-Tag: noindex` et ne sont pas dans `sitemap.xml` ; elles y
+  entrent seules une fois la config remplie. La politique de confidentialité décrit les traitements réels du code :
+  formulaire de contact et filtre anti-spam, espace client, journal (IP tronquée, 400 jours), mesure d'audience
+  maison (sans cookie ni IP, 400 jours), cookie de session seul, fichiers chargés chez Google Fonts et jsDelivr,
+  hébergeur, droits et CNIL.
+- **Bloc « Qui suis-je »** (`inc/partials/qui_suis_je.php`) : photo, prénom, fonction, parcours, téléphone et mail.
+  Masqué tant que prénom, texte ou photo manquent (ou que le fichier photo n'existe pas). Inclus sur la page contact
+  et sur l'accueil (une ligne avant l'appel à l'action final).
+- **Pied de page** : colonne « Métiers » (les 12 pages `secteurs/…`, lues dans `inc/secteurs.php`), liens Mentions
+  légales et Confidentialité, forme juridique et SIRET affichés seulement s'ils sont renseignés, logo et « Accueil »
+  vers `/`, « Fait avec passion pour les entrepreneurs » remplacé par « Devis gratuit, réponse sous 48 h ouvrées ».
+- **`/accueils` redirigé (301) vers `/`**, paramètres conservés (`utm_source`) ; l'URL canonique de l'accueil était
+  déjà `/`. Les redirections internes vers `accueils` (messages après connexion, etc.) continuent de fonctionner.
+- Hors périmètre touché par nécessité, ajouts seulement : `controllers/Visiteur/Visiteur.controller.php` (deux
+  méthodes de page et le plan du site, qui y est généré) ; `models/Supervision/Audience.class.php` (nom lisible des
+  deux pages dans *Supervision → Audience*, ajout autorisé par la conversation maître).
+
+**Fichiers / zones touchés** : `config/config.php`, `index.php`, `controllers/Visiteur/Visiteur.controller.php`,
+`models/Supervision/Audience.class.php`, `inc/legal.php`, `inc/content_mentions_legales.php`, `inc/content_confidentialite.php`, `inc/partials/qui_suis_je.php`
+(nouveaux), `views/Visiteur/mentionsLegales.view.php`, `views/Visiteur/confidentialite.view.php` (nouveaux),
+`views/Visiteur/contact.view.php`, `inc/content_accueil.php` (une ligne), `inc/footer.php`, `public/CSS/theme.css`
+(section « Mission 1 » en fin de fichier), `README.md`, `docs/DECISIONS.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : `php -l` sur tous les PHP modifiés ; en local (PHP 8.3, MariaDB), Chromium à 1440x900 et 390x844 :
+mentions légales, confidentialité, contact, accueil, config vide puis remplie de valeurs fictives (fichier local non
+versionné) : repères « à compléter » et bandeau visibles puis disparus, bloc « Qui suis-je » absent puis affiché,
+ligne SIRET du pied de page absente puis affichée ; `/accueils` → 301 vers `/` (avec et sans paramètres), 404
+conservée pour une adresse inconnue, `sitemap.xml` 18 adresses puis 20 ; aucun warning PHP, aucune erreur JavaScript,
+aucun défilement horizontal ; captures relues. Après fusion de `V3` (mission 2) dans la branche : mêmes pages aux
+deux tailles, la barre fixe « Appeler / Devis gratuit » apparaît sur les pages légales et ne masque pas la fin du pied
+de page (32 px d'écart sur téléphone).
+**Référence** : PR #27 vers `V3` (branche `claude/weby-1-confiance-legal`)
+**Suites** : voir « Identité légale et « Qui suis-je » » dans les points en suspens.
+
+---
+
+## 2026-11-21 — Audit design, mission 2/4 : textes et chemin vers le contact
+
+**Demande** : après l'audit design du site (PR #25, `docs/audits/2026-11-21-audit-design.md`), retirer les affirmations
+invérifiables, clarifier les textes et rendre l'appel et le devis accessibles partout, surtout sur téléphone
+(méthode Impeccable, `clarify` et `adapt`). Chantier en quatre missions menées en parallèle ; celle-ci est la 2.
+
+**Réalisé** :
+- **« 95 % » retiré** partout (haut de l'accueil, chiffres clés par défaut, pages *Lancement* et *Marketing*, y compris
+  le haut de ces deux pages, dont les textes sont dans le contrôleur), sans chiffre de remplacement : à la place, des faits déjà affichés ailleurs sur le site (devis et
+  premier échange gratuits, réponse sous 48h, paiement en 2x ou 3x sans frais dès 200 €).
+- **Haut de l'accueil** : bouton principal « Demander un devis gratuit » (vers `contact`), bouton secondaire d'appel
+  affichant le numéro (`tel:`) ; « Découvrir nos packs » devient un lien discret sous les deux boutons.
+- **Bandeau d'appel** (`cta.php`, bas des pages) : « Allons-y ! » remplacé par « Demander un devis gratuit » et un vrai
+  bouton d'appel avec le numéro, suivis des horaires.
+- **Barre fixe sur téléphone** (moins de 768 px), pages visiteur uniquement (ni connexion, ni espace client, ni
+  administration) : « Appeler » et « Devis gratuit ». Le pied de page et le bouton « retour en haut » lui laissent la
+  place ; elle s'efface pendant la saisie d'un formulaire (clavier ouvert) et respecte les zones sûres iOS. Sur la
+  page contact, « Devis gratuit » descend au formulaire au lieu de recharger la page.
+- **Clics téléphone** : les nouveaux liens `tel:` sont comptés par le suivi existant de `main.js` (aucun changement
+  de JavaScript nécessaire).
+- **Formulaire de contact** : ligne « Sans engagement · Réponse sous 48h ouvrées » sous le bouton d'envoi. Page
+  contact : le titre « Parlons de votre projet » n'apparaît plus qu'une fois (celui du haut de page).
+- **Jargon expliqué** à la première occurrence : Kbis, greffe, CMA, JO, ACRE, ARCE (*Lancement*), SEO (*Site
+  internet*), e-réputation (*Marketing*). *Gestion* : DPAE et DSN étaient déjà expliqués, rien à changer.
+- **Libellé unique** « Demander un devis gratuit » dans les fichiers de la mission, dont le bouton du haut des pages
+  métiers (« Devis gratuit » reste dans la barre de navigation et la barre fixe).
+
+**Fichiers / zones touchés** : `inc/header.php` (haut de page uniquement), `inc/partials/stats.php`,
+`inc/partials/cta.php`, `inc/partials/contact_form.php`, `inc/partials/barre_mobile.php` (nouveau),
+`inc/content_contact.php`, `inc/content_lancement.php`, `inc/content_site.php`, `inc/content_marketing.php`,
+`views/common/template.php` (une ligne), `controllers/Visiteur/Visiteur.controller.php` (textes affichés uniquement,
+aucune logique), `public/CSS/theme.css` (section « Mission 2 » ajoutée à la fin, aucune règle
+existante modifiée), `README.md`, `docs/DECISIONS.md`
+**Vérifications** : `php -l` sur chaque fichier PHP modifié ; site en local (PHP 8.3, MariaDB 10.11) ; avec Chromium
+à 1440×900 et 390×844 : accueil, contact, les quatre prestations, une page métier — aucun warning PHP, aucune erreur
+JavaScript, aucune requête en échec, aucun défilement horizontal ; captures regardées (haut de l'accueil, bandeau
+d'appel, formulaire, bas de page). Barre absente sur ordinateur et sur la page de connexion ; sur téléphone elle ne
+recouvre ni la dernière ligne du pied de page ni le bouton d'envoi, et disparaît pendant la saisie. Clic sur le
+téléphone de la barre et du bandeau : une ligne `telephone` dans `clics_contact` à chaque fois. Détecteur Impeccable :
+aucun constat sur les règles ajoutées.
+**Référence** : PR #26, branche `claude/weby-2-textes-contact` (brouillon, PR vers `V3`, la branche du chantier créée à
+partir de `V2` ; `V2` reste la production et n'est pas touchée)
+**Suites** : voir « Audit design, mission 2 » dans les points en suspens.
+
+---
+
+## 2026-11-21 — Audit design et ergonomie du site (critique Impeccable)
+
+**Demande** : vérifier le site en ligne et donner un avis.
+
+**Réalisé** :
+- Critique Impeccable (méthode pbakaus/impeccable) sur https://webycloudy.com : revue design par un agent
+  (captures 1440 et 390 px de l'accueil, d'une prestation, de deux pages métier et du contact) et analyse
+  automatique par un second agent (détecteur Impeccable sur les sources et les pages en ligne, console navigateur).
+- Note : 22/32 (heuristiques de Nielsen, 2 non applicables à une vitrine) — « Acceptable ».
+- Aucun changement du site : avis seulement, corrections à décider par le propriétaire.
+
+**Fichiers / zones touchés** : `docs/audits/2026-11-21-audit-design.md` (rapport), cet historique
+**Vérifications** : 0 erreur JavaScript, 0 requête en échec, pas de défilement horizontal en 390 px ;
+`/mentions-legales` renvoie 404 ; `/accueils` répond 200 en plus de `/`
+**Référence** : PR #25 (vers `V3`)
+**Suites** : voir « Audit design du 2026-11-21 » dans les points en suspens
+
+---
 
 ## 2026-10-30 — Demandes de spam : filtre du formulaire de contact et bouton de suppression
 

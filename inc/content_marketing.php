@@ -12,7 +12,7 @@
     ],
     "points" => [
       ["fa-magnifying-glass-chart", "Audit de votre activité", "Comment vendre plus et plus cher ? Nous analysons votre offre, vos prix, vos canaux et votre concurrence, et nous vous remettons un plan d'action."],
-      ["fa-users-viewfinder", "Acquisition clients", "Stratégies pour attirer des prospects qualifiés : réseaux sociaux, publicité Google, Facebook, Instagram et TikTok, e-réputation."],
+      ["fa-users-viewfinder", "Acquisition clients", "Stratégies pour attirer des prospects qualifiés : réseaux sociaux, publicité Google, Facebook, Instagram et TikTok, e-réputation (ce que l'on dit de vous en ligne : avis, commentaires)."],
       ["fa-palette", "Image de marque", "Identité visuelle, positionnement concurrentiel et message : une marque qui inspire confiance et qui se démarque."],
     ],
   ];
@@ -30,7 +30,7 @@
   ];
   include "inc/partials/features.php";
 
-  $chiffres = [["95 %", "de clients satisfaits"], ["48h", "pour recevoir votre devis"], ["Mensuel", "rapport de résultats dans votre espace"], ["France", "entière, visio ou RDV"]];
+  $chiffres = [["Gratuit", "le devis et le premier échange"], ["48h", "pour recevoir votre devis"], ["Mensuel", "rapport de résultats dans votre espace"], ["France", "entière, visio ou RDV"]];
   include "inc/partials/stats.php";
 
   $tarifs = [
@@ -38,7 +38,7 @@
     "texte" => "Combinez les offres selon vos objectifs. Devis gratuit.",
     "offres" => [
       ["nom" => "Audit & stratégie", "prix" => "500 €", "periode" => "", "vedette" => true, "details" => ["Audit de votre activité", "Plan d'action : vendre plus et plus cher", "Positionnement concurrentiel", "Restitution en visio"]],
-      ["nom" => "Acquisition clients", "prix" => "300 €", "periode" => "/mois", "details" => ["Réseaux sociaux animés", "Publicité Google, Meta, TikTok", "Gestion de votre e-réputation", "Rapport mensuel"]],
+      ["nom" => "Acquisition clients", "prix" => "300 €", "periode" => "/mois", "details" => ["Réseaux sociaux animés", "Publicité Google, Facebook, Instagram, TikTok", "Gestion de vos avis en ligne (e-réputation)", "Rapport mensuel"]],
       ["nom" => "Image de marque", "prix" => "Sur devis", "periode" => "", "details" => ["Logo & identité visuelle", "Charte graphique", "Supports de communication", "Message & positionnement"]],
     ],
   ];

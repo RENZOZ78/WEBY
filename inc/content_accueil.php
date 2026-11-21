@@ -22,7 +22,7 @@
           <div class="pack-prix">À partir de <b>299 €</b> le business plan · <b>200 €</b> + frais la création</div>
           <div class="d-flex flex-wrap gap-2">
             <a href="<?= URL ?>prestations/lancement" class="btn btn-gold">Découvrir le pack</a>
-            <a href="<?= URL ?>contact?offre=Pack%20Lancement" class="btn btn-ghost">Devis gratuit</a>
+            <a href="<?= URL ?>contact?offre=Pack%20Lancement" class="btn btn-ghost">Demander un devis gratuit</a>
           </div>
         </article>
       </div>
@@ -41,7 +41,7 @@
           <div class="pack-prix">RH dès <b>30 €</b> · Site dès <b>300 €</b> · Marketing dès <b>500 €</b></div>
           <div class="d-flex flex-wrap gap-2">
             <a href="<?= URL ?>prestations/marketing" class="btn btn-cyan">Découvrir le pack</a>
-            <a href="<?= URL ?>contact?offre=Pack%20Croissance" class="btn btn-ghost">Devis gratuit</a>
+            <a href="<?= URL ?>contact?offre=Pack%20Croissance" class="btn btn-ghost">Demander un devis gratuit</a>
           </div>
         </article>
       </div>
@@ -49,80 +49,35 @@
   </div>
 </section>
 
-<?php include "inc/partials/stats.php"; ?>
-
-<!-- SECTION PRESTATIONS ------------------------------->
-<?php
-  $prestations = [
-    ["fa-file-invoice", "Business plan professionnel", "Dès 299 €", "Un dossier de 30 pages : étude de marché, stratégie commerciale, prévisionnel financier sur 3 ou 5 ans, mise en page pour investisseurs.", "public/Assets/images/entreprise/BP2.png", "prestations/lancement", ""],
-    ["fa-stamp", "Création de société", "Dès 200 € + frais", "Rédaction des statuts (SASU, SARL, EURL, micro-entreprise), immatriculation au greffe, Journal officiel et aide aux aides ACRE / ARCE.", "public/Assets/images/entreprise/ent.png", "prestations/lancement", ""],
-    ["fa-folder-open", "Gestion & administratif", "RH dès 30 €", "Contrats, fiches de paie, entrées et sorties de salariés, création de devis et factures pros. À la carte, selon vos besoins.", "public/Assets/images/entreprise/bs3.png", "prestations/gestion", "cyan"],
-    ["fa-laptop-code", "Site internet professionnel", "Dès 300 €", "Site vitrine ou e-commerce moderne et responsive, référencement SEO pour être trouvé sur Google, maintenance et fluidité garanties.", "public/Assets/images/site%20internet/si2.png", "prestations/sites", "cyan"],
-    ["fa-bullhorn", "Marketing & croissance", "Dès 500 €", "Audit de votre activité, acquisition de prospects qualifiés, réseaux sociaux, publicité, identité visuelle et positionnement.", "public/Assets/images/site%20internet/rx3.png", "prestations/marketing", "cyan"],
-    ["fa-headset", "Espace client inclus", "Offert", "Suivez l'avancement de vos projets, retrouvez vos devis, factures et documents, et échangez avec nous depuis votre espace.", "public/Assets/images/site%20internet/Design%20sans%20titre.png", "creerCompte", ""],
-  ];
-?>
-<section class="section section-alt" id="prestations">
-  <div class="container">
-    <div class="section-head" data-aos="fade-up">
-      <span class="kicker">Nos prestations</span>
-      <h2>Tout ce qu'il faut pour réussir, au même endroit</h2>
-      <p>Secteurs : VTC, BTP, restauration, e-commerce, professions libérales… Nous accompagnons tous les entrepreneurs.</p>
-    </div>
-    <div class="row g-4">
-      <?php foreach($prestations as $i => $prestation) : ?>
-        <div class="col-md-6 col-xl-4" data-aos="fade-up" data-aos-delay="<?= ($i % 3) * 100 ?>">
-          <article class="service-card tilt">
-            <div class="media">
-              <div class="img-wrap"><img src="<?= URL.$prestation[4] ?>" alt="" loading="lazy"></div>
-              <span class="icon <?= $prestation[6] ?>"><i class="fas <?= $prestation[0] ?>"></i></span>
-            </div>
-            <div class="body">
-              <div class="prix"><?= $prestation[2] ?></div>
-              <h3><?= $prestation[1] ?></h3>
-              <p><?= $prestation[3] ?></p>
-              <a href="<?= URL.$prestation[5] ?>" class="link-arrow">En savoir plus <i class="fas fa-arrow-right"></i></a>
-            </div>
-          </article>
-        </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION METIERS : bandeau défilant, une page par métier ------------------------------->
+<!-- SECTION METIERS : bandeau défilant, une page par métier (juste après les packs) ------------------------------->
 <?php include "inc/partials/secteurs.php"; ?>
 
 <?php
-  $features = [
-    "kicker" => "Notre méthode",
-    "titre" => "Un accompagnement simple, en 4 étapes",
-    "texte" => "Vous nous expliquez votre projet, nous nous occupons du reste.",
-    "sombre" => true,
-    "etapes" => true,
-    "items" => [
-      ["fa-comments", "Écoute", "Un premier échange gratuit, en visio ou en rendez-vous, pour comprendre votre activité et vos objectifs."],
-      ["fa-magnifying-glass-chart", "Analyse", "Nous identifions vos besoins et vous envoyons un devis clair sous 48h."],
-      ["fa-pen-ruler", "Réalisation", "Nous réalisons votre prestation et vous suivez l'avancement depuis votre espace client."],
-      ["fa-headset", "Suivi", "Vos documents, vos demandes et notre support restent accessibles après la livraison."],
-    ],
-  ];
-  include "inc/partials/features.php";
+  include "inc/partials/stats.php";
+
+  /* Accueil volontairement court (2026-11-21) : une seule présentation de l'offre et des prix en plus des packs.
+   * - La grille des 6 prestations n'est plus affichée ici : elle répétait les packs et les tarifs ;
+   *   chaque prestation garde sa page (liens « Voir le détail » ci-dessous et menu « Prestations »).
+   * - La méthode en 4 étapes n'est plus affichée ici : le cycle animé du haut de page porte déjà cette idée.
+   * Les partiels inc/partials/features.php et pricing.php restent utilisés par les pages prestations et métier. */
 
   include "inc/partials/realisations.php";
 
   $tarifs = [
     "titre" => "Des tarifs clairs, dès le départ",
     "texte" => "Chaque projet est unique : ces prix sont indicatifs, demandez-nous un devis personnalisé.",
+    "compact" => true,
     "offres" => [
-      ["nom" => "Business plan", "prix" => "299 €", "periode" => "", "option" => "Prévisionnel financier seul dès 150 €", "details" => ["Étude de marché", "Stratégie commerciale", "Prévisionnel 3 ou 5 ans", "Mise en page investisseurs"]],
-      ["nom" => "Création de société", "prix" => "200 €", "periode" => "+ frais", "details" => ["Statuts SASU, SARL, EURL, micro", "Immatriculation & Journal officiel", "Aide ACRE / ARCE", "Livraison 48h à 7 jours"]],
-      ["nom" => "Site internet", "prix" => "300 €", "periode" => "", "vedette" => true, "details" => ["Vitrine ou e-commerce", "Responsive PC / mobile", "Référencement SEO", "Maintenance incluse"]],
-      ["nom" => "Marketing & croissance", "prix" => "500 €", "periode" => "", "details" => ["Audit de votre activité", "Acquisition clients", "Image de marque", "Réseaux sociaux & publicité"]],
+      ["nom" => "Business plan", "prix" => "299 €", "periode" => "", "lien" => "prestations/lancement", "option" => "Prévisionnel financier seul dès 150 €", "details" => ["Étude de marché", "Stratégie commerciale", "Prévisionnel 3 ou 5 ans", "Mise en page investisseurs"]],
+      ["nom" => "Création de société", "prix" => "200 €", "periode" => "+ frais", "lien" => "prestations/lancement", "details" => ["Statuts SASU, SARL, EURL, micro", "Immatriculation & Journal officiel", "Aide ACRE / ARCE", "Livraison 48h à 7 jours"]],
+      ["nom" => "Gestion & administratif", "prix" => "30 €", "periode" => "/ acte RH", "lien" => "prestations/gestion", "details" => ["Contrats de travail", "Fiches de paie", "Devis et factures pros", "À la carte"]],
+      ["nom" => "Site internet", "prix" => "300 €", "periode" => "", "lien" => "prestations/sites", "details" => ["Vitrine ou e-commerce", "Responsive PC / mobile", "Référencement SEO", "Maintenance incluse"]],
+      ["nom" => "Marketing & croissance", "prix" => "500 €", "periode" => "", "lien" => "prestations/marketing", "details" => ["Audit de votre activité", "Acquisition clients", "Image de marque", "Réseaux sociaux & publicité"]],
     ],
   ];
   include "inc/partials/pricing.php";
 
+  include "inc/partials/qui_suis_je.php";
   $cta_titre = "Appelez-nous pour transformer votre activité";
   include "inc/partials/cta.php";
 

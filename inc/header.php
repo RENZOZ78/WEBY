@@ -9,11 +9,13 @@
   $estAccueil = !empty($hero_accueil);
   $estCompact = !empty($hero_compact);
   $estAdmin = Securite::estAdministrateur() || Securite::estSuperAdministrateur();
+  $site = $site ?? require("config/config.php");
+  $telLien = "tel:".str_replace(' ', '', $site['telephone']);
 ?>
 <!-- Navigation ---------------------------------------->
 <nav class="navbar navbar-expand-lg wc-nav<?= $estCompact ? ' nav-solid' : '' ?>" id="main-nav" aria-label="Navigation principale">
   <div class="container">
-    <a href="<?= URL ?>accueils" class="navbar-brand">
+    <a href="<?= URL ?>" class="navbar-brand" aria-label="WebyCloudy, retour à l'accueil">
       <img src="<?= URL ?>public/Assets/images/accueil/logo_aigle.svg" alt="" width="58" height="47">
       <span class="brand-text">Weby<span>Cloudy</span></span>
     </a>
@@ -25,13 +27,13 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
         <li class="nav-item">
-          <a href="<?= URL ?>accueils" class="nav-link<?= $actif(["accueils", ""]) ?>">Accueil</a>
+          <a href="<?= URL ?>" class="nav-link<?= $actif(["accueils", ""]) ?>"<?= $actif(["accueils", ""]) ? ' aria-current="page"' : '' ?>>Accueil</a>
         </li>
 
         <!-- deroulant prestations -->
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle<?= $actif("prestations") ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">Prestations</a>
-          <ul class="dropdown-menu">
+          <button type="button" class="nav-link dropdown-toggle<?= $actif("prestations") ?>" id="menu-prestations" data-bs-toggle="dropdown" aria-expanded="false">Prestations</button>
+          <ul class="dropdown-menu" aria-labelledby="menu-prestations">
             <li><h6 class="dropdown-header text-uppercase small" style="color:var(--wc-gold-2)">Lancement &amp; financement</h6></li>
             <li><a class="dropdown-item" href="<?= URL ?>prestations/lancement"><i class="fas fa-rocket"></i>Business plan &amp; création de société</a></li>
             <li><hr class="dropdown-divider"></li>
@@ -39,6 +41,16 @@
             <li><a class="dropdown-item" href="<?= URL ?>prestations/gestion"><i class="fas fa-folder-open"></i>Gestion &amp; administratif</a></li>
             <li><a class="dropdown-item" href="<?= URL ?>prestations/sites"><i class="fas fa-laptop-code"></i>Site internet</a></li>
             <li><a class="dropdown-item" href="<?= URL ?>prestations/marketing"><i class="fas fa-bullhorn"></i>Marketing &amp; croissance</a></li>
+          </ul>
+        </li>
+
+        <!-- deroulant metiers : une page par metier (donnees : inc/secteurs.php) -->
+        <li class="nav-item dropdown">
+          <button type="button" class="nav-link dropdown-toggle<?= $actif("secteurs") ?>" id="menu-secteurs" data-bs-toggle="dropdown" aria-expanded="false">Votre métier</button>
+          <ul class="dropdown-menu menu-metiers" aria-labelledby="menu-secteurs">
+            <?php foreach(require "inc/secteurs.php" as $slugMenu => $metierMenu) : ?>
+              <li><a class="dropdown-item<?= $page_courante === "secteurs/".$slugMenu ? ' active' : '' ?>" href="<?= URL ?>secteurs/<?= $slugMenu ?>"<?= $page_courante === "secteurs/".$slugMenu ? ' aria-current="page"' : '' ?>><i class="fas <?= $metierMenu['icone'] ?>" aria-hidden="true"></i><?= $metierMenu['nom'] ?></a></li>
+            <?php endforeach; ?>
           </ul>
         </li>
 
@@ -56,8 +68,8 @@
         <!-- espace administration -->
         <?php if($estAdmin) : ?>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle<?= $actif("administration") ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administration</a>
-            <ul class="dropdown-menu dropdown-menu-end">
+            <button type="button" class="nav-link dropdown-toggle<?= $actif("administration") ?>" id="menu-administration" data-bs-toggle="dropdown" aria-expanded="false">Administration</button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menu-administration">
               <li><a class="dropdown-item" href="<?= URL ?>administration/tableau"><i class="fas fa-gauge-high"></i>Tableau de bord</a></li>
               <li><a class="dropdown-item" href="<?= URL ?>administration/demandes"><i class="fas fa-inbox"></i>Demandes</a></li>
               <li><a class="dropdown-item" href="<?= URL ?>administration/projets"><i class="fas fa-diagram-project"></i>Projets</a></li>
@@ -77,10 +89,10 @@
           </li>
         <?php else : ?>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle<?= $actif("compte") ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="nav-link dropdown-toggle<?= $actif("compte") ?>" id="menu-compte" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="far fa-user me-1"></i><?= $_SESSION['profil']['login'] ?>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menu-compte">
               <li><a class="dropdown-item" href="<?= URL ?>compte/tableau"><i class="fas fa-gauge-high"></i>Mon espace</a></li>
               <li><a class="dropdown-item" href="<?= URL ?>compte/projets"><i class="fas fa-diagram-project"></i>Mes projets</a></li>
               <li><a class="dropdown-item" href="<?= URL ?>compte/documents"><i class="fas fa-folder-open"></i>Mes documents</a></li>
@@ -107,13 +119,14 @@
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-lg-6" data-aos="fade-up">
-          <span class="eyebrow"><i class="fas fa-star"></i>95 % de clients satisfaits · France entière</span>
+          <span class="eyebrow">Devis gratuit · Réponse sous 48h · France entière</span>
           <h1>Lancez et développez <span class="rotating"><span class="on">votre entreprise</span><span>votre chiffre d'affaires</span><span>votre visibilité</span><span>votre société</span></span></h1>
           <p class="lead"><?= $hero_texte ?? "" ?></p>
           <div class="d-flex flex-wrap gap-3 mt-4">
-            <a href="#packs" class="btn btn-gold btn-lg">Découvrir nos packs</a>
-            <a href="<?= URL ?>contact" class="btn btn-outline-light btn-lg">Devis gratuit</a>
+            <a href="<?= URL ?>contact" class="btn btn-gold btn-lg">Demander un devis gratuit</a>
+            <a href="<?= $telLien ?>" class="btn btn-outline-light btn-lg btn-tel" aria-label="Appeler le <?= $site['telephone'] ?>"><i class="fas fa-phone" aria-hidden="true"></i><?= $site['telephone'] ?></a>
           </div>
+          <a href="#packs" class="hero-lien">Découvrir nos packs<i class="fas fa-arrow-down" aria-hidden="true"></i></a>
           <div class="hero-badges">
             <span><i class="fas fa-bolt"></i>Livraison 48h à 7 jours</span>
             <span><i class="fas fa-video"></i>Visio ou rendez-vous</span>
@@ -151,7 +164,7 @@
           <h1><?= $H1 ?></h1>
           <?php if(!empty($hero_texte)) : ?><p class="lead"><?= $hero_texte ?></p><?php endif; ?>
           <div class="d-flex flex-wrap gap-3 mt-4">
-            <?php foreach($hero_boutons ?? [["Devis gratuit", URL."contact", "btn-gold"], ["Voir les tarifs", "#tarifs", "btn-outline-light"]] as [$libelle, $lien, $classe]) : ?>
+            <?php foreach($hero_boutons ?? [["Demander un devis gratuit", URL."contact", "btn-gold"], ["Voir les tarifs", "#tarifs", "btn-outline-light"]] as [$libelle, $lien, $classe]) : ?>
               <a href="<?= $lien ?>" class="btn <?= $classe ?>"><?= $libelle ?></a>
             <?php endforeach; ?>
           </div>
