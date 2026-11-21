@@ -841,3 +841,67 @@ a { text-decoration: none; }
   [data-aos="reveal"] { clip-path: none; }
   .stagger > * { opacity: 1; transform: none; animation: none; }
 }
+
+/* === Mission 1 : pages légales, Qui suis-je, pied de page === */
+
+/* ---------- Pages légales (lecture) ---------- */
+.legal { padding-top: 3.5rem; }
+.legal-grille { display: grid; gap: 2.5rem; }
+@media (min-width: 992px) { .legal-grille { grid-template-columns: 14rem minmax(0, 42rem); gap: 4.5rem; justify-content: center; align-items: start; } }
+.legal-sommaire { border: 1px solid var(--wc-border); border-radius: var(--wc-radius-sm); background: var(--wc-bg-2); padding: 1.1rem 1.25rem; }
+@media (min-width: 992px) { .legal-sommaire { position: sticky; top: 6rem; border: 0; background: none; padding: 0; } }
+.legal-sommaire h2 { font-size: .95rem; font-weight: 600; color: var(--wc-muted); margin: 0 0 .8rem; letter-spacing: 0; }
+.legal-sommaire ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .1rem; }
+.legal-sommaire a { display: block; padding: .4rem 0; color: var(--wc-text); font-size: .95rem; }
+.legal-sommaire a:hover { color: var(--wc-gold-2); }
+.legal-texte { max-width: 42rem; font-size: 1.02rem; }
+.legal-texte > h2 { font-size: 1.45rem; margin: 3rem 0 1rem; scroll-margin-top: 6.5rem; text-wrap: balance; }
+.legal-texte p { color: #d5dbec; margin: 0 0 1rem; }
+.legal-texte .legal-chapo { font-size: 1.15rem; color: var(--wc-text); margin-bottom: 0; }
+.legal-texte a { color: var(--wc-gold-2); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+.legal-texte a:hover { color: #fff; }
+.legal-texte code, .legal-alerte code { font-size: .88em; color: var(--wc-text); background: rgba(255, 255, 255, .08); border-radius: 6px; padding: .1em .4em; }
+.legal-fiche { margin: 0 0 1.25rem; border-top: 1px solid var(--wc-border); }
+.legal-fiche > div { display: grid; gap: .15rem 1.5rem; padding: .8rem 0; border-bottom: 1px solid var(--wc-border); }
+@media (min-width: 576px) { .legal-fiche > div { grid-template-columns: 11rem minmax(0, 1fr); } }
+.legal-fiche dt { color: var(--wc-muted); font-weight: 500; font-size: .95rem; }
+.legal-fiche dd { margin: 0; color: var(--wc-text); line-height: 1.65; overflow-wrap: anywhere; }
+.legal-fiche .chiffres { font-variant-numeric: tabular-nums; }
+
+/* valeur obligatoire non renseignée : doit sauter aux yeux */
+.a-completer { display: inline-flex; align-items: center; gap: .45rem; padding: .15rem .6rem; border: 1px dashed var(--wc-orange); border-radius: 8px; background: rgba(255, 138, 61, .16); color: #ffd9bf; font-weight: 600; font-size: .95em; }
+.a-completer i { color: var(--wc-orange); font-size: .85em; }
+.legal-alerte { display: flex; gap: 1rem; margin: 0 auto 3rem; max-width: 60.5rem; padding: 1.25rem 1.4rem; border: 1px solid var(--wc-orange); border-radius: var(--wc-radius-sm); background: rgba(255, 138, 61, .12); color: #ffe6d4; }
+.legal-alerte > i { color: var(--wc-orange); font-size: 1.3rem; margin-top: .15rem; }
+.legal-alerte strong { display: block; color: #fff; font-size: 1.08rem; }
+.legal-alerte p { margin: .3rem 0 .5rem; line-height: 1.6; }
+.legal-alerte ul { margin: 0; padding-left: 1.1rem; display: grid; gap: .25rem; }
+
+/* ---------- Bloc « Qui suis-je » ---------- */
+.qui-suis-je { background: var(--wc-bg-2); border-block: 1px solid var(--wc-border); }
+.qui-grille { display: grid; gap: 2rem; max-width: 58rem; margin: 0 auto; }
+@media (min-width: 768px) { .qui-grille { grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); gap: 3.5rem; align-items: center; } }
+.qui-photo { margin: 0; max-width: 17rem; }
+.qui-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--wc-radius); border: 1px solid var(--wc-border-strong); box-shadow: var(--wc-shadow); }
+.qui-texte { max-width: 36rem; }
+.qui-texte h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); margin-bottom: .6rem; }
+.qui-texte p { color: #d5dbec; margin: 0 0 1rem; }
+.qui-texte .qui-nom { color: var(--wc-text); font-size: 1.1rem; margin-bottom: 1.1rem; }
+.qui-nom strong { font-family: var(--wc-font-title); color: var(--wc-gold-2); font-weight: 600; }
+.qui-nom span { color: var(--wc-muted); }
+.qui-nom span::before { content: "·"; margin: 0 .5rem; }
+.qui-contact { list-style: none; padding: 0; margin: 1.5rem 0; display: flex; flex-wrap: wrap; gap: .6rem 1.75rem; }
+.qui-contact a { display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; color: #fff; font-weight: 600; overflow-wrap: anywhere; }
+.qui-contact a:hover { color: var(--wc-gold-2); }
+.qui-contact i { color: var(--wc-gold-2); }
+
+/* ---------- Pied de page ---------- */
+.wc-footer .pied-metiers { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.5rem; }
+.wc-footer .pied-info { margin: 1.1rem 0 0; color: var(--wc-text); font-size: .95rem; }
+.wc-footer .pied-liens { display: flex; flex-wrap: wrap; gap: .35rem 1.75rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--wc-border); font-size: .95rem; }
+.wc-footer .pied-liens a { padding: .3rem 0; }
+.wc-footer .pied-liens + .bottom { border-top: 0; margin-top: .75rem; padding-top: 0; }
+.wc-footer .pied-legal { font-variant-numeric: tabular-nums; }
+
+/* focus clavier visible sur les éléments de cette section */
+.legal a:focus-visible, .qui-suis-je a:focus-visible, .wc-footer a:focus-visible { outline: 2px solid var(--wc-gold-2); outline-offset: 3px; border-radius: 4px; }

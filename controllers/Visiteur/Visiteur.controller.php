@@ -132,6 +132,32 @@
       ]);
     }
 
+    //ft pages legales : tant que l'identite legale (config/config.php) est incomplete, la page n'est pas proposee a Google
+    private function pageLegale($view, $titre, $description){
+      require_once "inc/legal.php";
+      if(!empty(legal_manquantes(require "config/config.php"))){
+        header("X-Robots-Tag: noindex");
+      }
+      $this->generatePageWithOptions([
+        "view" => $view,
+        "H1" => $titre,
+        "uvp"=> "Informations légales",
+        "page_description" => $description,
+        "page_title"=> "WebyCloudy | ".$titre,
+        "hero_compact" => true
+      ]);
+    }
+
+    public function mentionsLegales(){
+      $this->pageLegale("./views/Visiteur/mentionsLegales.view.php", "Mentions légales",
+        "Mentions légales du site WebyCloudy : éditeur, responsable de la publication, hébergeur.");
+    }
+
+    public function confidentialite(){
+      $this->pageLegale("./views/Visiteur/confidentialite.view.php", "Politique de confidentialité",
+        "Données personnelles collectées par le site WebyCloudy, durées de conservation, cookies et droits des personnes.");
+    }
+
     //ft qui traite le formulaire de contact : enregistre la demande puis previent l'agence par mail
     public function validation_contact($nom, $mail, $message, $sujet, $ouverture){
       $config = require("config/config.php");
@@ -192,6 +218,12 @@
       $pages = ["", "prestations/lancement", "prestations/gestion", "prestations/sites", "prestations/marketing", "contact"];
       foreach(array_keys(require "inc/secteurs.php") as $slug){
         $pages[] = "secteurs/".$slug;
+      }
+      //pages legales : seulement quand l'identite legale est complete (sinon elles affichent « à compléter »)
+      require_once "inc/legal.php";
+      if(empty(legal_manquantes($site))){
+        $pages[] = "mentions-legales";
+        $pages[] = "confidentialite";
       }
       header("Content-Type: application/xml; charset=UTF-8");
       echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";

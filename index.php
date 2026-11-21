@@ -49,6 +49,13 @@
       //premier lancement : creation des tables et du compte administrateur
       Installation::verifier();
 
+      //l'accueil n'a qu'une adresse : /accueils (contenu en double de /) est redirige vers /, parametres conserves
+      if(trim((string)($_GET['page'] ?? ""), "/") === "accueils" && in_array($_SERVER['REQUEST_METHOD'], ["GET", "HEAD"], true)){
+        $parametres = $_GET;
+        unset($parametres['page']);
+        redirectionPermanente(empty($parametres) ? "" : "?".http_build_query($parametres));
+      }
+
       //decoupage de l'url
       $url = [];
       if(empty($_GET['page'])){
@@ -123,6 +130,12 @@
 
         case "contact":
           $visiteurController->contact();
+          break;
+        case "mentions-legales":
+          $visiteurController->mentionsLegales();
+          break;
+        case "confidentialite":
+          $visiteurController->confidentialite();
           break;
         case "validation_contact":
           //champ piège invisible : rempli uniquement par les robots
