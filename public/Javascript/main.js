@@ -352,6 +352,16 @@
     });
   }
 
+  // barre fixe du telephone (Appeler / Devis gratuit) : retiree tant que le formulaire de contact est a l'ecran,
+  // pour ne jamais recouvrir un champ ni le bouton d'envoi ; elle revient quand le formulaire sort de l'ecran
+  var barreMobile = document.querySelector(".barre-mobile");
+  var formulaireContact = document.querySelector("#contact form");
+  if (barreMobile && formulaireContact && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      barreMobile.classList.toggle("barre-masquee", entries[entries.length - 1].isIntersecting);
+    }).observe(formulaireContact);
+  }
+
   // parallaxe du visuel du hero (souris uniquement)
   if (!reduit && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     var scene = document.querySelector(".hero-scene");
