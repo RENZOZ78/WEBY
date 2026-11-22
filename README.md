@@ -33,10 +33,10 @@ En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
   page publique (`site_url` dans `config/config.php`) et met `noindex` sur les erreurs, la connexion et les espaces privés
 - `controllers/`, `models/`, `views/` : MVC par rôle (Visiteur, Utilisateur, Administrateur, SuperAdministrateur)
 - `config/config.php` : outre le téléphone et les horaires, l'identité légale de l'éditeur (`legal_*`), l'hébergeur
-  (`hebergeur_*`) et le bloc « Qui suis-je » (`qui_*`). Les pages `mentions-legales` et `confidentialite`
+  (`hebergeur_*`) et le bloc de présentation « Qui sommes-nous ? » (`qui_*`, titre réglable par `qui_titre`). Les pages `mentions-legales` et `confidentialite`
   (`inc/content_mentions_legales.php`, `inc/content_confidentialite.php`, outils dans `inc/legal.php`) affichent
   « à compléter » tant qu'une valeur obligatoire est vide (et restent hors de Google et du plan du site) ; le bloc
-  `inc/partials/qui_suis_je.php` (contact, accueil) reste masqué tant que prénom, texte ou photo manquent.
+  `inc/partials/qui_suis_je.php` (contact, accueil) reste masqué tant que le texte ou la photo manquent (le nom et la fonction sont facultatifs).
   La politique de confidentialité décrit les traitements du code : la mettre à jour si une collecte change
 - `inc/footer.php` : pied de page (prestations, les 12 métiers de `inc/secteurs.php`, liens légaux, SIRET si renseigné)
 - `inc/content_*.php` : contenu des pages publiques ; `inc/partials/` : sections réutilisables (tarifs, réalisations, contact, cycle animé du hero de l'accueil…) ;

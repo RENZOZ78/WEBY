@@ -1,13 +1,15 @@
 <?php
-  /* Bloc « Qui suis-je » : photo, prénom, parcours, contact direct.
-   * Données : config/config.php (qui_prenom, qui_role, qui_texte, qui_photo).
-   * Le bloc ne s'affiche PAS tant que le prénom, le texte ou la photo manquent (ou que le fichier photo n'existe pas).
+  /* Bloc de présentation (« Qui sommes-nous ? ») : photo ou avatar, texte, contact direct.
+   * Données : config/config.php (qui_titre, qui_prenom, qui_role, qui_texte, qui_photo).
+   * Le bloc ne s'affiche PAS tant que le texte ou la photo manquent (ou que le fichier photo n'existe pas).
+   * Le nom (qui_prenom) et la fonction (qui_role) sont facultatifs.
    * $qui_sur_contact = true : inclus sur la page contact (pas de bouton vers le formulaire, déjà au-dessus). */
   $site = $site ?? require("config/config.php");
   $quiPrenom = trim((string)($site['qui_prenom'] ?? ""));
   $quiTexte = trim((string)($site['qui_texte'] ?? ""));
   $quiPhoto = ltrim(trim((string)($site['qui_photo'] ?? "")), "/");
-  if($quiPrenom !== "" && $quiTexte !== "" && $quiPhoto !== "" && is_file($quiPhoto)) :
+  $quiTitre = trim((string)($site['qui_titre'] ?? "")) ?: "Qui sommes-nous ?";
+  if($quiTexte !== "" && $quiPhoto !== "" && is_file($quiPhoto)) :
     $quiRole = trim((string)($site['qui_role'] ?? ""));
     $quiTaille = @getimagesize($quiPhoto);
     $quiParagraphes = preg_split('/\R\s*\R/', $quiTexte);
@@ -16,15 +18,17 @@
   <div class="container">
     <div class="qui-grille">
       <figure class="qui-photo">
-        <img src="<?= URL.htmlspecialchars(str_replace(' ', '%20', $quiPhoto)) ?>" alt="Portrait de <?= htmlspecialchars($quiPrenom) ?>"<?= $quiTaille ? ' '.$quiTaille[3] : '' ?> loading="lazy">
+        <img src="<?= URL.htmlspecialchars(str_replace(' ', '%20', $quiPhoto)) ?>" alt="<?= $quiPrenom !== "" ? "Portrait de ".htmlspecialchars($quiPrenom) : "L'équipe WebyCloudy" ?>"<?= $quiTaille ? ' '.$quiTaille[3] : '' ?> loading="lazy">
       </figure>
       <div class="qui-texte">
-        <h2 id="qui-suis-je-titre">Qui suis-je ?</h2>
-        <p class="qui-nom"><strong><?= htmlspecialchars($quiPrenom) ?></strong><?php if($quiRole !== "") : ?><span><?= htmlspecialchars($quiRole) ?></span><?php endif; ?></p>
+        <h2 id="qui-suis-je-titre"><?= htmlspecialchars($quiTitre) ?></h2>
+        <?php if($quiPrenom !== "") : ?>
+          <p class="qui-nom"><strong><?= htmlspecialchars($quiPrenom) ?></strong><?php if($quiRole !== "") : ?><span><?= htmlspecialchars($quiRole) ?></span><?php endif; ?></p>
+        <?php endif; ?>
         <?php foreach($quiParagraphes as $paragraphe) : ?>
           <p><?= nl2br(htmlspecialchars(trim($paragraphe))) ?></p>
         <?php endforeach; ?>
-        <ul class="qui-contact" aria-label="Me joindre directement">
+        <ul class="qui-contact" aria-label="Nous joindre directement">
           <li><a href="tel:<?= str_replace(' ', '', htmlspecialchars($site['telephone'])) ?>"><i class="fas fa-phone" aria-hidden="true"></i><?= htmlspecialchars($site['telephone']) ?></a></li>
           <li><a href="mailto:<?= htmlspecialchars($site['mail_contact']) ?>"><i class="fas fa-envelope" aria-hidden="true"></i><?= htmlspecialchars($site['mail_contact']) ?></a></li>
         </ul>

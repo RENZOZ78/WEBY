@@ -27,8 +27,8 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
-- [ ] **Mise en ligne de la V3** (entrée du 2026-11-22) : 1) le propriétaire remplit `legal_*` et `qui_*` dans
-      `config/config.php` et dépose sa photo ; 2) il confirme « Sans engagement » (sous le bouton d'envoi),
+- [ ] **Mise en ligne de la V3** (entrée du 2026-11-22) : 1) le propriétaire fournit l'avatar du bloc « Qui sommes-nous ? » (fichier à déposer dans le dépôt, chemin
+      dans `qui_photo` : le bloc reste masqué d'ici là) et dit si la mention de TVA est à ajouter (`legal_tva`) ; 2) il confirme « Sans engagement » (sous le bouton d'envoi),
       « Journal officiel (JO) » ou « journal d'annonces légales », la ligne « Gestion & administratif — à partir de
       30 € / acte RH » des tarifs de l'accueil, et la durée de conservation des demandes de contact ; 3) il valide la
       V3 ; 4) bascule du déploiement Hostinger de `V2` vers `V3` (voir `docs/DEPLOIEMENT.md`) ; 5) test sur un vrai
@@ -39,16 +39,6 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       glacier). Restent à décider : un vrai bouton pause pour le bandeau défilant du haut d'accueil (`inc/header.php`,
       aujourd'hui pause au survol ou au toucher seulement), le sort des sur-titres en capitales et des chiffres 01–04
       des solutions (signalés par le détecteur, liés au balisage).
-- [ ] **Identité légale et « Qui suis-je »** (entrée du 2026-11-21, PR #27 vers `V3`) : avant la mise en ligne de la V3, renseigner dans
-      `config/config.php` : `legal_nom`, `legal_forme`, `legal_siret`, `legal_adresse`, `legal_responsable` (et, selon le
-      statut, `legal_capital`, `legal_rcs`, `legal_tva`) ; pour le bloc « Qui suis-je » : `qui_prenom`, `qui_texte`,
-      `qui_photo` (photo à déposer dans le dépôt, ex. `public/Assets/images/accueil/`), `qui_role` facultatif. Tant que
-      c'est vide, les pages légales affichent « à compléter » et le bloc reste masqué. Relire la politique de
-      confidentialité (durée de conservation des demandes de contact à décider) ; le téléphone de l'hébergeur n'est
-      pas publié par Hostinger (clé `hebergeur_telephone` vide). Hors périmètre, à reprendre : liens `accueils` du menu
-      (`inc/header.php`), de la page d'erreur et des redirections internes (ils passent par la redirection 301) ;
-      polices et bibliothèques chargées
-      chez Google Fonts / jsDelivr (les héberger sur le site éviterait de transmettre l'IP des visiteurs).
 - [ ] **Inscriptions de robots** (entrées du 2026-10-30) : créer un compte de test pour vérifier que le mail de
       validation arrive (il commence par « Bonjour, ») ; dire s'il faut placer le bouton *Supprimer* de *Gestion
       complète* sous le login (sur téléphone il est dans la dernière colonne, à faire glisser) et s'il doit pouvoir
@@ -112,6 +102,33 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Réalisations et photos** (audit design du 2026-11-21, non traité dans la V3) : les liens « Voir le site »
       ouvrent encore des adresses `*.netlify.app` (les publier sur `*.webycloudy.com` ou ne garder que les captures) ;
       les photos de banque d'images sont à remplacer par de vrais livrables et une vraie photo.
+
+---
+
+## 2026-11-22 — Identité légale renseignée et bloc « Qui sommes-nous ? » (V3)
+
+**Demande** : reprendre les informations légales de sportmaniax.com ; société : Weby Weba Solutions, nom commercial :
+WebyCloudy, sans le nom du propriétaire dans le nom commercial ; présenter l'agence comme un groupe de professionnels ;
+la photo sera un avatar fourni plus tard.
+
+**Réalisé** :
+- `config/config.php` : identité légale reprise de la page Mentions légales de sportmaniax.com (forme juridique,
+  SIRET, RCS, adresse, responsable de la publication) ; raison sociale « Weby Weba Solutions », nouveau champ
+  `legal_nom_commercial` (« WebyCloudy ») affiché sur sa propre ligne des mentions légales. Le nom du propriétaire
+  n'apparaît que comme responsable de la publication. TVA laissée vide (à confirmer).
+- Les pages `/mentions-legales` et `/confidentialite` sont donc complètes : plus de bandeau « Page incomplète »,
+  plus de `noindex`, et elles entrent dans le plan du site (20 adresses).
+- Bloc de présentation : titre réglable (`qui_titre`, « Qui sommes-nous ? »), nom et fonction devenus facultatifs,
+  texte du propriétaire. Le bloc reste masqué tant que l'avatar n'est pas déposé (`qui_photo` vide).
+
+**Fichiers / zones touchés** : `config/config.php`, `inc/content_mentions_legales.php`, `inc/partials/qui_suis_je.php`,
+`README.md`, `docs/CONTEXTE_ACTIF.md`
+**Vérifications** : `php -l` ; site local à 1440x900 et 390x844 : mentions légales, confidentialité, contact sans
+warning PHP, sans erreur JavaScript, sans défilement horizontal ; pied de page avec forme juridique et SIRET ; bloc
+de présentation vu avec une image de test non versionnée ; le nom du propriétaire n'apparaît que sur
+`/mentions-legales`
+**Référence** : PR vers `V3`
+**Suites** : avatar et TVA, voir « Mise en ligne de la V3 » dans les points en suspens
 
 ---
 

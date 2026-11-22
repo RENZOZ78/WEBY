@@ -32,6 +32,9 @@
         <h2 id="editeur">Éditeur du site</h2>
         <dl class="legal-fiche">
           <div><dt>Raison sociale ou nom</dt><dd><?= legal_valeur($site, "legal_nom") ?></dd></div>
+          <?php if(legal_texte($site, "legal_nom_commercial") !== "") : ?>
+            <div><dt>Nom commercial</dt><dd><?= legal_texte($site, "legal_nom_commercial") ?></dd></div>
+          <?php endif; ?>
           <div><dt>Forme juridique</dt><dd><?= legal_valeur($site, "legal_forme") ?></dd></div>
           <?php if(legal_texte($site, "legal_capital") !== "") : ?>
             <div><dt>Capital social</dt><dd><?= legal_texte($site, "legal_capital") ?></dd></div>

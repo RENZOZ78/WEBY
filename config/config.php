@@ -26,15 +26,19 @@
     "horaires" => "Du lundi au vendredi, de 10h à 18h",
 
     //--- Identité légale de l'éditeur (pages mentions-legales et confidentialite, pied de page) ---
-    //A REMPLIR PAR LE PROPRIETAIRE. Tant qu'une valeur obligatoire est vide, les pages légales affichent
+    //Valeurs reprises le 2026-11-22, à la demande du propriétaire, des mentions légales de son autre site
+    //sportmaniax.com (même entreprise). Société : Weby Weba Solutions ; nom commercial : WebyCloudy (précisé par le
+    //propriétaire). Son nom n'apparaît que comme responsable de la publication. La TVA reste à confirmer.
+    // Tant qu'une valeur obligatoire est vide, les pages légales affichent
     //« à compléter » en évidence, ne sont pas proposées à Google et ne figurent pas dans le plan du site.
-    "legal_nom" => "",          //obligatoire : raison sociale, ou nom et prénom pour une entreprise individuelle
-    "legal_forme" => "",        //obligatoire : forme juridique (ex. « SASU », « Entrepreneur individuel (micro-entreprise) »)
-    "legal_siret" => "",        //obligatoire : numéro SIRET (14 chiffres)
-    "legal_adresse" => "",      //obligatoire : adresse du siège ou de l'établissement
-    "legal_responsable" => "",  //obligatoire : nom et prénom du responsable (directeur) de la publication
+    "legal_nom" => "Weby Weba Solutions",          //obligatoire : raison sociale, ou nom et prénom pour une entreprise individuelle
+    "legal_nom_commercial" => "WebyCloudy", //facultatif : nom commercial, affiché sur sa propre ligne (sans le nom du dirigeant)
+    "legal_forme" => "Entrepreneur individuel (micro-entrepreneur)",        //obligatoire : forme juridique (ex. « SASU », « Entrepreneur individuel (micro-entreprise) »)
+    "legal_siret" => "503 389 983 00035",        //obligatoire : numéro SIRET (14 chiffres)
+    "legal_adresse" => "14 square Albert Camus, 92390 Villeneuve-la-Garenne, France",      //obligatoire : adresse du siège ou de l'établissement
+    "legal_responsable" => "Didier Baptistin",  //obligatoire : nom et prénom du responsable (directeur) de la publication
     "legal_capital" => "",      //facultatif : capital social (sociétés uniquement, ex. « 1 000 € »)
-    "legal_rcs" => "",          //facultatif : immatriculation (ex. « RCS Versailles 123 456 789 » ou répertoire des métiers)
+    "legal_rcs" => "RCS Nanterre 503 389 983",          //facultatif : immatriculation (ex. « RCS Versailles 123 456 789 » ou répertoire des métiers)
     "legal_tva" => "",          //facultatif : numéro de TVA intracommunautaire, ou « TVA non applicable, art. 293 B du CGI »
 
     //--- Hébergeur du site (mentions légales) ---
@@ -45,11 +49,13 @@
     "hebergeur_telephone" => "", //Hostinger ne publie pas de numéro de téléphone : laissé vide (non affiché)
     "hebergeur_contact" => "https://www.hostinger.com/contacts",
 
-    //--- Bloc « Qui suis-je » (inc/partials/qui_suis_je.php : page contact et accueil) ---
-    //Le bloc ne s'affiche que lorsque le prénom, le texte ET la photo sont renseignés (et que la photo existe).
-    "qui_prenom" => "",         //prénom affiché
-    "qui_role" => "",           //facultatif : fonction (ex. « Fondateur de WebyCloudy »)
-    "qui_texte" => "",          //présentation et parcours ; une ligne vide sépare deux paragraphes
+    //--- Bloc de présentation « Qui sommes-nous ? » (inc/partials/qui_suis_je.php : page contact et accueil) ---
+    //Le bloc ne s'affiche que lorsque le texte ET la photo sont renseignés (et que le fichier de la photo existe).
+    "qui_titre" => "Qui sommes-nous ?", //titre du bloc
+    "qui_prenom" => "",         //facultatif : nom affiché sous le titre (prénom, ou nom de l'équipe)
+    "qui_role" => "",           //facultatif : fonction ou précision affichée après le nom
+    //texte fourni par le propriétaire le 2026-11-22 ; une ligne vide sépare deux paragraphes
+    "qui_texte" => "Nous sommes un groupe de professionnels animés par une même passion : faire évoluer les projets jusqu'au succès.\n\nDepuis plusieurs années, nous accompagnons des activités de tous les domaines et de toutes les tailles.",
     "qui_photo" => "",          //chemin de la photo dans le dépôt (ex. « public/Assets/images/accueil/portrait.jpg »)
     //compte super administrateur cree automatiquement a la premiere installation (laisser vide pour ne rien creer)
     "admin_login" => "",
