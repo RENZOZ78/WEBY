@@ -4,23 +4,21 @@
 À lire en premier, avant toute tâche ou tout conseil. Doit rester **court** (une page) : l'ancien part dans
 [`HISTORIQUE.md`](HISTORIQUE.md), les choix durables dans [`DECISIONS.md`](DECISIONS.md).
 
-Dernière mise à jour : 2026-11-22 — par Claude Code (V3 : identité légale renseignée, bloc « Qui sommes-nous ? »)
+Dernière mise à jour : 2026-11-22 — par Claude Code (V3 mise en ligne)
 
 > Ce dépôt est **public** : ne rien écrire ici de confidentiel (mots de passe, données clients, chiffres privés).
 
 ## Situation actuelle
 
-- **Site** : V2 en ligne sur https://webycloudy.com depuis le 2026-10-02 (PHP 8.4 / MySQL, Hostinger,
-  branche `V2` déployée automatiquement). Détails : [`DEPLOIEMENT.md`](DEPLOIEMENT.md).
+- **Site** : V3 en ligne sur https://webycloudy.com depuis le 2026-11-22 (PHP 8.4 / MySQL, Hostinger,
+  branche `V3` déployée automatiquement ; `V2` gardée en secours). Détails : [`DEPLOIEMENT.md`](DEPLOIEMENT.md).
 - **Contenu du site** : vitrine de l'agence, prestations (lancement & financement, gestion, site internet,
   marketing & croissance), une page par métier accompagné (12 métiers, `secteurs/…`, en PR), espace client, administration, et supervision du super admin (audience, journal
   d'activité, tableau de bord personnalisable) — en PR, pas encore en ligne.
-- **Phase** : validation de la V2 après mise en ligne (sécurité des accès, mails, tarifs, contenus).
-- **V3 prête, non déployée** (branche `V3`, 2026-11-22) : corrections de l'audit design
-  ([`audits/2026-11-21-audit-design.md`](audits/2026-11-21-audit-design.md)) fusionnées et vérifiées (PR #25 à #30) :
-  « 95 % » retirés, devis et appel mis en avant, barre « Appeler / Devis » sur mobile, accueil raccourci, menu des
-  12 métiers, pages légales, style plus sobre. `V2` reste en ligne, intacte, et servira de secours.
-  Mise en ligne : voir [`DEPLOIEMENT.md`](DEPLOIEMENT.md), section « V3 en préparation ».
+- **Phase** : suivi de la V3 après mise en ligne (envoi réel du formulaire, espace client, avatar), puis acquisition.
+- **V3** (2026-11-22) : corrections de l'audit design ([`audits/2026-11-21-audit-design.md`](audits/2026-11-21-audit-design.md)),
+  PR #25 à #33 : « 95 % » retirés, devis et appel mis en avant, barre « Appeler / Devis » sur mobile, accueil
+  raccourci, menu des 12 métiers, pages légales complètes, style épuré avec or premium.
 - **Charte graphique** : [`CHARTE_GRAPHIQUE.md`](CHARTE_GRAPHIQUE.md) — à suivre pour tout visuel (site, Instagram,
   Leboncoin, documents).
 
@@ -47,8 +45,8 @@ Le détail à cocher est dans « Points en suspens » de [`HISTORIQUE.md`](HISTO
 
 ## Sujets ouverts / à trancher
 
-- **Avant la mise en ligne de la V3** : avatar du bloc « Qui sommes-nous ? » à fournir (bloc masqué d'ici là),
-  mention de TVA à confirmer, validation de la V3 par le propriétaire. L'identité légale est renseignée (2026-11-22).
+- **Après la mise en ligne de la V3** : avatar du bloc « Qui sommes-nous ? » à fournir (bloc masqué d'ici là) ;
+  TVA et durée de conservation des demandes : rien à afficher pour le moment (décision du 2026-11-22).
 - Lien entre ce site (agence, `webycloudy.com`) et la plateforme de documents IA (projet Firebase
   `weby-cloudy-prod`, autre dépôt) : deux produits distincts sous le même nom — positionnement à clarifier.
 
@@ -56,6 +54,6 @@ Le détail à cocher est dans « Points en suspens » de [`HISTORIQUE.md`](HISTO
 
 | Outil | Rôle | Écrit dans le dépôt ? |
 |---|---|---|
-| Claude Code | code, mise en ligne, Hostinger | oui, par PR vers `V3` (vers `V2` pour un correctif urgent de la production) |
+| Claude Code | code, mise en ligne, Hostinger | oui, par PR vers `V3` (la production) |
 | Cowork | pilotage, contenus, marketing, fichiers locaux | oui, par PR vers `V3` (fichiers `docs/` uniquement sauf demande) |
 | Chat | réflexion, rédaction, stratégie | lit ; fait consigner ses conclusions par Cowork ou Claude Code |

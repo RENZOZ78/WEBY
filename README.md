@@ -2,7 +2,7 @@
 
 Site vitrine et espace client de l'agence WebyCloudy (PHP 8 / MySQL, architecture MVC maison, Bootstrap 5.3, thème sombre).
 
-En ligne sur https://webycloudy.com (branche `V2`, déployée automatiquement).
+En ligne sur https://webycloudy.com (branche `V3`, déployée automatiquement depuis le 2026-11-22 ; `V2` gardée en secours).
 
 ## Documentation
 

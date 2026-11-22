@@ -44,14 +44,12 @@ Une tâche n'est pas terminée tant que l'historique n'est pas à jour.
 - **Jamais de secret dans le dépôt** (mots de passe, clés, jetons) : ni dans le code, ni dans les `.md`.
   Les identifiants de production vivent uniquement dans `config/config.local.php` sur le serveur
   (fichier ignoré par git). Dans la documentation, écrire « voir hPanel » ou « voir config.local.php ».
-- **La branche `V2` est la production** : toute fusion dans `V2` est déployée automatiquement sur
-  https://webycloudy.com (déploiement Git Hostinger). Travailler sur une branche dédiée, ouvrir une PR vers `V2`,
-  tester avant de fusionner. La branche `master` contient l'ancien site statique (V1).
-- **La branche `V3` est la prochaine version, en préparation** (depuis le 2026-11-21, corrections de l'audit design) :
-  elle n'est pas déployée. Tant que le propriétaire ne l'a pas mise en ligne, les évolutions du site partent en PR
-  vers `V3` ; seuls les correctifs urgents de la production partent vers `V2` (à reporter ensuite dans `V3`).
-  À la mise en ligne, le déploiement Hostinger basculera sur `V3` et `V2` sera gardée en secours
-  (voir [`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md)).
+- **La branche `V3` est la production** (depuis le 2026-11-22) : toute fusion dans `V3` est déployée automatiquement
+  sur https://webycloudy.com (déploiement Git Hostinger). Travailler sur une branche dédiée, ouvrir une PR vers `V3`,
+  tester avant de fusionner.
+- **La branche `V2` est la version de secours** : ancienne production (2026-10-02 → 2026-11-22), gardée telle quelle.
+  Ne rien y fusionner. En cas de problème grave, rebasculer le déploiement Hostinger sur `V2`
+  (voir [`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md)). La branche `master` contient l'ancien site statique (V1).
 - **Tester avant de pousser** : `php -l` sur les fichiers PHP modifiés, parcours des pages concernées en local
   (PHP 8.4 + MySQL/MariaDB, voir README), aucun warning PHP, aucune erreur JavaScript, affichage mobile vérifié.
 - Toutes les requêtes POST passent par le jeton CSRF (`Securite::csrfField()` dans chaque formulaire).
