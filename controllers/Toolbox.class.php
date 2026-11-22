@@ -36,17 +36,97 @@
     }
 
     //ft qui envoie des mails aux utilisateurs
+    //Avec smtp_pass renseigné (config/config.local.php), le mail part par le serveur SMTP authentifié de la boîte
+    //(smtp.hostinger.com) : il est alors signé DKIM et reconnu par le SPF du domaine, donc il n'arrive plus en
+    //courrier indésirable. Sans mot de passe SMTP, repli sur mail() de PHP (comportement d'avant).
     public static function envoyerMail($destinataire,$sujet,$message,$repondreA = null){
-      //expediteur : l'adresse pro du domaine (meilleure delivrabilite que gmail, SPF du domaine)
       $config = require(__DIR__."/../config/config.php");
       $expediteur = $config['mail_contact'];
+      if(trim((string)($config['smtp_pass'] ?? "")) !== ""){
+        $envoye = self::envoyerMailSmtp($config, $expediteur, $destinataire, $sujet, $message, $repondreA);
+        if($envoye) return true;
+        //echec SMTP : on tente quand meme mail() pour ne rien perdre, et on le note dans le journal
+      }
       $headers = [
         "From" => "WebyCloudy <".$expediteur.">",
         "Content-Type" => "text/plain; charset=UTF-8",
       ];
       if($repondreA) $headers["Reply-To"] = $repondreA;
-      $sujet = "=?UTF-8?B?".base64_encode($sujet)."?=";
-      return @mail($destinataire,$sujet,$message,$headers,"-f".$expediteur);
+      $sujetCode = "=?UTF-8?B?".base64_encode($sujet)."?=";
+      return @mail($destinataire,$sujetCode,$message,$headers,"-f".$expediteur);
+    }
+
+    //envoi par SMTP authentifie (SSL implicite sur 465, ou STARTTLS sur 587) ; renvoie true si le serveur a accepte le mail
+    private static function envoyerMailSmtp($config, $expediteur, $destinataire, $sujet, $message, $repondreA){
+      $hote = $config['smtp_host'] ?? "smtp.hostinger.com";
+      $port = (int)($config['smtp_port'] ?? 465);
+      $securite = $config['smtp_secure'] ?? ($port === 465 ? "ssl" : "tls");
+      $utilisateur = $config['smtp_user'] ?? $expediteur;
+      $nettoyer = function($v){ return str_replace(["\r", "\n"], "", (string)$v); };
+      $destinataire = $nettoyer($destinataire);
+      $repondreA = $repondreA ? $nettoyer($repondreA) : null;
+      $etape = "connexion";
+      try {
+        $contexte = stream_context_create(["ssl" => ["verify_peer" => true, "verify_peer_name" => true, "peer_name" => $hote]]);
+        $cible = ($securite === "ssl" ? "ssl://" : "tcp://").$hote.":".$port;
+        $flux = @stream_socket_client($cible, $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $contexte);
+        if(!$flux) throw new RuntimeException($errstr ?: "connexion impossible");
+        stream_set_timeout($flux, 15);
+        $lire = function() use ($flux){
+          $reponse = "";
+          while(($ligne = fgets($flux, 1024)) !== false){
+            $reponse .= $ligne;
+            if(strlen($ligne) < 4 || $ligne[3] === " ") break;
+          }
+          return $reponse;
+        };
+        $commande = function($texte, $attendu) use ($flux, $lire, &$etape){
+          if($texte !== null) fwrite($flux, $texte."\r\n");
+          $reponse = $lire();
+          if((int)substr($reponse, 0, 3) !== $attendu) throw new RuntimeException($etape." : ".trim(substr($reponse, 0, 120)));
+          return $reponse;
+        };
+        $nomLocal = parse_url($config['site_url'] ?? "", PHP_URL_HOST) ?: "webycloudy.com";
+        $commande(null, 220);
+        $etape = "EHLO"; $commande("EHLO ".$nomLocal, 250);
+        if($securite === "tls"){
+          $etape = "STARTTLS"; $commande("STARTTLS", 220);
+          if(!stream_socket_enable_crypto($flux, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) throw new RuntimeException("STARTTLS refusé");
+          $etape = "EHLO"; $commande("EHLO ".$nomLocal, 250);
+        }
+        if($securite !== "none"){
+          $etape = "authentification";
+          $commande("AUTH LOGIN", 334);
+          $commande(base64_encode($utilisateur), 334);
+          $commande(base64_encode($config['smtp_pass']), 235);
+        }
+        $etape = "expéditeur"; $commande("MAIL FROM:<".$expediteur.">", 250);
+        $etape = "destinataire"; $commande("RCPT TO:<".$destinataire.">", 250);
+        $etape = "DATA"; $commande("DATA", 354);
+        $domaine = substr(strrchr($expediteur, "@"), 1) ?: $nomLocal;
+        $entetes = [
+          "Date: ".date("r"),
+          "From: WebyCloudy <".$expediteur.">",
+          "To: <".$destinataire.">",
+          "Subject: =?UTF-8?B?".base64_encode($sujet)."?=",
+          "Message-ID: <".bin2hex(random_bytes(12))."@".$domaine.">",
+          "MIME-Version: 1.0",
+          "Content-Type: text/plain; charset=UTF-8",
+          "Content-Transfer-Encoding: base64",
+        ];
+        if($repondreA) $entetes[] = "Reply-To: ".$repondreA;
+        $corps = rtrim(chunk_split(base64_encode($message), 76, "\r\n"));
+        $etape = "envoi"; $commande(implode("\r\n", $entetes)."\r\n\r\n".$corps."\r\n.", 250);
+        fwrite($flux, "QUIT\r\n");
+        fclose($flux);
+        return true;
+      } catch (Throwable $e) {
+        if(isset($flux) && is_resource($flux)) fclose($flux);
+        $detail = "SMTP ".$hote." · ".$e->getMessage();
+        error_log("Mail : ".$detail);
+        if(class_exists("Journal")) Journal::ajouter("mail_echec", mb_substr($detail, 0, 200));
+        return false;
+      }
     }
 
     //ft qui envoie le mail de validation et affiche le resultat

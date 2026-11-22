@@ -16,7 +16,7 @@ Dernière mise à jour : 2026-11-22 (mise en ligne de la V3)
 | PHP | 8.4 (passé de 7.4 le 2026-10-02) |
 | Base de données | MySQL `u181593296_webycloudy`, utilisateur `u181593296_weby`, hôte `127.0.0.1` |
 | Code déployé | dépôt GitHub `RENZOZ78/WEBY`, branche **`V3`** (depuis le 2026-11-22 ; `V2` = secours) |
-| Mails | Hostinger Business Email ; adresse du site : `info@webycloudy.com` (existe aussi : `contact@`) |
+| Mails | Hostinger Business Email ; adresse du site : `info@webycloudy.com` (existe aussi : `contact@`, `tasko@`) ; `info@` renvoie vers deux boîtes Gmail (copie gardée) |
 | SSL | certificat Hostinger à vie, redirection HTTPS active |
 | Domaine | `webycloudy.com` chez Hostinger, verrouillé, protection WHOIS, renouvellement automatique |
 
@@ -67,6 +67,23 @@ de 400 jours.
 - `config/config.local.php` (serveur uniquement) : surcharge `config.php` (base de données, comptes).
 - Pour changer le mot de passe MySQL : le modifier dans hPanel (*Bases de données MySQL*), puis reporter le
   nouveau mot de passe dans `config/config.local.php` via le gestionnaire de fichiers.
+
+## Mails envoyés par le site
+
+Le site envoie des mails : message du formulaire de contact (vers `info@webycloudy.com`), validation de compte,
+réponses de l'agence aux demandes. Ils partent de `info@webycloudy.com`.
+
+- **Constat du 2026-11-22** : envoyés par `mail()` de PHP depuis le serveur web, ils arrivent dans le dossier
+  **Courrier indésirable** (`INBOX.Junk`) de `info@` (vu dans les journaux de la boîte, API Hostinger
+  `mail_logs_list-mailbox-action`) ; un message classé indésirable n'est pas renvoyé vers les boîtes Gmail.
+- **Correctif** (`Toolbox::envoyerMail`) : quand `smtp_pass` est renseigné, les mails partent par le serveur SMTP
+  authentifié `smtp.hostinger.com:465` (SSL) avec le compte `info@webycloudy.com` : signés DKIM et couverts par le
+  SPF du domaine (`include:_spf.mail.hostinger.com`). Sans mot de passe, ou si le SMTP échoue, repli sur `mail()`
+  (l'échec SMTP est noté dans *Supervision → Journal*, catégorie *Sécurité*, « Échec d'envoi d'un mail »).
+- **Réglage à faire sur le serveur** : ajouter dans `config/config.local.php` la ligne
+  `"smtp_pass" => "…",` avec le mot de passe de la boîte `info@webycloudy.com` (voir hPanel → *Emails*).
+  Jamais dans le dépôt. Autres réglages possibles (par défaut ci-contre) : `smtp_host` (`smtp.hostinger.com`),
+  `smtp_port` (465), `smtp_secure` (`ssl`), `smtp_user` (`info@webycloudy.com`).
 
 ## Passage à la V3 (2026-11-22)
 

@@ -9,6 +9,8 @@
     "db_user" => "u000000000_weby",
     "db_pass" => "mot-de-passe-de-la-base",
     "mail_contact" => "info@webycloudy.com",
+    //mot de passe de la boîte info@webycloudy.com (hPanel → Emails) : les mails du site partent alors par SMTP
+    "smtp_pass" => "mot-de-passe-de-la-boite-mail",
     //compte super administrateur cree au premier lancement si la table est vide de super admin
     "admin_login" => "admin",
     "admin_mail" => "info@webycloudy.com",
