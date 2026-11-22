@@ -115,6 +115,34 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 ---
 
+## 2026-11-22 — Barre mobile : le formulaire de contact ne partait plus quand le bouton d'envoi était en bas de l'écran
+
+**Demande** : défaut bloquant trouvé à la vérification finale de la `V3` : sur téléphone, après avoir rempli le
+formulaire de contact, un appui sur « Envoyer le message » pouvait ne rien envoyer.
+
+**Réalisé** :
+- **Cause** : la barre fixe « Appeler / Devis gratuit » (mission 2) était masquée pendant la saisie d'un champ, puis
+  réapparaissait dès que le champ perdait le focus, c'est-à-dire au moment même de l'appui sur le bouton d'envoi. Si
+  ce bouton se trouvait dans les 68 px du bas de l'écran, la barre passait dessus entre l'appui et le relâchement et
+  le clic était perdu.
+- **Correction** : la barre n'est plus liée au focus. Elle est retirée tant que le formulaire de contact est visible à
+  l'écran (observateur dans `main.js`, qui pose la classe `barre-masquee`) et revient quand il en sort. Elle ne peut
+  donc plus apparaître au-dessus d'un champ ni du bouton d'envoi. Sans JavaScript, la barre reste simplement affichée.
+- Conséquence voulue : sur la page contact, la barre n'apparaît qu'une fois le formulaire dépassé (le téléphone est
+  affiché en haut de cette page).
+
+**Fichiers / zones touchés** : `public/Javascript/main.js`, `public/CSS/theme.css` (section « Mission 2 »)
+**Vérifications** : `node --check` ; en local (PHP 8.3, MariaDB 10.11), Chromium à 390×844 (tactile) sur
+`secteurs/vtc`, `contact` et l'accueil, sans faire défiler le bouton au préalable : envoi par clic, par appui tactile,
+et par appui aux coordonnées avec le bouton placé tout en bas de l'écran (cas qui échouait 3 fois sur 3 avant la
+correction) — à chaque fois POST, retour sur `contact` et message vert ; même envoi à 1440×900. Barre visible en
+haut des pages, retirée quand le formulaire est à l'écran, de retour en bas de page ; « Devis gratuit » mène au
+formulaire ; barre absente sur ordinateur ; aucune erreur JavaScript, aucun warning PHP, aucun défilement horizontal.
+**Référence** : PR de la branche `claude/weby-2-textes-contact` (PR vers `V3`)
+**Suites** : tester l'envoi du formulaire sur un vrai téléphone (iPhone compris) avant la mise en ligne de la `V3`.
+
+---
+
 ## 2026-11-21 — Style plus sobre et lisibilité (mission 4/4 du chantier après audit design)
 
 **Demande** : garder l'identité (bleu nuit + or) mais en plus sobre, et corriger les textes difficiles à lire relevés

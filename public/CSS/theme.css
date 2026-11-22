@@ -862,8 +862,10 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   /* la barre ne recouvre ni le bas du pied de page ni le bouton « retour en haut » */
   .barre-mobile ~ .wc-footer { padding-bottom: calc(1.2rem + 46px + 1rem + var(--wc-barre-mobile) + env(safe-area-inset-bottom, 0px)); } /* + la hauteur du bouton « retour en haut » */
   .barre-mobile ~ .back-top { bottom: calc(1.2rem + var(--wc-barre-mobile) + env(safe-area-inset-bottom, 0px)); }
-  /* pendant la saisie (clavier ouvert), la barre s'efface pour laisser voir le formulaire et son bouton d'envoi */
-  body:has(.form-control:focus) .barre-mobile { display: none; }
+  /* formulaire de contact à l'écran : la barre est retirée (classe posée par main.js) pour ne jamais passer
+     devant un champ ni devant le bouton d'envoi ; elle revient quand le formulaire sort de l'écran.
+     Pas de masquage lié au focus : la barre réapparaissait sous le doigt au moment d'appuyer sur « Envoyer ». */
+  .barre-mobile.barre-masquee { display: none; }
 }
 @media print { .barre-mobile { display: none; } }
 
