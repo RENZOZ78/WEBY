@@ -22,6 +22,13 @@
     "db_user" => config_env("DB_USER", "root"),
     "db_pass" => config_env("DB_PASS", ""),
     "mail_contact" => config_env("MAIL_CONTACT", "info@webycloudy.com"),
+    //envoi des mails par le serveur SMTP de la boîte (sinon : mail() de PHP, classé en indésirable par Hostinger).
+    //Le mot de passe se met UNIQUEMENT dans config/config.local.php sur le serveur ("smtp_pass" => "…").
+    "smtp_host" => config_env("SMTP_HOST", "smtp.hostinger.com"),
+    "smtp_port" => (int)config_env("SMTP_PORT", "465"),
+    "smtp_secure" => config_env("SMTP_SECURE", "ssl"), //ssl (port 465), tls (587, STARTTLS), none (tests locaux)
+    "smtp_user" => config_env("SMTP_USER", "info@webycloudy.com"),
+    "smtp_pass" => config_env("SMTP_PASS", ""),
     "telephone" => "06 52 47 37 99",
     "horaires" => "Du lundi au vendredi, de 10h à 18h",
 

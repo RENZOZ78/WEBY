@@ -37,6 +37,7 @@
       "statut_demande" => ["Statut de demande changé", "fa-flag", "demandes"],
       "demande_supprimee" => ["Demande supprimée (spam)", "fa-trash", "demandes"],
       "contact_bloque" => ["Message de contact bloqué (spam)", "fa-shield-halved", "securite"],
+      "mail_echec" => ["Échec d'envoi d'un mail (SMTP)", "fa-envelope-open", "securite"],
       "projet_cree" => ["Projet créé", "fa-diagram-project", "projets"],
       "projet_modifie" => ["Projet mis à jour", "fa-pen-to-square", "projets"],
       "projet_supprime" => ["Projet supprimé", "fa-trash", "projets"],

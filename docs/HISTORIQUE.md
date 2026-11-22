@@ -27,6 +27,10 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
+- [ ] **Mails du site en indésirable** (entrée du 2026-11-22) : ajouter `"smtp_pass" => "…"` (mot de passe de la boîte
+      `info@webycloudy.com`) dans `config/config.local.php` sur le serveur (gestionnaire de fichiers de hPanel), puis
+      renvoyer un message de test depuis le site : il doit arriver dans la boîte de réception et dans Gmail. En
+      attendant, regarder le dossier *Courrier indésirable* du webmail Hostinger.
 - [ ] **Après la mise en ligne de la V3** (entrée du 2026-11-22) : envoyer un vrai message depuis un téléphone (il
       doit arriver dans l'administration et par mail) ; se connecter à l'espace client et à l'administration ;
       tester la barre « Appeler / Devis gratuit » et le menu « Votre métier » sur un vrai téléphone ; fournir l'avatar
@@ -102,6 +106,34 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Réalisations et photos** (audit design du 2026-11-21, non traité dans la V3) : les liens « Voir le site »
       ouvrent encore des adresses `*.netlify.app` (les publier sur `*.webycloudy.com` ou ne garder que les captures) ;
       les photos de banque d'images sont à remplacer par de vrais livrables et une vraie photo.
+
+---
+
+## 2026-11-22 — Mails du site classés en indésirable : envoi par SMTP authentifié
+
+**Demande** : le propriétaire a envoyé un message de test depuis le formulaire du site ; la demande apparaît dans
+l'administration, mais aucun mail n'est arrivé dans ses boîtes.
+
+**Réalisé** :
+- Diagnostic (API Hostinger, journaux de la boîte `info@webycloudy.com`) : le mail du test est bien arrivé le
+  2026-11-22 à 18:24 UTC, mais dans le dossier **Courrier indésirable** (`INBOX.Junk`) ; il n'a donc pas été renvoyé
+  vers les deux boîtes Gmail (renvois actifs de `info@`). Les messages du formulaire du 2026-10-30 avaient subi le
+  même sort. Cause : `mail()` de PHP envoie depuis le serveur web, hors du serveur de mails du domaine (pas de
+  signature DKIM, SPF limité aux serveurs de mails Hostinger), d'où le classement en indésirable.
+- `controllers/Toolbox.class.php` : `envoyerMail()` envoie par le SMTP authentifié `smtp.hostinger.com:465` quand
+  `smtp_pass` est renseigné (dans `config/config.local.php` uniquement) ; repli sur `mail()` sinon ou en cas
+  d'échec, avec une ligne « Échec d'envoi d'un mail » dans le journal de supervision. Valeurs par défaut des
+  réglages SMTP dans `config/config.php`, exemple dans `config/config.local.example.php`.
+- Tant que le mot de passe n'est pas ajouté sur le serveur, rien ne change en ligne.
+
+**Fichiers / zones touchés** : `controllers/Toolbox.class.php`, `models/Supervision/Journal.class.php`,
+`config/config.php`, `config/config.local.example.php`, `docs/DEPLOIEMENT.md`
+**Vérifications** : `php -l` ; conversation SMTP complète testée contre un faux serveur local (en-têtes, sujet et corps
+encodés en UTF-8, Reply-To, fin de message) ; formulaire de contact local à 1440 et 390 : envoi et redirection
+corrects, aucun warning. Non testé : connexion réelle à `smtp.hostinger.com` (port 465 fermé depuis
+l'environnement de test) ; à vérifier en ligne après l'ajout du mot de passe
+**Référence** : PR vers `V3`
+**Suites** : voir « Mails du site en indésirable » dans les points en suspens
 
 ---
 
