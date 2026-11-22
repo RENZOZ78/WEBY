@@ -4,7 +4,7 @@
 À lire en premier, avant toute tâche ou tout conseil. Doit rester **court** (une page) : l'ancien part dans
 [`HISTORIQUE.md`](HISTORIQUE.md), les choix durables dans [`DECISIONS.md`](DECISIONS.md).
 
-Dernière mise à jour : 2026-11-21 — par Claude Code (audit design, lancement de la V3 ; pages légales, « Qui suis-je », pied de page : PR #27 vers `V3`)
+Dernière mise à jour : 2026-11-22 — par Claude Code (V3 assemblée et vérifiée, en attente de validation du propriétaire)
 
 > Ce dépôt est **public** : ne rien écrire ici de confidentiel (mots de passe, données clients, chiffres privés).
 
@@ -16,8 +16,11 @@ Dernière mise à jour : 2026-11-21 — par Claude Code (audit design, lancement
   marketing & croissance), une page par métier accompagné (12 métiers, `secteurs/…`, en PR), espace client, administration, et supervision du super admin (audience, journal
   d'activité, tableau de bord personnalisable) — en PR, pas encore en ligne.
 - **Phase** : validation de la V2 après mise en ligne (sécurité des accès, mails, tarifs, contenus).
-- **V3 en préparation** (depuis le 2026-11-21) : branche `V3`, corrections de l'audit design
-  ([`audits/2026-11-21-audit-design.md`](audits/2026-11-21-audit-design.md)) réparties en 4 PR vers `V3`. `V2` reste en ligne et intacte.
+- **V3 prête, non déployée** (branche `V3`, 2026-11-22) : corrections de l'audit design
+  ([`audits/2026-11-21-audit-design.md`](audits/2026-11-21-audit-design.md)) fusionnées et vérifiées (PR #25 à #30) :
+  « 95 % » retirés, devis et appel mis en avant, barre « Appeler / Devis » sur mobile, accueil raccourci, menu des
+  12 métiers, pages légales, style plus sobre. `V2` reste en ligne, intacte, et servira de secours.
+  Mise en ligne : voir [`DEPLOIEMENT.md`](DEPLOIEMENT.md), section « V3 en préparation ».
 - **Charte graphique** : [`CHARTE_GRAPHIQUE.md`](CHARTE_GRAPHIQUE.md) — à suivre pour tout visuel (site, Instagram,
   Leboncoin, documents).
 
@@ -54,6 +57,6 @@ Le détail à cocher est dans « Points en suspens » de [`HISTORIQUE.md`](HISTO
 
 | Outil | Rôle | Écrit dans le dépôt ? |
 |---|---|---|
-| Claude Code | code, mise en ligne, Hostinger | oui, par PR vers `V2` |
-| Cowork | pilotage, contenus, marketing, fichiers locaux | oui, par PR vers `V2` (fichiers `docs/` uniquement sauf demande) |
+| Claude Code | code, mise en ligne, Hostinger | oui, par PR vers `V3` (vers `V2` pour un correctif urgent de la production) |
+| Cowork | pilotage, contenus, marketing, fichiers locaux | oui, par PR vers `V3` (fichiers `docs/` uniquement sauf demande) |
 | Chat | réflexion, rédaction, stratégie | lit ; fait consigner ses conclusions par Cowork ou Claude Code |

@@ -68,6 +68,26 @@ de 400 jours.
 - Pour changer le mot de passe MySQL : le modifier dans hPanel (*Bases de données MySQL*), puis reporter le
   nouveau mot de passe dans `config/config.local.php` via le gestionnaire de fichiers.
 
+## V3 en préparation (non déployée)
+
+Depuis le 2026-11-21, la branche `V3` (créée à partir de `V2`) regroupe les corrections de l'audit design
+(`docs/audits/2026-11-21-audit-design.md`). **Rien n'a changé en production** : Hostinger déploie toujours `V2`.
+
+Avant de mettre la V3 en ligne :
+
+1. Le propriétaire remplit l'identité légale et le bloc « Qui suis-je » dans `config/config.php` (clés `legal_*`
+   et `qui_*`, photo déposée dans le dépôt). Tant qu'une valeur obligatoire manque, `/mentions-legales` et
+   `/confidentialite` affichent « Page incomplète : à ne pas mettre en ligne en l'état ».
+2. Le propriétaire valide la V3 (captures ou site de test).
+3. Dans hPanel → *Avancé → Git*, changer la branche déployée de `V2` à `V3` (même dépôt, même dossier
+   `public_html`, déploiement automatique activé), puis lancer un déploiement. `config/config.local.php` et
+   `storage/` restent sur le serveur : ils ne sont pas dans le dépôt. La V3 n'ajoute ni table ni colonne.
+4. Contrôler le site en ligne : accueil, une page métier, envoi d'un message de test depuis un téléphone,
+   `/mentions-legales`, connexion à l'espace client.
+
+Retour à la V2 : rebasculer la branche déployée sur `V2` dans hPanel et relancer le déploiement. `V2` n'est pas
+modifiée par la V3 (décision du 2026-11-21 : pas de fusion de `V3` dans `V2`).
+
 ## Sauvegarde et retour arrière
 
 - Ancien site statique (V1) : `domains/webycloudy.com/backup_v1` (à côté de `public_html`), et branche `master`

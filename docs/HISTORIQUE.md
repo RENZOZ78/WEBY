@@ -27,6 +27,12 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
+- [ ] **Mise en ligne de la V3** (entrée du 2026-11-22) : 1) le propriétaire remplit `legal_*` et `qui_*` dans
+      `config/config.php` et dépose sa photo ; 2) il confirme « Sans engagement » (sous le bouton d'envoi),
+      « Journal officiel (JO) » ou « journal d'annonces légales », la ligne « Gestion & administratif — à partir de
+      30 € / acte RH » des tarifs de l'accueil, et la durée de conservation des demandes de contact ; 3) il valide la
+      V3 ; 4) bascule du déploiement Hostinger de `V2` vers `V3` (voir `docs/DEPLOIEMENT.md`) ; 5) test sur un vrai
+      téléphone : barre « Appeler / Devis gratuit », envoi du formulaire, menu « Votre métier ».
 - [ ] **Style plus sobre** (entrée du 2026-11-21, mission 4/4) : après fusion, regarder l'accueil sur téléphone et sur
       ordinateur (titre sur deux lignes sans trou, cycle sans étincelles, bouton « Découvrir le pack » du pack
       Croissance en simple contour) et dire si les quatre teintes du cycle conviennent (or clair, ambre, bleu ciel, bleu
@@ -43,10 +49,6 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
       (`inc/header.php`), de la page d'erreur et des redirections internes (ils passent par la redirection 301) ;
       polices et bibliothèques chargées
       chez Google Fonts / jsDelivr (les héberger sur le site éviterait de transmettre l'IP des visiteurs).
-- [ ] **Audit design, mission 2** (entrée du 2026-11-21) : `inc/partials/pricing.php` : bouton
-      « Demander un devis », libellé unique à appliquer (transmis à la mission 3). À confirmer par le propriétaire : « Sans engagement » sous le formulaire, et le
-      terme « Journal officiel (JO) » pour l'annonce de création (elle paraît en général dans un journal d'annonces
-      légales). Après fusion : tester la barre « Appeler / Devis gratuit » sur un vrai téléphone (iPhone compris).
 - [ ] **Inscriptions de robots** (entrées du 2026-10-30) : créer un compte de test pour vérifier que le mail de
       validation arrive (il commence par « Bonjour, ») ; dire s'il faut placer le bouton *Supprimer* de *Gestion
       complète* sous le login (sur téléphone il est dans la dernière colonne, à faire glisser) et s'il doit pouvoir
@@ -107,11 +109,39 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Charte graphique** (`docs/CHARTE_GRAPHIQUE.md`) : créer un fichier de l'aigle seul (le logo actuel
       contient le nom), trancher l'écriture du nom dans le logo (« weby cloudy » ou « WebyCloudy »), définir le logo
       sur fond clair et en monochrome, exporter le logo en PNG, valider la version claire pour les documents imprimés.
-- [ ] **Audit design du 2026-11-21** (`docs/audits/2026-11-21-audit-design.md`) : à trancher par le propriétaire avant correction —
-      créer la page Mentions légales (404 aujourd'hui, obligatoire) et afficher SIRET / forme juridique ; retirer ou
-      justifier les « 95 % de clients satisfaits » ; ajouter un bloc « Qui suis-je » avec photo ; bouton « Appeler »
-      sur mobile ; raccourcir l'accueil (offre et prix répétés 3 fois) ; mettre les 12 métiers dans le menu ;
-      contraste du bouton cyan (2,3:1) et des champs du formulaire ; réalisations hors `*.netlify.app`.
+- [ ] **Réalisations et photos** (audit design du 2026-11-21, non traité dans la V3) : les liens « Voir le site »
+      ouvrent encore des adresses `*.netlify.app` (les publier sur `*.webycloudy.com` ou ne garder que les captures) ;
+      les photos de banque d'images sont à remplacer par de vrais livrables et une vraie photo.
+
+---
+
+## 2026-11-22 — V3 assemblée et vérifiée (coordination du chantier après audit design)
+
+**Demande** : lancer toutes les corrections de l'audit, réparties entre plusieurs conversations, sous la supervision
+d'une conversation maître qui vérifie, valide et fait la synthèse ; en faire une V3 et garder la V2 en secours.
+
+**Réalisé** :
+- Branche `V3` créée à partir de `V2` ; quatre conversations ont travaillé en parallèle, chacune sur ses fichiers :
+  pages légales et « Qui suis-je » (PR #27), textes et chemin vers le contact (PR #26), accueil et menu des métiers
+  (PR #28), style plus sobre et lisibilité (PR #29). Chaque PR a été vérifiée en local par la conversation maître
+  avant fusion dans `V3` (dans l'ordre #25, #26, #27, #28, #29).
+- Défaut bloquant trouvé à la vérification finale de l'ensemble : sur téléphone, la barre « Appeler / Devis gratuit »
+  réapparaissait par-dessus le bouton « Envoyer le message » au moment de l'appui, et le message ne partait pas.
+  Corrigé par la PR #30 (la barre est retirée tant que le formulaire est à l'écran), revérifié puis fusionné.
+- Documentation : `CLAUDE.md` (rôle de `V3`), `docs/DEPLOIEMENT.md` (mise en ligne de la V3 et retour à la V2),
+  `docs/CONTEXTE_ACTIF.md`.
+- `V2` et le site en ligne n'ont pas été modifiés.
+
+**Fichiers / zones touchés** : `CLAUDE.md`, `docs/DEPLOIEMENT.md`, `docs/CONTEXTE_ACTIF.md`, cet historique ; le détail
+du code est dans les entrées des missions ci-dessous
+**Vérifications** (site local, PHP 8.3 + MariaDB, Chromium à 1440x900 et 390x844) : `php -l` sur tous les PHP ;
+12 pages publiques sans warning PHP, sans erreur JavaScript, sans défilement horizontal ; envoi du formulaire à
+1440 et à 390 (clic et appui tactile, bouton en bas d'écran) : demande créée ; pages légales et « Qui suis-je »
+testés avec des valeurs fictives non versionnées ; détecteur Impeccable sur l'accueil : 88 → 8 signaux (1440),
+82 → 7 (390). Non vérifié par la conversation maître : espace client et administration une fois connecté
+(contrôlés par captures par la mission 4), vrai téléphone, PHP 8.4.
+**Référence** : PR #25 à #30 (vers `V3`), et la PR de cette entrée
+**Suites** : voir « Mise en ligne de la V3 » dans les points en suspens
 
 ---
 
