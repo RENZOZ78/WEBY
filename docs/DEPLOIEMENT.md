@@ -4,7 +4,7 @@
 **À mettre à jour à chaque changement côté serveur** (voir [`CLAUDE.md`](../CLAUDE.md)).
 Aucun mot de passe ici : ils sont dans hPanel et dans `config/config.local.php` sur le serveur.
 
-Dernière mise à jour : 2026-10-03
+Dernière mise à jour : 2026-11-22 (mise en ligne de la V3)
 
 ## Vue d'ensemble
 
@@ -15,15 +15,15 @@ Dernière mise à jour : 2026-10-03
 | Dossier du site | `/home/u181593296/domains/webycloudy.com/public_html` |
 | PHP | 8.4 (passé de 7.4 le 2026-10-02) |
 | Base de données | MySQL `u181593296_webycloudy`, utilisateur `u181593296_weby`, hôte `127.0.0.1` |
-| Code déployé | dépôt GitHub `RENZOZ78/WEBY`, branche **`V2`** |
+| Code déployé | dépôt GitHub `RENZOZ78/WEBY`, branche **`V3`** (depuis le 2026-11-22 ; `V2` = secours) |
 | Mails | Hostinger Business Email ; adresse du site : `info@webycloudy.com` (existe aussi : `contact@`) |
 | SSL | certificat Hostinger à vie, redirection HTTPS active |
 | Domaine | `webycloudy.com` chez Hostinger, verrouillé, protection WHOIS, renouvellement automatique |
 
 ## Déploiement
 
-Le déploiement Git automatique de Hostinger est actif sur la branche `V2` :
-**toute fusion dans `V2` est mise en ligne automatiquement** (en général en moins d'une minute).
+Le déploiement Git automatique de Hostinger est actif sur la branche `V3` :
+**toute fusion dans `V3` est mise en ligne automatiquement** (en général en moins d'une minute).
 
 Si un déploiement ne part pas, le relancer en ré-enregistrant les réglages dans hPanel
 (*Sites → webycloudy.com → Avancé → Git*), ou par l'API Hostinger
@@ -32,11 +32,11 @@ Si un déploiement ne part pas, le relancer en ré-enregistrant les réglages da
 **Attention** : entre le 2026-10-02 (PR #4) et le 2026-10-03, aucune fusion n'a été déployée sans que rien ne le
 signale (PR #5 à #10 absentes du serveur). Après chaque fusion, **vérifier que la production a bien changé** :
 par l'API de fichiers Hostinger (`hosting_files_website-content` / `hosting_files_list-website-and-directories`),
-comparer un fichier modifié avec `V2` ; ou dans le navigateur, regarder le code source de la page. Sinon, relancer
-le déploiement comme ci-dessus. Dernier déploiement contrôlé : commit `9e479a0` (PR #19), le 2026-10-30.
+comparer un fichier modifié avec `V3` ; ou dans le navigateur, regarder le code source de la page. Sinon, relancer
+le déploiement comme ci-dessus. Dernier déploiement contrôlé : commit `563d3d6` (PR #33, V3), le 2026-11-22.
 
 Réglages en place (vérifiés le 2026-10-03) : installation GitHub `RENZOZ78` active, dépôt `RENZOZ78/WEBY`,
-branche `V2`, déploiement à la racine du site (`public_html`), déploiement automatique activé.
+branche `V3` (depuis le 2026-11-22), déploiement à la racine du site (`public_html`), déploiement automatique activé.
 
 Fichiers présents sur le serveur mais **absents du dépôt** (le déploiement ne les écrase pas) :
 - `config/config.local.php` : identifiants de la base, adresse de contact, compte super-admin initial.
@@ -68,32 +68,29 @@ de 400 jours.
 - Pour changer le mot de passe MySQL : le modifier dans hPanel (*Bases de données MySQL*), puis reporter le
   nouveau mot de passe dans `config/config.local.php` via le gestionnaire de fichiers.
 
-## V3 en préparation (non déployée)
+## Passage à la V3 (2026-11-22)
 
-Depuis le 2026-11-21, la branche `V3` (créée à partir de `V2`) regroupe les corrections de l'audit design
-(`docs/audits/2026-11-21-audit-design.md`). **Rien n'a changé en production** : Hostinger déploie toujours `V2`.
+La V3 (corrections de l'audit design, `docs/audits/2026-11-21-audit-design.md`) a été mise en ligne le 2026-11-22
+avec l'accord du propriétaire : la branche déployée est passée de `V2` à `V3` (API Hostinger `hosting_deploy`, même
+dépôt, même dossier `public_html`, déploiement automatique conservé). `config/config.local.php` et `storage/` sont
+restés en place ; la V3 n'ajoute ni table ni colonne.
 
-Avant de mettre la V3 en ligne :
+Contrôlé après la bascule : réglage Git sur `V3` ; 11 pages publiques en 200 à 1440 et 390 px, sans warning PHP,
+sans erreur JavaScript, sans défilement horizontal ; `/accueils` redirige (301) vers `/` ; mentions légales
+complètes, sans `noindex` ; `sitemap.xml` à 20 adresses. Pas encore testés en ligne : envoi réel du formulaire
+depuis un téléphone, connexion à l'espace client.
 
-1. Le propriétaire remplit l'identité légale et le bloc « Qui suis-je » dans `config/config.php` (clés `legal_*`
-   et `qui_*`, photo déposée dans le dépôt). Tant qu'une valeur obligatoire manque, `/mentions-legales` et
-   `/confidentialite` affichent « Page incomplète : à ne pas mettre en ligne en l'état ».
-2. Le propriétaire valide la V3 (captures ou site de test).
-3. Dans hPanel → *Avancé → Git*, changer la branche déployée de `V2` à `V3` (même dépôt, même dossier
-   `public_html`, déploiement automatique activé), puis lancer un déploiement. `config/config.local.php` et
-   `storage/` restent sur le serveur : ils ne sont pas dans le dépôt. La V3 n'ajoute ni table ni colonne.
-4. Contrôler le site en ligne : accueil, une page métier, envoi d'un message de test depuis un téléphone,
-   `/mentions-legales`, connexion à l'espace client.
-
-Retour à la V2 : rebasculer la branche déployée sur `V2` dans hPanel et relancer le déploiement. `V2` n'est pas
-modifiée par la V3 (décision du 2026-11-21 : pas de fusion de `V3` dans `V2`).
+**Retour à la V2** en cas de problème grave : rebasculer la branche déployée sur `V2` (hPanel → *Avancé → Git*, ou
+API `hosting_deploy` avec la branche `V2`). `V2` n'est pas modifiée (décision du 2026-11-21 : pas de fusion de
+`V3` dans `V2`).
 
 ## Sauvegarde et retour arrière
 
 - Ancien site statique (V1) : `domains/webycloudy.com/backup_v1` (à côté de `public_html`), et branche `master`
   du dépôt.
 - Revenir à la V1 : vider `public_html`, y remettre le contenu de `backup_v1`, et désactiver le déploiement Git.
-- Revenir à une version précédente de la V2 : faire un « revert » de la PR concernée dans `V2` (redéploiement auto).
+- Revenir à une version précédente de la V3 : faire un « revert » de la PR concernée dans `V3` (redéploiement auto).
+- Revenir à la V2 entière : voir « Passage à la V3 » ci-dessus.
 - La base de données n'est pas sauvegardée par le dépôt : utiliser les sauvegardes Hostinger (hPanel).
 
 ## Intervenir sur le serveur sans accès SSH

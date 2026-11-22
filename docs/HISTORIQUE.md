@@ -27,12 +27,12 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 À mettre à jour à chaque entrée : ajouter ce qui reste, retirer ce qui est réglé.
 
-- [ ] **Mise en ligne de la V3** (entrée du 2026-11-22) : 1) le propriétaire fournit l'avatar du bloc « Qui sommes-nous ? » (fichier à déposer dans le dépôt, chemin
-      dans `qui_photo` : le bloc reste masqué d'ici là) et dit si la mention de TVA est à ajouter (`legal_tva`) ; 2) il confirme « Sans engagement » (sous le bouton d'envoi),
-      « Journal officiel (JO) » ou « journal d'annonces légales », la ligne « Gestion & administratif — à partir de
-      30 € / acte RH » des tarifs de l'accueil, et la durée de conservation des demandes de contact ; 3) il valide la
-      V3 ; 4) bascule du déploiement Hostinger de `V2` vers `V3` (voir `docs/DEPLOIEMENT.md`) ; 5) test sur un vrai
-      téléphone : barre « Appeler / Devis gratuit », envoi du formulaire, menu « Votre métier ».
+- [ ] **Après la mise en ligne de la V3** (entrée du 2026-11-22) : envoyer un vrai message depuis un téléphone (il
+      doit arriver dans l'administration et par mail) ; se connecter à l'espace client et à l'administration ;
+      tester la barre « Appeler / Devis gratuit » et le menu « Votre métier » sur un vrai téléphone ; fournir l'avatar
+      du bloc « Qui sommes-nous ? » (chemin dans `qui_photo`) ; envoyer le plan du site à jour dans la Search Console ;
+      à confirmer plus tard : « Sans engagement », « Journal officiel (JO) », la ligne « Gestion & administratif — à
+      partir de 30 € / acte RH ».
 - [ ] **Style plus sobre** (entrée du 2026-11-21, mission 4/4) : après fusion, regarder l'accueil sur téléphone et sur
       ordinateur (titre sur deux lignes sans trou, cycle sans étincelles, bouton « Découvrir le pack » du pack
       Croissance en simple contour) et dire si les quatre teintes du cycle conviennent (or clair, ambre, bleu ciel, bleu
@@ -102,6 +102,31 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 - [ ] **Réalisations et photos** (audit design du 2026-11-21, non traité dans la V3) : les liens « Voir le site »
       ouvrent encore des adresses `*.netlify.app` (les publier sur `*.webycloudy.com` ou ne garder que les captures) ;
       les photos de banque d'images sont à remplacer par de vrais livrables et une vraie photo.
+
+---
+
+## 2026-11-22 — Mise en ligne de la V3
+
+**Demande** : feu vert du propriétaire pour mettre la V3 en ligne ; pas de mention de TVA ni de durée de conservation
+des demandes de contact pour le moment ; l'avatar viendra plus tard.
+
+**Réalisé** :
+- Production basculée de la branche `V2` à la branche `V3` (API Hostinger `hosting_deploy`, même dépôt, dossier
+  `public_html`, déploiement automatique conservé). Vérifié avant : les fichiers du serveur correspondaient à `V2` ;
+  après : réglage Git sur `V3`, `config/config.local.php` et `storage/` toujours présents, `config.php` à jour.
+- `V2` n'est pas modifiée et reste la version de secours.
+- Documentation : `CLAUDE.md` (`V3` = production, `V2` = secours), `README.md`, `docs/DEPLOIEMENT.md`,
+  `docs/CONTEXTE_ACTIF.md`, `docs/DECISIONS.md`.
+
+**Fichiers / zones touchés** : Hostinger (branche déployée) ; `CLAUDE.md`, `README.md`, `docs/DEPLOIEMENT.md`,
+`docs/CONTEXTE_ACTIF.md`, `docs/DECISIONS.md`, cet historique
+**Vérifications** (site en ligne) : 11 pages publiques en 200 à 1440 et 390 px, sans warning PHP, sans erreur
+JavaScript, sans requête en échec, sans défilement horizontal ; barre mobile présente sur téléphone (retirée sur
+`/contact` tant que le formulaire est à l'écran), absente sur ordinateur et sur la connexion ; plus aucun « 95 % » ;
+or premium servi ; `/accueils` → 301 vers `/` ; mentions légales complètes et indexables ; `sitemap.xml` à
+20 adresses. Non testés : envoi réel du formulaire (pour ne pas créer de fausse demande), connexion à l'espace client
+**Référence** : PR vers `V3` (documentation)
+**Suites** : voir « Après la mise en ligne de la V3 » dans les points en suspens
 
 ---
 
