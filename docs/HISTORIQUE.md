@@ -105,6 +105,29 @@ Ne jamais écrire de mot de passe ni de clé dans ce fichier.
 
 ---
 
+## 2026-11-22 — Or premium : l'or jaune lumineux revient (V3)
+
+**Demande** : le propriétaire trouve l'or mat de la V3 moins qualitatif que l'or jaune de la V2 et demande de « faire
+péter l'or » (proposition 3 : or jaune lumineux, sans revenir à l'orange ni aux halos).
+
+**Réalisé** :
+- `public/CSS/theme.css` : section « Or premium » en fin de fichier. Or plus lumineux (`#e6b440`, `#f7d77a`,
+  `#d9a02c`), dégradé or clair → or profond sur les boutons d'action (navigation, haut de page, barre mobile), le mot
+  doré du titre, les chiffres, les prix et le cycle ; lueur dorée douce sur les boutons ; une lumière dorée fixe
+  derrière le titre de l'accueil ; filet et lueur légère sur l'offre vedette et le pack Lancement.
+- Conservé du style sobre : ni orange, ni violet, ni grands halos, pas d'animation ajoutée ; contrastes et anneau de
+  focus conformes.
+- Charte (`docs/CHARTE_GRAPHIQUE.md`) et décisions (`docs/DECISIONS.md`) mises à jour.
+
+**Fichiers / zones touchés** : `public/CSS/theme.css`, `docs/CHARTE_GRAPHIQUE.md`, `docs/DECISIONS.md`
+**Vérifications** : site local, 1440x900 et 390x844 : accueil, page métier VTC, contact, prestation Lancement sans
+warning PHP, sans erreur JavaScript, sans défilement horizontal ; captures regardées ; contrastes calculés : texte
+sombre sur l'or 8:1 au moins, textes en dégradé sur bleu nuit 8,3:1 au plus sombre
+**Référence** : PR vers `V3`
+**Suites** : le propriétaire regarde le rendu ; mise en ligne de la V3 toujours en attente de son accord
+
+---
+
 ## 2026-11-22 — Identité légale renseignée et bloc « Qui sommes-nous ? » (V3)
 
 **Demande** : reprendre les informations légales de sportmaniax.com ; société : Weby Weba Solutions, nom commercial :

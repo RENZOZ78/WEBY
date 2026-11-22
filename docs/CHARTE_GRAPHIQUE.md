@@ -52,8 +52,9 @@ Règles d'usage :
 
 | Rôle | Hex | Variable |
 |---|---|---|
-| Or — couleur principale | `#e0ab3c` | `--wc-gold` |
-| Or clair — liens, icônes, accents de texte | `#f3c868` | `--wc-gold-2` |
+| Or — couleur principale | `#e6b440` | `--wc-gold` |
+| Or clair — liens, icônes, accents de texte | `#f7d77a` | `--wc-gold-2` |
+| Or profond — fin du dégradé or | `#d9a02c` | `--wc-gold-3` |
 | Ambre — problèmes à résoudre, phase « Création » du cycle | `#f09a55` | `--wc-orange` |
 | Texte posé sur l'or | `#1a1205` | — |
 
@@ -74,7 +75,7 @@ Règles d'usage :
 | Texte secondaire | `#a7b0ca` | `--wc-muted` |
 | Texte indicatif des champs (placeholder) | `#939ebd` | — |
 | Contour des champs et des boutons discrets | blanc à 40 % | `--wc-border-control` |
-| Anneau de focus clavier | or clair `#f3c868`, 2 px, décalé de 2 px | `--wc-focus` |
+| Anneau de focus clavier | or très clair `#fde7a3`, 2 px, décalé de 2 px | `--wc-focus` |
 
 Contraste : tout texte fait au moins 4,5:1 sur son fond (3:1 pour les grands titres et les contours des éléments
 cliquables). Aucun texte sous 12 px, y compris sur téléphone.
@@ -89,9 +90,11 @@ cliquables). Aucun texte sous 12 px, y compris sur téléphone.
 
 ### Aplats et dégradés
 
-Plus de dégradé de couleur sur les boutons, les textes, les chiffres ou les pastilles : **l'or est en aplat**
-(`#e0ab3c`, `#f3c868` au survol et pour les textes). Les variables `--wc-grad-gold`, `--wc-grad-cyan` et
-`--wc-grad-pink` existent encore pour compatibilité mais donnent un aplat : ne plus les utiliser.
+**Or premium** (décision du 2026-11-22) : l'or jaune lumineux est la signature de la marque. Dégradé or
+`--wc-grad-gold` (`#fde7a3` → `#f3c95c` → `#d9a02c`, à 135°) sur les boutons d'action, le mot doré du titre, les
+chiffres clés et les prix ; lueur dorée douce sur les boutons (`--wc-glow-gold`) ; une seule lumière dorée fixe
+dans le haut de page. Aucun autre dégradé de couleur : ni orange, ni violet, ni cyan. `--wc-grad-cyan` et
+`--wc-grad-pink` donnent un aplat : ne plus les utiliser. Textes en dégradé sur bleu nuit : 8,3:1 au plus sombre.
 
 | Nom | Composition | Usage |
 |---|---|---|
@@ -113,7 +116,7 @@ simple contour blanc, jamais une deuxième couleur).
 - Titres : blancs, interlettrage resserré (-0,015 em).
 - Texte courant : interligne 1,75.
 - Sur-titres (« kicker ») : capitales, 0,78 rem, graisse 700, interlettrage 0,16 em, or clair ou bleu ciel.
-- Mots mis en avant dans un titre : or clair en aplat (plus de texte en dégradé).
+- Mots mis en avant dans un titre : dégradé or premium (repli or clair `#f7d77a` si le navigateur ne le gère pas).
 - Tailles de titres du site : H1 de 2,2 à 3,9 rem ; H2 de 1,8 à 2,6 rem (adaptées à la largeur d'écran). Le titre de
   l'accueil s'ajuste à sa colonne pour que le mot qui change tienne toujours sur une ligne.
 - Paragraphes d'introduction : 75 caractères par ligne au plus.
@@ -138,14 +141,14 @@ très discrète dans l'en-tête, cartes à bordure fine et translucide. Pas de h
 
 ## 5. Composants
 
-- **Bouton principal** : or en aplat `#e0ab3c` (or clair au survol), texte `#1a1205`, pilule, graisse 600, ombre neutre.
+- **Bouton principal** : dégradé or premium, texte `#1a1205`, pilule, graisse 600, lueur dorée douce (plus forte au survol).
 - **Bouton secondaire** : contour blanc à 50 %, texte blanc, fond transparent (blanc plein au survol).
 - **Bouton discret** : fond blanc à 6 %, bordure blanche à 40 %, texte blanc.
 - **Sur-titre** : texte or clair en capitales, sans encadré. Étiquette des packs : fond or à 15 %, bordure or à 40 %.
 - **Focus clavier** : anneau or clair de 2 px autour de tout élément cliquable ou champ.
 - **Carte** : fond `#111c3d`, bordure blanche à 9 %, arrondi 20 px ; au survol, ombre et bordure plus marquées
   (léger soulèvement de 3 px au plus, pas d'inclinaison).
-- **Offre vedette** : surface relevée `#172550`, filet or, prix en or clair ; ni lueur ni bordure animée.
+- **Offre vedette** : surface relevée `#172550`, filet or, prix en dégradé or, lueur dorée très légère ; pas de bordure animée.
 - **Icônes** : Font Awesome 6 (version gratuite), en or clair ou bleu ciel sur pastille discrète, ou en sombre
   sur pastille or.
 
